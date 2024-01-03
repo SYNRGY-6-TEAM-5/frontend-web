@@ -1,7 +1,7 @@
-# [Nama Project]: Aplikasi Booking tiket penerbangan online; [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://travis-ci.org/npm/npm) [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/npm)
+# [Nama Project]: Aplikasi Booking tiket penerbangan online [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://travis-ci.org/npm/npm) [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/npm)
 > Additional information or tag line
 
-A brief description of your project, what it is used for.
+Produk ini  adalah sebuah platform digital yang memungkinkan pengguna untuk memesan tiket pesawat secara online. Dengan menggunakan website ini, pengguna dapat memilih jadwal dan maskapai penerbangan yang diinginkan, memilih kursi, serta membayar tiket secara online. Website booking tiket pesawat telah menjadi pilihan utama bagi banyak orang dalam memesan tiket pesawat, karena memungkinkan pengguna untuk melakukan transaksi secara cepat, mudah, dan aman..
 
 ## Installing / Getting started
 
