@@ -1,7 +1,8 @@
 # [Nama Project]: Aplikasi Booking tiket penerbangan online [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://travis-ci.org/npm/npm) [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/npm)
+
 > Additional information or tag line
 
-Produk ini  adalah sebuah platform digital yang memungkinkan pengguna untuk memesan tiket pesawat secara online. Dengan menggunakan website ini, pengguna dapat memilih jadwal dan maskapai penerbangan yang diinginkan, memilih kursi, serta membayar tiket secara online. Website booking tiket pesawat telah menjadi pilihan utama bagi banyak orang dalam memesan tiket pesawat, karena memungkinkan pengguna untuk melakukan transaksi secara cepat, mudah, dan aman..
+Produk ini adalah sebuah platform digital yang memungkinkan pengguna untuk memesan tiket pesawat secara online. Dengan menggunakan website ini, pengguna dapat memilih jadwal dan maskapai penerbangan yang diinginkan, memilih kursi, serta membayar tiket secara online. Website booking tiket pesawat telah menjadi pilihan utama bagi banyak orang dalam memesan tiket pesawat, karena memungkinkan pengguna untuk melakukan transaksi secara cepat, mudah, dan aman..
 
 ## Installing / Getting started
 
@@ -17,11 +18,12 @@ Here you should say what actually happens when you execute the code above.
 ## Developing
 
 ### Built With
+
 List main libraries, frameworks used including versions (React, Angular etc...)
 
 ### Prerequisites
-What is needed to set up the dev environment. For instance, global dependencies or any other tools. include download links.
 
+What is needed to set up the dev environment. For instance, global dependencies or any other tools. include download links.
 
 ### Setting up Dev
 
@@ -51,6 +53,7 @@ Here again you should state what actually happens when the code above gets
 executed.
 
 ### Deploying / Publishing
+
 give instructions on how to build and release a new version
 In case there's some step you have to take that publishes this project to a
 server, this is the right time to state it.
@@ -64,7 +67,6 @@ And again you'd need to tell what the previous code actually does.
 ## Versioning
 
 We can maybe use [SemVer](http://semver.org/) for versioning. For the versions available, see the link to [tags](https://github.com/sergeyleschev/sergeyleschev/tags) on this repository.
-
 
 ## Configuration
 
@@ -87,8 +89,7 @@ Explain your code style and show how to check it.
 
 If the api is external, link to api documentation. If not describe your api including authentication methods as well as explaining all the endpoints with their required parameters.
 
-
 ## Database
 
 Explaining what database (and version) has been used. Provide download links.
-Documents your database design and schemas, relations etc... 
+Documents your database design and schemas, relations etc...

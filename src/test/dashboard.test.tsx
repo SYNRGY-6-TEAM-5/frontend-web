@@ -5,18 +5,18 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Home from "@/pages/home";
 
 describe("Home Page", () => {
-	afterEach(() => {
-		cleanup();
-	});
+  afterEach(() => {
+    cleanup();
+  });
 
-	it("should displays home", async () => {
-		render(
-			<Router>
-				<Home />
-			</Router>
-		);
+  it("should displays home", async () => {
+    render(
+      <Router>
+        <Home />
+      </Router>,
+    );
 
-		const home = screen.getByText(/Home/i);
-		expect(home).toBeInTheDocument();
-	});
+    const home = screen.getByText(/Home/i);
+    expect(home).toBeInTheDocument();
+  });
 });
