@@ -4,14 +4,7 @@ import heroImage from "../../assets/hero-img.png"
 import { Text } from "@/components/ui/Text"
 import { Button } from "@/components/ui/button"
 import { Fade, Slide } from "react-awesome-reveal"
-
-export const HeroTexts = {
-    firstText: "BEST DESITNATIONS AROUND THE WORLD",
-    secondText: "Travel, enjoy and live a new and full life.",
-    thirdText: "Built Wicket longer admire do barton vantity itself do in it. Preferred to sportsmen it engrossed listening. Park gate sell they west hard for the.",
-    firstButton: "Find out more",
-    secondButton: 'Play Demo'
-}
+import { HeroTexts } from "../particles/DataLists"
 
 const HeroSection = () => {
     return (
