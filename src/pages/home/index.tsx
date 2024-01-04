@@ -1,9 +1,25 @@
-const Home = () => {
-  return (
-    <div className="container flex h-screen items-center justify-center">
-      <h1 className="text-center text-7xl">AeroSwift</h1>;
-    </div>
-  );
-};
+// import BookingSteps from "../organs/BookingSteps"
+import HeroSection from "@/components/containers/HeroSection"
+import { SearchFilter } from "@/components/containers/SearchFilter"
+// import NewsLetter from "../organs/NewsLetter"
+// import Partners from "../organs/Partners"
+// import Services from "../organs/Services"
+// import Testimonials from "../organs/Testimonials"
+// import TopDestination from "../organs/TopDestination"
 
-export default Home;
+const Home = () => {
+    return (
+        <>
+            <HeroSection />
+            <SearchFilter />
+            {/* <Services /> */}
+            {/* <TopDestination /> */}
+            {/* <BookingSteps /> */}
+            {/* <Testimonials /> */}
+            {/* <Partners /> */}
+            {/* <NewsLetter /> */}
+        </>
+    )
+}
+
+export default Home
