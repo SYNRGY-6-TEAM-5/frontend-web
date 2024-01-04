@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Image } from "@/components/ui/Image";
 import { Button } from "@/components/ui/button";
 import { NavButtons, NavLinks } from "../particles/DataLists";
 import { List } from "@/components/ui/List";
