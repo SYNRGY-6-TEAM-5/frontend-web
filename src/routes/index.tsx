@@ -4,11 +4,19 @@ import Register from "@/pages/register";
 import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 
+import NavBar from "../components/containers/NavBar";
+import Footer from "../components/containers/Footer";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: (
+      <>
+        <NavBar />
+        <Home />
+        <Footer />
+      </>
+    ),
   },
   {
     path: "/login",
@@ -33,7 +41,7 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/cars/:id",
         element: <></>,
-      }
+      },
     ],
   },
 ]);
