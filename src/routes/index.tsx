@@ -6,6 +6,7 @@ import ProtectedRoute from "./ProtectedRoute";
 
 import NavBar from "../components/containers/NavBar";
 import Footer from "../components/containers/Footer";
+import ForgotPassword from "@/pages/forgot-password";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />,
   },
   {
     path: "/dashboard",
