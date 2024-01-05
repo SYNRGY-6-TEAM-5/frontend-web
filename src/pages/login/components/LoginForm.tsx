@@ -1,15 +1,23 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Loader } from "lucide-react";
-import { useState } from "react";
-import { Link } from "react-router-dom"
+import { GoogleLogo  } from "@phosphor-icons/react";
+import { Eye } from "@phosphor-icons/react";
+import { EyeSlash } from "@phosphor-icons/react";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
   const [isPending, setIsPending] = useState<boolean>();
+  const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
+
+  const togglePasswordVisible = () => {
+    setIsPasswordVisible((prevState) => !prevState);
+  }
 
   const handleOnSubmit = async (e: React.SyntheticEvent) => {
     setIsPending(true);
@@ -52,21 +60,32 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
               <Label htmlFor="password">
                 Password
               </Label>
-              <Input
-                id="password"
-                placeholder="Enter your password"
-                type="password"
-                autoCapitalize="none"
-                autoComplete="off"
-                autoCorrect="off"
-                className="border-0 border-b border-b-grey-500 rounded-none py-2.5 px-0 text-base"
-                required
-              />
+              <div className="flex flex-row">
+                <Input
+                  id="password"
+                  type={isPasswordVisible ? "text" : "password"}
+                  placeholder="Enter your password"
+                  autoCapitalize="none"
+                  autoComplete="off"
+                  autoCorrect="off"
+                  className="border-0 border-b border-b-grey-500 rounded-none py-2.5 px-0 text-base"
+                  required
+                />
+                <Button type="button" onClick={togglePasswordVisible}>
+                  {isPasswordVisible ? (
+                    <EyeSlash size={24} />
+                  ) : (
+                    <Eye size={24} />
+                  )} 
+                </Button>
+              </div>
             </div>
           </div>
-          <Link to={'/forgot-password'} className="text-right text-gray-400 text-sm text-medium">
-            Forgot Password
-          </Link>
+          <div className="flex justify-end">
+            <Link to={'/forgot-password'} className="text-right text-gray-400 text-sm text-medium">
+              Forgot Password
+            </Link>
+          </div>
           <Button type="submit" className="py-4 bg-primary-500 text-white rounded-xl">
             {isPending && <Loader className="mr-2 h-4 w-4 animate-spin" />}
             Sign In 
@@ -78,7 +97,7 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
           {isPending ? (
             <Loader className="mr-2 h-4 w-4 animate-spin" />
           ) : (
-            <img src="./src/assets/google.svg" />
+            <GoogleLogo size={24} weight="bold" />
           )}
           Sign in with Google
         </Button>

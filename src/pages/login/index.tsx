@@ -1,17 +1,19 @@
 import { Link } from "react-router-dom";
+import { Image } from "@/components/ui/Image";
+import icon from "../../assets/Vector.svg";
 import LoginForm from "./components/LoginForm";
 
 const Login = () => {
   return (
     <>
       <div className="container relative hidden md:h-[100vh] flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:p-0 min-[320px]:grid min-[320px]:py-5">
-        <div className="lg:bg-login-bg bg-cover relative hidden h-full flex-col p-10 text-white lg:flex dark:border-r">
+        <div className="lg:bg-login-bg bg-cover relative md:hidden h-full flex-col p-10 text-white lg:flex dark:border-r">
         </div>
         <div className="lg:p-8 space-y-24">
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
             <div className="flex flex-col space-y-3 text-center">
               <div className="mx-auto mb-3">
-                <img src="./src/assets/Vector.svg"/>
+              <Image image={icon} alt="icon" className="w-full" />
               </div>
               <h1 className="text-3xl font-semibold tracking-tight">
                 Welcome back
