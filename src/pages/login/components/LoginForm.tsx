@@ -45,6 +45,7 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
                 autoComplete="off"
                 autoCorrect="off"
                 className="border-0 border-b border-b-grey-500 rounded-none py-2.5 px-0 text-base"
+                required
               />
             </div>
             <div className="grid gap-1">
@@ -59,6 +60,7 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
                 autoComplete="off"
                 autoCorrect="off"
                 className="border-0 border-b border-b-grey-500 rounded-none py-2.5 px-0 text-base"
+                required
               />
             </div>
           </div>
