@@ -35,14 +35,8 @@ const NavBar = () => {
         <nav
           className={`h-20 w-full md:h-24 ${
             navBarColor ? "bg-white" : "bg-transparent"
-          } flex items-center justify-between px-8 md:px-12 lg:px-24`}
+          } flex items-center justify-end lg:justify-center px-4 md:px-6`}
         >
-          <Text
-            as="h4"
-            className=" text-color3 text-3xl font-medium md:text-5xl lg:text-4xl"
-          >
-            <Fade>AeroSwift</Fade>
-          </Text>
           <div className="hidden items-center gap-20 lg:flex">
             <ul className="flex items-center justify-center gap-8">
               {NavLinks.map((navlink, index) => (
@@ -56,6 +50,14 @@ const NavBar = () => {
                 </List>
               ))}
             </ul>
+
+            <Text
+              as="h4"
+              className="text-color3 flex w-96 flex-1 items-center justify-center text-3xl font-medium md:text-5xl lg:text-4xl"
+            >
+              <Fade>AeroSwift</Fade>
+            </Text>
+
             <ul className="flex items-center justify-center gap-6">
               {NavButtons.map((navbutton, index) => (
                 <List className="w-full" key={index}>
@@ -146,7 +148,7 @@ const NavBar = () => {
               ))}
             </ul>
           </section>
-          <ul className="flex w-full items-center justify-center gap-4 pb-24">
+          <ul className="flex w-full items-center justify-end gap-4 pb-24">
             {NavButtons.map((navbutton, index) => (
               <List className="w-auto" key={index}>
                 <Button
