@@ -8,6 +8,7 @@ import NavBar from "../components/containers/NavBar";
 import Footer from "../components/containers/Footer";
 import PasswordOTP from "@/pages/forget-password/otp";
 import ChangePasswordMethod from "@/pages/forget-password/method";
+import ChangePassword from "@/pages/forget-password/change-password";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: "/forgot-password/otp",
     element: <PasswordOTP />,
+  },
+  {
+    path: "/forgot-password/change-password",
+    element: <ChangePassword />,
   },
   {
     path: "/dashboard",

@@ -32,53 +32,62 @@ const PasswordOTP = () => {
     setTime({ minutes: 2, seconds: 0 });
   };
 
+  const verifiedOtp = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(otp);
+    setOtp("");
+  };
+
   return (
-    <div className="mx-auto w-full px-4 pt-24 sm:w-[435px] md:px-0">
-      <div className="px-3 py-8 sm:px-8">
+    <div className="xs:w-[435px] mx-auto w-full px-4 pt-24 md:px-0">
+      <div className="xs:px-8 px-3 py-8">
         <MainLogo className="mb-6 w-full text-center" />
         <Text className="text-center text-3xl font-medium">
           Verification Code
         </Text>
-        <Text className="mb-8 mt-3 text-center text-sm text-[#5D6B98]">
+        <Text className="text-gray-500 mb-8 mt-3 text-center text-sm">
           We have sent the code verification to{" "}
-          <span className="font-medium text-[#404968]">test@gmail.com</span>.
+          <span className="text-gray-700 font-medium">test@gmail.com</span>.
           Please input the 4 digits code
         </Text>
-        <OtpInput
-          value={otp}
-          onChange={setOtp}
-          numInputs={4}
-          renderSeparator={
-            <span className="font-semibold text-[#FEEBE6]">-</span>
-          }
-          skipDefaultStyles={true}
-          inputStyle={
-            "w-[62px] h-[62px] text-center rounded-xl valid:bg-[#F74E28] valid:text-white bg-[#F9F9FB] px-3 py-2 text-sm focus-visible:outline-none focus-visible:bg-[#EFF1F5] text-base font-semibold placeholder:text-[#111111] placeholder:font-semibold"
-          }
-          placeholder="----"
-          containerStyle={"flex justify-between"}
-          inputType={"tel"}
-          renderInput={(props) => <input required {...props} />}
-        />
-        {time.minutes > 0 || time.seconds > 0 ? (
-          <Text className="mb-6 mt-9 text-sm text-[#B9C0D4]">
-            Resend code after{" "}
-            <span className="ml-1 font-medium text-[#F74E28]">
-              {formatTime(time.minutes)}:{formatTime(time.seconds)}
-            </span>
-          </Text>
-        ) : (
-          <Button
-            onClick={resendCode}
-            variant={"secondary"}
-            className="mb-3 mt-9 h-14 w-full rounded-xl"
-          >
-            Resend Code
+        <form onSubmit={verifiedOtp}>
+          <OtpInput
+            value={otp}
+            onChange={setOtp}
+            numInputs={4}
+            renderSeparator={
+              <span className="text-primary-50 font-semibold">-</span>
+            }
+            skipDefaultStyles={true}
+            inputStyle={
+              "w-[62px] h-[62px] text-black text-center rounded-xl valid:bg-primary-500 valid:text-white bg-gray-50 px-3 py-2 text-sm focus-visible:outline-none focus-visible:bg-gray-100 text-base font-semibold placeholder:text-black placeholder:font-semibold"
+            }
+            placeholder="----"
+            containerStyle={"flex justify-between"}
+            inputType={"tel"}
+            renderInput={(props) => <input required {...props} />}
+          />
+          {time.minutes > 0 || time.seconds > 0 ? (
+            <Text className="mb-6 mt-9 text-sm text-gray-300">
+              Resend code after{" "}
+              <span className="ml-1 font-medium text-primary-500">
+                {formatTime(time.minutes)}:{formatTime(time.seconds)}
+              </span>
+            </Text>
+          ) : (
+            <Button
+              type="button"
+              onClick={resendCode}
+              variant={"secondary"}
+              className="mb-3 mt-9 h-14 w-full rounded-xl"
+            >
+              Resend Code
+            </Button>
+          )}
+          <Button type="submit" variant={"primary"} className="h-14 w-full">
+            Next
           </Button>
-        )}
-        <Button variant={"primary"} className="h-14 w-full">
-          Next
-        </Button>
+        </form>
       </div>
     </div>
   );

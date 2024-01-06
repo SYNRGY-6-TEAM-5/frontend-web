@@ -1,60 +1,74 @@
 import { MainLogo } from "@/assets/svg";
 import { Button } from "@/components/ui/button";
+import PasswordInput from "@/components/ui/password-input";
 import { Text } from "@mantine/core";
-import { EnvelopeSimple, Phone } from "@phosphor-icons/react";
-import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useFormik } from "formik";
 
-const ChangePasswordMethod = () => {
+interface FormValues {
+  password: string;
+  rePassword: string;
+}
+
+const ChangePassword = () => {
+  const formik = useFormik<FormValues>({
+    initialValues: {
+      password: "",
+      rePassword: "",
+    },
+    validate: (values) => {
+      const errors: Partial<FormValues> = {};
+      if (values.password !== values.rePassword) {
+        errors.rePassword = "Passwords must match";
+      }
+      return errors;
+    },
+    onSubmit: (values) => {
+      console.log("Form submitted:", values);
+      formik.resetForm();
+    },
+  });
+
   return (
-    <div className="mx-auto w-full px-4 pt-24 sm:w-fit md:px-0">
+    <div className="xs:w-[430px] mx-auto w-full px-4 pt-24 md:px-0">
       <div className="px-3 py-8 sm:px-8">
-        <MainLogo className="mb-6 w-full text-center h-10 " />
+        <MainLogo className="mb-6 h-10 w-full text-center " />
         <Text className="text-center text-3xl font-medium">
-          Choose verification method
+          Set new password
         </Text>
-        <Text className="mb-8 mt-3 text-center text-sm text-[#5D6B98]">
-          We’ll send you a verification code to reset your password
+        <Text className="mb-8 mt-3 text-center text-sm text-gray-400">
+          Your new password must be diffrent from previosly used passwords.
         </Text>
-        <label
-          htmlFor="phone"
-          className="group flex border-b py-3 text-[#B9C0D4] hover:border-[#FBAE9D] hover:text-[#FBAE9D] has-[:checked]:border-[#F74E28] has-[:checked]:text-[#F74E28]"
-        >
-          <Phone size={24} />
-          <Text className="ml-2 grow">+62-738-****-****</Text>
-          <input
-            type="radio"
-            id="phone"
-            className="checked:accent-[#F74E28]"
-            name="method"
+        <form onSubmit={formik.handleSubmit}>
+          <PasswordInput
+            id="password"
+            name="password"
+            placeholder="New password"
+            className="mb-5"
+            onChange={formik.handleChange}
+            value={formik.values.password}
           />
-        </label>
-        <label
-          htmlFor="email"
-          className="group mt-3 flex border-b py-3 text-[#B9C0D4] hover:border-[#FBAE9D] hover:text-[#FBAE9D] has-[:checked]:border-[#F74E28] has-[:checked]:text-[#F74E28]"
-        >
-          <EnvelopeSimple size={24} />
-          <Text className="ml-2 grow">te****@****.com</Text>
-          <input
-            type="radio"
-            id="email"
-            className="checked:accent-[#F74E28]"
-            name="method"
+          <PasswordInput
+            id="rePassword"
+            name="rePassword"
+            placeholder="Retype new password"
+            onChange={formik.handleChange}
+            value={formik.values.rePassword}
+            error={!!(formik.touched.rePassword && formik.errors.rePassword)}
           />
-        </label>
-        <Button variant={"primary"} className="mt-7 h-14 w-full">
-          Next
-        </Button>
-        <Link
-          to="/forgot-password"
-          className="mt-8 flex items-center justify-center text-sm font-semibold text-[#475467]"
-        >
-          <ArrowLeft size={20} className="mr-2" />
-          Change email
-        </Link>
+          {formik.touched.rePassword && formik.errors.rePassword ? (
+            <Text className="text-red-400">{formik.errors.rePassword}</Text>
+          ) : null}
+          <Button
+            type="submit"
+            variant={"primary"}
+            className="mt-7 h-14 w-full"
+          >
+            Change Password
+          </Button>
+        </form>
       </div>
     </div>
   );
 };
 
-export default ChangePasswordMethod;
+export default ChangePassword;

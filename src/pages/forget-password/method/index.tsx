@@ -7,38 +7,38 @@ import { Link } from "react-router-dom";
 
 const ChangePasswordMethod = () => {
   return (
-    <div className="mx-auto w-full px-4 pt-24 sm:w-fit md:px-0">
-      <div className="px-3 py-8 sm:px-8">
-        <MainLogo className="mb-6 w-full text-center h-10 " />
+    <div className="xs:w-fit mx-auto w-full px-4 pt-24 md:px-0">
+      <div className="xs:px-8 px-3 py-8">
+        <MainLogo className="mb-6 h-10 w-full text-center " />
         <Text className="text-center text-3xl font-medium">
           Choose verification method
         </Text>
-        <Text className="mb-8 mt-3 text-center text-sm text-[#5D6B98]">
+        <Text className="text-gray-500 mb-8 mt-3 text-center text-sm">
           We’ll send you a verification code to reset your password
         </Text>
         <label
           htmlFor="phone"
-          className="group flex border-b py-3 text-[#B9C0D4] hover:border-[#FBAE9D] hover:text-[#FBAE9D] has-[:checked]:border-[#F74E28] has-[:checked]:text-[#F74E28]"
+          className="text-gray-300 hover:border-primary-200 hover:text-prim2border-primary-200 group flex border-b py-3 has-[:checked]:border-primary-500 has-[:checked]:text-primary-500"
         >
           <Phone size={24} />
           <Text className="ml-2 grow">+62-738-****-****</Text>
           <input
             type="radio"
             id="phone"
-            className="checked:accent-[#F74E28]"
+            className="checked:accent-primary-500"
             name="method"
           />
         </label>
         <label
           htmlFor="email"
-          className="group mt-3 flex border-b py-3 text-[#B9C0D4] hover:border-[#FBAE9D] hover:text-[#FBAE9D] has-[:checked]:border-[#F74E28] has-[:checked]:text-[#F74E28]"
+          className="text-gray-300 hover:border-primary-200 hover:text-primary-200 group mt-3 flex border-b py-3 has-[:checked]:border-primary-500 has-[:checked]:text-primary-500"
         >
           <EnvelopeSimple size={24} />
           <Text className="ml-2 grow">te****@****.com</Text>
           <input
             type="radio"
             id="email"
-            className="checked:accent-[#F74E28]"
+            className="checked:accent-primary-500"
             name="method"
           />
         </label>
