@@ -18,7 +18,7 @@ const ChangePasswordMethod = () => {
         </Text>
         <label
           htmlFor="phone"
-          className="text-gray-300 hover:border-primary-200 hover:text-prim2border-primary-200 group flex border-b py-3 has-[:checked]:border-primary-500 has-[:checked]:text-primary-500"
+          className="text-gray-300 hover:border-primary-200 hover:text-primary-200 border-primary-200 group flex border-b py-3 has-[:checked]:border-primary-500 has-[:checked]:text-primary-500"
         >
           <Phone size={24} />
           <Text className="ml-2 grow">+62-738-****-****</Text>
