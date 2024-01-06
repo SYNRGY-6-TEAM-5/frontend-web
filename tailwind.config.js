@@ -35,6 +35,19 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
+    colors: {
+      primary:{
+        500: "#F74E28",
+      },
+      gray:{
+        200:"#DCDFEA",
+        400:"#7D89B0",
+      },
+      white: "#fff",
+    },
+    backgroundImage: {
+      "login-bg": "url('/src/assets/login-bg.png')",
+    },
   },
   plugins: [require("tailwindcss-animate")],
 };
