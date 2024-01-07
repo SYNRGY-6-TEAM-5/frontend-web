@@ -1,9 +1,8 @@
 import { Image } from "@/components/ui/Image"
 import bgImage from "../../../assets/hero-bg.png"
 import heroImage from "../../../assets/hero-img.png"
-import { Text } from "@/components/ui/Text"
-import { Button } from "@/components/ui/button"
-import { Fade, Slide } from "react-awesome-reveal"
+import { Text } from "@mantine/core"
+import { Slide } from "react-awesome-reveal"
 import { HeroTexts } from "../../../components/particles/DataLists"
 
 const HeroSection = () => {
@@ -12,29 +11,15 @@ const HeroSection = () => {
             <Image className="h-[60%] w-[100%] lg:h-[90vh] md:h-[50vh] lg:w-full md:w-[100%]" image={bgImage} alt="Hero Background Vector" />
             <main className="w-full lg:h-full h-auto grid md:grid-cols-2 absolute top-0 left-0 lg:px-24 md:px-8 px-5 pt-24 md:pt-32 lg:pt-0">
                 <div className="flex flex-col justify-center md:gap-6 gap-3 md:order-1 order-2">
-                    <Text as="p" className="text-color1 uppercase tracking-widest lg:text-base  text-sm font-normal">
-                        <Fade>{HeroTexts.firstText}</Fade>
+                    <Text className="text-color1 uppercase tracking-widest lg:text-base  text-sm font-normal">
+                        {HeroTexts.firstText}
                     </Text>
-                    <Text as="h1" className=" text-color3 lg:text-7xl md:text-5xl text-3xl font-medium">
-                        <Fade>{HeroTexts.secondText}</Fade>
+                    <Text className=" text-color3 lg:text-7xl md:text-5xl text-3xl font-medium">
+                        {HeroTexts.secondText}
                     </Text>
-                    <Text as="p" className="text-color3 md:text-base text-sm text-justify font-light">
-                        <Fade>{HeroTexts.thirdText}</Fade>
+                    <Text className="text-color3 md:text-base text-sm text-justify font-light">
+                        {HeroTexts.thirdText}
                     </Text>
-                    <div className="w-full flex md:justify-start justify-between items-center lg:gap-12 md:gap-6 gap-0">
-                        <Button type="button" className="outline-none border-none lg:px-7 px-5 py-3 bg-color2 text-white font-extralight rounded-lg">
-                            {HeroTexts.firstButton}
-                        </Button>
-                        <div className="flex items-center lg:gap-6 gap-3 cursor-pointer">
-                            <Text as="span" className="relative flex h-14 w-14">
-                                <Text as="span" className="animate-ping absolute inline-flex h-full w-full rounded-full bg-color1 opacity-75"></Text>
-                            </Text>
-                            <Button type="button" className="outline-none border-none">
-                                {HeroTexts.secondButton}
-                            </Button>
-                        </div>
-
-                    </div>
                 </div>
                 <div className="flex flex-col items-center justify-end md:order-2 order-1">
                     <Slide direction="right">

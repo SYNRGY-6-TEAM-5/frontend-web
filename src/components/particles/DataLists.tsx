@@ -20,11 +20,11 @@ export const NavLinks = [
 
 export const NavButtons = [
     {
-        name: "Login",
+        name: "Signup",
         url: "/"
     },
     {
-        name: "Signup",
+        name: "Login",
         url: "/"
     }
 

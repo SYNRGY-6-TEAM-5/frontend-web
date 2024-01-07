@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { NavButtons, NavLinks } from "../particles/DataLists";
 import { List } from "@/components/ui/List";
-import { Text } from "@/components/ui/Text";
+import Logo from "../../assets/logo1.svg";
+import { Text } from "@mantine/core";
+import { Image } from "../ui/Image";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ArrowCircleRight, CirclesFour } from "@phosphor-icons/react";
-import { Fade, Slide } from "react-awesome-reveal";
+import { Slide } from "react-awesome-reveal";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -30,12 +32,12 @@ const NavBar = () => {
   }, []);
 
   return (
-    <header className="fixed left-0 top-0 z-50 h-auto w-full overflow-x-hidden bg-transparent">
+    <header className="bg-transparent fixed left-0 top-0 z-50 h-auto w-full overflow-x-hidden">
       <Slide direction="down">
         <nav
-          className={`h-20 w-full md:h-24 ${
+          className={`h-14 w-full md:h-18 ${
             navBarColor ? "bg-white" : "bg-transparent"
-          } flex items-center justify-end lg:justify-center px-4 md:px-6`}
+          } flex items-center justify-end px-4 md:px-6 lg:justify-center`}
         >
           <div className="hidden items-center gap-20 lg:flex">
             <ul className="flex items-center justify-center gap-8">
@@ -43,7 +45,7 @@ const NavBar = () => {
                 <List className="w-full text-base" key={index}>
                   <NavLink
                     to={navlink.url}
-                    className="before:bg-color2 after:bg-color2 relative inline-block overflow-hidden pl-2 pt-2 before:absolute before:-left-10 before:top-2 before:h-2 before:w-2 before:rounded-full before:transition-all before:duration-200 before:ease-in after:absolute after:-top-10 after:left-1 after:h-3 after:w-0.5 after:transition-all after:duration-200 after:ease-in hover:before:left-0.5 hover:after:top-3.5"
+                    className="before:bg-color2 after:bg-color2 hover:text-primary relative inline-block overflow-hidden pl-2 pt-2 font-sans font-medium text-primary-500 before:absolute before:-left-10 before:top-2 before:h-2 before:w-2 before:rounded-full before:transition-all before:duration-200 before:ease-in after:absolute after:-top-10 after:left-1 after:h-3 after:w-0.5 after:transition-all after:duration-200 after:ease-in hover:before:left-0.5 hover:after:top-3.5"
                   >
                     {navlink.name}
                   </NavLink>
@@ -51,12 +53,15 @@ const NavBar = () => {
               ))}
             </ul>
 
-            <Text
-              as="h4"
-              className="text-color3 flex w-96 flex-1 items-center justify-center text-3xl font-medium md:text-5xl lg:text-4xl"
-            >
-              <Fade>AeroSwift</Fade>
-            </Text>
+            <div className="text-color3 flex w-96 flex-1 items-center justify-center text-3xl font-medium md:text-5xl lg:text-4xl">
+              <Image
+                as="a"
+                href="/"
+                className="h-8 md:h-10"
+                image={Logo}
+                alt="Logo"
+              />
+            </div>
 
             <ul className="flex items-center justify-center gap-6">
               {NavButtons.map((navbutton, index) => (
@@ -64,38 +69,26 @@ const NavBar = () => {
                   <Button
                     onClick={() => navigate(navbutton.url)}
                     type="button"
-                    variant="transparent"
-                    className={`${
-                      navbutton.name === "Signup"
-                        ? "border-2 border-gray-950 before:top-0"
-                        : "border-b-2 border-transparent before:bottom-0 hover:border-gray-950"
-                    } before:bg-color2 relative z-10 px-8 py-2 text-base before:absolute before:left-0 before:-z-10 before:h-0 before:w-full before:transition-all before:duration-300 before:ease-in before:content-[''] hover:before:h-full`}
+                    variant={`${navbutton.name === "Login" 
+                      ? "black" 
+                      : "transparent"}`
+                    }
+                    className={`
+                      relative z-10 px-8 py-2 text-white
+                      before:absolute before:left-0 before:-z-10 before:h-0 before:w-full
+                      before:transition-all before:duration-300 before:ease-in before:content-[''] 
+                      hover:before:h-full
+                      ${navBarColor && navbutton.name !== "Login" ? "text-black" : "text-white"}`}
                   >
                     {navbutton.name}
                   </Button>
                 </List>
               ))}
-              <List className="text-gray-950">
-                <select className="border-none bg-transparent text-base font-light outline-none">
-                  <option value="EN" selected>
-                    EN
-                  </option>
-                  <option value="ITA">ITA</option>
-                  <option value="FRA">FRA</option>
-                </select>
-              </List>
             </ul>
           </div>
           <div className="flex items-center gap-4 lg:hidden">
-            <select className="border-none bg-transparent text-sm font-light outline-none">
-              <option value="EN" selected>
-                EN
-              </option>
-              <option value="ITA">ITA</option>
-              <option value="FRA">FRA</option>
-            </select>
             <div
-              className="hamburger cursor-pointer text-gray-950"
+              className="hamburger text-gray-950 cursor-pointer"
               onClick={handleToggle}
             >
               <CirclesFour size={30} color="currentColor" weight="fill" />
@@ -106,7 +99,7 @@ const NavBar = () => {
 
       {/* Mobile Nav  */}
       <nav
-        className={`fixed top-0 flex h-screen w-full justify-end bg-gray-950/90 lg:hidden  ${
+        className={`bg-gray-950/90 fixed top-0 flex h-screen w-full justify-end lg:hidden  ${
           open ? "right-0" : "-right-[120vw]"
         } transition-all duration-500 ease-out`}
       >
@@ -117,14 +110,11 @@ const NavBar = () => {
         >
           <section className="flex w-full flex-col gap-16 px-4 py-6">
             <div className="flex w-full items-center justify-between">
-              <Text
-                as="h4"
-                className=" text-color3 text-3xl font-medium md:text-5xl lg:text-4xl"
-              >
-                <Fade>AeroSwift</Fade>
+              <Text className=" text-color3 text-3xl font-medium md:text-5xl lg:text-4xl">
+                AeroSwift
               </Text>
               <div
-                className="hamburger cursor-pointer text-gray-950"
+                className="hamburger text-gray-950 cursor-pointer"
                 onClick={handleToggle}
               >
                 <ArrowCircleRight
@@ -156,8 +146,8 @@ const NavBar = () => {
                   type="button"
                   className={`${
                     navbutton.name === "Signup"
-                      ? "border-2 border-gray-950 before:top-0"
-                      : "border-b-2 border-white before:bottom-0 hover:border-gray-950"
+                      ? "border-gray-950 border-2 before:top-0"
+                      : "hover:border-gray-950 border-b-2 border-white before:bottom-0"
                   } before:bg-color2 relative z-10 px-5 py-1.5 text-base before:absolute before:left-0 before:-z-10 before:h-0 before:w-full before:transition-all before:duration-300 before:ease-in before:content-[''] hover:before:h-full`}
                 >
                   {navbutton.name}

@@ -55,6 +55,9 @@ module.exports = {
         },
         white: "#fff",
       },
+      zinc:{
+        900: "#18181b",
+      }
     },
     backgroundImage: {
       "login-bg": "url('/src/assets/login-bg.png')",
