@@ -62,11 +62,6 @@ const ForgotPassword = () => {
               onChange={handleEmailChange}
               required
             />
-            <Button
-              variant={"link"}
-              type="button"
-              className={cn(isValidEmail ? "text-green-400" : "text-red-400")}
-            ></Button>
           </div>
         </div>
 
