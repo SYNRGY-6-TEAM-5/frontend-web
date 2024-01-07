@@ -20,6 +20,9 @@ module.exports = {
       sans: ["Inter", "sans-serif"],
     },
     extend: {
+      screens: {
+        xs: "425px",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -34,6 +37,27 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      colors: {
+        primary: {
+          50: "#FEEBE6",
+          200: "#FBAE9D",
+          500: "#F74E28",
+        },
+        black: "#111111",
+        gray: {
+          50: "#F9F9FB",
+          100: "#EFF1F5",
+          200: "#DCDFEA",
+          300: "#B9C0D4",
+          400: "#7D89B0",
+          500: "#5D6B98",
+          700: "#404968",
+        },
+        white: "#fff",
+      },
+    },
+    backgroundImage: {
+      "login-bg": "url('/src/assets/login-bg.png')",
     },
   },
   plugins: [require("tailwindcss-animate")],

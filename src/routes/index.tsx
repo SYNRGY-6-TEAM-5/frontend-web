@@ -6,7 +6,9 @@ import ProtectedRoute from "./ProtectedRoute";
 
 import NavBar from "../components/containers/NavBar";
 import Footer from "../components/containers/Footer";
-import ForgotPassword from "@/pages/forgot-password";
+import PasswordOTP from "@/pages/forget-password/otp";
+import ChangePasswordMethod from "@/pages/forget-password/method";
+import ChangePassword from "@/pages/forget-password/change-password";
 
 const router = createBrowserRouter([
   {
@@ -28,8 +30,16 @@ const router = createBrowserRouter([
     element: <Register />,
   },
   {
-    path: "/forgot-password",
-    element: <ForgotPassword />,
+    path: "/forgot-password/method",
+    element: <ChangePasswordMethod />,
+  },
+  {
+    path: "/forgot-password/otp",
+    element: <PasswordOTP />,
+  },
+  {
+    path: "/forgot-password/change-password",
+    element: <ChangePassword />,
   },
   {
     path: "/dashboard",
