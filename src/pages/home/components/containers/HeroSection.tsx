@@ -28,7 +28,7 @@ const HeroSection = () => {
 
             <Separator orientation="vertical" className="bg-primary-500 h-8 my-2 mx-3 md:my-0 md:mx-4" />
 
-            <Text className="text-color3 text-justify text-sm font-light md:text-base">
+            <Text className="text-gray-400 text-justify text-sm font-normal">
               {HeroTexts.firstText.second}
             </Text>
           </div>

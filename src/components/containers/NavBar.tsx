@@ -40,7 +40,7 @@ const NavBar = () => {
         >
           <div className="hidden w-full items-center gap-10 lg:flex">
             <div className="text-color3 flex w-96 flex-1 items-center justify-start text-3xl font-medium md:text-5xl lg:text-4xl">
-              <Logo className="h-10 md:h-12" alt="Logo" />
+              <Logo className="h-10 md:h-12" />
               <Text className="text-color3 pl-4 text-2xl font-normal md:text-5xl lg:text-4xl">
                 AeroSwift
               </Text>

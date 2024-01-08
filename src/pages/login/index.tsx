@@ -12,7 +12,7 @@ const Login = () => {
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
             <div className="flex flex-col space-y-3 text-center">
               <div className="mx-auto mb-3">
-              <Vector alt="icon" className="w-full" />
+              <Vector className="w-full" />
               </div>
               <h1 className="text-3xl font-semibold tracking-tight">
                 Welcome back
