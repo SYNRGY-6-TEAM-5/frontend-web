@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Loader } from "lucide-react";
-import { GoogleLogo } from "@phosphor-icons/react";
+import { GoogleLogo } from "@/assets/svg";
 import { Eye } from "@phosphor-icons/react";
 import { EyeSlash } from "@phosphor-icons/react";
 
@@ -64,7 +64,11 @@ const RegisterForm = ({ className, ...props }: UserAuthFormProps) => {
                   className="border-b-grey-500 rounded-none border-0 border-b px-0 py-2.5 text-base"
                   required
                 />
-                <Button type="button" onClick={togglePasswordVisible}>
+                <Button
+                  variant="link"
+                  type="button"
+                  onClick={togglePasswordVisible}
+                >
                   {isPasswordVisible ? (
                     <EyeSlash size={24} />
                   ) : (
@@ -76,7 +80,7 @@ const RegisterForm = ({ className, ...props }: UserAuthFormProps) => {
           </div>
           <Button
             type="submit"
-            className="rounded-xl bg-primary-500 py-4 text-white"
+            className="h-14 rounded-xl bg-primary-500 py-4 text-white"
           >
             {isPending && <Loader className="mr-2 h-4 w-4 animate-spin" />}
             Sign Up
@@ -88,12 +92,12 @@ const RegisterForm = ({ className, ...props }: UserAuthFormProps) => {
           variant="outline"
           type="button"
           disabled={isPending}
-          className="gap-2 rounded-xl border-gray-200"
+          className="h-14 gap-2 rounded-xl border-gray-200"
         >
           {isPending ? (
             <Loader className="mr-2 h-4 w-4 animate-spin" />
           ) : (
-            <GoogleLogo size={24} weight="bold" />
+            <GoogleLogo />
           )}
           Sign Up with Google
         </Button>
