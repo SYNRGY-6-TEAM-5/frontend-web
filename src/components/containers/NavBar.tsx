@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { NavButtons, NavLinks } from "../particles/DataLists";
 import { List } from "@/components/ui/List";
-import Logo from "../../assets/logo1.svg";
+import { Logo } from "@/assets/svg";
 import { Text } from "@mantine/core";
-import { Image } from "../ui/Image";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ArrowCircleRight, CirclesFour } from "@phosphor-icons/react";
 import { Slide } from "react-awesome-reveal";
@@ -35,20 +34,14 @@ const NavBar = () => {
     <header className="bg-transparent fixed left-0 top-0 z-50 h-auto w-full overflow-x-hidden">
       <Slide direction="down">
         <nav
-          className={`flex h-24 w-full md:h-18 items-center justify-end px-6 md:px-9 lg:px-20 lg:justify-between ${
+          className={`md:h-18 flex h-24 w-full items-center justify-end px-6 md:px-9 lg:justify-between lg:px-20 ${
             navBarColor ? "bg-white" : "bg-transparent"
           }`}
         >
-          <div className="lg:flex hidden items-center gap-10 w-full">
+          <div className="hidden w-full items-center gap-10 lg:flex">
             <div className="text-color3 flex w-96 flex-1 items-center justify-start text-3xl font-medium md:text-5xl lg:text-4xl">
-              <Image
-                as="a"
-                href="/"
-                className="h-10 md:h-12"
-                image={Logo}
-                alt="Logo"
-              />
-              <Text className="text-color3 text-2xl font-normal md:text-5xl lg:text-4xl pl-4">
+              <Logo className="h-10 md:h-12" alt="Logo" />
+              <Text className="text-color3 pl-4 text-2xl font-normal md:text-5xl lg:text-4xl">
                 AeroSwift
               </Text>
             </div>
@@ -72,16 +65,17 @@ const NavBar = () => {
                   <Button
                     onClick={() => navigate(navbutton.url)}
                     type="button"
-                    variant={`${navbutton.name === "Login" 
-                      ? "black" 
-                      : "transparent"}`
-                    }
+                    variant={`${
+                      navbutton.name === "Login" ? "black" : "transparent"
+                    }`}
                     className={`
                       relative z-10 px-8 py-2
                       before:absolute before:left-0 before:-z-10 before:h-0 before:w-full
                       before:transition-all before:duration-300 before:ease-in before:content-[''] 
                       hover:before:h-full
-                      ${navbutton.name !== "Login" ? "text-black" : "text-white"}`}
+                      ${
+                        navbutton.name !== "Login" ? "text-black" : "text-white"
+                      }`}
                   >
                     {navbutton.name}
                   </Button>

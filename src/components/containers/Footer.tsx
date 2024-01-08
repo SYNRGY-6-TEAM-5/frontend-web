@@ -2,7 +2,7 @@ import { Image } from "@/components/ui/Image";
 import { Text } from "@mantine/core";
 import { FooterTexts } from "../particles/DataLists";
 import { List } from "@/components/ui/List";
-import Logo from "../../assets/logo1.svg";
+import { Logo } from "@/assets/svg";
 import { Link } from "react-router-dom";
 import {
   FacebookLogo,
@@ -17,13 +17,7 @@ const Footer = () => {
       <section className="grid h-auto w-full gap-7 px-6 py-16 md:grid-cols-3 md:gap-4 md:px-12 lg:grid-cols-5 lg:gap-0 lg:px-20">
         <div className="flex flex-col items-start gap-4">
           <div className="text-color3 flex w-96 items-center justify-start gap-3 text-3xl font-medium md:text-5xl lg:text-4xl">
-            <Image
-              as="a"
-              href="/"
-              className="h-8 md:h-10"
-              image={Logo}
-              alt="Logo"
-            />
+            <Logo className="h-8 md:h-10" alt="Logo" />
             <Text className=" text-color3 text-3xl font-medium md:text-5xl lg:text-4xl">
               AeroSwift
             </Text>

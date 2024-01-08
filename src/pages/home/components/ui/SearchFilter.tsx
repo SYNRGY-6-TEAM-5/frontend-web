@@ -86,9 +86,9 @@ export function SearchFilter({ className, ...props }: CardProps) {
       >
         <CardContent className="grid gap-4 p-4">
           <div className="flex flex-col items-center justify-center gap-2">
-            <div className="rounded-md bg-black-900">
+            <div className="rounded-md bg-black">
               <Tabs defaultValue="one-way" className="w-[400px]">
-                <TabsList className="grid w-72 grid-cols-3 bg-black-900">
+                <TabsList className="grid w-72 grid-cols-3 bg-black">
                   <TabsTrigger value="one-way" className="text-white">
                     One-Way
                   </TabsTrigger>
@@ -115,7 +115,7 @@ export function SearchFilter({ className, ...props }: CardProps) {
                           <>
                             <FormItem>
                               <div className="flex w-full items-center rounded-md border bg-white p-4">
-                                <div className="space-3 bg-slate-500 flex flex-1 flex-row items-center gap-3">
+                                <div className="space-3 bg-white flex flex-1 flex-row items-center gap-3">
                                   <div className="flex flex-col bg-white">
                                     <div className="pointer-events-none inset-y-0 start-0 mb-3 flex flex-row items-center pr-3 ps-3.5">
                                       <AirplaneTakeoff
@@ -187,7 +187,7 @@ export function SearchFilter({ className, ...props }: CardProps) {
 
                                   <Button
                                     variant="primary"
-                                    className="border-primary-100 relative h-10 w-6 rounded-full border-4"
+                                    className="border-primary-200 relative h-10 w-6 rounded-full border-4"
                                   >
                                     <ArrowsLeftRight
                                       size={42}

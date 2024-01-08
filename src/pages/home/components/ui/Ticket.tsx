@@ -43,9 +43,9 @@ export function Ticket(
   const formattedArrivalTime = format(new Date(arrival_date), "HH:mm");
 
   return (
-    <div className="relative flex w-[18.5rem] flex-col overflow-hidden rounded-md border border-black-900 shadow-sm">
+    <div className="relative flex w-[18.5rem] flex-col overflow-hidden rounded-md border border-black shadow-sm">
       <Card
-        className={cn("flex  shrink-0 justify-between bg-black-900", className)}
+        className={cn("flex  shrink-0 justify-between bg-black", className)}
         {...props}
       >
         <CardContent className="grid w-full gap-4 p-4">
@@ -114,7 +114,7 @@ export function Ticket(
               <AvatarImage src={giIcon} alt="@shadcn" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-            <Text className="text-[12pt] font-semibold text-black-900 dark:text-white">
+            <Text className="text-[12pt] font-semibold text-black dark:text-white">
               {`${airline_iata} ${flight_number}`}
             </Text>
           </div>
