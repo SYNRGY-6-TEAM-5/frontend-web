@@ -9,6 +9,8 @@ import Footer from "../components/containers/Footer";
 import PasswordOTP from "@/pages/forget-password/otp";
 import ChangePasswordMethod from "@/pages/forget-password/method";
 import ChangePassword from "@/pages/forget-password/change-password";
+import ForgotPassword from "@/pages/forget-password";
+import ResetPassword from "@/pages/forget-password/reset";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +32,10 @@ const router = createBrowserRouter([
     element: <Register />,
   },
   {
+    path: "/forgot-password",
+    element: <ForgotPassword />,
+  },
+  {
     path: "/forgot-password/method",
     element: <ChangePasswordMethod />,
   },
@@ -40,6 +46,10 @@ const router = createBrowserRouter([
   {
     path: "/forgot-password/change-password",
     element: <ChangePassword />,
+  },
+  {
+    path: "/forgot-password/reset",
+    element: <ResetPassword />,
   },
   {
     path: "/dashboard",
