@@ -58,6 +58,7 @@ module.exports = {
     },
     backgroundImage: {
       "login-bg": "url('/src/assets/login-bg.png')",
+      "register-bg": "url('/src/assets/register-bg.png')",
     },
   },
   plugins: [require("tailwindcss-animate")],
