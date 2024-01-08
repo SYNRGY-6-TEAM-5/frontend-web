@@ -35,12 +35,25 @@ const NavBar = () => {
     <header className="bg-transparent fixed left-0 top-0 z-50 h-auto w-full overflow-x-hidden">
       <Slide direction="down">
         <nav
-          className={`h-14 w-full md:h-18 ${
+          className={`flex h-24 w-full md:h-18 items-center justify-end px-6 md:px-9 lg:px-20 lg:justify-between ${
             navBarColor ? "bg-white" : "bg-transparent"
-          } flex items-center justify-end px-4 md:px-6 lg:justify-center`}
+          }`}
         >
-          <div className="hidden items-center gap-20 lg:flex">
-            <ul className="flex items-center justify-center gap-8">
+          <div className="lg:flex hidden items-center gap-10 w-full">
+            <div className="text-color3 flex w-96 flex-1 items-center justify-start text-3xl font-medium md:text-5xl lg:text-4xl">
+              <Image
+                as="a"
+                href="/"
+                className="h-10 md:h-12"
+                image={Logo}
+                alt="Logo"
+              />
+              <Text className="text-color3 text-2xl font-normal md:text-5xl lg:text-4xl pl-4">
+                AeroSwift
+              </Text>
+            </div>
+
+            <ul className="flex items-center justify-end gap-8">
               {NavLinks.map((navlink, index) => (
                 <List className="w-full text-base" key={index}>
                   <NavLink
@@ -53,17 +66,7 @@ const NavBar = () => {
               ))}
             </ul>
 
-            <div className="text-color3 flex w-96 flex-1 items-center justify-center text-3xl font-medium md:text-5xl lg:text-4xl">
-              <Image
-                as="a"
-                href="/"
-                className="h-8 md:h-10"
-                image={Logo}
-                alt="Logo"
-              />
-            </div>
-
-            <ul className="flex items-center justify-center gap-6">
+            <ul className="flex items-center justify-end gap-6">
               {NavButtons.map((navbutton, index) => (
                 <List className="w-full" key={index}>
                   <Button
@@ -74,11 +77,11 @@ const NavBar = () => {
                       : "transparent"}`
                     }
                     className={`
-                      relative z-10 px-8 py-2 text-white
+                      relative z-10 px-8 py-2
                       before:absolute before:left-0 before:-z-10 before:h-0 before:w-full
                       before:transition-all before:duration-300 before:ease-in before:content-[''] 
                       hover:before:h-full
-                      ${navBarColor && navbutton.name !== "Login" ? "text-black" : "text-white"}`}
+                      ${navbutton.name !== "Login" ? "text-black" : "text-white"}`}
                   >
                     {navbutton.name}
                   </Button>

@@ -25,8 +25,8 @@ const Footer = () => {
               alt="Logo"
             />
             <Text className=" text-color3 text-3xl font-medium md:text-5xl lg:text-4xl">
-            AeroSwift
-          </Text>
+              AeroSwift
+            </Text>
           </div>
           <Text className="text-color4 text-sm">
             {FooterTexts.underLogoText}

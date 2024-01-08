@@ -1,6 +1,11 @@
 // import BookingSteps from "../organs/BookingSteps"
-import HeroSection from "@/pages/home/components/HeroSection"
-import { SearchFilter } from "@/pages/home/components/SearchFilter"
+import HeroSection from "@/pages/home/components/containers/HeroSection"
+import BrandBanner from "./components/containers/brandsBanner"
+import { BestDealsBanner } from "./components/containers/BestDealsBanner"
+import { TicketPromosBanner } from "./components/containers/TicketPromosBanner"
+import { Services } from "./components/containers/OurServices"
+import { NewsSection } from "./components/containers/NewsSection"
+import { CtaSection } from "./components/containers/CtaSection"
 // import NewsLetter from "../organs/NewsLetter"
 // import Partners from "../organs/Partners"
 // import Services from "../organs/Services"
@@ -11,7 +16,12 @@ const Home = () => {
     return (
         <>
             <HeroSection />
-            <SearchFilter />
+            <BrandBanner />
+            <BestDealsBanner />
+            <TicketPromosBanner />
+            <Services />
+            <NewsSection />
+            <CtaSection />
             {/* <Services /> */}
             {/* <TopDestination /> */}
             {/* <BookingSteps /> */}
