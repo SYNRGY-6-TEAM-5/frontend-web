@@ -5,7 +5,6 @@ import giIcon from "../../../../assets/icon-gi.png";
 import { cn } from "@/lib/utils";
 import { AirplaneInFlight } from "@phosphor-icons/react";
 import { Text } from "@mantine/core";
-// import { Separator } from "@/components/ui/separator";
 
 type CardProps = React.ComponentProps<typeof Card>;
 
@@ -37,8 +36,6 @@ export function Ticket(
     price,
   } = ticket;
 
-  //   const formattedDepartureDate = format(new Date(departure_date), "yyyy-MM-dd");
-  //   const formattedArrivalDate = format(new Date(arrival_date), "yyyy-MM-dd");
   const formattedDepartureTime = format(new Date(departure_date), "HH:mm");
   const formattedArrivalTime = format(new Date(arrival_date), "HH:mm");
 
@@ -54,19 +51,9 @@ export function Ticket(
               <Text className="text-2xl font-medium text-white dark:text-white">
                 {formattedDepartureTime}
               </Text>
-              {/* <Text className="text-[8pt] font-thin text-white text-opacity-80 dark:text-white">
-                {formattedDepartureDate}
-              </Text> */}
-              {/* <Separator
-                orientation="horizontal"
-                className="h-[0.5px] w-full bg-primary-500"
-              /> */}
               <Text className="text-left text-[8pt] font-thin text-white text-opacity-80 dark:text-white">
                 {departure_airport}
               </Text>
-              {/* <Text className="text-left text-[14pt] font-normal text-white text-opacity-80 dark:text-white">
-                {departure_airport}
-              </Text> */}
             </div>
 
             <div className="flex w-1/3 flex-col items-center justify-center gap-1">
@@ -80,27 +67,15 @@ export function Ticket(
               <Text className="text-2xl font-medium text-white dark:text-white">
                 {formattedArrivalTime}
               </Text>
-              {/* <Text className="text-[8pt] font-thin text-white text-opacity-80 dark:text-white">
-                {formattedArrivalDate}
-              </Text> */}
-              {/* <Separator
-                orientation="horizontal"
-                className="h-[0.5px] w-full bg-primary-500"
-              /> */}
               <Text className="text-right text-[8pt] font-thin text-white text-opacity-80 dark:text-white">
                 {arrival_airport}
               </Text>
-              {/* <Text className="text-right text-[14pt] font-normal text-white text-opacity-80 dark:text-white">
-                {arrival_airport}
-              </Text> */}
             </div>
           </div>
         </CardContent>
       </Card>
       <div className="absolute -left-2 top-[50%] h-5 w-5 rounded-full bg-primary-500"></div>
       <div className="absolute -right-2 top-[50%] h-5 w-5 rounded-full bg-primary-500"></div>
-      {/* <div className="absolute -top-[0.3rem] -left-2 bg-white w-5 h-5 rounded-full"></div> */}
-      {/* <div className="absolute -top-[0.3rem] -right-2 bg-white w-5 h-5 rounded-full"></div> */}
       <Card
         className={cn(
           "flex w-full shrink-0 justify-between bg-white",
@@ -109,8 +84,8 @@ export function Ticket(
         {...props}
       >
         <CardContent className="grid w-full grid-cols-2 gap-4 px-6 py-4">
-          <div className="flex w-1/2 flex-row gap-2 items-center justify-center px-2">
-            <Avatar className="w-8 h-4">
+          <div className="flex w-1/2 flex-row items-center justify-center gap-2 px-2">
+            <Avatar className="h-4 w-8">
               <AvatarImage src={giIcon} alt="@shadcn" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>

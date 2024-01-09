@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { NavButtons, NavLinks } from "../particles/DataLists";
 import { List } from "@/components/ui/List";
-import { Logo } from "@/assets/svg";
+import { MainLogo } from "@/assets/svg";
 import { Text } from "@mantine/core";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ArrowCircleRight, CirclesFour } from "@phosphor-icons/react";
@@ -40,7 +40,7 @@ const NavBar = () => {
         >
           <div className="hidden w-full items-center gap-10 lg:flex">
             <div className="text-color3 flex w-96 flex-1 items-center justify-start text-3xl font-medium md:text-5xl lg:text-4xl">
-              <Logo className="h-10 md:h-12" />
+              <MainLogo className="h-10 md:h-12" />
               <Text className="text-color3 pl-4 text-2xl font-normal md:text-5xl lg:text-4xl">
                 AeroSwift
               </Text>

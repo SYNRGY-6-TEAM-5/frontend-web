@@ -4,12 +4,12 @@ import bgImage from "../../../../assets/hero-bg.png";
 import { Text } from "@mantine/core";
 import { HeroTexts } from "../../../../components/particles/DataLists";
 
-import { SearchFilter } from "../ui/SearchFilter";
+import { SearchFilter } from "./SearchFilter";
 import AvatarGroup from "../ui/AvatarGroup";
 
 const HeroSection = () => {
   return (
-    <section className="relative flex h-[830px] w-full justify-end overflow-x-hidden md:h-[550px] lg:h-screen">
+    <section className="relative flex h-[100vh] w-full justify-end overflow-x-hidden md:h-[550px] lg:h-screen">
       <Image
         className="h-[100%] w-[100%] md:h-[50vh] md:w-[100%] lg:h-[100vh] lg:w-full"
         image={bgImage}

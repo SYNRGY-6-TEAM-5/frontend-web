@@ -71,7 +71,7 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
                   className="border-0 border-b border-b-grey-500 rounded-none py-2.5 px-0 text-base"
                   required
                 />
-                <Button type="button" onClick={togglePasswordVisible}>
+                <Button variant="transparent" className="border-b-[1px]" type="button" onClick={togglePasswordVisible}>
                   {isPasswordVisible ? (
                     <EyeSlash size={24} />
                   ) : (

@@ -7,5 +7,3 @@ export { default as Citilink } from "./citilink.svg?react";
 export { default as GarudaIndonesia } from "./garuda-indonesia.svg?react";
 export { default as LionAir } from "./lion-air.svg?react";
 export { default as BatikAir } from "./batik-air.svg?react";
-export { default as Vector } from "./Vector.svg?react";
-export { default as Logo } from "./logo1.svg?react";
