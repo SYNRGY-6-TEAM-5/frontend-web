@@ -13,14 +13,15 @@ type CardProps = React.ComponentProps<typeof Card>;
 export function NewsSection({ className, ...props }: CardProps) {
   return (
     <section className="flex flex-col gap-14 px-20 py-20">
-      <div className="relative flex w-full flex-row items-center justify-between">
-        <Text className="text-color3 w-4/5 text-4xl font-semibold">
+      <div className="flex w-full flex-row items-center justify-between">
+        <Text className="text-zinc-900 w-4/5 text-4xl font-semibold">
           News Highlight
         </Text>
 
         <Button
           type="button"
-          className={`hover:border-gray-950 before:bg-color2 relative z-10 border-b-2 shadow-sm px-5 py-1.5 text-base before:absolute before:bottom-0 before:left-0 before:-z-10 before:h-0 before:w-full before:transition-all before:duration-300 before:ease-in before:content-[''] hover:before:h-full`}
+          variant="transparent"
+          className="border border-gray-900 shadow-sm px-5 text-base"
         >
           Read More
         </Button>

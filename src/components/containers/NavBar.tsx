@@ -8,6 +8,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { ArrowCircleRight, CirclesFour } from "@phosphor-icons/react";
 import { Slide } from "react-awesome-reveal";
 
+import { ChevronDown } from "lucide-react";
+
 const NavBar = () => {
   const navigate = useNavigate();
 
@@ -31,7 +33,7 @@ const NavBar = () => {
   }, []);
 
   return (
-    <header className="bg-transparent fixed left-0 top-0 z-50 h-auto w-full overflow-x-hidden">
+    <header className="fixed left-0 top-0 z-50 h-auto w-full overflow-x-hidden bg-transparent">
       <Slide direction="down">
         <nav
           className={`md:h-18 flex h-24 w-full items-center justify-end px-6 md:px-9 lg:justify-between lg:px-20 ${
@@ -51,9 +53,14 @@ const NavBar = () => {
                 <List className="w-full text-base" key={index}>
                   <NavLink
                     to={navlink.url}
-                    className="before:bg-color2 after:bg-color2 hover:text-primary relative inline-block overflow-hidden pl-2 pt-2 font-sans font-medium text-primary-500 before:absolute before:-left-10 before:top-2 before:h-2 before:w-2 before:rounded-full before:transition-all before:duration-200 before:ease-in after:absolute after:-top-10 after:left-1 after:h-3 after:w-0.5 after:transition-all after:duration-200 after:ease-in hover:before:left-0.5 hover:after:top-3.5"
+                    className="flex flex-row gap-[2px] items-center overflow-hidden pl-2 pt-2 font-normal tracking-wide text-zinc-900 before:absolute before:-left-10 before:top-2 before:h-2 before:w-2 before:rounded-full before:transition-all before:duration-200 before:ease-in after:absolute after:-top-10 after:left-1 after:h-3 after:w-0.5 after:transition-all after:duration-200 after:ease-in hover:text-primary-500 hover:before:left-0.5 hover:after:top-3.5"
                   >
                     {navlink.name}
+
+                    <ChevronDown
+                      size={20}
+                      className="font-base text-primary-500"
+                    />
                   </NavLink>
                 </List>
               ))}
@@ -69,7 +76,7 @@ const NavBar = () => {
                       navbutton.name === "Login" ? "black" : "transparent"
                     }`}
                     className={`
-                      relative z-10 px-8 py-2
+                      text-md font-normal tracking-wide  relative z-10 px-8 py-2
                       before:absolute before:left-0 before:-z-10 before:h-0 before:w-full
                       before:transition-all before:duration-300 before:ease-in before:content-[''] 
                       hover:before:h-full
@@ -85,7 +92,7 @@ const NavBar = () => {
           </div>
           <div className="flex items-center gap-4 lg:hidden">
             <div
-              className="hamburger text-gray-950 cursor-pointer"
+              className="hamburger cursor-pointer text-gray-950"
               onClick={handleToggle}
             >
               <CirclesFour size={30} color="currentColor" weight="fill" />
@@ -96,7 +103,7 @@ const NavBar = () => {
 
       {/* Mobile Nav  */}
       <nav
-        className={`bg-gray-950/90 fixed top-0 flex h-screen w-full justify-end lg:hidden  ${
+        className={`fixed top-0 flex h-screen w-full justify-end bg-gray-950/90 lg:hidden  ${
           open ? "right-0" : "-right-[120vw]"
         } transition-all duration-500 ease-out`}
       >
@@ -111,7 +118,7 @@ const NavBar = () => {
                 AeroSwift
               </Text>
               <div
-                className="hamburger text-gray-950 cursor-pointer"
+                className="hamburger cursor-pointer text-gray-950"
                 onClick={handleToggle}
               >
                 <ArrowCircleRight
@@ -143,8 +150,8 @@ const NavBar = () => {
                   type="button"
                   className={`${
                     navbutton.name === "Signup"
-                      ? "border-gray-950 border-2 before:top-0"
-                      : "hover:border-gray-950 border-b-2 border-white before:bottom-0"
+                      ? "border-2 border-gray-950 before:top-0"
+                      : "border-b-2 border-white before:bottom-0 hover:border-gray-950"
                   } before:bg-color2 relative z-10 px-5 py-1.5 text-base before:absolute before:left-0 before:-z-10 before:h-0 before:w-full before:transition-all before:duration-300 before:ease-in before:content-[''] hover:before:h-full`}
                 >
                   {navbutton.name}

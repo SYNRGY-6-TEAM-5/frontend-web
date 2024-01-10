@@ -1,0 +1,24 @@
+{
+    "origin": {
+        "airportName": "Anaa",
+        "cityIataCode": "AAA",
+        "countryIso2": "PF",
+        "iataCode": "AAA"
+    },
+    "destination": {
+        "airportName": "Abaa",
+        "cityIataCode": "ABA",
+        "countryIso2": "PF",
+        "iataCode": "ABA"
+    },
+    "date": {
+        "departureDate": "2024-01-30T17:00:00.000Z"
+    },
+    "ticket-details": {
+        "ticket_class": "First",
+        "adult_seat": 1,
+        "child_seat": 0,
+        "total_seat": 1,
+        "infant_seat": 0
+    }
+}

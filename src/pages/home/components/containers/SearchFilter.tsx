@@ -1,12 +1,10 @@
 import OneWayForm from "../ui/form/OneWayForm";
 import RoundTripForm from "../ui/form/RoundTripForm";
 
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { cn } from "@/lib/utils";
-import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 
 type CardProps = React.ComponentProps<typeof Card>;
 
@@ -49,12 +47,7 @@ export function SearchFilter({ className, ...props }: CardProps) {
                 </TabsContent>
               </Tabs>
             </div>
-            <Button
-              variant="primary"
-              className="h-12 w-full items-center rounded-md p-4"
-            >
-              <MagnifyingGlassIcon className="mr-2 h-4 w-4" /> Cari
-            </Button>
+            
           </div>
         </CardContent>
       </Card>

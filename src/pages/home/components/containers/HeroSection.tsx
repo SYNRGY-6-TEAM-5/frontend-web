@@ -17,7 +17,7 @@ const HeroSection = () => {
         alt="Hero Background Vector"
       />
       <main className="absolute left-0 top-0 flex h-auto w-full flex-col items-center justify-center gap-20 pt-24 md:px-8 md:pt-32 lg:h-full lg:flex-row lg:px-20 lg:pt-20">
-        <div className="flex flex-1 flex-col justify-center gap-2 md:gap-3">
+        <div className="flex flex-1 flex-col justify-center gap-14">
           <div className="flex flex-row items-center gap-2 justify-start">
             <div className="flex flex-row items-center justify-start gap-2">
               <AvatarGroup />
@@ -33,7 +33,7 @@ const HeroSection = () => {
             </Text>
           </div>
 
-          <Text className="text-color3 text-3xl font-semibold md:text-5xl lg:text-7xl">
+          <Text className="text-color3 text-3xl uppercase font-semibold md:text-5xl lg:text-7xl">
             {HeroTexts.thirdText}
           </Text>
         </div>

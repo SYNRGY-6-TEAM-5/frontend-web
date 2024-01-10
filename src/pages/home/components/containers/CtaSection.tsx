@@ -30,7 +30,7 @@ export function CtaSection() {
               type="button"
               className={`hover:border-gray-400 bg-primary-500 text-white px-5 py-1.5 text-base shadow-sm`}
             >
-              Signup Now
+              Sign up Now
             </Button>
           </div>
         </div>

@@ -1,18 +1,15 @@
 export const NavLinks = [
     {
+        name: "Journey",
+        url: "/"
+    },
+    {
         name: "Destination",
         url: "/"
     },
+    
     {
-        name: "Hotels",
-        url: "/"
-    },
-    {
-        name: "Flights",
-        url: "/"
-    },
-    {
-        name: "Bookings",
+        name: "Offers",
         url: "/"
     }
 
