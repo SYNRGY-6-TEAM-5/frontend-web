@@ -9,6 +9,7 @@ import Footer from "../components/containers/Footer";
 import PasswordOTP from "@/pages/forget-password/otp";
 import ChangePasswordMethod from "@/pages/forget-password/method";
 import ChangePassword from "@/pages/forget-password/change-password";
+import TermsOfService from "@/pages/terms-of-service";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/terms-of-service",
+    element: <TermsOfService />,
   },
   {
     path: "/forgot-password/method",
