@@ -106,6 +106,7 @@ const SelectSeatDialog: React.FC<CardProps & { onTicketDetails: (details: Seat) 
     const newTicketDetails = updateTicketDetails();
     setTicketDetails(newTicketDetails);
     onTicketDetails(newTicketDetails);
+    console.log(ticketDetails);
   }, [adultSeat, childSeat, infantSeat, ticketClass]);
 
   return (
