@@ -1,18 +1,15 @@
 export const NavLinks = [
     {
+        name: "Journey",
+        url: "/"
+    },
+    {
         name: "Destination",
         url: "/"
     },
+    
     {
-        name: "Hotels",
-        url: "/"
-    },
-    {
-        name: "Flights",
-        url: "/"
-    },
-    {
-        name: "Bookings",
+        name: "Offers",
         url: "/"
     }
 
@@ -20,21 +17,24 @@ export const NavLinks = [
 
 export const NavButtons = [
     {
-        name: "Login",
-        url: "/"
+        name: "Signup",
+        url: "/register"
     },
     {
-        name: "Signup",
-        url: "/"
+        name: "Login",
+        url: "/login"
     }
 
 ];
 
 
 export const HeroTexts = {
-    firstText: "BEST DESITNATIONS AROUND THE WORLD",
+    firstText: {
+        first: "Trusted by 2K+ travellers",
+        second: "We provide an extensive selection of flight options, covering various destinations and schedules to suit your preferences. "
+    },
     secondText: "Travel, enjoy and live a new and full life.",
-    thirdText: "Built Wicket longer admire do barton vantity itself do in it. Preferred to sportsmen it engrossed listening. Park gate sell they west hard for the.",
+    thirdText: "Soar to New Heights and Cultivate Expertise",
     firstButton: "Find out more",
     secondButton: 'Play Demo'
 }

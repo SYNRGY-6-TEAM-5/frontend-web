@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const TermsOfService = () => {
   const [isChecked, setChecked] = useState(false);
@@ -7,18 +7,26 @@ const TermsOfService = () => {
   useEffect(() => {
     const handleScroll = () => {
       const contentElement = document.querySelector(".content");
-      const isScrolledToBottom =
-        contentElement.scrollHeight - contentElement.scrollTop - 1 >=
-        contentElement.clientHeight;
 
-      setShowScrollButton(isScrolledToBottom);
+      if (contentElement) {
+        const isScrolledToBottom =
+          contentElement.scrollHeight - contentElement.scrollTop - 1 >=
+          contentElement.clientHeight;
+
+        setShowScrollButton(isScrolledToBottom);
+      }
     };
 
     const contentElement = document.querySelector(".content");
-    contentElement.addEventListener("scroll", handleScroll);
+
+    if (contentElement) {
+      contentElement.addEventListener("scroll", handleScroll);
+    }
 
     return () => {
-      contentElement.removeEventListener("scroll", handleScroll);
+      if (contentElement) {
+        contentElement.removeEventListener("scroll", handleScroll);
+      }
     };
   }, []);
 
