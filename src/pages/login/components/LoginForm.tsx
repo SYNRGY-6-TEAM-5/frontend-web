@@ -5,20 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Loader } from "lucide-react";
-import { Eye } from "@phosphor-icons/react";
-import { EyeSlash } from "@phosphor-icons/react";
 import { GoogleLogo } from "@/assets/svg";
+import PasswordInput from "@/components/ui/password-input";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
   const navigate = useNavigate();
   const [isPending, setIsPending] = useState<boolean>();
-  const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
-
-  const togglePasswordVisible = () => {
-    setIsPasswordVisible((prevState) => !prevState);
-  };
 
   const handleOnSubmit = async (e: React.SyntheticEvent) => {
     setIsPending(true);
@@ -38,7 +32,7 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
   };
 
   return (
-    <div className={cn("grid gap-4", className)} {...props}>
+    <div className={cn("grid gap-3", className)} {...props}>
       <form onSubmit={handleOnSubmit}>
         <div className="grid gap-6">
           <div className="grid gap-5">
@@ -51,36 +45,17 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
                 autoCapitalize="none"
                 autoComplete="off"
                 autoCorrect="off"
-                className="border-b-grey-500 rounded-none border-0 border-b px-0 py-2.5 text-base"
+                className="border-b-grey-500 rounded-none border-0 border-b px-0 py-2.5 text-base text-slate-700 placeholder:text-gray-300"
                 required
               />
             </div>
             <div className="grid gap-1">
               <Label htmlFor="password">Password</Label>
-              <div className="flex flex-row">
-                <Input
-                  id="password"
-                  type={isPasswordVisible ? "text" : "password"}
-                  placeholder="Enter your password"
-                  autoCapitalize="none"
-                  autoComplete="off"
-                  autoCorrect="off"
-                  className="border-b-grey-500 rounded-none border-0 border-b px-0 py-2.5 text-base"
-                  required
-                />
-                <Button
-                  variant="transparent"
-                  className="border-b-[1px]"
-                  type="button"
-                  onClick={togglePasswordVisible}
-                >
-                  {isPasswordVisible ? (
-                    <EyeSlash size={24} />
-                  ) : (
-                    <Eye size={24} />
-                  )}
-                </Button>
-              </div>
+              <PasswordInput
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+              />
             </div>
           </div>
           <div className="flex justify-end">

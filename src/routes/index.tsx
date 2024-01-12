@@ -36,6 +36,10 @@ const router = createBrowserRouter([
     element: <Register />,
   },
   {
+    path: "/otp",
+    element: <PasswordOTP />,
+  },
+  {
     path: "/setup-profile",
     element: <SetupProfile />,
   },

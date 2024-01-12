@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const TermsOfService = () => {
+  const navigate = useNavigate();
+
   const [isChecked, setChecked] = useState(false);
   const [showScrollButton, setShowScrollButton] = useState(false);
 
@@ -230,6 +233,9 @@ const TermsOfService = () => {
             <button
               className="mt-4 w-full rounded-xl bg-primary-500 py-4 text-sm text-white disabled:bg-gray-300"
               disabled={!isChecked}
+              onClick={() => {
+                navigate(-1);
+              }}
             >
               Continue
             </button>
