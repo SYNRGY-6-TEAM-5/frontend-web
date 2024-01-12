@@ -37,7 +37,7 @@ const Login = () => {
               <blockquote className="space-y-2">
                 <p className="text-xs text-center">
                   By continuing you agree to our
-                  <Link to="/term" className="text-primary-500 font-medium">
+                  <Link to="/terms-of-service" className="text-primary-500 font-medium">
                     T&Cs
                   </Link>
                   . We use your data to offer you a personalized experience

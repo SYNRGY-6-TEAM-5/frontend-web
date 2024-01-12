@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import PasswordInput from "@/components/ui/password-input";
 import { Text } from "@mantine/core";
 import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
 
 interface FormValues {
   password: string;
@@ -10,6 +11,8 @@ interface FormValues {
 }
 
 const ChangePassword = () => {
+  const navigate = useNavigate();
+
   const formik = useFormik<FormValues>({
     initialValues: {
       password: "",
@@ -25,11 +28,12 @@ const ChangePassword = () => {
     onSubmit: (values) => {
       console.log("Form submitted:", values);
       formik.resetForm();
+      navigate("/forgot-password/reset");
     },
   });
 
   return (
-    <div className="xs:w-[430px] mx-auto w-full px-4 pt-24 md:px-0">
+    <div className="mx-auto w-full px-4 pt-24 xs:w-[430px] md:px-0">
       <div className="px-3 py-8 sm:px-8">
         <MainLogo className="mb-6 h-10 w-full text-center " />
         <Text className="text-center text-3xl font-medium">

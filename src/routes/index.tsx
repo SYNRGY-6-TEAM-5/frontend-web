@@ -64,6 +64,10 @@ const router = createBrowserRouter([
     element: <ResetPassword />,
   },
   {
+    path: "/terms-of-service",
+    element: <TermsOfService />,
+  },
+  {
     path: "/flight-list",
     element: <FlightList />,
   },
