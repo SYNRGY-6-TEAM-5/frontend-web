@@ -43,7 +43,7 @@ const DatePicker: React.FC<{ field: FieldProps }> = ({ field }) => {
           mode="single"
           selected={field.value}
           onSelect={(date: Date | undefined) => field.onChange(date)}
-          disabled={(date) => date < new Date()}
+          // disabled={(date) => date < new Date()}
           initialFocus
         />
       </PopoverContent>

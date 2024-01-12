@@ -12,6 +12,7 @@ import ChangePassword from "@/pages/forget-password/change-password";
 import ForgotPassword from "@/pages/forget-password";
 import ResetPassword from "@/pages/forget-password/reset";
 import TermsOfService from "@/pages/terms-of-service";
+import FlightList from "@/pages/flight-list";
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
   {
     path: "/forgot-password/reset",
     element: <ResetPassword />,
+  },
+  {
+    path: "/flight-list",
+    element: <FlightList />,
   },
   {
     path: "/dashboard",
