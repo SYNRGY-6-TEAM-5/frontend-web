@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
@@ -14,53 +14,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-export type Airport = {
-  airport_name: string;
-  iata_code: string;
-  icao_code: string;
-  latitude: string;
-  longitude: string;
-  geoname_id: string;
-  timezone: string;
-  gmt: string;
-  phone_number: string;
-  country_name: string;
-  country_iso2: string;
-  city_iata_code: string;
-}
-
-export const airports: Airport[] = [
-  {
-    airport_name: "Anaa",
-    iata_code: "AAA",
-    icao_code: "NTGA",
-    latitude: "-17.05",
-    longitude: "-145.41667",
-    geoname_id: "6947726",
-    timezone: "Pacific/Tahiti",
-    gmt: "-10",
-    phone_number: "012345678",
-    country_name: "French Polynesia",
-    country_iso2: "PF",
-    city_iata_code: "AAA",
-  },
-  {
-    airport_name: "Abaa",
-    iata_code: "ABA",
-    icao_code: "NTGA",
-    latitude: "-17.05",
-    longitude: "-145.41667",
-    geoname_id: "6947726",
-    timezone: "Pacific/Tahiti",
-    gmt: "-10",
-    phone_number: "012345678",
-    country_name: "French Polynesia",
-    country_iso2: "PF",
-    city_iata_code: "ABA",
-  },
-];
+import { IAirport } from "@/lib/hooks/useHome";
 
 interface SelectAirportDialogProps {
+  airports: IAirport[];
+  handleSearch: (event: ChangeEvent<HTMLInputElement>) => void;
   onAirportSelect: (airport: any) => void;
   isActive: boolean;
   switchedAirport: {
@@ -72,6 +30,8 @@ interface SelectAirportDialogProps {
 }
 
 const SelectAirportDialog: React.FC<SelectAirportDialogProps> = ({
+  airports,
+  handleSearch,
   onAirportSelect,
   isActive,
   switchedAirport,
@@ -82,6 +42,8 @@ const SelectAirportDialog: React.FC<SelectAirportDialogProps> = ({
     countryIso2: "",
     iataCode: "",
   });
+
+  console.log(airports)
 
   useEffect(() => {
     // Update selectedAirport when isActive changes and switchedAirport is not null
@@ -129,7 +91,7 @@ const SelectAirportDialog: React.FC<SelectAirportDialogProps> = ({
               Pick an airport
             </Text>
           )}
-          
+
           <Text className="w-full text-start text-[9pt] font-bold tracking-wider text-primary-500">
             {selectedAirport.iataCode !== ""
               ? `${selectedAirport.airportName} (${selectedAirport.iataCode})`
@@ -155,6 +117,7 @@ const SelectAirportDialog: React.FC<SelectAirportDialogProps> = ({
                 autoComplete="on"
                 autoCorrect="on"
                 className="inline-flex h-10 w-full items-center justify-start gap-3 rounded-lg bg-gray-100 px-3 py-2.5 opacity-80"
+                onChange={handleSearch}
                 required
               />
             </div>{" "}
@@ -162,7 +125,10 @@ const SelectAirportDialog: React.FC<SelectAirportDialogProps> = ({
         </DialogHeader>
         <div className="grid">
           <div className="flex flex-row items-center justify-between">
-            <Text typeof="p" className="w-32 text-sm font-light text-primary-500 lg:text-sm">
+            <Text
+              typeof="p"
+              className="w-32 text-sm font-light text-primary-500 lg:text-sm"
+            >
               Recent Search
             </Text>
             <Button variant="transparent" className="h-10 w-auto">
@@ -185,7 +151,7 @@ const SelectAirportDialog: React.FC<SelectAirportDialogProps> = ({
                 >
                   <div className="inline-flex flex-col items-start justify-start gap-1">
                     <div className="text-base font-semibold text-neutral-900">
-                      {`${airport.airport_name} (${airport.city_iata_code}), ${airport.country_iso2}`}
+                      {`${airport.city.city_name} (${airport.city.iata_code}), ${airport.country_iso2}`}
                     </div>
                     <div className="text-sm font-semibold text-slate-500">
                       {`${airport.airport_name} (${airport.iata_code})`}

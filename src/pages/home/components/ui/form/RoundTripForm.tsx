@@ -21,6 +21,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/components/ui/use-toast";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import useHome from "@/lib/hooks/useHome";
 
 const FormSchema = z.object({
   departureDate: z
@@ -55,10 +56,12 @@ const FormSchema = z.object({
 });
 
 const OneWayForm = () => {
+  const { airports, handleSearch } = useHome();
   // eslint-disable-next-line no-unused-vars
   const [selectedOriginAirport, setSelectedOriginAirport] = useState(null);
   // eslint-disable-next-line no-unused-vars
-  const [selectedDestinationAirport, setSelectedDestinationAirport] = useState(null);
+  const [selectedDestinationAirport, setSelectedDestinationAirport] =
+    useState(null);
   // eslint-disable-next-line no-unused-vars
   const [isOriginActive, setIsOriginActive] = useState(true);
 
@@ -69,7 +72,7 @@ const OneWayForm = () => {
 
     console.log("Ticket Details:", details);
   };
-  
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -111,7 +114,9 @@ const OneWayForm = () => {
         title: "Airport origin and destination are empty",
         description: (
           <div className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <p className="text-white">Please select origin and destination airports.</p>
+            <p className="text-white">
+              Please select origin and destination airports.
+            </p>
           </div>
         ),
       });
@@ -122,7 +127,10 @@ const OneWayForm = () => {
       const completeData = {
         origin: selectedOriginAirport,
         destination: selectedDestinationAirport,
-        date: { departureDate: data.departureDate, arrivalDate: data.arrivalDate },
+        date: {
+          departureDate: data.departureDate,
+          arrivalDate: data.arrivalDate,
+        },
         "ticket-details": ticketDetails,
       };
 
@@ -161,6 +169,8 @@ const OneWayForm = () => {
                       </label>
                     </div>
                     <SelectAirportDialog
+                      airports={airports}
+                      handleSearch={handleSearch}
                       onAirportSelect={handleOriginAirportSelection}
                       isActive={isOriginActive}
                       switchedAirport={selectedOriginAirport}
@@ -187,6 +197,8 @@ const OneWayForm = () => {
                       </label>
                     </div>
                     <SelectAirportDialog
+                      airports={airports}
+                      handleSearch={handleSearch}
                       onAirportSelect={handleDestinationAirportSelection}
                       isActive={isOriginActive}
                       switchedAirport={selectedDestinationAirport}
