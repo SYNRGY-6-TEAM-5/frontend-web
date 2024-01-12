@@ -11,6 +11,8 @@ import ChangePasswordMethod from "@/pages/forget-password/method";
 import ChangePassword from "@/pages/forget-password/change-password";
 import ForgotPassword from "@/pages/forget-password";
 import ResetPassword from "@/pages/forget-password/reset";
+import SetupProfile from "@/pages/setup-profile";
+import AccountCreated from "@/pages/account-created";
 import TermsOfService from "@/pages/terms-of-service";
 import FlightList from "@/pages/flight-list";
 
@@ -34,8 +36,12 @@ const router = createBrowserRouter([
     element: <Register />,
   },
   {
-    path: "/terms-of-service",
-    element: <TermsOfService />,
+    path: "/setup-profile",
+    element: <SetupProfile />,
+  },
+  {
+    path: "/account-created",
+    element: <AccountCreated />
   },
   {
     path: "/forgot-password",
@@ -56,6 +62,10 @@ const router = createBrowserRouter([
   {
     path: "/forgot-password/reset",
     element: <ResetPassword />,
+  },
+  {
+    path: "/terms-of-service",
+    element: <TermsOfService />,
   },
   {
     path: "/flight-list",

@@ -3,8 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 import OtpInput from "react-otp-input";
+import { useNavigate } from "react-router-dom";
 
 const PasswordOTP = () => {
+  const navigate = useNavigate();
   const [otp, setOtp] = useState("");
   const [time, setTime] = useState({ minutes: 2, seconds: 0 });
 
@@ -36,18 +38,19 @@ const PasswordOTP = () => {
     e.preventDefault();
     console.log(otp);
     setOtp("");
+    navigate("/forgot-password/change-password");
   };
 
   return (
-    <div className="xs:w-[435px] mx-auto w-full px-4 pt-24 md:px-0">
-      <div className="xs:px-8 px-3 py-8">
+    <div className="mx-auto w-full px-4 pt-24 xs:w-[435px] md:px-0">
+      <div className="px-3 py-8 xs:px-8">
         <MainLogo className="mb-6 w-full text-center" />
         <Text className="text-center text-3xl font-medium">
           Verification Code
         </Text>
-        <Text className="text-gray-500 mb-8 mt-3 text-center text-sm">
+        <Text className="mb-8 mt-3 text-center text-sm text-gray-500">
           We have sent the code verification to{" "}
-          <span className="text-gray-700 font-medium">test@gmail.com</span>.
+          <span className="font-medium text-gray-700">test@gmail.com</span>.
           Please input the 4 digits code
         </Text>
         <form onSubmit={verifiedOtp}>
@@ -56,7 +59,7 @@ const PasswordOTP = () => {
             onChange={setOtp}
             numInputs={4}
             renderSeparator={
-              <span className="text-primary-50 font-semibold">-</span>
+              <span className="font-semibold text-primary-50">-</span>
             }
             skipDefaultStyles={true}
             inputStyle={
