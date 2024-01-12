@@ -14,6 +14,7 @@ import ResetPassword from "@/pages/forget-password/reset";
 import SetupProfile from "@/pages/setup-profile";
 import AccountCreated from "@/pages/account-created";
 import TermsOfService from "@/pages/terms-of-service";
+import FlightList from "@/pages/flight-list";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
   {
     path: "/forgot-password/reset",
     element: <ResetPassword />,
+  },
+  {
+    path: "/flight-list",
+    element: <FlightList />,
   },
   {
     path: "/dashboard",

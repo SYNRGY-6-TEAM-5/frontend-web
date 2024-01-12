@@ -22,6 +22,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/components/ui/use-toast";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 
+import useHome from "@/lib/hooks/useHome";
+import { Link } from "react-router-dom";
+
 const FormSchema = z.object({
   departureDate: z
     .date()
@@ -55,6 +58,8 @@ const FormSchema = z.object({
 });
 
 const OneWayForm = () => {
+  const { airports, handleSearch, handleSubmit, params } = useHome();
+
   // eslint-disable-next-line no-unused-vars
   const [selectedOriginAirport, setSelectedOriginAirport] = useState(null);
   // eslint-disable-next-line no-unused-vars
@@ -119,32 +124,20 @@ const OneWayForm = () => {
       });
       return;
     }
+    
+    const completeData = {
+      origin: selectedOriginAirport,
+      destination: selectedDestinationAirport,
+      date: {
+        departureDate: data.departureDate,
+        arrivalDate: data.arrivalDate,
+      },
+      "ticket-details": ticketDetails,
+    };
 
-    if (ticketDetails) {
-      const completeData = {
-        origin: selectedOriginAirport,
-        destination: selectedDestinationAirport,
-        date: {
-          departureDate: data.departureDate,
-          arrivalDate: data.arrivalDate,
-        },
-        "ticket-details": ticketDetails,
-      };
-
-      toast({
-        title: "You submitted the following values:",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">
-              {JSON.stringify(completeData, null, 2)}
-            </code>
-          </pre>
-        ),
-      });
-    } else {
-      console.log("Ticket details are not available yet.");
-    }
+    handleSubmit(completeData);
   };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 pt-4">
@@ -166,6 +159,8 @@ const OneWayForm = () => {
                       </label>
                     </div>
                     <SelectAirportDialog
+                      airports={airports}
+                      handleSearch={handleSearch}
                       onAirportSelect={handleOriginAirportSelection}
                       isActive={isOriginActive}
                       switchedAirport={selectedOriginAirport}
@@ -192,6 +187,8 @@ const OneWayForm = () => {
                       </label>
                     </div>
                     <SelectAirportDialog
+                      airports={airports}
+                      handleSearch={handleSearch}
                       onAirportSelect={handleDestinationAirportSelection}
                       isActive={isOriginActive}
                       switchedAirport={selectedDestinationAirport}
@@ -226,13 +223,15 @@ const OneWayForm = () => {
             </FormItem>
           )}
         />
-        <Button
-          variant="primary"
-          type="submit"
-          className="h-12 w-full items-center rounded-md p-4"
-        >
-          <MagnifyingGlassIcon className="mr-2 h-4 w-4" /> Cari
-        </Button>
+        <Link to="/flight-list" state={params}>
+          <Button
+            variant="primary"
+            type="submit"
+            className="h-12 w-full items-center rounded-md p-4"
+          >
+            <MagnifyingGlassIcon className="mr-2 h-4 w-4" /> Cari
+          </Button>
+        </Link>
       </form>
     </Form>
   );
