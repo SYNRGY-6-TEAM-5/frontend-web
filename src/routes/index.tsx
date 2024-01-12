@@ -11,6 +11,8 @@ import ChangePasswordMethod from "@/pages/forget-password/method";
 import ChangePassword from "@/pages/forget-password/change-password";
 import ForgotPassword from "@/pages/forget-password";
 import ResetPassword from "@/pages/forget-password/reset";
+import SetupProfile from "@/pages/setup-profile";
+import AccountCreated from "@/pages/account-created";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +32,14 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/setup-profile",
+    element: <SetupProfile />,
+  },
+  {
+    path: "/account-created",
+    element: <AccountCreated />,
   },
   {
     path: "/forgot-password",
