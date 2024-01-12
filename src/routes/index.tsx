@@ -13,6 +13,7 @@ import ForgotPassword from "@/pages/forget-password";
 import ResetPassword from "@/pages/forget-password/reset";
 import SetupProfile from "@/pages/setup-profile";
 import AccountCreated from "@/pages/account-created";
+import TermsOfService from "@/pages/terms-of-service";
 
 const router = createBrowserRouter([
   {
@@ -39,7 +40,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/account-created",
-    element: <AccountCreated />,
+    element: <AccountCreated />
   },
   {
     path: "/forgot-password",

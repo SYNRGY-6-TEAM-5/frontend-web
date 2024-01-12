@@ -54,6 +54,9 @@ module.exports = {
           700: "#404968",
         },
         white: "#fff",
+        zinc:{
+          900: "#18181b",
+        }
       },
     },
     backgroundImage: {

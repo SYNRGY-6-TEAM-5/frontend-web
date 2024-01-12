@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import { Image } from "@/components/ui/Image";
-import icon from "../../assets/Vector.svg";
+import { MainLogo } from "@/assets/svg";
 import RegisterForm from "./components/RegisterForm";
 
 const Register = () => {
@@ -12,7 +11,7 @@ const Register = () => {
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
             <div className="flex flex-col space-y-3 text-center">
               <div className="mx-auto mb-3">
-                <Image image={icon} alt="icon" className="w-full" />
+                <MainLogo className="w-full" />
               </div>
               <h1 className="text-3xl font-semibold tracking-tight">
                 Create an Account
