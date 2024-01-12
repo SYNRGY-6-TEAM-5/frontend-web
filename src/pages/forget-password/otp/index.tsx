@@ -3,10 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 import OtpInput from "react-otp-input";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const PasswordOTP = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const [otp, setOtp] = useState("");
   const [time, setTime] = useState({ minutes: 2, seconds: 0 });
 
@@ -38,7 +40,9 @@ const PasswordOTP = () => {
     e.preventDefault();
     console.log(otp);
     setOtp("");
-    navigate("/forgot-password/change-password");
+    location.pathname === "/otp"
+      ? navigate("/setup-profile")
+      : navigate("/forgot-password/change-password");
   };
 
   return (
