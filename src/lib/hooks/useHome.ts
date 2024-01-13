@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useState } from 'react';
 
 export
     interface IParams {
@@ -127,16 +127,12 @@ export default function useHome() {
         }));
     };
 
-    useEffect(() => {
-        fetchAirports();
-        console.log(params);
-    }, [fetchAirports, params]);
-
     return {
         airports,
         params,
         loading,
         meta,
+        fetchAirports,
         setParams,
         handleSearch,
         handleSubmit,

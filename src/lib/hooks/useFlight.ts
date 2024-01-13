@@ -193,10 +193,6 @@ export default function useFlight() {
         }
     }, [params]);
 
-    useEffect(() => {
-        fetchFlights();
-    }, [fetchFlights]);
-
     const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setParams({
@@ -206,21 +202,28 @@ export default function useFlight() {
         console.log(params)
     };
 
-    const handleSubmit = (data: any) => {
-        // Assuming your data structure is available and has the necessary values
+    const handleFilter = (_paramsData: any) => {
+        // Assuming your _paramsData structure is available and has the necessary values
         const newParams: IParams = {
-            departure_airport: data.origin?.iataCode,
-            arrival_airport: data.destination?.iataCode,
-            departure_date: data.departureDate,
-            // Add other parameters as needed
+            departure_airport: _paramsData.origin?.iataCode,
+            arrival_airport: _paramsData.destination?.iataCode,
+            departure_date: _paramsData.date.departureDate,
         };
 
-        setParams({
-            ...params,
-            ...newParams,
-        });
+        // Only create a new Date instance if departure_date is not an empty string
+        const formattedDate = newParams.departure_date ? new Date(newParams.departure_date) : null;
 
-        console.log(params);
+        // Check if formattedDate is not null before constructing the formatted string
+        const unformattedValue = formattedDate
+            ? `${formattedDate.getFullYear()}-${String(formattedDate.getMonth() + 1).padStart(2, '0')}-${String(formattedDate.getDate()).padStart(2, '0')}`
+            : '';
+
+        setParams(prevParams => ({
+            ...prevParams,
+            departure_airport: newParams.departure_airport,
+            arrival_airport: newParams.arrival_airport,
+            departure_date: unformattedValue,
+        }));
     };
 
     return {
@@ -228,8 +231,9 @@ export default function useFlight() {
         params,
         loading,
         meta,
+        fetchFlights,
         setParams,
         handleSearch,
-        handleSubmit
+        handleFilter
     };
 }
