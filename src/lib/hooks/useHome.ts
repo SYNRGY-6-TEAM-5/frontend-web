@@ -77,7 +77,7 @@ export default function useHome() {
         try {
             setLoading(true);
             const response = await axios.get<IApiResponse<AirportData>>(
-                'https://binar-flight-app.fly.dev/api/airport/',
+                'https://backend-node-production-df38.up.railway.app/api/airport/',
                 {
                     params,
                     headers: {
