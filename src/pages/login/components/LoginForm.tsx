@@ -4,15 +4,44 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { Loader } from "lucide-react";
 import { GoogleLogo } from "@/assets/svg";
 import PasswordInput from "@/components/ui/password-input";
+import { Loader } from "lucide-react";
+import { useGoogleLogin } from '@react-oauth/google';
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
   const navigate = useNavigate();
+
   const [isPending, setIsPending] = useState<boolean>();
+
+  const login = useGoogleLogin({
+    onSuccess: async (tokenResp) => {
+      const response = await fetch('http://localhost:8000/v1/users/googleAuth', {
+        method: 'POST',
+				headers: {
+          Accept: 'application/json',
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${tokenResp.access_token}`,
+				},
+			});
+      console.log("masuk");
+
+			const resJson = await response.json();
+
+			console.log({response: resJson});
+
+
+			if(resJson.data) {
+				navigate('/admin/flight/list');
+			}
+		},
+	});
+
+	const handleLogin = () => {
+		login();
+	};
 
   const handleOnSubmit = async (e: React.SyntheticEvent) => {
     setIsPending(true);
@@ -80,6 +109,7 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
           variant="outline"
           type="button"
           disabled={isPending}
+          onClick={handleLogin}
           className="h-14 gap-2 rounded-xl border-gray-200"
         >
           {isPending ? (
