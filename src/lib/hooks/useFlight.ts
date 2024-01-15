@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useState } from 'react';
 
 interface IParams {
     page?: number;
