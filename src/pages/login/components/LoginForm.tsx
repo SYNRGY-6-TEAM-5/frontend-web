@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
@@ -49,6 +49,7 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
       console.log("masuk");
 			const resJson = await response.json();
 			console.log({response: resJson});
+      setGoogleIsPending(false);
 			if(resJson.data) {
 				navigate('/admin/flight/list');
 			}
@@ -56,6 +57,7 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
 	});
 
 	const handleLogin = () => {
+    setGoogleIsPending(true);
 		login();
 	};
 
