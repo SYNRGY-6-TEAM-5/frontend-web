@@ -79,16 +79,16 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
         setMessage("Successfully Login")
         Cookies.set('accesstoken', res.data.token);
         Cookies.set('role',res.data.roles);
-      } else {
+        setIsPending(false);
+    } else {
         setError(true);
         setMessage("Login Error, Pastikan data benar");
       }
     }).catch(() =>{
       setError(true);
       setMessage("Login Error, Pastikan data benar");
+      setIsPending(false);
     })
-    console.log({message});
-    setIsPending(false);
   }
 
   const handleOnSubmit = async (e: React.SyntheticEvent) => {
