@@ -22,24 +22,18 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
   const API = 'https://backend-java-production-ece2.up.railway.app/api/v1/auth/login';
   const GoogleAPI = 'http://localhost:8000/v1/users/googleAuth';
   const navigate = useNavigate();
+  const [googleIsPending, setGoogleIsPending] = useState<boolean>();
   const [isPending, setIsPending] = useState<boolean>();
 
   const token = Cookies.get('accesstoken');
   const role = Cookies.get('role');
   const [error, setError] = useState<boolean>(false);
 	const [message, setMessage] = useState<string>('');
-	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
-  useEffect(() => {
-		setIsLoggedIn(!!token);
-	}, [token]);
-
-	useEffect(() => {
-		if(isLoggedIn){
-      role === 'USER' && navigate('/user/payment');
-      role === 'ADMIN' && navigate('/admin/dashboard');
-    } 
-	}, [isLoggedIn]);
+  if(token){
+    role === 'USER' && navigate('user/payment');
+    role === 'ADMIN' && navigate('admin/dashboard');
+  }
 
   const login = useGoogleLogin({
     onSuccess: async (tokenResp) => {
@@ -80,6 +74,8 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
         Cookies.set('accesstoken', res.data.token);
         Cookies.set('role',res.data.roles);
         setIsPending(false);
+        role === 'USER' && navigate('user/payment');
+        role === 'ADMIN' && navigate('admin/dashboard');
     } else {
         setError(true);
         setMessage("Login Error, Pastikan data benar");
@@ -153,11 +149,11 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
         <Button
           variant="outline"
           type="button"
-          disabled={isPending}
+          disabled={googleIsPending}
           onClick={handleLogin}
           className="h-14 gap-2 rounded-xl border-gray-200"
         >
-          {isPending ? (
+          {googleIsPending ? (
             <Loader className="mr-2 h-4 w-4 animate-spin" />
           ) : (
             <GoogleLogo />
