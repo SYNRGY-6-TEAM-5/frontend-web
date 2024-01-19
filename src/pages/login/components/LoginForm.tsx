@@ -31,8 +31,8 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
 	const [message, setMessage] = useState<string>('');
 
   if(token){
-    role === 'USER' && navigate('user/payment');
-    role === 'ADMIN' && navigate('admin/dashboard');
+    role === 'USER' && navigate('/user/payment');
+    role === 'ADMIN' && navigate('/admin/dashboard');
   }
 
   const login = useGoogleLogin({
@@ -76,8 +76,8 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
         Cookies.set('accesstoken', res.data.token);
         Cookies.set('role',res.data.roles);
         setIsPending(false);
-        role === 'USER' && navigate('user/payment');
-        role === 'ADMIN' && navigate('admin/dashboard');
+        role === 'USER' && navigate('/user/payment');
+        role === 'ADMIN' && navigate('/admin/dashboard');
     } else {
         setError(true);
         setMessage("Login Error, Pastikan data benar");
