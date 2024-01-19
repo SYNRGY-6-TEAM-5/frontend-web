@@ -15,6 +15,7 @@ import SetupProfile from "@/pages/setup-profile";
 import AccountCreated from "@/pages/account-created";
 import TermsOfService from "@/pages/terms-of-service";
 import FlightList from "@/pages/flight-list";
+import Payment from "@/pages/payment";
 
 const router = createBrowserRouter([
   {
@@ -74,6 +75,20 @@ const router = createBrowserRouter([
   {
     path: "/flight-list",
     element: <FlightList />,
+  },
+  {
+    path: "/user",
+    element: (
+      <ProtectedRoute>
+        <></>
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        path: "/user/payment",
+        element: <FlightList />,
+      },
+    ],
   },
   {
     path: "/dashboard",
