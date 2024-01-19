@@ -1,7 +1,7 @@
 import Home from "@/pages/home";
 import Login from "@/pages/login";
 import Register from "@/pages/register";
-import { createBrowserRouter } from "react-router-dom";
+import { Outlet, createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 
 import NavBar from "../components/containers/NavBar";
@@ -80,7 +80,7 @@ const router = createBrowserRouter([
     path: "/user",
     element: (
       <ProtectedRoute>
-        <></>
+        <Outlet></Outlet>
       </ProtectedRoute>
     ),
     children: [
