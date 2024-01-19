@@ -86,7 +86,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/user/payment",
-        element: <FlightList />,
+        element: <Payment />,
       },
     ],
   },
