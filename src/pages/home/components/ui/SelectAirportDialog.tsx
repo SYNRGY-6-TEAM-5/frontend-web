@@ -151,7 +151,7 @@ const SelectAirportDialog: React.FC<SelectAirportDialogProps> = ({
                 >
                   <div className="inline-flex flex-col items-start justify-start gap-1">
                     <div className="text-base font-semibold text-neutral-900">
-                      {`${airport.city.city_name} (${airport.city.iata_code}), ${airport.country_iso2}`}
+                      {`${airport.city_name} (${airport.city_iata_code}), ${airport.country_iso_code}`}
                     </div>
                     <div className="text-sm font-semibold text-slate-500">
                       {`${airport.airport_name} (${airport.iata_code})`}

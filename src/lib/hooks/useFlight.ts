@@ -174,7 +174,7 @@ export default function useFlight() {
         try {
             setLoading(true);
             const response = await axios.get<IApiResponse<FlightData>>(
-                'https://backend-node-production-df38.up.railway.app/api/flight/',
+                'https://backend-node-production-a54c.up.railway.app/api/flight/',
                 {
                     params,
                     headers: {
