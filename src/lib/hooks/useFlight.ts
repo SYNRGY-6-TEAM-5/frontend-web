@@ -28,135 +28,65 @@ interface IMeta {
     totalPages: number;
 }
 
-interface IAirport {
+export interface IAirport {
     airport_id: number;
-    city: Object;
     airport_name: string;
     iata_code: string;
-    icao_code: string;
-    latitude: string;
-    longitude: string;
-    geoname_id: string;
-    timezone: string;
     gmt: string;
-    phone_number: string;
-    country_name: string;
-    country_iso2: string;
-    city_iata_code: string;
-    created_by: number;
-    updated_by: number;
-}
-
-interface ICity {
-    gmt: number;
-    iata_code: Object;
-    country_iso2: string;
-    geoname_id: string;
-    latitude: string;
-    longitude: string;
     city_name: string;
-    timezone: string;
-    created_by: number;
-    updated_by: number;
+    city_iata_code: string;
+    country_name: string;
+    country_iso_code: string;
 }
 
-interface IDeparture {
+export interface IDeparture {
     departure_id: number;
     airport_id: number;
-    airport: string;
-    timezone: string;
     terminal: string;
-    gate: string;
-    delay: number;
-    iata: string;
-    icao: string;
     scheduled_time: string;
-    estimated_time: string;
-    actual_time: string;
-    created_by: number;
-    updated_by: number;
 }
 
-interface IArrival {
+export interface IArrival {
     arrival_id: number;
     airport_id: number;
-    timezone: string;
     terminal: string;
-    gate: string;
-    delay: string;
-    baggage: string;
     scheduled_time: string;
-    estimated_time: string;
-    actual_time: string;
-    created_by: number;
-    updated_by: number;
 }
 
-interface IFlight {
+export interface IAirline {
+    airline_id: number;
+    name: string;
+    iata: string;
+    image: string;
+}
+
+export interface IFlight {
     flight_id: number;
     departure_id: number;
     arrival_id: number;
     airline_id: number;
-    aircraft_id: number;
-    live_id: number;
-    flight_status: number;
-    flight_date: Date;
+
+    transit: number;
+    first_seat: number;
+    business_seat: number;
+    economy_seat: number;
+    flight_status: string;
     flight_number: string;
     iata: string;
-    icao: string;
-    created_by: number;
-    updated_by: number;
-}
-
-interface IAirline {
-    airline_id: number;
-    name: string;
-    iata: string;
-    icao: string;
-    created_by: number;
-    updated_by: number;
-}
-
-interface IAircraft {
-    aircraft_id: number;
-    airplane_id: number;
-    registration_number: string;
-    iata: string;
-    icao: string;
-    icao24: string;
-}
-
-interface ILiveTracking {
-    live_id: number;
-    aircraft_id: number;
-    updated: string;
-    latitude: string;
-    longitude: string;
-    altitude: string;
-    direction: string;
-    speed_horizontal: string;
-    speed_vertical: string;
-    is_ground: string;
-}
-
-interface AirportWithCity extends IAirport {
-    city: ICity;
 }
 
 interface DepartureWithAirport extends IDeparture {
-    airport_details: AirportWithCity;
+    airport_details: IAirport;
 }
 
 interface ArrivalWithAirport extends IArrival {
-    airport_details: AirportWithCity;
+    airport_details: IAirport;
 }
 
-interface FlightWithRelations extends IFlight {
+export interface FlightWithRelations extends IFlight {
     departure: DepartureWithAirport;
     arrival: ArrivalWithAirport;
     airline: IAirline;
-    aircraft: IAircraft;
-    live_tracking: ILiveTracking;
 }
 
 type FlightData = Array<FlightWithRelations>;
@@ -203,17 +133,14 @@ export default function useFlight() {
     };
 
     const handleFilter = (_paramsData: any) => {
-        // Assuming your _paramsData structure is available and has the necessary values
         const newParams: IParams = {
             departure_airport: _paramsData.origin?.iataCode,
             arrival_airport: _paramsData.destination?.iataCode,
             departure_date: _paramsData.date.departureDate,
         };
 
-        // Only create a new Date instance if departure_date is not an empty string
         const formattedDate = newParams.departure_date ? new Date(newParams.departure_date) : null;
 
-        // Check if formattedDate is not null before constructing the formatted string
         const unformattedValue = formattedDate
             ? `${formattedDate.getFullYear()}-${String(formattedDate.getMonth() + 1).padStart(2, '0')}-${String(formattedDate.getDate()).padStart(2, '0')}`
             : '';
