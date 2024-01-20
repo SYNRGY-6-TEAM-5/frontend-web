@@ -33,34 +33,12 @@ export interface IAirport {
     airport_id: number;
     airport_name: string;
     iata_code: string;
-    icao_code: string;
-    latitude: string;
-    longitude: string;
-    geoname_id: string;
-    timezone: string;
     gmt: string;
-    phone_number: string;
-    country_name: string;
-    country_iso2: string;
+    city_name: string;
     city_iata_code: string;
-    created_at: string;
-    updated_at: string | null;
-    created_by: number;
-    updated_by: number;
-    city: {
-        gmt: number;
-        iata_code: Object;
-        country_iso2: string;
-        geoname_id: string;
-        latitude: string;
-        longitude: string;
-        city_name: string;
-        timezone: string;
-        created_by: number;
-        updated_by: number;
-    };
-
-}
+    country_name: string;
+    country_iso_code: string;
+  }
 
 type AirportData = Array<IAirport>;
 
@@ -77,7 +55,7 @@ export default function useHome() {
         try {
             setLoading(true);
             const response = await axios.get<IApiResponse<AirportData>>(
-                'https://backend-node-production-df38.up.railway.app/api/airport/',
+                'https://backend-node-production-a54c.up.railway.app/api/airport/',
                 {
                     params,
                     headers: {

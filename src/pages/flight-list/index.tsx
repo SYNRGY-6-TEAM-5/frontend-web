@@ -45,7 +45,7 @@ const FlightList = () => {
                 </div>
               </div>
               <div className="text-base font-semibold tracking-wider text-neutral-900">
-                {flight.flight_date.toString()}
+                {flight.departure.scheduled_time}
               </div>
             </div>
           ))}
