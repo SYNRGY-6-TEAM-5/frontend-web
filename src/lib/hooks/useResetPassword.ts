@@ -109,11 +109,11 @@ export const useResetChangePassword = () => {
     mutationFn: async (data: formChangePassword) => {
       const response = await axiosClient.put(
         `/auth/forgot-password/edit-password`,
+        data,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          data,
         },
       );
       return response;
