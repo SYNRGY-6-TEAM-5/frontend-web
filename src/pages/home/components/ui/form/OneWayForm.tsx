@@ -23,7 +23,7 @@ import { toast } from "@/components/ui/use-toast";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 
 import useHome from "@/lib/hooks/useHome";
-import { Link } from "react-router-dom";
+import { useNavigate  } from "react-router-dom";
 
 const FormSchema = z.object({
   departureDate: z
@@ -58,7 +58,8 @@ const FormSchema = z.object({
 });
 
 const OneWayForm = () => {
-  const { airports, handleSearch, handleSubmit, params } = useHome();
+  const { airports, handleSearch, fetchAirports, params, setParams } = useHome();
+  const navigate = useNavigate();
 
   // eslint-disable-next-line no-unused-vars
   const [selectedOriginAirport, setSelectedOriginAirport] = useState(null);
@@ -67,6 +68,7 @@ const OneWayForm = () => {
     useState(null);
   // eslint-disable-next-line no-unused-vars
   const [isOriginActive, setIsOriginActive] = useState(true);
+  const [completeData, setCompleteData] = useState({});
 
   const [ticketDetails, setTicketDetails] = useState<Seat | null>(null);
 
@@ -113,7 +115,7 @@ const OneWayForm = () => {
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
     if (isOriginDestEmpty) {
       toast({
-        title: "Airport origin and destination are empty",
+        title: 'Airport origin and destination are empty',
         description: (
           <div className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
             <p className="text-white">
@@ -124,19 +126,36 @@ const OneWayForm = () => {
       });
       return;
     }
-    
-    const completeData = {
+
+    const _completeData = {
       origin: selectedOriginAirport,
       destination: selectedDestinationAirport,
       date: {
         departureDate: data.departureDate,
         arrivalDate: data.arrivalDate,
       },
-      "ticket-details": ticketDetails,
+      'ticket-details': ticketDetails,
     };
 
-    handleSubmit(completeData);
+    // Use the callback form of setParams to ensure you're working with the latest state
+    setParams(prevParams => ({
+      ...prevParams,
+      ..._completeData,
+    }));
+    setCompleteData(_completeData);
   };
+
+  // Use useEffect to navigate when params are updated
+  useEffect(() => {
+    fetchAirports();
+
+    if (Object.keys(completeData).length > 0) {
+      console.log(params);
+      console.log(completeData);
+      
+      navigate('/flight-list', { state: params });
+    }
+  }, [fetchAirports, completeData, params]);
 
   return (
     <Form {...form}>
@@ -223,7 +242,7 @@ const OneWayForm = () => {
             </FormItem>
           )}
         />
-        <Link to="/flight-list" state={params}>
+        {/* <Link to="/flight-list" state={params}> */}
           <Button
             variant="primary"
             type="submit"
@@ -231,7 +250,7 @@ const OneWayForm = () => {
           >
             <MagnifyingGlassIcon className="mr-2 h-4 w-4" /> Cari
           </Button>
-        </Link>
+        {/* </Link> */}
       </form>
     </Form>
   );

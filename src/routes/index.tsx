@@ -1,7 +1,7 @@
 import Home from "@/pages/home";
 import Login from "@/pages/login";
 import Register from "@/pages/register";
-import { createBrowserRouter } from "react-router-dom";
+import { Outlet, createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 
 import NavBar from "../components/containers/NavBar";
@@ -16,6 +16,8 @@ import AccountCreated from "@/pages/account-created";
 import TermsOfService from "@/pages/terms-of-service";
 import FlightList from "@/pages/flight-list";
 import SearchFlight from "@/pages/search-flight";
+import Payment from "@/pages/payment";
+import Booking from "@/pages/booking";
 
 const router = createBrowserRouter([
   {
@@ -79,6 +81,24 @@ const router = createBrowserRouter([
   {
     path: "/search-flight",
     element: <SearchFlight />,
+  },
+  {
+    path: "/booking",
+    element: <Booking />,
+  },
+  {
+    path: "/user",
+    element: (
+      <ProtectedRoute>
+        <Outlet></Outlet>
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        path: "/user/payment",
+        element: <Payment />,
+      },
+    ],
   },
   {
     path: "/dashboard",

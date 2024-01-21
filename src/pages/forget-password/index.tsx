@@ -3,15 +3,17 @@ import { MainLogo } from "@/assets/svg";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Text } from "@mantine/core";
-import { ArrowLeft } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { ArrowLeft, Loader } from "lucide-react";
+import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
+import { useResetSendEmail } from "@/lib/hooks/useResetPassword";
 
 const ForgotPassword = () => {
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(false);
+
+  const { mutateAsync, isPending } = useResetSendEmail({ email });
 
   const validateEmail = (inputEmail: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -26,12 +28,12 @@ const ForgotPassword = () => {
 
   const submitEmail = () => {
     if (isValidEmail) {
-      navigate("/forgot-password/method");
+      mutateAsync();
     }
   };
 
   return (
-    <div className="mx-auto w-full px-4 pt-24 xs:w-fit md:px-0">
+    <div className="mx-auto w-full px-4 pt-24 xs:w-[360px] md:px-0">
       <div className="px-3 py-8 xs:px-8">
         <MainLogo className="mb-6 h-10 w-full text-center " />
         <Text className="text-center text-3xl font-medium">
@@ -71,8 +73,9 @@ const ForgotPassword = () => {
             !isValidEmail && "cursor-not-allowed"
           }`}
           onClick={submitEmail}
-          disabled={!isValidEmail}
+          disabled={!isValidEmail || isPending}
         >
+          {isPending && <Loader className="mr-2 h-4 w-4 animate-spin" />}
           Next
         </Button>
         <Link

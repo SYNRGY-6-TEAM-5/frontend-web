@@ -1,16 +1,43 @@
 import { MainLogo } from "@/assets/svg";
 import { Button } from "@/components/ui/button";
+import {
+  useResetSendEmail,
+  useResetValidateOTP,
+} from "@/lib/hooks/useResetPassword";
 import { Text } from "@mantine/core";
+import { differenceInSeconds } from "date-fns";
+import Cookies from "js-cookie";
+import { Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 import OtpInput from "react-otp-input";
-import { useLocation, useNavigate } from "react-router-dom";
+
+interface forgotDataTypes {
+  expiredOTP: number;
+  otp: string;
+  success: boolean;
+  email: string;
+}
+
+const restTime = (time: number) => {
+  const expTime = differenceInSeconds(time, Date.now());
+  const minutes = Math.floor(expTime / 60);
+  const seconds = expTime % 60;
+
+  return { minutes, seconds };
+};
 
 const PasswordOTP = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const forgotData = Cookies.get("forgotData");
+  const parsedData: forgotDataTypes = JSON.parse(forgotData ?? "{}");
 
   const [otp, setOtp] = useState("");
-  const [time, setTime] = useState({ minutes: 2, seconds: 0 });
+  const [time, setTime] = useState(
+    restTime(parsedData.expiredOTP) ?? { minutes: 5, seconds: 0 },
+  );
+
+  const { mutateAsync, isPending } = useResetValidateOTP({ otp });
+  const { mutateAsync: mutateResend, isPending: isPendingResend } =
+    useResetSendEmail({ email: parsedData.email });
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -32,17 +59,15 @@ const PasswordOTP = () => {
 
   const formatTime = (time: number) => (time < 10 ? `0${time}` : time);
 
-  const resendCode = () => {
-    setTime({ minutes: 2, seconds: 0 });
+  const resendCode = async () => {
+    await mutateResend();
+    setTime({ minutes: 5, seconds: 0 });
   };
 
-  const verifiedOtp = (e: React.FormEvent<HTMLFormElement>) => {
+  const verifiedOtp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(otp);
+    await mutateAsync();
     setOtp("");
-    location.pathname === "/otp"
-      ? navigate("/setup-profile")
-      : navigate("/forgot-password/change-password");
   };
 
   return (
@@ -54,8 +79,8 @@ const PasswordOTP = () => {
         </Text>
         <Text className="mb-8 mt-3 text-center text-sm text-gray-500">
           We have sent the code verification to{" "}
-          <span className="font-medium text-gray-700">test@gmail.com</span>.
-          Please input the 4 digits code
+          <span className="font-medium text-gray-700">{parsedData?.email}</span>
+          . Please input the 4 digits code
         </Text>
         <form onSubmit={verifiedOtp}>
           <OtpInput
@@ -86,12 +111,22 @@ const PasswordOTP = () => {
               type="button"
               onClick={resendCode}
               variant={"secondary"}
+              disabled={isPendingResend}
               className="mb-3 mt-9 h-14 w-full rounded-xl"
             >
+              {isPendingResend && (
+                <Loader className="mr-2 h-4 w-4 animate-spin" />
+              )}
               Resend Code
             </Button>
           )}
-          <Button type="submit" variant={"primary"} className="h-14 w-full">
+          <Button
+            type="submit"
+            variant={"primary"}
+            className="h-14 w-full"
+            disabled={isPending}
+          >
+            {isPending && <Loader className="mr-2 h-4 w-4 animate-spin" />}
             Next
           </Button>
         </form>

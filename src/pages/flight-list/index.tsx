@@ -2,21 +2,21 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Text } from "@mantine/core";
 
 import useFlight from "@/lib/hooks/useFlight";
-import useHome from "@/lib/hooks/useHome";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const FlightList = () => {
-  // const location = useLocation();
-  
-  const { params } = useHome();
-  const { flights } = useFlight();
-  
+  const location = useLocation();
+  const newParams: any = location.state;
+  const { flights, fetchFlights, params, handleFilter } = useFlight();
+
   useEffect(() => {
-    if (params) {
-      // The state is available, you can use it here
-      console.log(params);
+    if (newParams) {
+      handleFilter(newParams);
+      fetchFlights(),
+      console.log(newParams);
     }
-  }, [params]);
+  }, [fetchFlights, params]);
 
   return (
     <section className="flex w-full flex-col justify-center gap-10 overflow-x-hidden px-16 py-10">
@@ -32,7 +32,8 @@ const FlightList = () => {
             >
               <div className="inline-flex flex-col items-start justify-start gap-1">
                 <div className="text-base font-semibold text-neutral-900">
-                  Airline/Flight Number: {`${flight.airline.iata}/${flight.flight_number}`}
+                  Airline/Flight Number:{" "}
+                  {`${flight.airline.iata}/${flight.flight_number}`}
                 </div>
                 <div className="text-sm font-semibold text-slate-500">
                   Departure Airport:{" "}
@@ -44,7 +45,7 @@ const FlightList = () => {
                 </div>
               </div>
               <div className="text-base font-semibold tracking-wider text-neutral-900">
-                {flight.flight_date.toString()}
+                {flight.departure.scheduled_time}
               </div>
             </div>
           ))}
