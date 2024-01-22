@@ -56,7 +56,8 @@ module.exports = {
         white: "#fff",
         zinc:{
           900: "#18181b",
-        }
+        },
+        error: "#F04438"
       },
     },
     backgroundImage: {
