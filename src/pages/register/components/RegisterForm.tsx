@@ -27,15 +27,8 @@ const RegisterForm = ({ className, ...props }: UserAuthFormProps) => {
   const [googleIsPending, setGoogleIsPending] = useState<boolean>();
   const [isPending, setIsPending] = useState<boolean>();
 
-  const token = Cookies.get("accesstoken");
-  const role = Cookies.get("role");
   const [error, setError] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-
-  if (token) {
-    role === "USER" && navigate("/user/payment");
-    role === "ADMIN" && navigate("/admin/dashboard");
-  }
 
   const register = useGoogleLogin({
     onSuccess: async (tokenResp) => {
@@ -74,51 +67,43 @@ const RegisterForm = ({ className, ...props }: UserAuthFormProps) => {
     register();
   };
 
-  const post = ({ email, password }: PostRegister) => {
-    axios
-      .post(API, {
-        emailAddress: email,
-        password: password,
-      })
-      .then((res) => {
-        if (res.status === 201) {
-          setError(false);
-          setMessage("Successfully Registered");
+  const post = async ({ email, password }: PostRegister) => {
+    try {
+      const res = await axios.post(
+        API,
+        {
+          email: email,
+          password: password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
 
-          // Set cookies and navigate to OTP page after successful registration
-          Cookies.set("accesstoken", res.data.token);
-          Cookies.set("role", res.data.roles);
-          setIsPending(false);
-
-          // Navigate to the OTP page upon successful registration
-          navigate("/otp");
-        } else {
-          setError(true);
-          setMessage("Registration Error, Please check your data");
-        }
-      })
-      .catch(() => {
-        console.error("Registration Error:", error);
-
-        // Handle different types of errors (validation errors, etc.) from the server
-        if (error.response) {
-          console.error(
-            "Server responded with non-success status:",
-            error.response.data,
-          );
-          // Additional handling based on the error response from the server
-        } else if (error.request) {
-          console.error("No response received from the server:", error.request);
-          // Additional handling for cases where no response is received from the server
-        } else {
-          console.error("Error setting up the request:", error.message);
-          // Additional handling for other types of errors
-        }
-
+      if (res.status === 200) {
+        setError(false);
+        setMessage("Successfully Registered");
+        Cookies.set(
+          "otpData",
+          JSON.stringify({
+            ...res.data,
+            email: email,
+            password: password,
+          }),
+        );
+        setIsPending(false);
+        navigate("/otp");
+      } else {
         setError(true);
         setMessage("Registration Error, Please check your data");
-        setIsPending(false);
-      });
+      }
+    } catch (error) {
+      setError(true);
+      setMessage("Registration Error, Please check your data");
+      setIsPending(false);
+    }
   };
 
   const handleOnSubmit = async (e: React.SyntheticEvent) => {
@@ -131,7 +116,6 @@ const RegisterForm = ({ className, ...props }: UserAuthFormProps) => {
     const email = target.email.value;
     const password = target.password.value;
 
-    // Call the modified post function for user registration
     await post({ email, password });
   };
 
