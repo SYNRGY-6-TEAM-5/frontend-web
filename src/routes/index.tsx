@@ -17,6 +17,7 @@ import TermsOfService from "@/pages/terms-of-service";
 import FlightList from "@/pages/flight-list";
 import Payment from "@/pages/payment";
 import Booking from "@/pages/booking";
+import LayoutUser from "@/layput/user";
 
 const router = createBrowserRouter([
   {
@@ -91,7 +92,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/user/payment",
-        element: <Payment />,
+        element: (
+          <LayoutUser>
+            <Payment />
+          </LayoutUser>
+        ),
       },
     ],
   },
