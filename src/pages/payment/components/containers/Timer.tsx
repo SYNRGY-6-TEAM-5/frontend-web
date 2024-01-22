@@ -8,8 +8,8 @@ interface timeProps {
 
 const Timer = ({hours, minutes, seconds}:timeProps) => {
   return(
-    <Card className="bg-black">
-      <CardContent className="grid grid-cols-3 gap-4 p-2">
+    <Card className="bg-black h-fit">
+      <CardContent className="grid p-2 md:grid-cols-3 md:text-left xs:text-center xs:grid-cols-1">
           <div className="text-white">Complet payment in</div>
           <div></div>
           <div className="rounded-md bg-white text-error text-center">

@@ -1,8 +1,8 @@
 import { Text } from "@mantine/core";
 import { Image } from "@/components/ui/Image";
-import BankMandiri from "../../../assets/svg/BankMandiri.svg";
-import Ocbc from "../../../assets/svg/OCBC.svg";
-import BCA from "../../../assets/svg/BCA.svg";
+import BankMandiri from "../../../../assets/svg/BankMandiri.svg";
+import Ocbc from "../../../../assets/svg/OCBC.svg";
+import BCA from "../../../../assets/svg/BCA.svg";
 import { useState } from "react";
 
 const methodData = [

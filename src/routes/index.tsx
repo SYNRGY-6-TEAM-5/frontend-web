@@ -17,7 +17,7 @@ import TermsOfService from "@/pages/terms-of-service";
 import FlightList from "@/pages/flight-list";
 import Payment from "@/pages/payment";
 import Booking from "@/pages/booking";
-import LayoutUser from "@/layput/user";
+import LayoutUser from "@/layout/user";
 
 const router = createBrowserRouter([
   {
