@@ -25,8 +25,8 @@ const methodData = [
 
 const PaymentMethod = ({runTimer}:{runTimer:boolean}) => {
   const [check, setCheck] = useState<string>();
-  const handleOnChange = async (e) => { 
-    setCheck(e.target.value);
+  const handleOnChange = async (method:string) => { 
+    setCheck(method);
   }
   return(
     <div className="grid gap-4">
@@ -45,7 +45,9 @@ const PaymentMethod = ({runTimer}:{runTimer:boolean}) => {
             />
             <Text className="ml-2 grow">{method.title}</Text>
             <input
-              onChange={handleOnChange}
+              onChange={() => {
+                handleOnChange(method.value);
+              }}
               type="radio"
               id={String(index)}
               className="checked:accent-primary-500"
