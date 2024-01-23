@@ -1,5 +1,6 @@
 import { MainLogo } from "@/assets/svg";
 import { Button } from "@/components/ui/button";
+import { useRegisterValidateOTP } from "@/lib/hooks/useRegister";
 import {
   useResetSendEmail,
   useResetValidateOTP,
@@ -10,8 +11,9 @@ import Cookies from "js-cookie";
 import { Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 import OtpInput from "react-otp-input";
+import { useLocation } from "react-router-dom";
 
-interface forgotDataTypes {
+interface otpDataTypes {
   expiredOTP: number;
   otp: string;
   success: boolean;
@@ -27,8 +29,10 @@ const restTime = (time: number) => {
 };
 
 const PasswordOTP = () => {
-  const forgotData = Cookies.get("forgotData");
-  const parsedData: forgotDataTypes = JSON.parse(forgotData ?? "{}");
+  const otpData = Cookies.get("otpData");
+  const parsedData: otpDataTypes = JSON.parse(otpData ?? "{}");
+
+  const location = useLocation();
 
   const [otp, setOtp] = useState("");
   const [time, setTime] = useState(
@@ -36,6 +40,8 @@ const PasswordOTP = () => {
   );
 
   const { mutateAsync, isPending } = useResetValidateOTP({ otp });
+  const { mutateAsync: mutateRegisterOTP, isPending: isPendingRegister } =
+    useRegisterValidateOTP({ otp });
   const { mutateAsync: mutateResend, isPending: isPendingResend } =
     useResetSendEmail({ email: parsedData.email });
 
@@ -66,7 +72,9 @@ const PasswordOTP = () => {
 
   const verifiedOtp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await mutateAsync();
+    location.pathname === "/otp"
+      ? await mutateRegisterOTP()
+      : await mutateAsync();
     setOtp("");
   };
 
@@ -124,9 +132,9 @@ const PasswordOTP = () => {
             type="submit"
             variant={"primary"}
             className="h-14 w-full"
-            disabled={isPending}
+            disabled={isPending || isPendingRegister}
           >
-            {isPending && <Loader className="mr-2 h-4 w-4 animate-spin" />}
+            {(isPending || isPendingRegister) && <Loader className="mr-2 h-4 w-4 animate-spin" />}
             Next
           </Button>
         </form>

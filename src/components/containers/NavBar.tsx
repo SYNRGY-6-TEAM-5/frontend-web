@@ -7,11 +7,14 @@ import { Text } from "@mantine/core";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ArrowCircleRight, CirclesFour } from "@phosphor-icons/react";
 import { Slide } from "react-awesome-reveal";
+import { Image } from "../ui/Image";
 
 import { ChevronDown } from "lucide-react";
+import Cookies from "js-cookie";
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const token = Cookies.get("accesstoken");
 
   const [open, setOpen] = useState(false);
   // const [scrollY, setScrollY] = useState(0)
@@ -40,55 +43,67 @@ const NavBar = () => {
             navBarColor ? "bg-white" : "bg-transparent"
           }`}
         >
-          <div className="hidden w-full items-center gap-10 lg:flex">
+          <div className="hidden w-full items-center lg:flex">
             <div className="text-color3 flex w-96 flex-1 items-center justify-start text-3xl font-medium md:text-5xl lg:text-4xl">
               <MainLogo className="h-10 md:h-12" />
-              <Text className="text-color3 pl-4 text-2xl font-normal md:text-5xl lg:text-4xl">
+              <Text className="pl-4 text-2xl font-medium tracking-tighter">
                 AeroSwift
               </Text>
             </div>
 
-            <ul className="flex items-center justify-end gap-8">
+            <ul className="mr-16 flex items-center justify-end gap-8">
               {NavLinks.map((navlink, index) => (
                 <List className="w-full text-base" key={index}>
                   <NavLink
                     to={navlink.url}
-                    className="flex flex-row items-center gap-[2px] overflow-hidden pl-2 pt-2 font-normal tracking-wide text-zinc-900 before:absolute before:-left-10 before:top-2 before:h-2 before:w-2 before:rounded-full before:transition-all before:duration-200 before:ease-in after:absolute after:-top-10 after:left-1 after:h-3 after:w-0.5 after:transition-all after:duration-200 after:ease-in hover:text-primary-500 hover:before:left-0.5 hover:after:top-3.5"
+                    className="flex flex-row items-center gap-[2px] overflow-hidden text-lg font-semibold text-zinc-900 before:absolute before:-left-10 before:top-2 before:h-2 before:w-2 before:rounded-full before:transition-all before:duration-200 before:ease-in after:absolute after:-top-10 after:left-1 after:h-3 after:w-0.5 after:transition-all after:duration-200 after:ease-in hover:text-primary-500 hover:before:left-0.5 hover:after:top-3.5"
                   >
                     {navlink.name}
 
-                    <ChevronDown
-                      size={20}
-                      className="font-base text-primary-500"
-                    />
+                    <ChevronDown size={20} className="ml-3 text-primary-500" />
                   </NavLink>
                 </List>
               ))}
             </ul>
 
-            <ul className="flex items-center justify-end gap-6">
-              {NavButtons.map((navbutton, index) => (
-                <List className="w-full" key={index}>
+            {token ? (
+              <div className="flex items-center">
+                <Image
+                  className="mr-3 h-11 w-11 cursor-pointer"
+                  image={
+                    "https://images.pexels.com/photos/1553783/pexels-photo-1553783.jpeg?auto=compress&cs=tinysrgb&w=600"
+                  }
+                  objectCover="object-cover rounded-full"
+                  alt="User Image"
+                />
+                <Text className="text-lg font-semibold">Angga Taufik</Text>
+              </div>
+            ) : (
+              <ul className="flex items-center justify-end gap-3">
+                {NavButtons.map((navbutton, index) => (
                   <Button
+                    key={index}
                     onClick={() => navigate(navbutton.url)}
                     type="button"
                     variant={`${
-                      navbutton.name === "Login" ? "black" : "transparent"
+                      navbutton.name === "Sign In" ? "black" : "outline"
                     }`}
                     className={`
-                      text-md relative z-10  px-8 py-2 font-normal tracking-wide
+                      relative z-10 rounded-xl px-6 py-2 text-lg font-medium
                       before:absolute before:left-0 before:-z-10 before:h-0 before:w-full
                       before:transition-all before:duration-300 before:ease-in before:content-[''] 
                       hover:before:h-full
                       ${
-                        navbutton.name !== "Login" ? "text-black" : "text-white"
+                        navbutton.name !== "Sign In"
+                          ? "text-black"
+                          : "text-white"
                       }`}
                   >
                     {navbutton.name}
                   </Button>
-                </List>
-              ))}
-            </ul>
+                ))}
+              </ul>
+            )}
           </div>
           <div className="flex items-center gap-4 lg:hidden">
             <div

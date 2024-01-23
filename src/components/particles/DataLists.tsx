@@ -17,11 +17,11 @@ export const NavLinks = [
 
 export const NavButtons = [
     {
-        name: "Signup",
+        name: "Sign Up",
         url: "/register"
     },
     {
-        name: "Login",
+        name: "Sign In",
         url: "/login"
     }
 

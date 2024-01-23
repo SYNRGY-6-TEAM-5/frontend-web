@@ -1,33 +1,51 @@
-import { MainLogo, ImageProfile } from "@/assets/svg";
+import { MainLogo } from "@/assets/svg";
 import { Button } from "@/components/ui/button";
 import { Text } from "@mantine/core";
 import { useFormik } from "formik";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
+import UploadImage from "./components/UploadImage";
+import CalendarForm from "./components/CalendarForm";
+import {
+  useRegisterFillProfile,
+  useRegisterUploadImage,
+} from "@/lib/hooks/useRegister";
+import { Loader } from "lucide-react";
 
 interface FormValues {
   fullName: string;
-  dateOfBirth: string;
+  dateOfBirth: Date | null;
   phoneNumber: string;
   image: File | null;
 }
 
 const SetupProfile = () => {
+  const { mutateAsync, isPending } = useRegisterFillProfile();
+  const { mutateAsync: mutateImage, isPending: isImagePending } =
+    useRegisterUploadImage();
+
   const formik = useFormik<FormValues>({
     initialValues: {
       fullName: "",
-      dateOfBirth: "",
+      dateOfBirth: null,
       phoneNumber: "",
       image: null,
     },
     validate: () => {
       const errors: Partial<FormValues> = {};
-      // Add any validation logic here if needed
       return errors;
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       console.log("Form submitted:", values);
+      if (values.image) {
+        await mutateImage(values.image);
+      }
+      const data = {
+        fullName: values.fullName,
+        dob: values.dateOfBirth!,
+        phoneNumber: parseInt(values.phoneNumber, 10),
+      };
+      await mutateAsync(data);
       formik.resetForm();
     },
   });
@@ -41,64 +59,44 @@ const SetupProfile = () => {
         </Text>
 
         <form onSubmit={formik.handleSubmit}>
-          <Label htmlFor="imageUpload">
-            <ImageProfile className="mb-6 h-20 w-full cursor-pointer text-center" />
-            <Text className="mb-6 cursor-pointer text-center font-medium text-primary-500">
-              Upload Image
-            </Text>
-            <Input
-              type="file"
-              id="imageUpload"
-              accept="image/*"
-              onChange={(event) => {
-                formik.setFieldValue(
-                  "image",
-                  event.currentTarget.files?.[0] || null,
-                );
-              }}
-              style={{ display: "none" }}
-            />
-          </Label>
-          {formik.values.image && (
-            <Text className="mb-6 text-center text-sm text-gray-500">
-              {formik.values.image.name}
-            </Text>
-          )}
+          <UploadImage formik={formik} />
           <Input
             type="text"
             id="fullName"
             name="fullName"
             placeholder="Full Name"
-            className="border-b-grey-500 mb-5 rounded-none border-0 border-b px-0 py-2.5 text-base"
+            autoComplete="off"
+            className="border-b-grey-500 mb-5 rounded-none border-0 border-b px-0 py-2.5 text-base placeholder:text-gray-300"
             onChange={formik.handleChange}
             value={formik.values.fullName}
           />
-
-          <Input
-            type="text"
-            id="dateOfBirth"
-            name="dateOfBirth"
-            placeholder="Date of Birth (DD/MM/YYYY)"
-            className="border-b-grey-500 mb-5 rounded-none border-0 border-b px-0 py-2.5 text-base"
-            onChange={formik.handleChange}
-            value={formik.values.dateOfBirth}
-          />
-
-          <Input
-            type="text"
-            id="phoneNumber"
-            name="phoneNumber"
-            placeholder="+62  |  Phone Number"
-            className="border-b-grey-500 mb-5 rounded-none border-0 border-b px-0 py-2.5 text-base"
-            onChange={formik.handleChange}
-            value={formik.values.phoneNumber}
-          />
-
+          <CalendarForm formik={formik} />
+          <div className="border-b-grey-500 group mb-5 flex items-center border-b has-[:active]:text-black ">
+            <span className="text-gray-300 group-has-[:valid]:text-black">
+              +62
+            </span>
+            <div className="mx-2 text-gray-300">|</div>
+            <Input
+              type="tel"
+              id="phoneNumber"
+              name="phoneNumber"
+              placeholder="Phone Number"
+              autoComplete="off"
+              className="before:content-['+62 |'] rounded-none border-0 px-0 py-2.5 text-base placeholder:text-gray-300"
+              onChange={formik.handleChange}
+              value={formik.values.phoneNumber}
+              required
+            />
+          </div>
           <Button
             type="submit"
             variant={"primary"}
             className="mt-7 h-14 w-full"
+            disabled={isPending || isImagePending}
           >
+            {(isPending || isImagePending) && (
+              <Loader className="mr-2 h-4 w-4 animate-spin" />
+            )}
             Confirm
           </Button>
         </form>
