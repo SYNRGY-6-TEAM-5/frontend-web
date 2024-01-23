@@ -15,6 +15,7 @@ import SetupProfile from "@/pages/setup-profile";
 import AccountCreated from "@/pages/account-created";
 import TermsOfService from "@/pages/terms-of-service";
 import FlightList from "@/pages/flight-list";
+import SearchFlight from "@/pages/search-flight";
 import Payment from "@/pages/payment";
 import Booking from "@/pages/booking";
 
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
   {
     path: "/flight-list",
     element: <FlightList />,
+  },
+  {
+    path: "/search-flight",
+    element: <SearchFlight />,
   },
   {
     path: "/booking",
