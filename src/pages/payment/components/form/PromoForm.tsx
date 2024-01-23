@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle, DialogFooter} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle, DialogFooter, DialogClose} from "@/components/ui/dialog";
 import { Text } from "@mantine/core";
 import Tiket from "../../../../assets/svg/ticket-discount.svg";
 import { Input } from "@/components/ui/input";
@@ -7,8 +7,12 @@ import { useState } from "react";
 
 const PromoForm = () => {
   const [voucher, setVoucher] = useState<string>("");
-  const handleOnClick = (e) => {
-    setVoucher(e.target.value);
+  const handleOnClick = (e:React.SyntheticEvent) => {
+    e.preventDefault();
+    const target = e.target as typeof e.target & {
+      promos: { value: string };
+    };
+    setVoucher(target.promos.value);
   }
   return (
     <Dialog>
@@ -38,9 +42,10 @@ const PromoForm = () => {
         <DialogHeader>
           <DialogTitle>Promo Codes and Vouchers</DialogTitle>
         </DialogHeader>
-        <div className="flex flex-row items-center justify-between gap-3 rounded-lg">
+        <form onSubmit={handleOnClick} className="flex flex-row items-center justify-between gap-3 rounded-lg">
           <Input
             id="promos"
+            name="promos"
             type="text"
             placeholder="Input your code"
             autoCapitalize="none"
@@ -49,8 +54,10 @@ const PromoForm = () => {
             defaultValue="Input your code"
             className="inline-flex h-10 items-center justify-start rounded-lg bg-gray-100 border-b border-dashed py-2.5 opacity-80"
           />
-          <Button type="submit" onClick={handleOnClick} className="rounded-xl bg-primary-500 py-4 mx-4 text-white">Use</Button>
-        </div>{" "}
+          <DialogClose asChild >
+            <Button type="submit" className="rounded-xl bg-primary-500 py-4 mx-4 text-white">Use</Button>
+          </DialogClose>
+        </form>{" "}
         <DialogFooter></DialogFooter>
       </DialogContent>
     </Dialog>
