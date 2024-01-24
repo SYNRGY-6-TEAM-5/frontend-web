@@ -31,12 +31,14 @@ const SetupProfile = () => {
       phoneNumber: "",
       image: null,
     },
-    validate: () => {
-      const errors: Partial<FormValues> = {};
+    validate: (values) => {
+      const errors: Partial<{ dateOfBirth: string }> = {};
+      if (!values.dateOfBirth) {
+        errors.dateOfBirth = "Select your date of birth!";
+      }
       return errors;
     },
     onSubmit: async (values) => {
-      console.log("Form submitted:", values);
       if (values.image) {
         await mutateImage(values.image);
       }
@@ -69,6 +71,7 @@ const SetupProfile = () => {
             className="border-b-grey-500 mb-5 rounded-none border-0 border-b px-0 py-2.5 text-base placeholder:text-gray-300"
             onChange={formik.handleChange}
             value={formik.values.fullName}
+            required
           />
           <CalendarForm formik={formik} />
           <div className="border-b-grey-500 group mb-5 flex items-center border-b has-[:active]:text-black ">

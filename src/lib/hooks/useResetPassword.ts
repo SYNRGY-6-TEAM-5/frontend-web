@@ -114,6 +114,7 @@ export const useResetChangePassword = () => {
     },
     onSuccess(data) {
       if (data.status === 200) {
+        Cookies.remove("otpData");
         navigate("/forgot-password/reset");
       }
     },

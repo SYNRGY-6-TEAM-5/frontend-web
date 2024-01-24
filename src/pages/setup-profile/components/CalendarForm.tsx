@@ -9,6 +9,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { FormikValues } from "formik";
+import { Info } from "@phosphor-icons/react";
 
 interface props {
   formik: FormikValues;
@@ -21,18 +22,19 @@ const CalendarForm = ({ formik }: props) => {
         <Button
           variant={"link"}
           className={cn(
-            "mb-5 w-full rounded-none border-b pl-0 text-left font-normal decoration-transparent",
-            !formik.values.dateOfBirth && "text-muted-foreground",
+            "mb-5 w-full rounded-none border-b pl-0 text-left text-base font-normal text-gray-300 decoration-transparent",
+            formik.values.dateOfBirth && "text-black",
+            formik.errors.dateOfBirth && "border-b-red-500 text-red-500",
           )}
         >
-          {formik.values.dateOfBirth ? (
-            <span className="text-base">
-              {format(formik.values.dateOfBirth, "dd / MM / yyyy")}
-            </span>
+          {formik.values.dateOfBirth
+            ? format(formik.values.dateOfBirth, "dd / MM / yyyy")
+            : "Date of Birth"}
+          {formik.errors.dateOfBirth ? (
+            <Info className="ml-auto h-5 w-5 text-red-500" />
           ) : (
-            <span className="text-base text-gray-300">Date of Birth</span>
+            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
           )}
-          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">

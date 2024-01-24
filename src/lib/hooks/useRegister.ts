@@ -39,7 +39,8 @@ export const useRegisterValidateOTP = ({ otp }: propsValidateOTP) => {
     },
     onSuccess(data) {
       if (data.status === 200) {
-        Cookies.set("otpData", data.data.token);
+        Cookies.remove("otpData");
+        Cookies.set("accesstoken", data.data.token);
         navigate("/setup-profile");
       }
     },
@@ -53,7 +54,7 @@ export const useRegisterUploadImage = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const token = Cookies.get("otpData");
+  const token = Cookies.get("accesstoken");
 
   const { mutateAsync, error, isPending } = useMutation({
     mutationKey: ["registerUploadImage"],
