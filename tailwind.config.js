@@ -56,7 +56,11 @@ module.exports = {
         white: "#fff",
         zinc:{
           900: "#18181b",
-        }
+        },
+        error: "#F04438"
+      },
+      boxShadow: {
+        '3xl':'0px 4px 4px 0px rgba(0, 0, 0, 0.04)',
       },
     },
     backgroundImage: {

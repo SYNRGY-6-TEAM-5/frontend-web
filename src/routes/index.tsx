@@ -18,6 +18,7 @@ import FlightList from "@/pages/flight-list";
 import SearchFlight from "@/pages/search-flight";
 import Payment from "@/pages/payment";
 import Booking from "@/pages/booking";
+import LayoutUser from "@/layout/user";
 
 const router = createBrowserRouter([
   {
@@ -96,7 +97,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/user/payment",
-        element: <Payment />,
+        element: (
+          <LayoutUser>
+            <Payment />
+          </LayoutUser>
+        ),
       },
     ],
   },

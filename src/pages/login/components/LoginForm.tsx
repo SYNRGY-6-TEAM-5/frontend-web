@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
@@ -16,7 +16,7 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 interface PostLogin {
   email: string;
   password: string;
-};
+}
 
 const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
   const API = 'https://backend-java-production-ece2.up.railway.app/api/v1/auth/login';
@@ -29,11 +29,6 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
   const role = Cookies.get('role');
   const [error, setError] = useState<boolean>(false);
 	const [message, setMessage] = useState<string>('');
-
-  if(token){
-    role === 'USER' && navigate('/user/payment');
-    role === 'ADMIN' && navigate('/admin/dashboard');
-  }
 
   const login = useGoogleLogin({
     onSuccess: async (tokenResp) => {
@@ -76,8 +71,6 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
         Cookies.set('accesstoken', res.data.token);
         Cookies.set('role',res.data.roles);
         setIsPending(false);
-        role === 'USER' && navigate('/user/payment');
-        role === 'ADMIN' && navigate('/admin/dashboard');
     } else {
         setError(true);
         setMessage("Login Error, Pastikan data benar");
@@ -102,6 +95,14 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
     await post({email, password});
   };
 
+  if(token){
+    if(role === 'USER') {
+      return <Navigate to={'/user/payment'} replace/>;
+    }
+    if(role === 'ADMIN') {
+      return <Navigate to={'/admin/dashboard'} replace/>;
+    }
+  }
   return (
     <div className={cn("grid gap-3", className)} {...props}>
       {error && <Allert variant="destructive" tittle="Error" desc={message}/>}
