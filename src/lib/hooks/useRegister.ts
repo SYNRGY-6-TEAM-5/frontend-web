@@ -8,43 +8,6 @@ import { ApiError } from "@/types/ApiError";
 import Cookies from "js-cookie";
 import { handleApiError } from "../errorApiHandler";
 
-interface propsSendEmail {
-  email: string;
-}
-
-interface responseSendEmail {
-  expiredOTP: number;
-  otp: string;
-  success: boolean;
-}
-
-export const useResetSendEmail = ({ email }: propsSendEmail) => {
-  const { toast } = useToast();
-  const navigate = useNavigate();
-
-  const { mutateAsync, error, isPending } = useMutation({
-    mutationKey: ["resetSendEmail"],
-    mutationFn: async () => {
-      const response = await axiosClient.post<responseSendEmail>(
-        `/auth/forgot-password`,
-        {
-          email,
-        },
-      );
-      return response;
-    },
-    onSuccess(data) {
-      if (data.status === 200) {
-        Cookies.set("otpData", JSON.stringify({ ...data.data, email: email }));
-        navigate("/forgot-password/otp");
-      }
-    },
-    onError: (error: ApiError) => handleApiError(error, toast),
-  });
-
-  return { mutateAsync, error, isPending };
-};
-
 interface propsValidateOTP {
   otp: string;
 }
@@ -54,9 +17,10 @@ interface otpDataTypes {
   otp: string;
   success: boolean;
   email: string;
+  password?: string;
 }
 
-export const useResetValidateOTP = ({ otp }: propsValidateOTP) => {
+export const useRegisterValidateOTP = ({ otp }: propsValidateOTP) => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -64,21 +28,20 @@ export const useResetValidateOTP = ({ otp }: propsValidateOTP) => {
   const parsedData: otpDataTypes = JSON.parse(otpData!);
 
   const { mutateAsync, error, isPending } = useMutation({
-    mutationKey: ["resetValidateOTP"],
+    mutationKey: ["registerValidateOTP"],
     mutationFn: async () => {
-      const response = await axiosClient.post(
-        `/auth/forgot-password/validate-otp`,
-        {
-          email: parsedData.email,
-          otp,
-        },
-      );
+      const response = await axiosClient.post(`/auth/signup/validate-otp`, {
+        email: parsedData.email,
+        password: parsedData.password,
+        otp,
+      });
       return response;
     },
     onSuccess(data) {
       if (data.status === 200) {
-        Cookies.set("otpData", data.data.token);
-        navigate("/forgot-password/change-password");
+        Cookies.remove("otpData");
+        Cookies.set("accesstoken", data.data.token);
+        navigate("/setup-profile");
       }
     },
     onError: (error: ApiError) => handleApiError(error, toast),
@@ -87,25 +50,24 @@ export const useResetValidateOTP = ({ otp }: propsValidateOTP) => {
   return { mutateAsync, error, isPending };
 };
 
-interface formChangePassword {
-  newPassword: string;
-  retypePassword: string;
-}
-
-export const useResetChangePassword = () => {
+export const useRegisterUploadImage = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const token = Cookies.get("otpData");
+  const token = Cookies.get("accesstoken");
 
   const { mutateAsync, error, isPending } = useMutation({
-    mutationKey: ["resetChangePassword"],
-    mutationFn: async (data: formChangePassword) => {
-      const response = await axiosClient.put(
-        `/auth/forgot-password/edit-password`,
-        data,
+    mutationKey: ["registerUploadImage"],
+    mutationFn: async (file: File) => {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await axiosClient.post(
+        `/user/profile-image?name=${file.name}`,
+        formData,
         {
           headers: {
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
           },
         },
@@ -114,8 +76,40 @@ export const useResetChangePassword = () => {
     },
     onSuccess(data) {
       if (data.status === 200) {
-        Cookies.remove("otpData");
         navigate("/forgot-password/reset");
+      }
+    },
+    onError: (error: ApiError) => handleApiError(error, toast),
+  });
+
+  return { mutateAsync, error, isPending };
+};
+
+interface formFillProfile {
+  fullName: string;
+  dob: Date;
+  phoneNumber: number;
+}
+
+export const useRegisterFillProfile = () => {
+  const { toast } = useToast();
+  const navigate = useNavigate();
+
+  const token = Cookies.get("otpData");
+
+  const { mutateAsync, error, isPending } = useMutation({
+    mutationKey: ["registerFillProfile"],
+    mutationFn: async (data: formFillProfile) => {
+      const response = await axiosClient.put(`/user/profile`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response;
+    },
+    onSuccess(data) {
+      if (data.status === 200) {
+        navigate("/account-created");
       }
     },
     onError: (error: ApiError) => handleApiError(error, toast),
