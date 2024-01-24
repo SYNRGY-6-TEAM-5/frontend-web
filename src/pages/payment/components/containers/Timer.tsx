@@ -12,7 +12,7 @@ const Timer = ({hours, minutes, seconds}:timeProps) => {
       <CardContent className="grid p-2 md:grid-cols-3 md:text-left xs:text-center xs:grid-cols-1">
           <div className="text-white">Complet payment in</div>
           <div></div>
-          <div className="rounded-md bg-white text-error text-center">
+          <div className="rounded-md bg-white text-error-500 text-center">
             {hours}:{minutes}:{seconds}
           </div>
       </CardContent>

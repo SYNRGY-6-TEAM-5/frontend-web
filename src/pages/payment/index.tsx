@@ -2,9 +2,9 @@ import Timer from "./components/containers/Timer";
 import PaymentMethod from "./components/containers/PaymentMethod";
 import OrderDetail from "./components/containers/OrderDetail";
 import useTimer from "@/lib/hooks/useTimer";
-import Promo from "./components/containers/Promo";
 import Total from "./components/containers/Total";
 import { Button } from "@/components/ui/button";
+import PromoForm from "./components/form/PromoForm";
 
 const Payment = () => {
   const date = new Date().getTime();
@@ -19,7 +19,7 @@ const Payment = () => {
       </div>
       <div className="bg-white shadow-3xl flex flex-col">
         <OrderDetail />
-        <Promo />
+        <PromoForm />
         <Total />
         <Button
             type="submit"
