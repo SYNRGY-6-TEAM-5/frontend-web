@@ -7,10 +7,10 @@ import { Text } from "@mantine/core";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ArrowCircleRight, CirclesFour } from "@phosphor-icons/react";
 import { Slide } from "react-awesome-reveal";
-import { Image } from "../ui/Image";
 
 import { ChevronDown } from "lucide-react";
 import Cookies from "js-cookie";
+import NavProfile from "./NavProfile";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ const NavBar = () => {
               </Text>
             </div>
 
-            <ul className="mr-16 flex items-center justify-end gap-8">
+            <ul className="mr-14 flex items-center justify-end gap-8">
               {NavLinks.map((navlink, index) => (
                 <List className="w-full text-base" key={index}>
                   <NavLink
@@ -67,17 +67,7 @@ const NavBar = () => {
             </ul>
 
             {token ? (
-              <div className="flex items-center">
-                <Image
-                  className="mr-3 h-11 w-11 cursor-pointer"
-                  image={
-                    "https://images.pexels.com/photos/1553783/pexels-photo-1553783.jpeg?auto=compress&cs=tinysrgb&w=600"
-                  }
-                  objectCover="object-cover rounded-full"
-                  alt="User Image"
-                />
-                <Text className="text-lg font-semibold">Angga Taufik</Text>
-              </div>
+              <NavProfile />
             ) : (
               <ul className="flex items-center justify-end gap-3">
                 {NavButtons.map((navbutton, index) => (
