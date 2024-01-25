@@ -1,3 +1,5 @@
+const Warning = require('postcss/lib/warning');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -60,6 +62,9 @@ module.exports = {
         error: {
           50: "#FEF3F2",
           500:"#F04438",
+        },
+        warning: {
+          500: "#F79009",
         }
       },
       boxShadow: {

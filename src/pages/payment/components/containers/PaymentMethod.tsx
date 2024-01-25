@@ -61,6 +61,6 @@ const PaymentMethod = ({runTimer}:{runTimer:boolean}) => {
       </div>
     </div>
   )
-} 
+}
 
 export default PaymentMethod;
