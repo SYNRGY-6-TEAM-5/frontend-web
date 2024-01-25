@@ -1,9 +1,10 @@
-import { useState } from "react";
 import { Button } from "./button";
 import { Input } from "./input";
 import { cn } from "@/lib/utils";
 import { Copy } from "lucide-react";
-import Allert from "../containers/Allert";
+import { Toaster } from "./sonner";
+import { toast } from "sonner";
+
 
 type ListProps = {
   name: string;
@@ -20,14 +21,11 @@ const InputCopy = ({
   value,
   error,
 }: ListProps) => {
-  const [copy, setCopy] = useState<boolean>(false);
 
   const handleCopyText = () => {
     navigator.clipboard.writeText(String(value));
-    setCopy(true);
-    setTimeout(() => {
-      setCopy(false);
-    }, 3000);
+    toast.success("Text Copied", {
+    })
   };
 
   return (
@@ -47,7 +45,7 @@ const InputCopy = ({
         autoComplete="off"
         autoCorrect="off"
         className={cn(
-          " text-black text-sm font-medium rounded-none border-0 text-base bg-transparent",
+          " text-black text-sm font-medium rounded-none border-0 bg-transparent",
           error && "!text-red-400",
         )}
         disabled
@@ -60,7 +58,7 @@ const InputCopy = ({
       >
         <Copy size={24} />
       </Button>
-      {copy && <Allert variant={"default"} tittle={"Text copied"} desc={""} position={"center"} />}
+      <Toaster />
     </div>
   );
 };

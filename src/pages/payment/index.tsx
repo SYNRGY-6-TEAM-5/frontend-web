@@ -6,16 +6,26 @@ import Total from "./components/containers/Total";
 import { Button } from "@/components/ui/button";
 import PromoForm from "./components/form/PromoForm";
 import { useNavigate } from "react-router-dom";
+import { Toaster, toast } from "sonner";
+import { useEffect } from "react";
 
 const Payment = () => {
   const date = new Date().getTime();
-  const countDownTime = 20;
+  const countDownTime = 5;
   const {seconds, minutes, hours, runTimer} = useTimer({date, countDownTime});
 
   const navigate = useNavigate();
   const handleOnClick = () => {
     navigate('/user/payment-details');
   }
+
+  useEffect(() => {
+    if(!runTimer) {
+      toast.error("Transaction Timeout", {
+        description: "Please, repeate the procedure",
+      })
+    }
+  })
 
   return(
     <section className="grid gap-4 pt-32 pb-4 px-20 lg:grid-cols-3 xs:grid-cols-1">
@@ -36,6 +46,7 @@ const Payment = () => {
           Pay
         </Button>
       </div>
+      <Toaster />
     </section>
   )
 }

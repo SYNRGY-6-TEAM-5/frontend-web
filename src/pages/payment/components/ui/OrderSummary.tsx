@@ -27,7 +27,7 @@ const OrderSummary = () => {
         <ChevronRight size={20} className="font-base text-primary-500" />
       </label>
       <Dialog open={dialog} onOpenChange={handleDialog}>
-        <DialogContent className="max-w-[375px] backdrop-blur-md p-4 sm:max-w-[375px] overflow-y-scroll max-h-screen">
+        <DialogContent className="max-w-[375px] max-h-[85%] backdrop-blur-md p-4 sm:max-w-[375px] overflow-y-scroll">
           <DialogHeader>
             <DialogTitle>Order Summary</DialogTitle>
           </DialogHeader>
