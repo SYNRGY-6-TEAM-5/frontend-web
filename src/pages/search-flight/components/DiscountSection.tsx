@@ -2,10 +2,10 @@ import DiscountSearch from "../../../assets/discount-search.png";
 
 const DiscountSection = () => {
   return (
-    <div className="mx-auto mt-9 flex">
+    <div className="m-auto mt-9 w-full bg-black pl-6 md:pl-9 lg:pl-20">
       <section className="flex h-[452px] items-center justify-between overflow-x-hidden">
         <div className="flex h-full w-full bg-[#111]">
-          <div className="ml-9 flex w-full flex-col items-start justify-center text-white">
+          <div className="flex w-full flex-col items-start justify-center text-white">
             <div className="max-w-[505px] text-[40px] font-medium leading-[60px] tracking-[-0.96px]">
               Sign up now and Get a 30% Discount on All Cabin Class
             </div>
