@@ -34,15 +34,18 @@ export default function useNav() {
         }
     };
 
-    const getInitials = (name: string) => {
-        const words = name?.trim().split(/\s+/);
-        if (words.length >= 2) {
-            return `${words[0].charAt(0)}${words[words.length - 1].charAt(0)}`;
+    const getInitials = (name: string | null | undefined) => {
+        if (name) {
+            const words = name.trim().split(/\s+/);
+            if (words.length >= 2) {
+                return `${words[0].charAt(0)}${words[words.length - 1].charAt(0)}`;
+            } else {
+                return name.charAt(0) || "A";
+            }
         } else {
-            return name?.charAt(0) || "A";
+            return "NA";
         }
-    };
-
+    };    
 
     const fetchUserData = async () => {
         try {
