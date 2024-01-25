@@ -68,7 +68,9 @@ const NavProfile = ({ className, ...props }: CardProps) => {
             <AvatarFallback>{initialName}</AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-2">
-            <Text className="text-lg font-semibold">{userData?.fullName}</Text>
+            {userData?.fullName ? 
+              <Text className="text-lg font-semibold">{userData?.fullName}</Text>
+            : <Text className="text-lg font-semibold text-slate-500">Not Assigned</Text>}
             <Text className="text-md font-normal text-slate-500">
               {userData?.email_address}
             </Text>
