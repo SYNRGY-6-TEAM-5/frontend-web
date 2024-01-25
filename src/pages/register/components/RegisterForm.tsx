@@ -121,7 +121,7 @@ const RegisterForm = ({ className, ...props }: UserAuthFormProps) => {
 
   return (
     <div className={cn("grid gap-3", className)} {...props}>
-      {error && <Allert variant="destructive" tittle="Error" desc={message} />}
+      {error && <Allert position={"top-left"} variant="destructive" tittle="Error" desc={message} />}
       <form onSubmit={handleOnSubmit}>
         <div className="grid gap-6">
           <div className="grid gap-5">
