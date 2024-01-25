@@ -37,8 +37,8 @@ const TabsPassanger = ({passengers, depart, arrive}:flightInterface) => {
           <Table className="border border-gray-200">
             <TableHeader className="bg-black text-white rounded-lg hover:bg-white hover:text-black">
               <TableRow>
-                <TableHead>Add-ons</TableHead>
-                <TableHead>Evidence</TableHead>
+                <TableHead className="border-white border text-white rounded-ss-lg">Add-ons</TableHead>
+                <TableHead className="border-white border text-white rounded-se-lg">Evidence</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
