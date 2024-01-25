@@ -15,18 +15,14 @@ import {
 } from "@/components/ui/dialog";
 
 import { IAirport } from "@/lib/hooks/useHome";
+import { AirportDetails } from "@/types/Ticket";
 
 interface SelectAirportDialogProps {
   airports: IAirport[];
   handleSearch: (event: ChangeEvent<HTMLInputElement>) => void;
   onAirportSelect: (airport: any) => void;
   isActive: boolean;
-  switchedAirport: {
-    airportName: string;
-    cityIataCode: string;
-    countryIso2: string;
-    iataCode: string;
-  } | null;
+  switchedAirport: Partial<AirportDetails> | null;
 }
 
 const SelectAirportDialog: React.FC<SelectAirportDialogProps> = ({
@@ -36,11 +32,12 @@ const SelectAirportDialog: React.FC<SelectAirportDialogProps> = ({
   isActive,
   switchedAirport,
 }) => {
-  const [selectedAirport, setSelectedAirport] = useState({
-    airportName: "",
-    cityIataCode: "",
-    countryIso2: "",
-    iataCode: "",
+  const [selectedAirport, setSelectedAirport] = useState<Partial<AirportDetails>>({
+    airport_name: "",
+    city_iata_code: "",
+    country_iso_code: "",
+    city_name: "",
+    iata_code: "",
   });
 
   useEffect(() => {
@@ -52,24 +49,27 @@ const SelectAirportDialog: React.FC<SelectAirportDialogProps> = ({
 
   const handleAirportClick = (airport: any) => {
     onAirportSelect({
-      airportName: airport.airport_name,
-      cityIataCode: airport.city_iata_code,
-      countryIso2: airport.country_iso2,
-      iataCode: airport.iata_code,
+      airport_name: airport.airport_name,
+      city_iata_code: airport.city_iata_code,
+      country_iso_code: airport.country_iso2,
+      city_name: airport.city_name,
+      iata_code: airport.iata_code,
     });
 
     setSelectedAirport({
-      airportName: airport.airport_name,
-      cityIataCode: airport.city_iata_code,
-      countryIso2: airport.country_iso2,
-      iataCode: airport.iata_code,
+      airport_name: airport.airport_name,
+      city_iata_code: airport.city_iata_code,
+      country_iso_code: airport.country_iso2,
+      city_name: airport.city_name,
+      iata_code: airport.iata_code,
     });
 
     console.log({
-      airportName: airport.airport_name,
-      cityIataCode: airport.city_iata_code,
-      countryIso2: airport.country_iso2,
-      iataCode: airport.iata_code,
+      airport_name: airport.airport_name,
+      city_iata_code: airport.city_iata_code,
+      country_iso_code: airport.country_iso2,
+      city_name: airport.city_name,
+      iata_code: airport.iata_code,
     });
   };
 
@@ -80,9 +80,9 @@ const SelectAirportDialog: React.FC<SelectAirportDialogProps> = ({
           variant="transparent"
           className="h-15 relative flex w-[8.5rem] flex-col items-start justify-start border-b border-dashed border-b-primary-500"
         >
-          {selectedAirport.cityIataCode !== "" ? (
+          {selectedAirport.city_iata_code !== "" ? (
             <Text className="-left-4 w-full text-start text-2xl font-semibold text-slate-700 lg:text-xl">
-              {selectedAirport.cityIataCode}
+              {selectedAirport.city_iata_code}
             </Text>
           ) : (
             <Text className="w-full text-start text-sm font-semibold text-slate-400 lg:text-sm">
@@ -91,8 +91,8 @@ const SelectAirportDialog: React.FC<SelectAirportDialogProps> = ({
           )}
 
           <Text className="w-full text-start text-[9pt] font-bold tracking-wider text-primary-500">
-            {selectedAirport.iataCode !== ""
-              ? `${selectedAirport.airportName} (${selectedAirport.iataCode})`
+            {selectedAirport.iata_code !== ""
+              ? `${selectedAirport.airport_name} (${selectedAirport.iata_code})`
               : ""}
           </Text>
           <ChevronDown

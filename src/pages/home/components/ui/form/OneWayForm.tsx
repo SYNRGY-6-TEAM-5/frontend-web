@@ -25,6 +25,7 @@ import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import useHome from "@/lib/hooks/useHome";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
+import { AirportDetails } from "@/types/Ticket";
 
 const FormSchema = z.object({
   departureDate: z
@@ -59,18 +60,14 @@ const FormSchema = z.object({
 });
 
 const OneWayForm = () => {
-  const { airports, handleSearch, fetchAirports, params, setParams } =
-    useHome();
+  const { airports, handleSearch, fetchAirports } = useHome();
   const navigate = useNavigate();
 
-  // eslint-disable-next-line no-unused-vars
-  const [selectedOriginAirport, setSelectedOriginAirport] = useState(null);
-  // eslint-disable-next-line no-unused-vars
+  const [selectedOriginAirport, setSelectedOriginAirport] =
+    useState<AirportDetails | null>(null);
   const [selectedDestinationAirport, setSelectedDestinationAirport] =
-    useState(null);
-  // eslint-disable-next-line no-unused-vars
+    useState<AirportDetails | null>(null);
   const [isOriginActive, setIsOriginActive] = useState(true);
-  const [completeData, setCompleteData] = useState({});
 
   const [ticketDetails, setTicketDetails] = useState<Seat | null>(null);
 
@@ -129,13 +126,15 @@ const OneWayForm = () => {
       return;
     }
 
-    const searchParams = new URLSearchParams()
-    searchParams.append('origin', selectedOriginAirport.iataCode!);
-    searchParams.append('destination', selectedDestinationAirport.iataCode!);
-    searchParams.append('date', format(data.departureDate!, "yyyy-MM-dd"));
+    const searchParams = new URLSearchParams();
+    searchParams.append("origin", selectedOriginAirport.iata_code!);
+    searchParams.append("destination", selectedDestinationAirport.iata_code!);
+    searchParams.append("o_city", selectedOriginAirport.city_name!);
+    searchParams.append("d_city", selectedDestinationAirport.city_name!);
+    searchParams.append("date", format(data.departureDate!, "yyyy-MM-dd"));
 
     for (const key in ticketDetails) {
-      searchParams.append(key, ticketDetails[key]);
+      searchParams.append(key, (ticketDetails as Record<string, any>)[key]);
     }
 
     navigate(`/search-flight?${searchParams}`);

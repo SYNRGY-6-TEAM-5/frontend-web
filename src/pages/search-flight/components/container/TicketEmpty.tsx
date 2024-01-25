@@ -26,7 +26,7 @@ const TicketEmpty = () => {
               {paramsData.origin}
             </div>
             <div className="text-[16px] font-medium text-gray-300">
-              Yogyakarta
+            {paramsData.o_city}
             </div>
           </div>
           <div className="mx-6">
@@ -36,7 +36,7 @@ const TicketEmpty = () => {
             <div className="text-[36px] font-bold text-black">
               {paramsData.destination}
             </div>
-            <div className="text-[16px] font-medium text-gray-300">Jakarta</div>
+            <div className="text-[16px] font-medium text-gray-300">{paramsData.d_city}</div>
           </div>
         </div>
         <Text className="mt-8 text-center">

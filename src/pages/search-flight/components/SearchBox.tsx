@@ -27,7 +27,7 @@ const SearchBox = () => {
               <div className="text-[36px] font-bold text-[#F74E28]">
                 {paramsData.origin}
               </div>
-              <div className="text-[12px] font-extralight">Yogyakarta</div>
+              <div className="text-[12px] font-extralight">{paramsData.o_city}</div>
             </div>
             <div className="mx-6">
               <img src={Destination} alt="" />
@@ -36,7 +36,7 @@ const SearchBox = () => {
               <div className="text-[36px] font-bold text-[#F74E28]">
                 {paramsData.destination}
               </div>
-              <div className="text-[12px] font-extralight">Jakarta</div>
+              <div className="text-[12px] font-extralight">{paramsData.d_city}</div>
             </div>
           </div>
           <div className="ml-16 flex items-center justify-center text-[18px] text-[#B9C0D4]">
