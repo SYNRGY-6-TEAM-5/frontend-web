@@ -60,7 +60,7 @@ const FormSchema = z.object({
 });
 
 const OneWayForm = () => {
-  const { airports, handleSearch, fetchAirports } = useHome();
+  const { airports, handleSearch, fetchAirports, params } = useHome();
   const navigate = useNavigate();
 
   const [selectedOriginAirport, setSelectedOriginAirport] =
@@ -141,8 +141,13 @@ const OneWayForm = () => {
   };
 
   useEffect(() => {
-    fetchAirports();
-  }, []);
+    const debounceTimeout = setTimeout(() => {
+      fetchAirports();
+    }, 300);
+
+    return () => clearTimeout(debounceTimeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params]);
 
   return (
     <Form {...form}>
