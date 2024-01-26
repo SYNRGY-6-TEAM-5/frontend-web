@@ -9,3 +9,6 @@ export { default as Citilink } from "./citilink.svg?react";
 export { default as GarudaIndonesia } from "./garuda-indonesia.svg?react";
 export { default as LionAir } from "./lion-air.svg?react";
 export { default as BatikAir } from "./batik-air.svg?react";
+export { default as FullProtect } from "./full-protect.svg?react";
+export { default as BaggageInsurance } from "./baggage-insurance.svg?react";
+export { default as FlightDelay } from "./flight-delay.svg?react";
