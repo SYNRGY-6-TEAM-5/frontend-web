@@ -9,3 +9,8 @@ export { default as Citilink } from "./citilink.svg?react";
 export { default as GarudaIndonesia } from "./garuda-indonesia.svg?react";
 export { default as LionAir } from "./lion-air.svg?react";
 export { default as BatikAir } from "./batik-air.svg?react";
+export { default as EatLogo } from "./eat.svg?react";
+export { default as WorkLogo } from "./work.svg?react";
+export { default as GarudaLogo } from "./garuda.svg?react";
+export { default as ArrowCircleRight } from "./ArrowCircleRight.svg?react";
+
