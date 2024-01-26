@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import SelectAirportDialog from "../SelectAirportDialog";
-import SelectSeatDialog, { Seat } from "../SelectSeatDialog";
+import SelectSeatDialog from "../SelectSeatDialog";
 import DatePicker from "../Calendar";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,6 +26,7 @@ import useHome from "@/lib/hooks/useHome";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import { AirportDetails } from "@/types/Ticket";
+import { Seat } from "@/types/Ticket";
 
 const FormSchema = z.object({
   departureDate: z
