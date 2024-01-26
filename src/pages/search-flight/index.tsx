@@ -8,9 +8,10 @@ import ListTicket from "./components/ListTicket";
 import SearchBox from "./components/SearchBox";
 
 const SearchFlight = () => {
+
   return (
     <>
-      <div className="font-inter flex flex-col">
+      <div className="flex flex-col bg-[#FBFBFB]">
         <NavBar />
         <SearchBox />
         <DatePrice />

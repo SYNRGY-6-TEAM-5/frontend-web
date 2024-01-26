@@ -52,7 +52,6 @@ export const useRegisterValidateOTP = ({ otp }: propsValidateOTP) => {
 
 export const useRegisterUploadImage = () => {
   const { toast } = useToast();
-  const navigate = useNavigate();
 
   const token = Cookies.get("accesstoken");
 
@@ -73,11 +72,6 @@ export const useRegisterUploadImage = () => {
         },
       );
       return response;
-    },
-    onSuccess(data) {
-      if (data.status === 200) {
-        navigate("/forgot-password/reset");
-      }
     },
     onError: (error: ApiError) => handleApiError(error, toast),
   });
