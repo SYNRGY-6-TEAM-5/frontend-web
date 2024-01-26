@@ -1,3 +1,4 @@
+import { Text } from "@mantine/core";
 import { Card } from "@/components/ui/card";
 import { TabsContent } from "@/components/ui/tabs";
 
@@ -5,6 +6,8 @@ import useFilter from "@/lib/hooks/useFilter";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { useEffect } from "react";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
+import { Button } from "@/components/ui/button";
 
 type CardProps = React.ComponentProps<typeof Card>;
 
@@ -53,6 +56,12 @@ const AirlineTabContent: React.FC<AirlineTabContentProps> = () => {
               </Label>
             </div>
           ))}
+          <Button variant="ghost" className="flex flex-row gap-1">
+            <Text className="text-xs font-normal text-primary-500">
+              Show More
+            </Text>
+            <ChevronDownIcon className="text-primary-500" />
+          </Button>
         </RadioGroup>
       </Card>
     </TabsContent>
