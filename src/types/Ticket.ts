@@ -31,13 +31,21 @@ interface Arrival {
   airport_details: AirportDetails;
 }
 
-interface Airline {
+export interface Airline {
   airline_id: number;
   name: string;
   iata: string;
   image: string;
   created_at: string;
   updated_at: null | string; // Adjust the type accordingly
+}
+
+export type Seat = {
+  ticket_class: string
+  adult_seat: number;
+  child_seat: number;
+  total_seat: number
+  infant_seat: number;
 }
 
 interface Flight {

@@ -14,11 +14,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { IAirport } from "@/lib/hooks/useHome";
 import { AirportDetails } from "@/types/Ticket";
 
 interface SelectAirportDialogProps {
-  airports: IAirport[];
+  airports: AirportDetails[];
   handleSearch: (event: ChangeEvent<HTMLInputElement>) => void;
   onAirportSelect: (airport: any) => void;
   isActive: boolean;
@@ -80,9 +79,9 @@ const SelectAirportDialog: React.FC<SelectAirportDialogProps> = ({
           variant="transparent"
           className="h-15 relative flex w-[8.5rem] flex-col items-start justify-start border-b border-dashed border-b-primary-500"
         >
-          {selectedAirport.city_iata_code !== "" ? (
+          {selectedAirport.iata_code !== "" ? (
             <Text className="-left-4 w-full text-start text-2xl font-semibold text-slate-700 lg:text-xl">
-              {selectedAirport.city_iata_code}
+              {selectedAirport.iata_code}
             </Text>
           ) : (
             <Text className="w-full text-start text-sm font-semibold text-slate-400 lg:text-sm">
@@ -90,11 +89,11 @@ const SelectAirportDialog: React.FC<SelectAirportDialogProps> = ({
             </Text>
           )}
 
-          <Text className="w-full text-start text-[9pt] font-bold tracking-wider text-primary-500">
+          {/* <Text className="w-full text-start text-[9pt] font-bold tracking-wider text-primary-500">
             {selectedAirport.iata_code !== ""
               ? `${selectedAirport.airport_name} (${selectedAirport.iata_code})`
               : ""}
-          </Text>
+          </Text> */}
           <ChevronDown
             size={20}
             className="font-base absolute right-0 top-1/4 text-primary-500"

@@ -7,21 +7,17 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Text } from "@mantine/core";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 
-type CardProps = React.ComponentProps<typeof Card>;
+import SortByTabContent from "./tabs/SortBy";
+import DepartureTimeTabContent from "./tabs/DepartureTime";
+import DurationTabContent from "./tabs/Duration";
+import CabinClassTabContent from "./tabs/CabinClass";
+import AirlineTabContent from "./tabs/Airline";
+import LayoverTabContent from "./tabs/Layover";
 
-const FilterDialog: React.FC<CardProps> = ({ className, ...props }) => {
+const FilterDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -105,89 +101,12 @@ const FilterDialog: React.FC<CardProps> = ({ className, ...props }) => {
               orientation="vertical"
               className="z-50 h-full w-[0.1px] bg-black"
             />
-            <TabsContent value="sort-by" className="w-full">
-              <Card>
-                <ul className="flex w-full flex-col items-center justify-center gap-2">
-                  <li>
-                    <input
-                      type="radio"
-                      id="economy-class"
-                      name="ticket-class"
-                      value="Economy"
-                      className="peer hidden"
-                      required
-                      // checked={ticketClass === "Economy"}
-                      // onChange={handleTicketClassChange}
-                    />
-                    <label
-                      htmlFor="economy-class"
-                      className="inline-flex w-full min-w-[7.5rem] cursor-pointer items-center justify-between rounded-full bg-slate-100 p-2 text-zinc-900 hover:bg-primary-200 hover:text-white peer-checked:bg-primary-500 peer-checked:text-white"
-                    >
-                      <Text className="text-center text-xs font-semibold">
-                        Economy Class
-                      </Text>
-                    </label>
-                  </li>
-                  <li>
-                    <input
-                      type="radio"
-                      id="business-class"
-                      name="ticket-class"
-                      value="Business"
-                      className="peer hidden"
-                      required
-                      // checked={ticketClass === "Business"}
-                      // onChange={handleTicketClassChange}
-                    />
-                    <label
-                      htmlFor="business-class"
-                      className="inline-flex w-full min-w-[7.5rem] cursor-pointer items-center justify-between rounded-full bg-slate-100 p-2 text-zinc-900 hover:bg-primary-200 hover:text-white peer-checked:bg-primary-500 peer-checked:text-white"
-                    >
-                      <div className="flex w-full items-center justify-center">
-                        <Text className="text-xs font-semibold">
-                          Business Class
-                        </Text>
-                      </div>
-                    </label>
-                  </li>
-                  <li>
-                    <input
-                      type="radio"
-                      id="first-class"
-                      name="ticket-class"
-                      value="First"
-                      className="peer hidden"
-                      required
-                      // checked={ticketClass === "First"}
-                      // onChange={handleTicketClassChange}
-                    />
-                    <label
-                      htmlFor="first-class"
-                      className="inline-flex w-full min-w-[7.5rem] cursor-pointer items-center justify-between rounded-full bg-slate-100 p-2 text-zinc-900 hover:bg-primary-200 hover:text-white peer-checked:bg-primary-500 peer-checked:text-white"
-                    >
-                      <Text className="pl-2 text-xs font-semibold">
-                        First Class
-                      </Text>
-                    </label>
-                  </li>
-                </ul>
-              </Card>
-            </TabsContent>
-            <TabsContent value="departure-time">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Password</CardTitle>
-                  <CardDescription>
-                    Change your password here. After saving, you'll be logged
-                    out.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-2"></CardContent>
-                <CardFooter>
-                  <Button>Save password</Button>
-                </CardFooter>
-              </Card>
-            </TabsContent>
+            <SortByTabContent />
+            <DepartureTimeTabContent />
+            <DurationTabContent />
+            <CabinClassTabContent />
+            <AirlineTabContent />
+            <LayoverTabContent />
           </Tabs>
           <div className="flex w-full flex-row items-end justify-between">
             <Button variant="ghost" className="h-8">

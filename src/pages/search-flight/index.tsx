@@ -3,7 +3,7 @@ import CopyrightSearch from "./components/Copyright";
 import DatePrice from "./components/DatePrice";
 import DiscountSection from "./components/DiscountSection";
 import FilterSort from "./components/FiterSort";
-import FooterSearch from "./components/Footer";
+import FooterSearch from "../../components/containers/Footer";
 import ListTicket from "./components/ListTicket";
 import SearchBox from "./components/SearchBox";
 
