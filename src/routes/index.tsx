@@ -5,7 +5,7 @@ import { Outlet, createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 
 import NavBar from "../components/containers/NavBar";
-import Footer from "../components/containers/Footer";
+import FooterSearch from "../components/containers/Footer";
 import PasswordOTP from "@/pages/forget-password/otp";
 import ChangePasswordMethod from "@/pages/forget-password/method";
 import ChangePassword from "@/pages/forget-password/change-password";
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
       <>
         <NavBar />
         <Home />
-        <Footer />
+        <FooterSearch />
       </>
     ),
   },

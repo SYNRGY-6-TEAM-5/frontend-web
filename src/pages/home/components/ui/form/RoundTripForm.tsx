@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import SelectAirportDialog from "../SelectAirportDialog";
-import SelectSeatDialog, { Seat } from "../SelectSeatDialog";
+import SelectSeatDialog from "../SelectSeatDialog";
 import DatePicker from "../Calendar";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,6 +22,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/components/ui/use-toast";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import useHome from "@/lib/hooks/useHome";
+import { Seat } from "@/types/Ticket";
 
 const FormSchema = z.object({
   departureDate: z
