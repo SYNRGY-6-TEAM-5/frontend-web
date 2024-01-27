@@ -3,8 +3,8 @@ import React from "react";
 import { Text } from "@mantine/core";
 import { Input } from "@/components/ui/input";
 
-import DoBForm from "../containers/DoBForm";
 import { FormikValues } from "formik";
+import ExpirationDateForm from "../containers/ExpDateForm";
 
 interface TravelDocFormProps {
   _index: number;
@@ -35,13 +35,16 @@ const TravelDocForm: React.FC<TravelDocFormProps> = ({
   _age,
   formik,
 }) => {
-  const nikKey = `${_age}-nik-${
+  const docTypeKey = `${_age}-doc-type-${
     _index + 1
   }` as keyof FormValues["passengers"]["adults"];
-  const fullNameKey = `${_age}-fullName-${
+  const docNumberKey = `${_age}-doc-num-${
     _index + 1
   }` as keyof FormValues["passengers"]["adults"];
-  const dateOfBirthKey = `${_age}-dateOfBirth-${
+  const nationalityKey = `${_age}-nation-${
+    _index + 1
+  }` as keyof FormValues["passengers"]["adults"];
+  const expDateKey = `${_age}-exp-date-${
     _index + 1
   }` as keyof FormValues["passengers"]["adults"];
 
@@ -52,41 +55,41 @@ const TravelDocForm: React.FC<TravelDocFormProps> = ({
       } Travel Documents`}</Text>
       <Input
         type="text"
-        id={`${_age}-nik-${_index + 1}`}
-        name={`${_age}-nik-${_index + 1}`}
+        id={`${_age}-doc-type-${_index + 1}`}
+        name={`${_age}-doc-type-${_index + 1}`}
         placeholder="Document Type"
         autoComplete="off"
         className="border-b px-0 py-2.5 text-base placeholder:text-gray-300"
         onChange={formik.handleChange}
-        value={formik.values[nikKey]?.toString()}
+        value={formik.values[docTypeKey]?.toString()}
         required
       />
       <Input
         type="text"
-        id={`${_age}-fullName-${_index + 1}`}
-        name={`${_age}-fullName-${_index + 1}`}
+        id={`${_age}-nation-${_index + 1}`}
+        name={`${_age}-nation-${_index + 1}`}
         placeholder="Nationality"
         autoComplete="off"
         className="border-b px-0 py-2.5 text-base placeholder:text-gray-300"
         onChange={formik.handleChange}
-        value={formik.values[fullNameKey]?.toString()}
+        value={formik.values[nationalityKey]?.toString()}
         required
       />
       <Input
         type="text"
-        id={`${_age}-fullName-${_index + 1}`}
-        name={`${_age}-fullName-${_index + 1}`}
+        id={`${_age}-doc-num-${_index + 1}`}
+        name={`${_age}-doc-num-${_index + 1}`}
         placeholder="Document Number"
         autoComplete="off"
         className="border-b px-0 py-2.5 text-base placeholder:text-gray-300"
         onChange={formik.handleChange}
-        value={formik.values[fullNameKey]?.toString()}
+        value={formik.values[docNumberKey]?.toString()}
         required
       />
-      <DoBForm
+      <ExpirationDateForm
         formik={formik}
-        _id={`${_age}-dateOfBirth-${_index + 1}`}
-        _dobKey={dateOfBirthKey}
+        _id={`${_age}-exp-date-${_index + 1}`}
+        _expKey={expDateKey}
       />
     </div>
   );

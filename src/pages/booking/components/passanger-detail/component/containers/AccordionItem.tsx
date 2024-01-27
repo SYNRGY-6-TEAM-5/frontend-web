@@ -76,7 +76,7 @@ const AccordionFormItem: React.FC<AccordionFormItemProps> = ({
             type="text"
             id={`${_age}-nik-${_index + 1}`}
             name={`${_age}-nik-${_index + 1}`}
-            placeholder="NIK"
+            placeholder={_age !== "adult" ? "Parent or Provisioning adult NIK" : "NIK"}
             autoComplete="off"
             className="border-b px-0 py-2.5 text-base placeholder:text-gray-300"
             onChange={formik.handleChange}
@@ -87,7 +87,7 @@ const AccordionFormItem: React.FC<AccordionFormItemProps> = ({
             type="text"
             id={`${_age}-fullName-${_index + 1}`}
             name={`${_age}-fullName-${_index + 1}`}
-            placeholder="fullName"
+            placeholder="Full Name"
             autoComplete="off"
             className="border-b px-0 py-2.5 text-base placeholder:text-gray-300"
             onChange={formik.handleChange}

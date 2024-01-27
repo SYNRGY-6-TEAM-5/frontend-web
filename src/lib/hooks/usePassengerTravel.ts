@@ -14,10 +14,18 @@ interface formFillPassenger {
   nik: string;
 }
 
+interface TravelDoc {
+  docType: Date;
+  nation: string;
+  docNum: string;
+  expDate: string;
+}
+
 interface PassengerData {
   nik: string;
   fullName: string;
   dateOfBirth: Date | null;
+  travelDocs: TravelDoc[];
 }
 
 interface PassengerGroup {
@@ -42,25 +50,61 @@ export const restructureData = (data: any): FormValues => {
   for (const key in data) {
     if (key.includes('adult')) {
       const index = key.split('-')[2];
-      passengers.adults[`adult-${index}`] = {
-        nik: data[`adult-nik-${index}`],
-        fullName: data[`adult-fullName-${index}`],
-        dateOfBirth: data[`adult-dateOfBirth-${index}`],
-      };
+      const passengerKey = `adult-${index}`;
+      if (!passengers.adults[passengerKey]) {
+        passengers.adults[passengerKey] = {
+          nik: data[`adult-nik-${index}`],
+          fullName: data[`adult-fullName-${index}`],
+          dateOfBirth: data[`adult-dateOfBirth-${index}`],
+          travelDocs: [],
+        };
+      }
+      if (key.startsWith('adult-doc')) {
+        passengers.adults[passengerKey].travelDocs.push({
+          expDate: data[`adult-exp-date-${index}`],
+          docType: data[key],
+          nation: data[`adult-nation-${index}`],
+          docNum: data[`adult-doc-num-${index}`],
+        });
+      }
     } else if (key.includes('child')) {
       const index = key.split('-')[2];
-      passengers.childs[`child-${index}`] = {
-        nik: data[`child-nik-${index}`],
-        fullName: data[`child-fullName-${index}`],
-        dateOfBirth: data[`child-dateOfBirth-${index}`],
-      };
+      const passengerKey = `child-${index}`;
+      if (!passengers.childs[passengerKey]) {
+        passengers.childs[passengerKey] = {
+          nik: data[`child-nik-${index}`],
+          fullName: data[`child-fullName-${index}`],
+          dateOfBirth: data[`child-dateOfBirth-${index}`],
+          travelDocs: [],
+        };
+      }
+      if (key.startsWith('child-doc')) {
+        passengers.childs[passengerKey].travelDocs.push({
+          expDate: data[`child-exp-date-${index}`],
+          docType: data[key],
+          nation: data[`child-nation-${index}`],
+          docNum: data[`child-doc-num-${index}`],
+        });
+      }
     } else if (key.includes('infant')) {
       const index = key.split('-')[2];
-      passengers.infants[`infant-${index}`] = {
-        nik: data[`infant-nik-${index}`],
-        fullName: data[`infant-fullName-${index}`],
-        dateOfBirth: data[`infant-dateOfBirth-${index}`],
-      };
+      const passengerKey = `infant-${index}`;
+      if (!passengers.infants[passengerKey]) {
+        passengers.infants[passengerKey] = {
+          nik: data[`infant-nik-${index}`],
+          fullName: data[`infant-fullName-${index}`],
+          dateOfBirth: data[`infant-dateOfBirth-${index}`],
+          travelDocs: [],
+        };
+      }
+      if (key.startsWith('infant-doc')) {
+        passengers.infants[passengerKey].travelDocs.push({
+          expDate: data[`infant-exp-date-${index}`],
+          docType: data[key],
+          nation: data[`infant-nation-${index}`],
+          docNum: data[`infant-doc-num-${index}`],
+        });
+      }
     }
   }
 

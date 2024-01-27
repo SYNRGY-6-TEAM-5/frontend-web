@@ -16,7 +16,7 @@ import {
 import { Accordion } from "@/components/ui/accordion";
 
 import {
-  useFillPassenger,
+  // useFillPassenger,
   restructureData,
 } from "@/lib/hooks/usePassengerTravel";
 import { Button } from "@/components/ui/button";
@@ -29,7 +29,7 @@ const ticketDetails: any = {
   infant_seat: 1,
   child_seat: 0,
   total_seat: 0,
-  isInternational: false,
+  isInternational: true,
 };
 
 interface PassengerData {
@@ -85,7 +85,8 @@ const PassangerDetail = () => {
     },
     onSubmit: async (values) => {
       const { passengers } = restructureData(values);
-      console.log("Formik Log:", passengers);
+      console.log("Formik Unstructured Log:", values);
+      console.log("Formik Structured Log:", passengers);
     },
   });
 
@@ -162,9 +163,9 @@ const PassangerDetail = () => {
       <Card className="mb-8">
         <CardHeader className="flex flex-col gap-6">
           {ticketDetails.isInternational ? (
-            <div className="flex flex-row items-center justify-between gap-12">
+            <div className="flex flex-row items-center justify-between gap-12 pt-2">
               <CardTitle className="w-full">Your destination requires travel documents</CardTitle>
-              <CardDescription className="text-sm w-96 text-slate-900">
+              <CardDescription className="text-sm w-96 text-slate-900 text-right">
                 Please prepare the documents, you will need to enter the
                 details.
               </CardDescription>
