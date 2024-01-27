@@ -16,10 +16,8 @@ import {
 import { Accordion } from "@/components/ui/accordion";
 
 import {
-  // useFillPassenger,
   restructureData,
 } from "@/lib/hooks/usePassengerTravel";
-import { Button } from "@/components/ui/button";
 import AccordionFormItem from "./component/containers/AccordionItem";
 import { Form } from "@/components/ui/form";
 
@@ -89,10 +87,6 @@ const PassangerDetail = () => {
       console.log("Formik Structured Log:", passengers);
     },
   });
-
-  const handleSubmit = () => {
-    console.log("Basic Log >>> ", passengersData);
-  };
 
   const generatePassengerAccordionItems = () => {
     const items: JSX.Element[] = [];
