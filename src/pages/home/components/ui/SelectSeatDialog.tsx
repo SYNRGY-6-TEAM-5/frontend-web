@@ -19,14 +19,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
-export type Seat = {
-  ticket_class: string
-  adult_seat: number;
-  child_seat: number;
-  total_seat: number
-  infant_seat: number;
-}
+import { Seat } from "@/types/Ticket";
 
 type CardProps = React.ComponentProps<typeof Card>;
 

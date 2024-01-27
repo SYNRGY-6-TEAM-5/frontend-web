@@ -13,4 +13,6 @@ export { default as EatLogo } from "./eat.svg?react";
 export { default as WorkLogo } from "./work.svg?react";
 export { default as GarudaLogo } from "./garuda.svg?react";
 export { default as ArrowCircleRight } from "./ArrowCircleRight.svg?react";
-
+export { default as FullProtect } from "./full-protect.svg?react";
+export { default as BaggageInsurance } from "./baggage-insurance.svg?react";
+export { default as FlightDelay } from "./flight-delay.svg?react";
