@@ -185,9 +185,6 @@ const PassangerDetail = () => {
             <Form {...form}>
               <form onSubmit={formik.handleSubmit}>
                 {items}
-                <Button type="submit" onClick={handleSubmit}>
-                  Submit
-                </Button>
               </form>
             </Form>
           </Accordion>
