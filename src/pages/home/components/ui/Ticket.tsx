@@ -21,7 +21,7 @@ interface TicketProps {
   };
 }
 
-export function Ticket(
+export function TicketComponent(
   { ticket }: TicketProps,
   { className, ...props }: CardProps,
 ) {
@@ -40,7 +40,7 @@ export function Ticket(
   const formattedArrivalTime = format(new Date(arrival_date), "HH:mm");
 
   return (
-    <div className="relative flex w-[18.5rem] flex-col overflow-hidden rounded-2xl border border-black shadow-sm">
+    <div className="relative flex flex-col overflow-hidden rounded-2xl border border-black shadow-sm">
       <Card
         className={cn("flex  shrink-0 justify-between bg-black", className)}
         {...props}

@@ -60,7 +60,11 @@ const FormSchema = z.object({
     }),
 });
 
-const OneWayForm = () => {
+interface props {
+  tripType: string;
+}
+
+const OneWayForm = ({ tripType }: props) => {
   const { airports, handleSearch, fetchAirports, params } = useHome();
   const navigate = useNavigate();
 
@@ -132,13 +136,15 @@ const OneWayForm = () => {
     searchParams.append("destination", selectedDestinationAirport.iata_code!);
     searchParams.append("o_city", selectedOriginAirport.city_name!);
     searchParams.append("d_city", selectedDestinationAirport.city_name!);
-    searchParams.append("date", format(data.departureDate!, "yyyy-MM-dd"));
+    searchParams.append("dep_date", format(data.departureDate!, "yyyy-MM-dd"));
+    searchParams.append("ret_date", format(data.arrivalDate!, "yyyy-MM-dd"));
+    searchParams.append("trip-type", tripType!);
 
     for (const key in ticketDetails) {
       searchParams.append(key, (ticketDetails as Record<string, any>)[key]);
     }
 
-    navigate(`/search-flight?${searchParams}`);
+    navigate(`/flight/search-flight?${searchParams}`);
   };
 
   useEffect(() => {
@@ -235,7 +241,6 @@ const OneWayForm = () => {
             </FormItem>
           )}
         />
-        {/* <Link to="/flight-list" state={params}> */}
         <Button
           variant="primary"
           type="submit"
@@ -243,7 +248,6 @@ const OneWayForm = () => {
         >
           <MagnifyingGlassIcon className="mr-2 h-4 w-4" /> Cari
         </Button>
-        {/* </Link> */}
       </form>
     </Form>
   );

@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import SelectAirportDialog from "../SelectAirportDialog";
 import SelectSeatDialog from "../SelectSeatDialog";
 import DepartureDatePicker from "../DepartureDatePicker";
-import ArrivalDatePicker from "../ArrivalDatePicker";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -22,8 +21,13 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/components/ui/use-toast";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
+
 import useHome from "@/lib/hooks/useHome";
+import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
+import { AirportDetails } from "@/types/Ticket";
 import { Seat } from "@/types/Ticket";
+import ArrivalDatePicker from "../ArrivalDatePicker";
 
 const FormSchema = z.object({
   departureDate: z
@@ -57,14 +61,18 @@ const FormSchema = z.object({
     }),
 });
 
-const OneWayForm = () => {
-  const { airports, handleSearch } = useHome();
-  // eslint-disable-next-line no-unused-vars
-  const [selectedOriginAirport, setSelectedOriginAirport] = useState(null);
-  // eslint-disable-next-line no-unused-vars
+interface props {
+  tripType: string;
+}
+
+const RoundTripForm = ({ tripType }: props) => {
+  const { airports, handleSearch, fetchAirports, params } = useHome();
+  const navigate = useNavigate();
+
+  const [selectedOriginAirport, setSelectedOriginAirport] =
+    useState<AirportDetails | null>(null);
   const [selectedDestinationAirport, setSelectedDestinationAirport] =
-    useState(null);
-  // eslint-disable-next-line no-unused-vars
+    useState<AirportDetails | null>(null);
   const [isOriginActive, setIsOriginActive] = useState(true);
 
   const [ticketDetails, setTicketDetails] = useState<Seat | null>(null);
@@ -74,7 +82,6 @@ const OneWayForm = () => {
 
     console.log("Ticket Details:", details);
   };
-
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -125,31 +132,30 @@ const OneWayForm = () => {
       return;
     }
 
-    if (ticketDetails) {
-      const completeData = {
-        origin: selectedOriginAirport,
-        destination: selectedDestinationAirport,
-        date: {
-          departureDate: data.departureDate,
-          arrivalDate: data.arrivalDate,
-        },
-        "ticket-details": ticketDetails,
-      };
+    const searchParams = new URLSearchParams();
+    searchParams.append("origin", selectedOriginAirport.iata_code!);
+    searchParams.append("destination", selectedDestinationAirport.iata_code!);
+    searchParams.append("o_city", selectedOriginAirport.city_name!);
+    searchParams.append("d_city", selectedDestinationAirport.city_name!);
+    searchParams.append("date", format(data.departureDate!, "yyyy-MM-dd"));
+    searchParams.append("trip-type", tripType!);
 
-      toast({
-        title: "You submitted the following values:",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">
-              {JSON.stringify(completeData, null, 2)}
-            </code>
-          </pre>
-        ),
-      });
-    } else {
-      console.log("Ticket details are not available yet.");
+    for (const key in ticketDetails) {
+      searchParams.append(key, (ticketDetails as Record<string, any>)[key]);
     }
+
+    navigate(`/flight/search-flight?${searchParams}`);
   };
+
+  useEffect(() => {
+    const debounceTimeout = setTimeout(() => {
+      fetchAirports();
+    }, 300);
+
+    return () => clearTimeout(debounceTimeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params]);
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 pt-4">
@@ -260,4 +266,4 @@ const OneWayForm = () => {
   );
 };
 
-export default OneWayForm;
+export default RoundTripForm;
