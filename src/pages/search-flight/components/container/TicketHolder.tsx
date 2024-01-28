@@ -14,6 +14,8 @@ import { TicketIcon } from "lucide-react";
 
 import { useCartStore } from "@/store/useCart";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Toaster, toast } from "sonner";
 
 interface props {
   tripType: string;
@@ -21,13 +23,24 @@ interface props {
 
 const TicketsHolder = ({ tripType }: props) => {
   const { count, cart } = useCartStore();
+  const [effect, setEffect] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const oneWayTitileArray: string[] = ["Departure"];
   const roundtripTitileArray: string[] = ["Departure", "Return"];
 
   const handleProceedToBooking = () => {
-    navigate("/flight/booking");
+    if (
+      (tripType === "one-way" && count() === 1) ||
+      (tripType === "roundtrip" && count() === 2)
+    ) {
+      navigate("/flight/booking");
+    } else {
+      setEffect(true);
+      toast.error("No Ticket Selected", {
+        description: "Please, Select ticket to continue",
+      })
+    }
   };
 
   return (
@@ -47,11 +60,15 @@ const TicketsHolder = ({ tripType }: props) => {
             <Button
               onClick={handleProceedToBooking}
               variant="primary"
-              className="flex w-56 gap-3 text-white"
+              className={`${
+                effect && "animate-wiggle"
+              }flex w-56 gap-3 text-white`}
+              onAnimationEnd={() => setEffect(false)}
             >
               Proceed to booking
               <TicketIcon />
             </Button>
+            <Toaster />
           </div>
           <div className="flex flex-col items-center justify-center gap-3">
             {cart.length ? (
