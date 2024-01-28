@@ -41,9 +41,11 @@ const ListTicket = () => {
     trip_type: searchParams.get("trip-type") || "",
   };
 
-  const { data: depData, isFetching: depIsFetching } = useSearchTicket(paramsData);
-  const { data: retData, isFetching: retIsFetching } = useSearchTicket(returnParamsData);
-  
+  const { data: depData, isFetching: depIsFetching } =
+    useSearchTicket(paramsData);
+  const { data: retData, isFetching: retIsFetching } =
+    useSearchTicket(returnParamsData);
+
   const { setIsFetchedAfterMount } = useSearchTicketStore();
 
   useEffect(() => {
@@ -51,71 +53,72 @@ const ListTicket = () => {
   }, [depIsFetching, retIsFetching]);
 
   return (
-    <div className="relative mt-6 grid gap-y-6 px-6 md:px-9 lg:px-20">
-      <div className="flex w-full flex-row items-center justify-between gap-4">
-        <TicketsHolder tripType={tripData.trip_type} />
+
+      <div className="relative mt-6 grid gap-y-6 px-6 md:px-9 lg:px-20">
+        <div className="flex w-full flex-row items-center justify-between gap-4">
+          <TicketsHolder tripType={tripData.trip_type} />
+        </div>
+        {tripData.trip_type === "one-way" ? (
+          <>
+            {depIsFetching ? (
+              <LoadingTicket />
+            ) : (
+              <>
+                {!!depData && depData.length > 0 ? (
+                  depData.map((ticket: Ticket) => (
+                    <FlightCard
+                      key={ticket.ticket_id}
+                      ticket={ticket}
+                      tripType={tripData.trip_type}
+                    />
+                  ))
+                ) : (
+                  <TicketEmpty />
+                )}
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            {depIsFetching || retIsFetching ? (
+              <LoadingTicket />
+            ) : (
+              <>
+                {cart.length === 0 && (
+                  <>
+                    {!!depData && depData.length > 0 ? (
+                      depData.map((ticket: Ticket) => (
+                        <FlightCard
+                          key={ticket.ticket_id}
+                          ticket={ticket}
+                          tripType="departure"
+                        />
+                      ))
+                    ) : (
+                      <TicketEmpty />
+                    )}
+                  </>
+                )}
+                {cart.length > 0 && (
+                  <>
+                    {!!retData && retData.length > 0 ? (
+                      retData.map((ticket: Ticket) => (
+                        <FlightCard
+                          key={ticket.ticket_id}
+                          ticket={ticket}
+                          tripType="return"
+                        />
+                      ))
+                    ) : (
+                      <TicketEmpty />
+                    )}
+                  </>
+                )}
+              </>
+            )}
+          </>
+        )}
       </div>
-      {tripData.trip_type === "one-way" ? (
-        <>
-          {depIsFetching ? (
-            <LoadingTicket />
-          ) : (
-            <>
-              {!!depData && depData.length > 0 ? (
-                depData.map((ticket: Ticket) => (
-                  <FlightCard
-                    key={ticket.ticket_id}
-                    ticket={ticket}
-                    tripType={tripData.trip_type}
-                  />
-                ))
-              ) : (
-                <TicketEmpty />
-              )}
-            </>
-          )}
-        </>
-      ) : (
-        <>
-          {depIsFetching || retIsFetching ? (
-            <LoadingTicket />
-          ) : (
-            <>
-              {cart.length === 0 && (
-                <>
-                  {depData.length > 0 ? (
-                    depData.map((ticket: Ticket) => (
-                      <FlightCard
-                        key={ticket.ticket_id}
-                        ticket={ticket}
-                        tripType="departure"
-                      />
-                    ))
-                  ) : (
-                    <TicketEmpty />
-                  )}
-                </>
-              )}
-              {cart.length > 0 && (
-                <>
-                  {!!retData && retData.length > 0 ? (
-                    retData.map((ticket: Ticket) => (
-                      <FlightCard
-                        key={ticket.ticket_id}
-                        ticket={ticket}
-                        tripType="return"
-                      />
-                    ))
-                  ) : (
-                    <TicketEmpty />
-                  )}
-                </>
-              )}
-            </>
-          )}
-        </>
-      )}
-    </div>
   );
 };
 

@@ -131,13 +131,18 @@ const OneWayForm = ({ tripType }: props) => {
       return;
     }
 
+    console.log("Arrival Date >>>", typeof data.departureDate);
+
     const searchParams = new URLSearchParams();
     searchParams.append("origin", selectedOriginAirport.iata_code!);
     searchParams.append("destination", selectedDestinationAirport.iata_code!);
     searchParams.append("o_city", selectedOriginAirport.city_name!);
     searchParams.append("d_city", selectedDestinationAirport.city_name!);
     searchParams.append("dep_date", format(data.departureDate!, "yyyy-MM-dd"));
-    searchParams.append("ret_date", format(data.arrivalDate!, "yyyy-MM-dd"));
+    searchParams.append(
+      "ret_date",
+      format(data.arrivalDate || data.departureDate!, "yyyy-MM-dd"),
+    );
     searchParams.append("trip-type", tripType!);
 
     for (const key in ticketDetails) {

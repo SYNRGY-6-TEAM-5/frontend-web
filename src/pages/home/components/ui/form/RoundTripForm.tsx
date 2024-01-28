@@ -137,7 +137,11 @@ const RoundTripForm = ({ tripType }: props) => {
     searchParams.append("destination", selectedDestinationAirport.iata_code!);
     searchParams.append("o_city", selectedOriginAirport.city_name!);
     searchParams.append("d_city", selectedDestinationAirport.city_name!);
-    searchParams.append("date", format(data.departureDate!, "yyyy-MM-dd"));
+    searchParams.append("dep_date", format(data.departureDate!, "yyyy-MM-dd"));
+    searchParams.append(
+      "ret_date",
+      format(data.arrivalDate || data.departureDate!, "yyyy-MM-dd"),
+    );
     searchParams.append("trip-type", tripType!);
 
     for (const key in ticketDetails) {
