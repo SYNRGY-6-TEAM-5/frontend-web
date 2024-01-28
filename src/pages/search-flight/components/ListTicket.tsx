@@ -10,9 +10,10 @@ import TicketEmpty from "./container/TicketEmpty";
 import LoadingTicket from "./ui/LoadingTicket";
 import TicketsHolder from "./container/TicketHolder";
 import { ITripDetails, Ticket } from "@/types/Ticket";
-import { data } from "@/components/particles/TicketData";
-import { ret_data } from "@/components/particles/ReturnTicketData";
 import { useCartStore } from "@/store/useCart";
+// Mock Data for dev purpose
+// import { data } from "@/components/particles/TicketData";
+// import { ret_data } from "@/components/particles/ReturnTicketData";
 
 const ListTicket = () => {
   const location = useLocation();
@@ -40,10 +41,9 @@ const ListTicket = () => {
     trip_type: searchParams.get("trip-type") || "",
   };
 
-  // const { data: depData, isFetching: depIsFetching } = useSearchTicket(paramsData);
-  // const { data: retData, isFetching: retIsFetching } = useSearchTicket(returnParamsData);
-  const { isFetching: depIsFetching } = useSearchTicket(paramsData);
-  const { isFetching: retIsFetching } = useSearchTicket(returnParamsData);
+  const { data: depData, isFetching: depIsFetching } = useSearchTicket(paramsData);
+  const { data: retData, isFetching: retIsFetching } = useSearchTicket(returnParamsData);
+  
   const { setIsFetchedAfterMount } = useSearchTicketStore();
 
   useEffect(() => {
@@ -61,8 +61,8 @@ const ListTicket = () => {
             <LoadingTicket />
           ) : (
             <>
-              {!!data && data.length > 0 ? (
-                data.map((ticket: Ticket) => (
+              {!!depData && depData.length > 0 ? (
+                depData.map((ticket: Ticket) => (
                   <FlightCard
                     key={ticket.ticket_id}
                     ticket={ticket}
@@ -83,8 +83,8 @@ const ListTicket = () => {
             <>
               {cart.length === 0 && (
                 <>
-                  {data.length > 0 ? (
-                    data.map((ticket: Ticket) => (
+                  {depData.length > 0 ? (
+                    depData.map((ticket: Ticket) => (
                       <FlightCard
                         key={ticket.ticket_id}
                         ticket={ticket}
@@ -98,8 +98,8 @@ const ListTicket = () => {
               )}
               {cart.length > 0 && (
                 <>
-                  {!!ret_data && ret_data.length > 0 ? (
-                    ret_data.map((ticket: Ticket) => (
+                  {!!retData && retData.length > 0 ? (
+                    retData.map((ticket: Ticket) => (
                       <FlightCard
                         key={ticket.ticket_id}
                         ticket={ticket}
