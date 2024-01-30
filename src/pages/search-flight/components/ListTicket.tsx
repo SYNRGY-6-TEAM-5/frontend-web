@@ -11,11 +11,13 @@ import LoadingTicket from "./ui/LoadingTicket";
 import TicketsHolder from "./container/TicketHolder";
 import { ITripDetails, Ticket } from "@/types/Ticket";
 import { useCartStore } from "@/store/useCart";
+import { useTicketContext } from "@/context/TicketContext";
 // Mock Data for dev purpose
-// import { data } from "@/components/particles/TicketData";
-// import { ret_data } from "@/components/particles/ReturnTicketData";
+import { data } from "@/components/particles/TicketData";
+import { ret_data } from "@/components/particles/ReturnTicketData";
 
 const ListTicket = () => {
+  const { setTripData } = useTicketContext();
   const location = useLocation();
   const { cart } = useCartStore();
   const searchParams = new URLSearchParams(location.search);
@@ -36,10 +38,15 @@ const ListTicket = () => {
     ticket_class: searchParams.get("ticket_class") || "",
     adult_seat: parseInt(searchParams.get("adult_seat") || "0"),
     infant_seat: parseInt(searchParams.get("infant_seat") || "0"),
-    child_seat: parseInt(searchParams.get("adult_seat") || "0"),
-    total_seat: parseInt(searchParams.get("adult_seat") || "0"),
+    child_seat: parseInt(searchParams.get("child_seat") || "0"),
+    total_seat: parseInt(searchParams.get("total_seat") || "0"),
+    isInternational: false,
     trip_type: searchParams.get("trip-type") || "",
   };
+
+  useEffect(() => {
+    setTripData(tripData);
+  }, [setTripData, tripData]);
 
   const { data: depData, isFetching: depIsFetching } =
     useSearchTicket(paramsData);
@@ -64,8 +71,8 @@ const ListTicket = () => {
               <LoadingTicket />
             ) : (
               <>
-                {!!depData && depData.length > 0 ? (
-                  depData.map((ticket: Ticket) => (
+                {!!data && data.length > 0 ? (
+                  data.map((ticket: Ticket) => (
                     <FlightCard
                       key={ticket.ticket_id}
                       ticket={ticket}
@@ -86,8 +93,8 @@ const ListTicket = () => {
               <>
                 {cart.length === 0 && (
                   <>
-                    {!!depData && depData.length > 0 ? (
-                      depData.map((ticket: Ticket) => (
+                    {!!data && data.length > 0 ? (
+                      data.map((ticket: Ticket) => (
                         <FlightCard
                           key={ticket.ticket_id}
                           ticket={ticket}
@@ -101,8 +108,8 @@ const ListTicket = () => {
                 )}
                 {cart.length > 0 && (
                   <>
-                    {!!retData && retData.length > 0 ? (
-                      retData.map((ticket: Ticket) => (
+                    {!!ret_data && ret_data.length > 0 ? (
+                      ret_data.map((ticket: Ticket) => (
                         <FlightCard
                           key={ticket.ticket_id}
                           ticket={ticket}

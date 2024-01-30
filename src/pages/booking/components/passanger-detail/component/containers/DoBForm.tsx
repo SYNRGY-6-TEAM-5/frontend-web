@@ -14,10 +14,9 @@ import { Info } from "@phosphor-icons/react";
 interface props {
   formik: FormikValues;
   _id: string;
-  _dobKey: string;
 }
 
-const DoBForm = ({ formik, _id, _dobKey }: props) => {
+const DoBForm = ({ formik, _id }: props) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -25,14 +24,14 @@ const DoBForm = ({ formik, _id, _dobKey }: props) => {
           variant={"link"}
           className={cn(
             "mb-5 w-full rounded-none border-b pl-0 text-left text-base font-normal text-gray-300 decoration-transparent",
-            formik.values[_dobKey] && "text-black",
-            formik.errors[_dobKey] && "border-b-red-500 text-red-500",
+            formik.values.dateOfBirth && "text-black",
+            formik.errors.dateOfBirth && "border-b-red-500 text-red-500",
           )}
         >
-          {formik.values[_dobKey]
-            ? format(formik.values[_dobKey], "dd / MM / yyyy")
+          {formik.values.dateOfBirth
+            ? format(formik.values.dateOfBirth, "dd / MM / yyyy")
             : "Date of Birth"}
-          {formik.errors[_dobKey] ? (
+          {formik.errors.dateOfBirth ? (
             <Info className="ml-auto h-5 w-5 text-red-500" />
           ) : (
             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
@@ -43,14 +42,14 @@ const DoBForm = ({ formik, _id, _dobKey }: props) => {
         <Calendar
           mode="single"
           id={_id}
-          selected={formik.values[_dobKey]?.toISOString()}
-          onSelect={(e) => {
-            formik.setFieldValue(_dobKey, e);
+          selected={formik.values.dateOfBirth}
+          onSelect={(date) => {
+            formik.setFieldValue("dateOfBirth", date); // Update the field value with the selected date
           }}
           disabled={(date) =>
             date > new Date() || date < new Date("1900-01-01")
           }
-          defaultMonth={formik.values[_dobKey]}
+          defaultMonth={formik.values.dateOfBirth}
           captionLayout="dropdown-buttons"
           fromDate={new Date("1960-01-01")}
           toDate={new Date()}
