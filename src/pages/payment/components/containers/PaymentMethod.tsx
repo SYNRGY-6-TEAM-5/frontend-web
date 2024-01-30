@@ -56,7 +56,6 @@ const PaymentMethod = ({runTimer}:{runTimer:boolean}) => {
             />
           </label>
         ))}
-        {check}
       </div>
     </div>
   )
