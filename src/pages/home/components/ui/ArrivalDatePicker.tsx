@@ -12,11 +12,11 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 
 interface FieldProps {
-  value: Date | undefined; // Adjust this to match the Date type or undefined
-  onChange: (value: Date | undefined) => void; // Update the onChange function to accept Date or undefined
+  value: Date | undefined;
+  onChange: (value: Date | undefined) => void; 
 }
 
-const DatePicker: React.FC<{ field: FieldProps }> = ({ field }) => {
+const ArrivalDatePicker: React.FC<{ field: FieldProps }> = ({ field }) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -31,7 +31,7 @@ const DatePicker: React.FC<{ field: FieldProps }> = ({ field }) => {
               format(field.value, "PPP")
             ) : (
               <Text className="w-full text-start text-sm font-semibold text-slate-400 lg:text-sm">
-                Pick departure date
+                Pick arrival date
               </Text>
             )}
             <CalendarIcon className="ml-auto h-4 w-4 text-primary-500 opacity-50" />
@@ -43,7 +43,7 @@ const DatePicker: React.FC<{ field: FieldProps }> = ({ field }) => {
           mode="single"
           selected={field.value}
           onSelect={(date: Date | undefined) => field.onChange(date)}
-          // disabled={(date) => date < new Date()}
+          disabled={(date) => date < new Date()}
           initialFocus
         />
       </PopoverContent>
@@ -51,4 +51,4 @@ const DatePicker: React.FC<{ field: FieldProps }> = ({ field }) => {
   );
 };
 
-export default DatePicker;
+export default ArrivalDatePicker;

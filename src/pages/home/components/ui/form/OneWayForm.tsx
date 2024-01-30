@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 import SelectAirportDialog from "../SelectAirportDialog";
 import SelectSeatDialog from "../SelectSeatDialog";
-import DatePicker from "../Calendar";
+import DepartureDatePicker from "../DepartureDatePicker";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -217,7 +217,7 @@ const OneWayForm = () => {
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel className="text-white">Departure Date</FormLabel>
-              <DatePicker field={field} />
+              <DepartureDatePicker field={field} />
               <FormMessage />
             </FormItem>
           )}
