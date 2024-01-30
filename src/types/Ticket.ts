@@ -78,3 +78,13 @@ export interface Ticket {
   updated_at: null | string; // Adjust the type accordingly
   flight: Flight;
 }
+
+export interface ITripDetails {
+  ticket_class: string;
+  adult_seat?: number;
+  infant_seat?: number;
+  child_seat?: number;
+  total_seat: number;
+  isInternational?: boolean;
+  trip_type: string;
+} 

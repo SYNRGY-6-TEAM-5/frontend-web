@@ -16,12 +16,12 @@ const DateButton = ({ date }: props) => {
 
   const { isFetchedAfterMount } = useSearchTicketStore();
 
-  const selectedDate = searchParams.get("date");
+  const selectedDate = searchParams.get("dep_date");
   const active =
     selectedDate && new Date(selectedDate).getTime() === date.getTime();
 
   const updateUrlParams = (): void => {
-    searchParams.set("date", format(date, "yyyy-MM-dd"));
+    searchParams.set("dep_date", format(date, "yyyy-MM-dd"));
     navigate(`${location.pathname}?${searchParams.toString()}`);
     queryClient.invalidateQueries({ queryKey: ["searchTicket"] });
   };

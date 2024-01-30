@@ -1,9 +1,14 @@
-import { Ticket } from "@/types/Ticket";
-import ArrowCircle from "../../../../assets/arrowCircle.png";
 import { differenceInMinutes, format } from "date-fns";
+
+import { Button } from "@/components/ui/button";
+import ArrowCircle from "../../../../assets/arrowCircle.png";
+
+import { useCartStore } from "@/store/useCart";
+import { Ticket } from "@/types/Ticket";
 
 interface props {
   ticket: Ticket;
+  tripType: string;
 }
 
 const formatMoney = (amount: string) => {
@@ -17,7 +22,9 @@ const formatTime = (time: string) => {
   return formattedTime;
 };
 
-const FlightCard = ({ ticket }: props) => {
+const FlightCard = ({ ticket, tripType }: props) => {
+  const { add: handleAddToCart } = useCartStore();
+
   const timeDifference = () => {
     const startDate = new Date(ticket.flight.departure.scheduled_time);
     const endDate = new Date(ticket.flight.arrival.scheduled_time);
@@ -39,10 +46,14 @@ const FlightCard = ({ ticket }: props) => {
     ticket.flight.transit > 0 ? `${ticket.flight.transit} transit` : "Non-stop";
 
   return (
-    <section className="mx-auto flex w-full flex-row items-center justify-between overflow-x-hidden rounded-xl border border-gray-100 bg-white px-4 py-6">
+    <Button
+      onClick={() => handleAddToCart(ticket, tripType)}
+      variant="ghost"
+      className="h-46 mx-auto flex w-full flex-row items-center justify-between overflow-hidden rounded-xl border border-gray-100 bg-white px-4 py-6"
+    >
       <div className="flex items-center">
-        <div className="flex flex-col gap-2">
-          <img src={ticket.flight.airline.image} alt="" width={48} />
+        <div className="flex flex-col w-36 items-center justify-center gap-4">
+          <img src={ticket.flight.airline.image} alt={ticket.flight.airline.name} width={48} />
           <div className="text-Base-Black font-inter leading-38 text-[30px] font-semibold">
             {ticket.flight.iata}
           </div>
@@ -128,7 +139,7 @@ const FlightCard = ({ ticket }: props) => {
           /pax
         </div>
       </div>
-    </section>
+    </Button>
   );
 };
 
