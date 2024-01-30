@@ -15,9 +15,7 @@ import {
 } from "@/components/ui/card";
 import { Accordion } from "@/components/ui/accordion";
 
-import {
-  restructureData,
-} from "@/lib/hooks/usePassengerTravel";
+import { restructureData } from "@/lib/hooks/usePassengerTravel";
 import AccordionFormItem from "./component/containers/AccordionItem";
 import { Form } from "@/components/ui/form";
 
@@ -103,7 +101,7 @@ const PassangerDetail = () => {
           formik={formik}
         />,
       );
-      currentnthPassenger++
+      currentnthPassenger++;
     }
 
     for (let i = 0; i < child_seat; i++) {
@@ -117,7 +115,7 @@ const PassangerDetail = () => {
           formik={formik}
         />,
       );
-      currentnthPassenger++
+      currentnthPassenger++;
     }
 
     for (let i = 0; i < infant_seat; i++) {
@@ -131,7 +129,7 @@ const PassangerDetail = () => {
           formik={formik}
         />,
       );
-      currentnthPassenger++
+      currentnthPassenger++;
     }
 
     return { items, passengersData };
@@ -158,8 +156,10 @@ const PassangerDetail = () => {
         <CardHeader className="flex flex-col gap-6">
           {ticketDetails.isInternational ? (
             <div className="flex flex-row items-center justify-between gap-12 pt-2">
-              <CardTitle className="w-full">Your destination requires travel documents</CardTitle>
-              <CardDescription className="text-sm w-96 text-slate-900 text-right">
+              <CardTitle className="w-full">
+                Your destination requires travel documents
+              </CardTitle>
+              <CardDescription className="w-96 text-right text-sm text-slate-900">
                 Please prepare the documents, you will need to enter the
                 details.
               </CardDescription>
@@ -177,9 +177,7 @@ const PassangerDetail = () => {
         <CardContent className="px-6 pb-6">
           <Accordion type="single" collapsible className="w-full">
             <Form {...form}>
-              <form onSubmit={formik.handleSubmit}>
-                {items}
-              </form>
+              <form onSubmit={formik.handleSubmit}>{items}</form>
             </Form>
           </Accordion>
         </CardContent>
