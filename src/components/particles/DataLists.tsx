@@ -235,3 +235,113 @@ export const FooterTexts = {
         ]
     }
 }
+
+export const BankTexts = [
+    {
+        value: "bca",
+        name: "BCA Virtual Account",
+        noRekening : "7 800 8291 0221220",
+        atm : [
+            "Kunjungi ATM BCA terdekat.",
+            "Masukkan kartu ATM BCA.",
+            "Masukkan 6 digit PIN ATM BCA.",
+            "Pilih “Transaksi Lainnya” > “Transfer” > “Ke Rekening BCA Virtual Account”.",
+            "Masukkan nomor BCA Virtual Account Anda, kemudian tekan “Benar”",
+            "Masukkan jumlah yang akan dibayarkan, selanjutnya tekan “Benar.",
+            "Konfirmasi transaksi dan tunggu hingga bukti transfer keluar dari mesin ATM."
+        ],
+        internet : [
+            "Kunjungi laman https://ibank.klikbca.com/",
+            "Masukan User ID KlikBCA Individual dan PIN",
+            "kemudian pilih 'Login'",
+            "Daftarkan nomor rekening tujuan, lalu masukman nominal yang akan ditransfer.",
+            "Tulis berita transfer jika diperlukan.",
+            "Pilih jenis transfer, lakukan konfirmasi dengan token BCA APPL 2 dan APPL 1.",
+            "Transaksi selesai dan bukti transfer bisa dicetak."
+        ],
+        mobile : [
+            "Login ke aplikasi BCA mobile",
+            "Pilih fitur “m-Transfer”",
+            "Pilih “BCA Virtual Account”",
+            "Masukkan nomor BCA Virtual Account Anda",
+            "Pastikan kembali informasi transfer sudah benar",
+            "Lalu, masukkan jumlah yang akan dibayarkan",
+            "Konfirmasi dengan memasukkan PIN BCA mobile",
+            "Transfer ke sesama rekening BCA berhasil"
+        ]
+    },
+    {
+        value: "mandiri",
+        name: "Mandiri Virtual Account",
+        noRekening : "7 800 8291 0221220",
+        atm : [
+            "Kunjungi ATM Mandiri terdekat.",
+            "Masukkan kartu ATM Mandiri.",
+            "Masukkan 6 digit PIN ATM Mandiri.",
+            "Pilih “Bayar/Beli” >  “Multi Payment”",
+            "Massukkan Kode Perusahaan '88908'",
+            "Masukkan nomor Virtual Account yang di dapat",
+            "Masukkan nominal transfer yang diinginkan.",
+            "Konfirmasi transaksi dan tunggu hingga bukti transfer keluar dari mesin ATM."
+        ],
+        internet : [
+            "Masuk ke akun Mandiri Online menggunakan username dan password masing-masing.",
+            "Pilih menu Pembayaran > Multi Payment",
+            "Silahkan Pilih 'No Rekening Anda'",
+            "Pilih Penyedia Jasa '88908'",
+            "Pilih 'No Virtual Account'",
+            "Masukkan 'No Virtual Account' yang di dapat",
+            "Tunggu beberapa detik hingga notifikasi tagihan muncul, pilih Konfirmasi dan ketik PIN keamanan transaksi.",
+            "Simpan bukti transaksi."
+        ],
+        mobile : [
+            "Silahkan login ke mobile banking Anda.",
+            "Klik “Icon Menu” di sebelah kiri atas.",
+            "Pilih menu “Pembayaran”",
+            "Lanjut buat “Pembayaran Baru”",
+            "Pilih “Multi Payment”",
+            "Klik “Penyedia Jasa” atau “Service Provider”,  kemudian pilih kode perusahaan, contoh:  “Xendit 88908”",
+            "Pilih “No. Virtual”",
+            "Masukkan nomor Virtual Account Anda dengan kode perusahaan (contoh 8890802001287578), kemudian pilih “Tambah Sebagai Nomor Baru”",
+            "Masukkan nominal lalu pilih “Konfirmasi” dan “lanjut”",
+            "Selanjutnya akan muncul tampilan konfirmasi pembayaran. Pastikan semua informasi dan total tagihan sudah benar. Jika sudah benar, lalu scroll ke bawah  dan pilih “Konfirmasi”",
+            "Masukkan PIN Anda dan pilih “OK”",
+            "Sampai pada tahap ini, berarti transaksi dengan menggunakan VA telah berhasil dilakukan.",
+        ]
+    },
+    {
+        value: "ocbc",
+        name: "BCA Virtual Account",
+        noRekening : "7 800 8291 0221220",
+        atm : [
+            "Kunjungi ATM OCBC terdekat.",
+            "Masukkan kartu ATM OCBC.",
+            "Masukkan 6 digit PIN ATM OCBC.",
+            "Pilih “Pembayaran” > “Virtual Account”.",
+            "Masukkan nomor Virtual Account Anda.",
+            "Masukkan jumlah yang akan dibayarkan.",
+            "Konfirmasi transaksi dan tunggu hingga bukti transfer keluar dari mesin ATM."
+        ],
+        internet : [
+            "Kunjungi laman https://online.ocbcnisp.com/",
+            "Masukan User ID dan Kata Sandi",
+            "kemudian pilih 'Login'",
+            "Pilih Bahasa dan Masukkan PIN ATM Anda",
+            "Pilih Menu 'Pembayaran dan Pembelian",
+            "Daftarkan nomor rekening tujuan, lalu masukman nominal yang akan ditransfer.",
+            "Pilih Tipe tagihan dan Organisasi Biller 'Virtual Account'",
+            "Masukkan No Virtual Account pada kolom ID Pelanggan",
+            "Massukkan Nomintal Pembayaran",
+            "Konfirmasi Pembayaran",
+            "Transaksi selesai dan bukti transfer bisa dicetak."
+        ],
+        mobile : [
+            "Login ke aplikasi  ONe Mobile OCBC NISP",
+            "Pilih “Pembayaran Pembelian – Pembayaran Bill”",
+            "Pilih “ Bayar ke Biller Baru dengan Kategori Biller : VIRTUAL ACCOUNT”",
+            "Pilih Nama Organisasi : VIRTUAL ACCOUNT dan masukkan nomor Virtual Account pada Kolom ID Pelanggan. ",
+            "Pastikan kembali informasi transfer sudah benar",
+            "Lalu, masukkan jumlah yang akan dibayarkan"
+        ]
+    },
+]

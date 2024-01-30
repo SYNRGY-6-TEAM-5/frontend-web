@@ -7,6 +7,7 @@ import { Toaster, toast } from "sonner";
 import { useEffect } from "react";
 
 const PaymentDetails = () => {
+  const bankMethod = localStorage.getItem("bankMethod");
   const date = new Date().getTime();
   const countDownTime = 5;
   const {seconds, minutes, hours, runTimer} = useTimer({date, countDownTime});
@@ -21,10 +22,10 @@ const PaymentDetails = () => {
   
 
   return(
-    <section className="grid gap-4 pt-32 pb-4 px-20 lg:grid-cols-3 xs:grid-cols-1">
+    <section className="grid gap-12 pb-4 px-20 lg:grid-cols-3 xs:grid-cols-1">
       <div className="col-span-2 flex flex-col space-y-9">
         <Timer hours={hours} minutes={minutes} seconds={seconds} />
-        <MethodDetails />
+        <MethodDetails bankMethod={String(bankMethod)} />
       </div>
       <div className="bg-white shadow-3xl flex flex-col">
         <OrderDetail />
