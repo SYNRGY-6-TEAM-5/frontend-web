@@ -1,14 +1,13 @@
 import NavBar from "@/components/containers/NavBar";
 import CopyrightSearch from "./components/Copyright";
-import DatePrice from "./components/DatePrice";
 import DiscountSection from "./components/DiscountSection";
-import FilterSort from "./components/FiterSort";
 import FooterSearch from "../../components/containers/Footer";
 import ListTicket from "./components/ListTicket";
 import SearchBox from "./components/SearchBox";
+import DatePrice from "./components/DatePrice";
+import FilterSort from "./components/FiterSort";
 
 const SearchFlight = () => {
-
   return (
     <>
       <div className="flex flex-col bg-[#FBFBFB]">

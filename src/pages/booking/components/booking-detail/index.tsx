@@ -1,6 +1,9 @@
 import { Card, CardHeader } from "@/components/ui/card";
 import { ArrowCircleRight, EatLogo, GarudaLogo, WorkLogo } from "@/assets/svg";
 import { Text } from "@mantine/core";
+import { Ticket } from "@/types/Ticket";
+import { useCartStore } from "@/store/useCart";
+import { differenceInMinutes, format } from "date-fns";
 
 interface DepartureArrival {
   code: string;
@@ -12,14 +15,17 @@ interface BookingSectionProps {
   flightNumber: string;
   departure: DepartureArrival;
   arrival: DepartureArrival;
+  time: string;
   price: string;
 }
+
 
 const BookingSection: React.FC<BookingSectionProps> = ({
   title,
   flightNumber,
   departure,
   arrival,
+  time,
   price,
 }) => {
   return (
@@ -47,7 +53,7 @@ const BookingSection: React.FC<BookingSectionProps> = ({
           </div>
           <div className="inline-flex h-[92px] flex-col items-center justify-between">
             <Text className="text-center text-sm font-semibold text-white">
-              1h 2m
+              {time}
             </Text>
             <div className="inline-flex w-[136px] items-center justify-start gap-1">
               <div className="h-[0px] shrink grow basis-0 border border-zinc-200"></div>
@@ -89,24 +95,59 @@ const BookingSection: React.FC<BookingSectionProps> = ({
 };
 
 const BookingDetail = () => {
+  const { cart, totalFare } = useCartStore();
+
+  const formatTime = (time: string | null | undefined) => {
+    if (time) {
+      const date = new Date(time);
+      const formattedTime = format(date, "hh:mm a");
+      return formattedTime;
+    } else {
+      return "";
+    }
+  };
+
+  const timeDifference = (ticket: Ticket | null | undefined) => {
+    if (ticket) {
+      const startDate = new Date(ticket.flight.departure.scheduled_time);
+      const endDate = new Date(ticket.flight.arrival.scheduled_time);
+
+      const differenceInMinutesValue = differenceInMinutes(endDate, startDate);
+
+      const hours = Math.floor(differenceInMinutesValue / 60);
+      const minutes = differenceInMinutesValue % 60;
+
+      const formattedDifference = format(
+        new Date(0, 0, 0, hours, minutes),
+        "H'h' m'm'",
+      );
+
+      return formattedDifference;
+    } else {
+      return "";
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
-        <BookingSection
-          title="Depart"
-          flightNumber="GA207"
-          departure={{ code: "YIA", time: "06:25 AM" }}
-          arrival={{ code: "CGK", time: "07:40 AM" }}
-          price="IDR 1,165,450"
-        />
-        <BookingSection
-          title="Return"
-          flightNumber="GA207"
-          departure={{ code: "CGK", time: "07:40 AM" }}
-          arrival={{ code: "YIA", time: "06:25 AM" }}
-          price="IDR 1,165,450"
-        />
-        {/* ... Additional sections */}
+        {cart.map((ticket, index) => (
+          <BookingSection
+            key={index}
+            title={index === 0 ? "Departure" : "Return"}
+            flightNumber={ticket.flight.iata}
+            departure={{
+              code: ticket.flight.departure.airport_details.iata_code,
+              time: formatTime(ticket.flight.departure.scheduled_time),
+            }}
+            arrival={{
+              code: ticket.flight.arrival.airport_details.iata_code,
+              time: formatTime(ticket.flight.arrival.scheduled_time),
+            }}
+            time={timeDifference(ticket)}
+            price={parseFloat(ticket.fare_amount).toLocaleString()}
+          />
+        ))}
         <div className="flex h-16 flex-col items-center justify-between self-stretch border-t border-zinc-200 px-3 py-5">
           <div className="inline-flex items-center justify-between self-stretch">
             <div className="flex items-center justify-start gap-1">
@@ -114,7 +155,7 @@ const BookingDetail = () => {
               <div className="relative h-5 w-5"></div>
             </div>
             <Text className="text-2xl font-medium text-primary-500">
-              IDR 2,230,900
+              {`IDR ${totalFare().toLocaleString()}`}
             </Text>
           </div>
         </div>

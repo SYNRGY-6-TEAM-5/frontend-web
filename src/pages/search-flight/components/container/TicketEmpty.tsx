@@ -16,7 +16,7 @@ const TicketEmpty = () => {
     <div className="mx-auto my-24 w-fit">
       <Text className="max-w-[807px] text-center text-4xl font-medium">
         Flight are not available on{" "}
-        {`${format(paramsData.date!, "dd MMMM yyyy")}`}, please select the
+        {`${format(paramsData.dep_date!, "dd MMMM yyyy")}`}, please select the
         nearest date.
       </Text>
       <div className="mx-auto mt-16 flex max-w-[351px] flex-col justify-center">

@@ -6,7 +6,9 @@ export interface FlightSearchParams {
   size?: number;
   departure_airport: string;
   arrival_airport: string;
-  departure_date: string;
+  departure_date?: string;
+  return_date?: string;
+  trip_type?: string;
 }
 
 export const useSearchTicket = (params: FlightSearchParams) => {

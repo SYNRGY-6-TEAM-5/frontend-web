@@ -40,7 +40,7 @@ const SearchBox = () => {
             </div>
           </div>
           <div className="ml-16 flex items-center justify-center text-[18px] text-[#B9C0D4]">
-            {`${format(paramsData.date!, "E, dd MMM yyyy")} - ${paramsData.total_seat} Passengers - ${paramsData.ticket_class} Class`}
+            {`${format(paramsData.dep_date!, "E, dd MMM yyyy")} - ${paramsData.total_seat} Passengers - ${paramsData.ticket_class} Class`}
           </div>
         </div>
         <div className="rounded-[12px] bg-white">
