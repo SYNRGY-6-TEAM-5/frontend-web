@@ -81,10 +81,10 @@ export interface Ticket {
 
 export interface ITripDetails {
   ticket_class: string;
-  adult_seat?: number;
-  infant_seat?: number;
-  child_seat?: number;
+  adult_seat: number;
+  infant_seat: number;
+  child_seat: number;
   total_seat: number;
-  isInternational?: boolean;
+  isInternational: boolean;
   trip_type: string;
 } 

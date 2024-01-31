@@ -34,9 +34,6 @@ export function SearchFilter({ className, ...props }: CardProps) {
                   <TabsTrigger value="roundtrip" className="text-white">
                     Roundtrip
                   </TabsTrigger>
-                  <TabsTrigger value="multi" className="text-white">
-                    Multi
-                  </TabsTrigger>
                 </TabsList>
                 <TabsContent
                   value="one-way"
