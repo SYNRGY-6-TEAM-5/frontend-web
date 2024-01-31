@@ -1,3 +1,5 @@
+import { useLocation } from "react-router-dom";
+
 import NavBar from "@/components/containers/NavBar";
 import CopyrightSearch from "./components/Copyright";
 import DiscountSection from "./components/DiscountSection";
@@ -8,12 +10,16 @@ import DatePrice from "./components/DatePrice";
 import FilterSort from "./components/FiterSort";
 
 const SearchFlight = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const trip_type = searchParams.get("trip-type") || "";
+
   return (
     <>
       <div className="flex flex-col bg-[#FBFBFB]">
         <NavBar />
         <SearchBox />
-        <DatePrice />
+        <DatePrice tripType={trip_type} />
         <FilterSort />
         <ListTicket />
         <DiscountSection />

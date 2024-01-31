@@ -1,8 +1,4 @@
 "use client";
-import { useFormik } from "formik";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
 
 import { Text } from "@mantine/core";
 import { Switch } from "@/components/ui/switch";
@@ -15,78 +11,17 @@ import {
 } from "@/components/ui/card";
 import { Accordion } from "@/components/ui/accordion";
 
-import {
-  restructureData,
-} from "@/lib/hooks/usePassengerTravel";
 import AccordionFormItem from "./component/containers/AccordionItem";
-import { Form } from "@/components/ui/form";
-
-const ticketDetails: any = {
-  ticket_class: "",
-  adult_seat: 2,
-  infant_seat: 1,
-  child_seat: 0,
-  total_seat: 0,
-  isInternational: true,
-};
-
-interface PassengerData {
-  nik: string;
-  fullName: string;
-  dateOfBirth: Date | null;
-  courtesy_title: string;
-  vaccinated: boolean;
-}
-
-interface FormValues {
-  passengers: {
-    adults: Record<string, PassengerData>;
-    childs: Record<string, PassengerData>;
-    infants: Record<string, PassengerData>;
-  };
-}
-
-const FormSchema = z.object({
-  type: z.enum(["all", "mentions", "none"], {
-    required_error: "You need to select a notification type.",
-  }),
-});
+import { useTicketContext } from "@/context/TicketContext";
 
 const PassangerDetail = () => {
   // const { mutateAsync } = useFillPassenger();
+  const { tripData } = useTicketContext();
 
   let passengersData: Record<string, any> = {};
-  const { adult_seat, child_seat, infant_seat } = ticketDetails;
+  const { adult_seat, child_seat, infant_seat, isInternational } = tripData;
 
-  const formik = useFormik<FormValues>({
-    initialValues: {
-      passengers: {
-        adults: {},
-        childs: {},
-        infants: {},
-      },
-    },
-    validate: (values) => {
-      const errors: Partial<{ [key: string]: { dateOfBirth: string } }> = {};
-
-      Object.entries(values.passengers).forEach(
-        ([_passengerType, passengerData]) => {
-          Object.entries(passengerData).forEach(([passengerKey, passenger]) => {
-            if (!passenger.dateOfBirth) {
-              errors[passengerKey] = { dateOfBirth: "Select date of birth!" };
-            }
-          });
-        },
-      );
-
-      return errors;
-    },
-    onSubmit: async (values) => {
-      const { passengers } = restructureData(values);
-      console.log("Formik Unstructured Log:", values);
-      console.log("Formik Structured Log:", passengers);
-    },
-  });
+  console.log(tripData);
 
   const generatePassengerAccordionItems = () => {
     const items: JSX.Element[] = [];
@@ -99,11 +34,10 @@ const PassangerDetail = () => {
           _index={i}
           _nthPassenger={currentnthPassenger}
           _age="adult"
-          isInternational={ticketDetails.isInternational}
-          formik={formik}
+          isInternational={isInternational}
         />,
       );
-      currentnthPassenger++
+      currentnthPassenger++;
     }
 
     for (let i = 0; i < child_seat; i++) {
@@ -113,11 +47,10 @@ const PassangerDetail = () => {
           _index={i}
           _nthPassenger={currentnthPassenger}
           _age="child"
-          isInternational={ticketDetails.isInternational}
-          formik={formik}
+          isInternational={isInternational}
         />,
       );
-      currentnthPassenger++
+      currentnthPassenger++;
     }
 
     for (let i = 0; i < infant_seat; i++) {
@@ -127,19 +60,14 @@ const PassangerDetail = () => {
           _index={i}
           _nthPassenger={currentnthPassenger}
           _age="infant"
-          isInternational={ticketDetails.isInternational}
-          formik={formik}
+          isInternational={isInternational}
         />,
       );
-      currentnthPassenger++
+      currentnthPassenger++;
     }
 
     return { items, passengersData };
   };
-
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-  });
 
   const { items } = generatePassengerAccordionItems();
 
@@ -156,10 +84,12 @@ const PassangerDetail = () => {
       </div>
       <Card className="mb-8">
         <CardHeader className="flex flex-col gap-6">
-          {ticketDetails.isInternational ? (
+          {isInternational ? (
             <div className="flex flex-row items-center justify-between gap-12 pt-2">
-              <CardTitle className="w-full">Your destination requires travel documents</CardTitle>
-              <CardDescription className="text-sm w-96 text-slate-900 text-right">
+              <CardTitle className="w-full">
+                Your destination requires travel documents
+              </CardTitle>
+              <CardDescription className="w-96 text-right text-sm text-slate-900">
                 Please prepare the documents, you will need to enter the
                 details.
               </CardDescription>
@@ -175,12 +105,8 @@ const PassangerDetail = () => {
           </div>
         </CardHeader>
         <CardContent className="px-6 pb-6">
-          <Accordion type="single" collapsible className="w-full">
-            <Form {...form}>
-              <form onSubmit={formik.handleSubmit}>
-                {items}
-              </form>
-            </Form>
+          <Accordion type="multiple" className="w-full">
+            {items}
           </Accordion>
         </CardContent>
       </Card>
