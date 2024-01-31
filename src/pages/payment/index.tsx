@@ -13,10 +13,17 @@ const Payment = () => {
   const date = new Date().getTime();
   const countDownTime = 5;
   const {seconds, minutes, hours, runTimer} = useTimer({date, countDownTime});
+  const method = localStorage.getItem("bankMethod");
 
   const navigate = useNavigate();
   const handleOnClick = () => {
-    navigate('/user/payment-details');
+    if(method){
+      navigate('/user/payment-details/');
+    } else {
+      toast.error("Payment Method", {
+        description: "Please, Select Payment Method",
+      })
+    }
   }
 
   useEffect(() => {
@@ -28,7 +35,7 @@ const Payment = () => {
   })
 
   return(
-    <section className="grid gap-4 pt-32 pb-4 px-20 lg:grid-cols-3 xs:grid-cols-1">
+    <section className="grid gap-12 pb-4 px-20 lg:grid-cols-3 xs:grid-cols-1">
       <div className="col-span-2 flex flex-col space-y-9">
         <Timer hours={hours} minutes={minutes} seconds={seconds} />
         <PaymentMethod runTimer={runTimer} /> 
