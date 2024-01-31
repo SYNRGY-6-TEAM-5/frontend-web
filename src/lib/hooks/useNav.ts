@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import Cookies from "js-cookie";
+import { useProfileUserStore } from "@/store/useProfileUserStore";
 
 export interface IUser {
     user_id: string;
@@ -17,6 +18,8 @@ export default function useNav() {
     const [userData, setUserData] = useState<IUser>();
 
     const [isOpen, setOpen] = useState<boolean>(false);
+
+    const {setUserData: setDataStore} = useProfileUserStore()
 
     const handleOpen = (): void => {
         setOpen(true);
@@ -65,6 +68,7 @@ export default function useNav() {
             );
 
             const userData: IUser = response.data;
+            setDataStore(response.data)
             console.log("User data >>> ", userData);
             setUserData(userData);
         } catch (error) {

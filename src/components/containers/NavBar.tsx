@@ -4,7 +4,7 @@ import { NavButtons, NavLinks } from "../particles/DataLists";
 import { List } from "@/components/ui/List";
 import { MainLogo } from "@/assets/svg";
 import { Text } from "@mantine/core";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ArrowCircleRight, CirclesFour } from "@phosphor-icons/react";
 import { Slide } from "react-awesome-reveal";
 
@@ -44,12 +44,15 @@ const NavBar = () => {
           }`}
         >
           <div className="hidden w-full items-center lg:flex">
-            <div className="text-color3 flex w-96 flex-1 items-center justify-start text-3xl font-medium md:text-5xl lg:text-4xl">
+            <Link
+              to={"/"}
+              className="text-color3 flex w-96 flex-1 items-center justify-start text-3xl font-medium md:text-5xl lg:text-4xl"
+            >
               <MainLogo className="h-10 md:h-12" />
               <Text className="pl-4 text-2xl font-medium tracking-tighter">
                 AeroSwift
               </Text>
-            </div>
+            </Link>
 
             <ul className="mr-14 flex items-center justify-end gap-8">
               {NavLinks.map((navlink, index) => (

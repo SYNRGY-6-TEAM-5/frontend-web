@@ -1,13 +1,13 @@
 import { useLocation } from "react-router-dom";
 
 import NavBar from "@/components/containers/NavBar";
-import CopyrightSearch from "./components/Copyright";
 import DiscountSection from "./components/DiscountSection";
 import FooterSearch from "../../components/containers/Footer";
 import ListTicket from "./components/ListTicket";
 import SearchBox from "./components/SearchBox";
 import DatePrice from "./components/DatePrice";
 import FilterSort from "./components/FiterSort";
+import CopyrightSearch from "@/components/containers/Copyright";
 
 const SearchFlight = () => {
   const location = useLocation();
