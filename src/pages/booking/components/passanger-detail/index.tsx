@@ -105,7 +105,7 @@ const PassangerDetail = () => {
           </div>
         </CardHeader>
         <CardContent className="px-6 pb-6">
-          <Accordion type="single" collapsible className="w-full">
+          <Accordion type="multiple" className="w-full">
             {items}
           </Accordion>
         </CardContent>

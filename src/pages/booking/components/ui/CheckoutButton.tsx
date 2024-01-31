@@ -9,7 +9,7 @@ const CheckoutButton = () => {
             
         </CardHeader>
         <CardContent className="px-6 py-8">
-            <Button variant="primary" className="w-full h-14">
+            <Button type="submit" variant="primary" className="w-full h-14">
                 Continue to payment
             </Button>
         </CardContent>

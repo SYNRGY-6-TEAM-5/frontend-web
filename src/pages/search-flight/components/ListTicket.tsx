@@ -13,8 +13,8 @@ import { ITripDetails, Ticket } from "@/types/Ticket";
 import { useCartStore } from "@/store/useCart";
 import { useTicketContext } from "@/context/TicketContext";
 // Mock Data for dev purpose
-import { data } from "@/components/particles/TicketData";
-import { ret_data } from "@/components/particles/ReturnTicketData";
+// import { data } from "@/components/particles/TicketData";
+// import { ret_data } from "@/components/particles/ReturnTicketData";
 
 const ListTicket = () => {
   const { setTripData } = useTicketContext();
@@ -40,7 +40,7 @@ const ListTicket = () => {
     infant_seat: parseInt(searchParams.get("infant_seat") || "0"),
     child_seat: parseInt(searchParams.get("child_seat") || "0"),
     total_seat: parseInt(searchParams.get("total_seat") || "0"),
-    isInternational: false,
+    isInternational: true,
     trip_type: searchParams.get("trip-type") || "",
   };
 
@@ -71,8 +71,8 @@ const ListTicket = () => {
               <LoadingTicket />
             ) : (
               <>
-                {!!data && data.length > 0 ? (
-                  data.map((ticket: Ticket) => (
+                {!!depData && depData.length > 0 ? (
+                  depData.map((ticket: Ticket) => (
                     <FlightCard
                       key={ticket.ticket_id}
                       ticket={ticket}
@@ -93,8 +93,8 @@ const ListTicket = () => {
               <>
                 {cart.length === 0 && (
                   <>
-                    {!!data && data.length > 0 ? (
-                      data.map((ticket: Ticket) => (
+                    {!!depData && depData.length > 0 ? (
+                      depData.map((ticket: Ticket) => (
                         <FlightCard
                           key={ticket.ticket_id}
                           ticket={ticket}
@@ -108,8 +108,8 @@ const ListTicket = () => {
                 )}
                 {cart.length > 0 && (
                   <>
-                    {!!ret_data && ret_data.length > 0 ? (
-                      ret_data.map((ticket: Ticket) => (
+                    {!!retData && retData.length > 0 ? (
+                      retData.map((ticket: Ticket) => (
                         <FlightCard
                           key={ticket.ticket_id}
                           ticket={ticket}
