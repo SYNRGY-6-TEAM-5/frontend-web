@@ -4,6 +4,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import DialogAddOns from "./components/DialogAddOns";
 
 const TravelAddOns = () => {
   return (
@@ -11,6 +12,8 @@ const TravelAddOns = () => {
       <CardHeader>
         <CardTitle>Travel Add Ons</CardTitle>
         <CardDescription>Card Description</CardDescription>
+        <DialogAddOns type="Baggage" />
+        <DialogAddOns type="Meal" />
       </CardHeader>
     </Card>
   );
