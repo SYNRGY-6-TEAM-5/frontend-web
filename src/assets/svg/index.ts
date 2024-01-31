@@ -16,3 +16,4 @@ export { default as ArrowCircleRight } from "./ArrowCircleRight.svg?react";
 export { default as FullProtect } from "./full-protect.svg?react";
 export { default as BaggageInsurance } from "./baggage-insurance.svg?react";
 export { default as FlightDelay } from "./flight-delay.svg?react";
+export { default as CheckedBox } from "./checkedbox.svg?react";
