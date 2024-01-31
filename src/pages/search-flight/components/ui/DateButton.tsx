@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { useSearchTicketStore } from "@/store/useSearctTicketStore";
+import { useSearchTicketStore } from "@/store/useSearchTicketStore";
 import { useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { useLocation, useNavigate } from "react-router-dom";

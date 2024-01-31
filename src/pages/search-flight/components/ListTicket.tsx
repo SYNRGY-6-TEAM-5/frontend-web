@@ -5,7 +5,7 @@ import {
   useSearchTicket,
 } from "@/lib/hooks/useSearchTicket";
 import { useEffect } from "react";
-import { useSearchTicketStore } from "@/store/useSearctTicketStore";
+import { useSearchTicketStore } from "@/store/useSearchTicketStore";
 import TicketEmpty from "./container/TicketEmpty";
 import LoadingTicket from "./ui/LoadingTicket";
 import TicketsHolder from "./container/TicketHolder";
