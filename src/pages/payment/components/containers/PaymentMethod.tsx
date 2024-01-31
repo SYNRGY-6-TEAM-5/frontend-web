@@ -27,6 +27,9 @@ const PaymentMethod = ({runTimer}:{runTimer:boolean}) => {
     setCheck(method);
     localStorage.setItem("bankMethod", method);
   }
+  
+  console.log({check});
+
   return(
     <div className="grid gap-4">
       <Text>Payment Method</Text>
