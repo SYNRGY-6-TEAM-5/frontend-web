@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { Text } from "@mantine/core";
 import {
   Dialog,
   DialogContent,
@@ -24,10 +26,14 @@ const DialogAddOns = ({ type, image }: props) => {
   return (
     <Dialog>
       <DialogOverlay className="bg-transparent" />
-      <DialogTrigger asChild>
-        <button onClick={selectAddOns}>
-          <img src={image} alt={type} className="ml-2 hover:opacity-90" />
-        </button>
+      <DialogTrigger asChild className="shadow-md">
+        <Button
+          variant="primary"
+          onClick={selectAddOns}
+          className="h-5 w-5 p-3"
+        >
+          <Text className="text-sm">+</Text>
+        </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[85vh] overflow-auto sm:max-w-md">
         {isSelecting ? <AddOnsContent /> : <FlightContent />}
