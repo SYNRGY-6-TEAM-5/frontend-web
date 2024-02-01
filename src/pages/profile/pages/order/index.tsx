@@ -7,9 +7,15 @@ const Order = () => {
   const dataOrder = [
     {
       orderId: 12345,
+      status: "waiting"
     },
     {
       orderId: 23456,
+      status: "active"
+    },
+    {
+      orderId: 54353,
+      status: "expired"
     }
   ];
 
