@@ -1,7 +1,35 @@
+import { Text } from "@mantine/core";
+import { Link } from "react-router-dom";
+import NoActiveFlight from "./components/NoActiveFlight";
+import ActiveOrder from "./components/ActiveOrder";
+
 const Order = () => {
-  return (
-    <div>Order</div>
-  )
+  const dataOrder = [
+    {
+      orderId: 12345,
+    },
+    {
+      orderId: 23456,
+    }
+  ];
+
+  if (dataOrder !== null) {
+    return (
+      <section id="order">
+        <div className="flex justify-between items-center mb-10">
+          <Text>Your Flight</Text>
+          <Link to="/" className="text-primary-500">History </Link>
+        </div>
+        <ActiveOrder orderActive={dataOrder} />
+      </section>
+    )
+  } else {
+    return (
+      <section id="order">
+        <NoActiveFlight />
+      </section>
+    )
+  }
 }
 
 export default Order
