@@ -1,9 +1,10 @@
 import { Card, CardHeader } from "@/components/ui/card";
-import { ArrowCircleRight, EatLogo, GarudaLogo, WorkLogo } from "@/assets/svg";
+import { ArrowCircleRight, EatLogo, WorkLogo } from "@/assets/svg";
 import { Text } from "@mantine/core";
 import { Ticket } from "@/types/Ticket";
 import { useCartStore } from "@/store/useCart";
 import { differenceInMinutes, format } from "date-fns";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface DepartureArrival {
   code: string;
@@ -17,6 +18,7 @@ interface BookingSectionProps {
   arrival: DepartureArrival;
   time: string;
   price: string;
+  airlineLogo: string;
 }
 
 
@@ -27,19 +29,20 @@ const BookingSection: React.FC<BookingSectionProps> = ({
   arrival,
   time,
   price,
+  airlineLogo,
 }) => {
   return (
     <div className="flex h-[334px] flex-col items-start justify-start gap-3 bg-white px-4 py-6">
       <div className="inline-flex items-center justify-between self-stretch p-2">
         <Text className="text-2xl font-normal text-black">{title}</Text>
-        <div className="flex items-center justify-center gap-2">
-          <div className="relative h-[22px] w-12">
-            <div className="absolute left-0 top-[-0px] h-[22px] w-12">
-              <GarudaLogo />
-            </div>
+        
+          <div className="flex items-center justify-center gap-4">
+            <Avatar className="z-10">
+              <AvatarImage src={airlineLogo} alt="@shadcn" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            <Text className="text-2xl font-medium">{flightNumber}</Text>
           </div>
-          <Text className="text-2xl font-medium">{flightNumber}</Text>
-        </div>
       </div>
       <div className="flex h-[226px] flex-col items-start justify-center gap-6 self-stretch">
         <div className="inline-flex items-center justify-between self-stretch rounded-2xl bg-neutral-900 p-3">
@@ -136,6 +139,7 @@ const BookingDetail = () => {
             key={index}
             title={index === 0 ? "Departure" : "Return"}
             flightNumber={ticket.flight.iata}
+            airlineLogo={ticket.flight.airline.image}
             departure={{
               code: ticket.flight.departure.airport_details.iata_code,
               time: formatTime(ticket.flight.departure.scheduled_time),

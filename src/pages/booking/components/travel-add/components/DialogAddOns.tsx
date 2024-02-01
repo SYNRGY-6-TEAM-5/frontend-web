@@ -5,7 +5,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import FlightContent from "./container/ChooseFlight";
-import BaggageDialog from "./container/AddOnsContent";
+import AddOnsContent from "./container/AddOnsContent";
 import { useAddOnsStore } from "@/store/useAddOnsStore";
 
 interface props {
@@ -30,7 +30,7 @@ const DialogAddOns = ({ type, image }: props) => {
         </button>
       </DialogTrigger>
       <DialogContent className="max-h-[85vh] overflow-auto sm:max-w-md">
-        {isSelecting ? <BaggageDialog /> : <FlightContent />}
+        {isSelecting ? <AddOnsContent /> : <FlightContent />}
       </DialogContent>
     </Dialog>
   );

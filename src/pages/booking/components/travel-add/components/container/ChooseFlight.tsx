@@ -33,7 +33,7 @@ const ChooseFlight = () => {
             </Text>
           </div>
           <div className="my-3 h-px w-full bg-gray-200"></div>
-          <div>
+          <div className="flex flex-col gap-6">
             <div className="flex items-center justify-between">
               <div className="flex gap-2">
                 <GarudaLogo className="w-6" />
@@ -45,9 +45,9 @@ const ChooseFlight = () => {
                 </Text>
               </div>
             </div>
-            <div className="mt-4 flex items-center text-xs font-medium text-gray-400">
-              Fri, 19 Jan <Dot className="h-4 w-4 text-black" />
-              16:20 - 17:40
+            <div className="flex h-8 items-center justify-between rounded-md bg-slate-200 px-3 py-3">
+              <Text className="text-sm font-medium">Saifulloh Fadli</Text>
+              <Text className="text-sm font-medium">1 Meal</Text>
             </div>
           </div>
         </div>

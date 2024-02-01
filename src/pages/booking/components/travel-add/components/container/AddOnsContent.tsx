@@ -21,20 +21,25 @@ import { CaretDown } from "@phosphor-icons/react";
 import Meal from "../ui/Meal";
 import Baggage from "../ui/Baggage";
 import { useAddOnsStore } from "@/store/useAddOnsStore";
+import { PassengerDetailsItem, usePassengerStore } from "@/store/useBooking";
 
-function SelectPassanger() {
+function SelectPassenger({
+  passengerDetails,
+}: {
+  passengerDetails: PassengerDetailsItem[];
+}) {
   return (
     <Select>
       <SelectTrigger className="mx-auto w-fit border-none text-lg font-medium">
-        <SelectValue placeholder="Select a fruit" />
+        <SelectValue placeholder="Select a Passenger" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectItem value="apple">Apple</SelectItem>
-          <SelectItem value="banana">Banana</SelectItem>
-          <SelectItem value="blueberry">Blueberry</SelectItem>
-          <SelectItem value="grapes">Grapes</SelectItem>
-          <SelectItem value="pineapple">Pineapple</SelectItem>
+          {passengerDetails.map((passenger, index) => (
+            <SelectItem key={index} value={passenger.fullName}>
+              {passenger.fullName}
+            </SelectItem>
+          ))}
         </SelectGroup>
       </SelectContent>
     </Select>
@@ -64,7 +69,21 @@ const AccordionSubtotal = () => {
 };
 
 const AddOnsContent = () => {
-  const { type, flight, setSelect } = useAddOnsStore();
+  const {
+    type,
+    flight,
+    mealsAddOn,
+    baggageAddOn,
+    setSelect,
+    calculateMealPriceTotal,
+  } = useAddOnsStore();
+  const { passengerDetails } = usePassengerStore();
+
+  const handleSave = () => {
+    setSelect(false);
+    console.log(baggageAddOn);
+    console.log(mealsAddOn);
+  };
 
   return (
     <>
@@ -74,9 +93,12 @@ const AddOnsContent = () => {
         </DialogTitle>
       </DialogHeader>
       <div className="mt-6 ">
-        <SelectPassanger />
+        <SelectPassenger passengerDetails={passengerDetails} />
         <Text className="mx-auto w-fit text-xs font-semibold">
-          1 Meal <span className="font-normal">IDR 49,000</span>
+          {`${mealsAddOn.length} Meal`}{" "}
+          <span className="font-normal">{`IDR ${parseFloat(
+            calculateMealPriceTotal(),
+          ).toLocaleString()}`}</span>
         </Text>
         <div className="mt-8 rounded-lg px-3 py-4 shadow">
           <div>
@@ -104,7 +126,7 @@ const AddOnsContent = () => {
         type="button"
         variant="primary"
         className="h-14 w-full rounded-xl"
-        onClick={() => setSelect(false)}
+        onClick={handleSave}
       >
         Save
       </Button>
