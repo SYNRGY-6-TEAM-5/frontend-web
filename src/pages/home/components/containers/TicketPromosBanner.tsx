@@ -2,7 +2,7 @@ import { Text } from "@mantine/core";
 import { Separator } from "@/components/ui/separator";
 
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Ticket } from "../ui/Ticket";
+import { TicketComponent } from "../ui/Ticket";
 
 export interface Ticket {
     departure_date: string;
@@ -69,7 +69,7 @@ export function TicketPromosBanner() {
         <ScrollArea className="w-full whitespace-nowrap rounded-md">
           <div className="flex items-center space-x-4 p-4">
             {tickets.map((ticket, index) => (
-              <Ticket key={index} ticket={ticket} />
+              <TicketComponent key={index} ticket={ticket} />
             ))}
           </div>
           <ScrollBar orientation="horizontal" />

@@ -5,7 +5,7 @@ import { Outlet, createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 
 import NavBar from "../components/containers/NavBar";
-import Footer from "../components/containers/Footer";
+import FooterSearch from "../components/containers/Footer";
 import PasswordOTP from "@/pages/forget-password/otp";
 import ChangePasswordMethod from "@/pages/forget-password/method";
 import ChangePassword from "@/pages/forget-password/change-password";
@@ -14,10 +14,19 @@ import ResetPassword from "@/pages/forget-password/reset";
 import SetupProfile from "@/pages/setup-profile";
 import AccountCreated from "@/pages/account-created";
 import TermsOfService from "@/pages/terms-of-service";
-import FlightList from "@/pages/flight-list";
 import SearchFlight from "@/pages/search-flight";
 import Payment from "@/pages/payment";
 import Booking from "@/pages/booking";
+import LayoutUser from "@/layout/user";
+import PaymentDetails from "@/pages/paymentDetails";
+import { TicketProvider } from "@/context/TicketContext";
+import Profile from "@/pages/profile";
+import MyFlight from "@/pages/profile/pages/my-flight";
+import EditProfile from "@/pages/profile/pages/edit";
+import Order from "@/pages/profile/pages/order";
+import Passenger from "@/pages/profile/pages/passenger";
+import Notification from "@/pages/profile/pages/notification";
+import Faq from "@/pages/profile/pages/faq";
 import AddOns from "@/pages/add-ons/AddOns";
 
 const router = createBrowserRouter([
@@ -27,7 +36,7 @@ const router = createBrowserRouter([
       <>
         <NavBar />
         <Home />
-        <Footer />
+        <FooterSearch />
       </>
     ),
   },
@@ -76,20 +85,26 @@ const router = createBrowserRouter([
     element: <TermsOfService />,
   },
   {
-    path: "/flight-list",
-    element: <FlightList />,
-  },
-  {
-    path: "/search-flight",
-    element: <SearchFlight />,
-  },
-  {
-    path: "/add-ons",
-    element: <AddOns />,
-  },
-  {
-    path: "/booking",
-    element: <Booking />,
+    path: "/flight/",
+    element: (
+      <TicketProvider>
+        <Outlet></Outlet>
+      </TicketProvider>
+    ),
+    children: [
+      {
+        path: "/flight/search-flight",
+        element: <SearchFlight />,
+      },
+      {
+        path: "/add-ons",
+        element: <AddOns />,
+      },
+      {
+        path: "/flight/booking",
+        element: <Booking />,
+      },
+    ],
   },
   {
     path: "/user",
@@ -101,7 +116,49 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/user/payment",
-        element: <Payment />,
+        element: (
+          <LayoutUser>
+            <Payment />
+          </LayoutUser>
+        ),
+      },
+      {
+        path: "/user/payment-details",
+        element: (
+          <LayoutUser>
+            <PaymentDetails />
+          </LayoutUser>
+        ),
+      },
+    ],
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
+    children: [
+      {
+        path: "/profile",
+        element: <MyFlight />,
+      },
+      {
+        path: "/profile/edit",
+        element: <EditProfile />,
+      },
+      {
+        path: "/profile/order",
+        element: <Order />,
+      },
+      {
+        path: "/profile/passenger-data",
+        element: <Passenger />,
+      },
+      {
+        path: "/profile/notification",
+        element: <Notification />,
+      },
+      {
+        path: "/profile/faq",
+        element: <Faq />,
       },
     ],
   },

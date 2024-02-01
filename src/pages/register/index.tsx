@@ -1,12 +1,24 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { MainLogo } from "@/assets/svg";
 import RegisterForm from "./components/RegisterForm";
+import Cookies from "js-cookie";
 
 const Register = () => {
+  const token = Cookies.get("accesstoken");
+  const role = Cookies.get("role");
+
+  if (token) {
+    return role === "USER" ? (
+      <Navigate to={"/user/payment"} replace />
+    ) : (
+      <Navigate to={"/admin/dashboard"} replace />
+    );
+  }
+
   return (
     <>
       <div className="container relative hidden flex-col items-center justify-center min-[320px]:grid min-[320px]:py-5 md:h-[100vh] lg:max-w-none lg:grid-cols-2 lg:p-0">
-        <div className="lg:bg-register-bg relative h-full flex-col bg-cover p-10 text-white md:hidden lg:flex dark:border-r"></div>
+        <div className="relative h-full flex-col bg-cover p-10 text-white md:hidden lg:flex lg:bg-register-bg dark:border-r"></div>
         <div className="space-y-24 lg:p-8">
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
             <div className="flex flex-col space-y-3 text-center">

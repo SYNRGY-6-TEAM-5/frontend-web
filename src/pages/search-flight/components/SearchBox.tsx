@@ -1,8 +1,17 @@
 import { useState } from "react";
 import Destination from "../../../assets/destination.png";
+import { useLocation } from "react-router-dom";
+import { format } from "date-fns";
 
 const SearchBox = () => {
   const [editMode, setEditMode] = useState(false);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+
+  const paramsData: Record<string, string> = {};
+  searchParams.forEach((value, key) => {
+    paramsData[key] = value;
+  });
 
   const handleEditClick = () => {
     setEditMode(true);
@@ -10,24 +19,28 @@ const SearchBox = () => {
 
   const handleInputChange = () => {};
   return (
-    <div className="relative mt-28 flex ">
-      <section className="mx-auto flex max-h-[126px]  w-full max-w-[1280px] flex-row items-center justify-between overflow-x-hidden rounded-[16px] bg-[#111] px-9 text-white md:h-[550px]">
+    <div className="relative mt-28 px-6 md:px-9 lg:px-20  ">
+      <section className="flex max-h-[126px] w-full flex-row items-center justify-between overflow-x-hidden rounded-[16px] bg-[#111] px-9 text-white md:h-[550px]">
         <div className="flex flex-row justify-between">
           <div className="flex flex-row items-center justify-center">
             <div className="flex flex-col items-center justify-center">
-              <div className="text-[36px] font-bold text-[#F74E28]">YIA</div>
-              <div className="text-[12px] font-extralight">Yogyakarta</div>
+              <div className="text-[36px] font-bold text-[#F74E28]">
+                {paramsData.origin}
+              </div>
+              <div className="text-[12px] font-extralight">{paramsData.o_city}</div>
             </div>
             <div className="mx-6">
               <img src={Destination} alt="" />
             </div>
             <div className="flex flex-col items-center justify-center">
-              <div className="text-[36px] font-bold text-[#F74E28]">CGK</div>
-              <div className="text-[12px] font-extralight">Jakarta</div>
+              <div className="text-[36px] font-bold text-[#F74E28]">
+                {paramsData.destination}
+              </div>
+              <div className="text-[12px] font-extralight">{paramsData.d_city}</div>
             </div>
           </div>
           <div className="ml-16 flex items-center justify-center text-[18px] text-[#B9C0D4]">
-            Tue, 3 Jan 2024 - 2 Passengers - Economy Class
+            {`${format(paramsData.dep_date!, "E, dd MMM yyyy")} - ${paramsData.total_seat} Passengers - ${paramsData.ticket_class} Class`}
           </div>
         </div>
         <div className="rounded-[12px] bg-white">

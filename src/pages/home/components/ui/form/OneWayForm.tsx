@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import SelectAirportDialog from "../SelectAirportDialog";
-import SelectSeatDialog, { Seat } from "../SelectSeatDialog";
-import DatePicker from "../Calendar";
+import SelectSeatDialog from "../SelectSeatDialog";
+import DepartureDatePicker from "../DepartureDatePicker";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -23,7 +23,10 @@ import { toast } from "@/components/ui/use-toast";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 
 import useHome from "@/lib/hooks/useHome";
-import { useNavigate  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
+import { AirportDetails } from "@/types/Ticket";
+import { Seat } from "@/types/Ticket";
 
 const FormSchema = z.object({
   departureDate: z
@@ -57,18 +60,19 @@ const FormSchema = z.object({
     }),
 });
 
-const OneWayForm = () => {
-  const { airports, handleSearch, fetchAirports, params, setParams } = useHome();
+interface props {
+  tripType: string;
+}
+
+const OneWayForm = ({ tripType }: props) => {
+  const { airports, handleSearch, fetchAirports, params } = useHome();
   const navigate = useNavigate();
 
-  // eslint-disable-next-line no-unused-vars
-  const [selectedOriginAirport, setSelectedOriginAirport] = useState(null);
-  // eslint-disable-next-line no-unused-vars
+  const [selectedOriginAirport, setSelectedOriginAirport] =
+    useState<AirportDetails | null>(null);
   const [selectedDestinationAirport, setSelectedDestinationAirport] =
-    useState(null);
-  // eslint-disable-next-line no-unused-vars
+    useState<AirportDetails | null>(null);
   const [isOriginActive, setIsOriginActive] = useState(true);
-  const [completeData, setCompleteData] = useState({});
 
   const [ticketDetails, setTicketDetails] = useState<Seat | null>(null);
 
@@ -115,7 +119,7 @@ const OneWayForm = () => {
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
     if (isOriginDestEmpty) {
       toast({
-        title: 'Airport origin and destination are empty',
+        title: "Airport origin and destination are empty",
         description: (
           <div className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
             <p className="text-white">
@@ -127,35 +131,35 @@ const OneWayForm = () => {
       return;
     }
 
-    const _completeData = {
-      origin: selectedOriginAirport,
-      destination: selectedDestinationAirport,
-      date: {
-        departureDate: data.departureDate,
-        arrivalDate: data.arrivalDate,
-      },
-      'ticket-details': ticketDetails,
-    };
+    console.log("Arrival Date >>>", typeof data.departureDate);
 
-    // Use the callback form of setParams to ensure you're working with the latest state
-    setParams(prevParams => ({
-      ...prevParams,
-      ..._completeData,
-    }));
-    setCompleteData(_completeData);
+    const searchParams = new URLSearchParams();
+    searchParams.append("origin", selectedOriginAirport.iata_code!);
+    searchParams.append("destination", selectedDestinationAirport.iata_code!);
+    searchParams.append("o_city", selectedOriginAirport.city_name!);
+    searchParams.append("d_city", selectedDestinationAirport.city_name!);
+    searchParams.append("dep_date", format(data.departureDate!, "yyyy-MM-dd"));
+    searchParams.append(
+      "ret_date",
+      format(data.arrivalDate || data.departureDate!, "yyyy-MM-dd"),
+    );
+    searchParams.append("trip-type", tripType!);
+
+    for (const key in ticketDetails) {
+      searchParams.append(key, (ticketDetails as Record<string, any>)[key]);
+    }
+
+    navigate(`/flight/search-flight?${searchParams}`);
   };
 
-  // Use useEffect to navigate when params are updated
   useEffect(() => {
-    fetchAirports();
+    const debounceTimeout = setTimeout(() => {
+      fetchAirports();
+    }, 300);
 
-    if (Object.keys(completeData).length > 0) {
-      console.log(params);
-      console.log(completeData);
-      
-      navigate('/flight-list', { state: params });
-    }
-  }, [fetchAirports, completeData, params]);
+    return () => clearTimeout(debounceTimeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params]);
 
   return (
     <Form {...form}>
@@ -224,7 +228,7 @@ const OneWayForm = () => {
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel className="text-white">Departure Date</FormLabel>
-              <DatePicker field={field} />
+              <DepartureDatePicker field={field} />
               <FormMessage />
             </FormItem>
           )}
@@ -242,15 +246,13 @@ const OneWayForm = () => {
             </FormItem>
           )}
         />
-        {/* <Link to="/flight-list" state={params}> */}
-          <Button
-            variant="primary"
-            type="submit"
-            className="h-12 w-full items-center rounded-md p-4"
-          >
-            <MagnifyingGlassIcon className="mr-2 h-4 w-4" /> Cari
-          </Button>
-        {/* </Link> */}
+        <Button
+          variant="primary"
+          type="submit"
+          className="h-12 w-full items-center rounded-md p-4"
+        >
+          <MagnifyingGlassIcon className="mr-2 h-4 w-4" /> Cari
+        </Button>
       </form>
     </Form>
   );

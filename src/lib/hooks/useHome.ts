@@ -1,46 +1,10 @@
 import axios from 'axios';
 import { ChangeEvent, useCallback, useState } from 'react';
 
-export
-    interface IParams {
-    page?: number;
-    size?: number;
-    search?: string;
-    departure_airport?: string;
-    arrival_airport?: string;
-    departure_date?: string;
-}
+import { IParams, IApiResponse, IMeta } from '@/types/ApiResponse';
+import { AirportDetails } from '@/types/Ticket';
 
-export interface IApiResponse<T> {
-    data: T;
-    message: string;
-    meta?: {
-        page: number;
-        size: number;
-        totalData: number;
-        totalPages: number;
-    };
-}
-
-export interface IMeta {
-    page: number;
-    size: number;
-    totalData: number;
-    totalPages: number;
-}
-
-export interface IAirport {
-    airport_id: number;
-    airport_name: string;
-    iata_code: string;
-    gmt: string;
-    city_name: string;
-    city_iata_code: string;
-    country_name: string;
-    country_iso_code: string;
-  }
-
-type AirportData = Array<IAirport>;
+type AirportData = Array<AirportDetails>;
 
 export default function useHome() {
     const [meta, setMeta] = useState<IMeta>();

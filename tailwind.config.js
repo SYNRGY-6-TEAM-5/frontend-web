@@ -1,3 +1,5 @@
+const Warning = require('postcss/lib/warning');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -24,6 +26,10 @@ module.exports = {
         xs: "425px",
       },
       keyframes: {
+        wiggle: {
+          "0%, 100%": { transform: "rotate(-3deg)" },
+          "50%": { transform: "rotate(3deg)" }
+        },
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -36,6 +42,7 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        wiggle: "wiggle 200ms ease-in-out",
       },
       colors: {
         primary: {
@@ -56,7 +63,17 @@ module.exports = {
         white: "#fff",
         zinc:{
           900: "#18181b",
+        },
+        error: {
+          50: "#FEF3F2",
+          500:"#F04438",
+        },
+        warning: {
+          500: "#F79009",
         }
+      },
+      boxShadow: {
+        '3xl':'0px 4px 4px 0px rgba(0, 0, 0, 0.04)',
       },
     },
     backgroundImage: {
