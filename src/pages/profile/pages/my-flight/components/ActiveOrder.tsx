@@ -105,7 +105,7 @@ const ActiveOrder = ({orderActive} : orderArr) => {
             </>
           ) : order.checkIn === true && order.checkInStatus === "false" ?(
             <>
-              <Text className="text-center text-error-500 bg-error-100 rounded px-1 py-[6px]">Can't check in yet</Text>
+              <Text className="text-center text-error-500 bg-error-100 rounded px-1 py-[6px] text-sm">Can't check in yet</Text>
               <Text className="text-sm font-normal text-primary-500">Your e-ticket is available!</Text>
             </>
           ) : (
