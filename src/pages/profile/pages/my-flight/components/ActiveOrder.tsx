@@ -35,7 +35,7 @@ const ActiveOrder = ({orderActive} : orderArr) => {
   return(
     <div className="grid lg:grid-cols-2 gap-x-8 gap-y-8 grid-cols-1">
       {filteredOrder.map((order, index) => (
-        <div key={index} className="space-y-3 p-3 bg-white shadow-3xl h-fit">
+        <div key={index} className="space-y-3 p-3 bg-white shadow-3xl h-fit rounded-xl">
           <div className="flex justify-between items-center">
             <Text className="text-xs font-normal text-gray-400">Order ID: {order.orderId}</Text>
             <Text className="bg-gray-100 rounded-3xl px-2 py-1 text-primary-500 text-xs font-medium">Roundtrip</Text>
@@ -76,7 +76,7 @@ const ActiveOrder = ({orderActive} : orderArr) => {
                 htmlFor="prices"
                 className="group flex items-center justify-between bg-success-500 text-white p-[6px] rounded-lg cursor-pointer"
               >
-                <Text className="text-s font-normal ">You can check-in now</Text>
+                <Text className="text-sm font-normal ">You can check-in now</Text>
                 <input
                   type="button"
                   id="prices"
@@ -84,7 +84,7 @@ const ActiveOrder = ({orderActive} : orderArr) => {
                 />
                 <ChevronRight size={20} className="font-base" />
               </label>
-              <Text className="text-s font-normal text-primary-500">Your e-ticket is available!</Text>
+              <Text className="text-sm font-normal text-primary-500">Your e-ticket is available!</Text>
             </>
           ) : order.checkIn === true && order.checkInStatus === "expired" ?(
             <>
@@ -92,7 +92,7 @@ const ActiveOrder = ({orderActive} : orderArr) => {
                 htmlFor="prices"
                 className="group flex items-center justify-between bg-gray-300 text-gray-500 p-[6px] rounded-lg cursor-not-allowed"
               >
-                <Text className="text-s font-normal ">Time for check in has expired</Text>
+                <Text className="text-sm font-normal ">Time for check in has expired</Text>
                 <input
                   type="button"
                   id="prices"
@@ -101,19 +101,19 @@ const ActiveOrder = ({orderActive} : orderArr) => {
                 />
                 <ChevronRight size={20} className="font-base" />
               </label>
-              <Text className="text-s font-normal text-primary-500">Your e-ticket is available!</Text>
+              <Text className="text-sm font-normal text-primary-500">Your e-ticket is available!</Text>
             </>
           ) : order.checkIn === true && order.checkInStatus === "false" ?(
             <>
               <Text className="text-center text-error-500 bg-error-100 rounded px-1 py-[6px]">Can't check in yet</Text>
-              <Text className="text-s font-normal text-primary-500">Your e-ticket is available!</Text>
+              <Text className="text-sm font-normal text-primary-500">Your e-ticket is available!</Text>
             </>
           ) : (
             <label
               htmlFor="eTicket"
               className="group flex items-center justify-between text-primary-500 cursor-pointer"
             >
-              <Text className="text-s font-normal">Your e-ticket is available!</Text>
+              <Text className="text-sm font-normal">Your e-ticket is available!</Text>
               <input
                 type="button"
                 id="eTicket"
