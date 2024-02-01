@@ -20,6 +20,13 @@ import Booking from "@/pages/booking";
 import LayoutUser from "@/layout/user";
 import PaymentDetails from "@/pages/paymentDetails";
 import { TicketProvider } from "@/context/TicketContext";
+import Profile from "@/pages/profile";
+import MyFlight from "@/pages/profile/pages/my-flight";
+import EditProfile from "@/pages/profile/pages/edit";
+import Order from "@/pages/profile/pages/order";
+import Passenger from "@/pages/profile/pages/passenger";
+import Notification from "@/pages/profile/pages/notification";
+import Faq from "@/pages/profile/pages/faq";
 
 const router = createBrowserRouter([
   {
@@ -117,6 +124,36 @@ const router = createBrowserRouter([
             <PaymentDetails />
           </LayoutUser>
         ),
+      },
+    ],
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
+    children: [
+      {
+        path: "/profile",
+        element: <MyFlight />,
+      },
+      {
+        path: "/profile/edit",
+        element: <EditProfile />,
+      },
+      {
+        path: "/profile/order",
+        element: <Order />,
+      },
+      {
+        path: "/profile/passenger-data",
+        element: <Passenger />,
+      },
+      {
+        path: "/profile/notification",
+        element: <Notification />,
+      },
+      {
+        path: "/profile/faq",
+        element: <Faq />,
       },
     ],
   },

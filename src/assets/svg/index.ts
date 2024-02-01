@@ -20,4 +20,9 @@ export { default as CheckedBox } from "./checkedbox.svg?react";
 export { default as Bca } from "./BCA.svg";
 export { default as BankMandiri } from "./BankMandiri.svg";
 export { default as Ocbc } from "./OCBC.svg";
-
+export { default as EditPencil } from "./edit-pencil.svg?react";
+export { default as Logout } from "./logout.svg?react";
+export { default as Airflight } from "./airflight.svg?react";
+export { default as Passenger } from "./passenger.svg?react";
+export { default as Faq } from "./faq.svg?react";
+export { default as Notification } from "./notification.svg?react";
