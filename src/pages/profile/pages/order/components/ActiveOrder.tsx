@@ -6,7 +6,9 @@ import { ChevronRight } from "lucide-react";
 
 interface order {
   orderId:number,
-  status:string
+  payment:string,
+  checkIn:boolean,
+  checkInStatus:string
 }
 
 interface orderArr {
@@ -18,7 +20,7 @@ const ActiveOrder = ({orderActive} : orderArr) => {
   const countDownTime = 1000;
   const {seconds, minutes, hours} = useTimer({date, countDownTime});
 
-  const filteredOrder = orderActive.filter(order => order.status !== "expired")
+  const filteredOrder = orderActive.filter(order => order.payment !== "expired")
     .map(order => {
       return order
     });
@@ -49,31 +51,72 @@ const ActiveOrder = ({orderActive} : orderArr) => {
               <Text className="text-xs font-normal text-gray-500">Yogyakarta</Text>
             </div>
           </div>
-          {order.status === "waiting" ? (
+
+          {order.payment === "waiting" ? (
           <div className="flex justify-between">
             <Text className="font-medium text-sm">Total</Text>
             <Text className="font-semibold text-primary-500">IDR 2,230,900</Text>
           </div>
           ): ""}
-          {order.status === "waiting" ? (
+
+          {order.payment === "waiting" ? (
             <Button
               type="button"
               className="w-full h-14 rounded-xl bg-primary-500 py-4 text-white font-medium text-sm"
             >Complete the Payment in {hours}:{minutes}:{seconds}</Button>
+          ) : order.checkIn === true && order.checkInStatus === "true" ?(
+            <>
+              <label
+                htmlFor="prices"
+                className="group flex items-center justify-between bg-success-500 text-white p-[6px] rounded-lg cursor-pointer"
+              >
+                <Text className="text-s font-normal ">You can check-in now</Text>
+                <input
+                  type="button"
+                  id="prices"
+                  name="prices"
+                />
+                <ChevronRight size={20} className="font-base" />
+              </label>
+              <Text className="text-s font-normal text-primary-500">Your e-ticket is available!</Text>
+            </>
+          ) : order.checkIn === true && order.checkInStatus === "expired" ?(
+            <>
+              <label
+                htmlFor="prices"
+                className="group flex items-center justify-between bg-gray-300 text-gray-500 p-[6px] rounded-lg cursor-not-allowed"
+              >
+                <Text className="text-s font-normal ">Time for check in has expired</Text>
+                <input
+                  type="button"
+                  id="prices"
+                  name="prices"
+                  disabled
+                />
+                <ChevronRight size={20} className="font-base" />
+              </label>
+              <Text className="text-s font-normal text-primary-500">Your e-ticket is available!</Text>
+            </>
+          ) : order.checkIn === true && order.checkInStatus === "false" ?(
+            <>
+              <Text className="text-center text-error-500 bg-error-100 rounded px-1 py-[6px]">Can't check in yet</Text>
+              <Text className="text-s font-normal text-primary-500">Your e-ticket is available!</Text>
+            </>
           ) : (
             <label
-              htmlFor="prices"
-              className="group flex items-center justify-between"
+              htmlFor="eTicket"
+              className="group flex items-center justify-between text-primary-500 cursor-pointer"
             >
-              <Text className="text-s font-normal text-primary-500">Your e-ticket is available!</Text>
+              <Text className="text-s font-normal">Your e-ticket is available!</Text>
               <input
                 type="button"
-                id="prices"
-                name="prices"
+                id="eTicket"
+                name="eTicket"
               />
-              <ChevronRight size={20} className="font-base text-primary-500" />
+              <ChevronRight size={20} className="font-base" />
             </label>
           )}
+          
         </div>
       ))}
     </div>

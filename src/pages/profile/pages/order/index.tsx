@@ -4,18 +4,45 @@ import NoActiveFlight from "./components/NoActiveFlight";
 import ActiveOrder from "./components/ActiveOrder";
 
 const Order = () => {
+  // payment apakah sudah dibayar atau belum atau sudah expired
+  // checkIn apakah maskapai menyediakan check in lewat web atau tidak
+  // checkInStatus apakah check in sudah dapat dilakukan atau belum atau apakah sudah expired 
   const dataOrder = [
     {
       orderId: 12345,
-      status: "waiting"
+      payment: "waiting",
+      checkIn: false,
+      checkInStatus: "false"
     },
     {
       orderId: 23456,
-      status: "active"
+      payment: "success",
+      checkIn: false,
+      checkInStatus: "false"
     },
     {
-      orderId: 54353,
-      status: "expired"
+      orderId: 34567,
+      payment: "expired",
+      checkIn: false,
+      checkInStatus: "false"
+    },
+    {
+      orderId: 45678,
+      payment: "success",
+      checkIn: true,
+      checkInStatus: "true"
+    },
+    {
+      orderId: 45678,
+      payment: "success",
+      checkIn: true,
+      checkInStatus: "false"
+    },
+    {
+      orderId: 45678,
+      payment: "success",
+      checkIn: true,
+      checkInStatus: "expired"
     }
   ];
 

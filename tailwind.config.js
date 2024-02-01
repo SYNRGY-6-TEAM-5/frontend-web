@@ -66,10 +66,14 @@ module.exports = {
         },
         error: {
           50: "#FEF3F2",
+          100: "#FEE4E2",
           500:"#F04438",
         },
         warning: {
           500: "#F79009",
+        },
+        success : {
+          500: "#12B76A"
         }
       },
       boxShadow: {
