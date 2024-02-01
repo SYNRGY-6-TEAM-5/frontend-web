@@ -18,6 +18,7 @@ import FlightList from "@/pages/flight-list";
 import SearchFlight from "@/pages/search-flight";
 import Payment from "@/pages/payment";
 import Booking from "@/pages/booking";
+import AddOns from "@/pages/add-ons/AddOns";
 
 const router = createBrowserRouter([
   {
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
   {
     path: "/search-flight",
     element: <SearchFlight />,
+  },
+  {
+    path: "/add-ons",
+    element: <AddOns />,
   },
   {
     path: "/booking",
