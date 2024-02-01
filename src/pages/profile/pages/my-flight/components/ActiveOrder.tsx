@@ -3,6 +3,7 @@ import useTimer from "@/lib/hooks/useTimer";
 import OrderIcon from "@/assets/order-icon.png";
 import Globe from "@/assets/globe.png";
 import { ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface order {
   orderId:number,
@@ -25,7 +26,11 @@ const ActiveOrder = ({orderActive} : orderArr) => {
       return order
     });
 
-    console.log({filteredOrder})
+  const navigate = useNavigate();
+  const handleWaiting = (orderId:number) => {
+    console.log({orderId});
+    navigate('/profile/order/payment/');
+  }
 
   return(
     <div className="grid lg:grid-cols-2 gap-x-8 gap-y-8 grid-cols-1">
@@ -62,6 +67,7 @@ const ActiveOrder = ({orderActive} : orderArr) => {
           {order.payment === "waiting" ? (
             <Button
               type="button"
+              onClick={() => handleWaiting(order.orderId)}
               className="w-full h-14 rounded-xl bg-primary-500 py-4 text-white font-medium text-sm"
             >Complete the Payment in {hours}:{minutes}:{seconds}</Button>
           ) : order.checkIn === true && order.checkInStatus === "true" ?(
