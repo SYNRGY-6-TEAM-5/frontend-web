@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -11,23 +10,24 @@ import { useAddOnsStore } from "@/store/useAddOnsStore";
 
 interface props {
   type: "Baggage" | "Meal";
+  image: string;
 }
 
-const DialogAddOns = ({ type }: props) => {
+const DialogAddOns = ({ type, image }: props) => {
   const { isSelecting, setSelect, setType } = useAddOnsStore();
 
   const selectAddOns = () => {
     setSelect(false);
-    setType(type);
+    setType(image);
   };
 
   return (
     <Dialog>
       <DialogOverlay className="bg-transparent" />
       <DialogTrigger asChild>
-        <Button variant="outline" onClick={selectAddOns}>
-          {type}
-        </Button>
+        <button onClick={selectAddOns}>
+          <img src={image} alt={type} className="ml-2 hover:opacity-90" />
+        </button>
       </DialogTrigger>
       <DialogContent className="max-h-[85vh] overflow-auto sm:max-w-md">
         {isSelecting ? <BaggageDialog /> : <FlightContent />}

@@ -27,7 +27,6 @@ import Order from "@/pages/profile/pages/order";
 import Passenger from "@/pages/profile/pages/passenger";
 import Notification from "@/pages/profile/pages/notification";
 import Faq from "@/pages/profile/pages/faq";
-import AddOns from "@/pages/add-ons/AddOns";
 
 const router = createBrowserRouter([
   {
@@ -95,10 +94,6 @@ const router = createBrowserRouter([
       {
         path: "/flight/search-flight",
         element: <SearchFlight />,
-      },
-      {
-        path: "/add-ons",
-        element: <AddOns />,
       },
       {
         path: "/flight/booking",
