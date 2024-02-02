@@ -17,13 +17,10 @@ const LogoutButton = () => {
 
   return (
     <Dialog>
-      <DialogTrigger className="w-full">
-        <Button
-          className="my-6 h-14 w-full rounded bg-primary-50 text-xs font-medium text-primary-500 hover:bg-red-500 hover:text-white"
-          type="button"
-        >
+      <DialogTrigger className="my-6 h-14 w-full rounded bg-primary-50 text-xs font-medium text-primary-500 hover:bg-red-500 hover:text-white">
+        <span className="flex items-center justify-center ">
           <Logout className="mr-1" /> Log Out
-        </Button>
+        </span>
       </DialogTrigger>
       <DialogContent className="max-w-[400px]">
         <DialogHeader>
