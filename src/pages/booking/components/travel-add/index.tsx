@@ -17,7 +17,7 @@ const TravelAddOns = () => {
       </CardHeader>
 
       <CardContent>
-        <section className="flex flex-col items-center justify-center">
+        <section className="flex flex-col items-center justify-center pb-8 gap-4">
           <div className="mt-1 flex h-full w-full max-w-[756px] items-center justify-center">
             <div className="flex h-[128px] w-[756px] flex-col justify-around rounded-lg bg-white px-4 py-3 shadow-md">
               <div className="flex flex-row justify-between">
