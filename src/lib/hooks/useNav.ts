@@ -30,11 +30,8 @@ export default function useNav() {
     };
 
     const handleLogout = () => {
-        const c = confirm("Are you sure you want to logout?");
-        if (c) {
-            Cookies.remove("accesstoken");
-            window.location.href = "/login";
-        }
+        Cookies.remove("accesstoken");
+        window.location.href = "/login";
     };
 
     const getInitials = (name: string | null | undefined) => {
