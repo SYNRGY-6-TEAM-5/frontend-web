@@ -30,5 +30,4 @@ export interface PassengerData {
     courtesy_title: string;
     vaccinated: string;
     travel_docs: ITravelDocs[];
-    add_ons: IAddOns;
 }

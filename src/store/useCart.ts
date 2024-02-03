@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { Ticket } from '@/types/Ticket';
 
-interface CartItem extends Ticket {
+export interface CartItem extends Ticket {
     count: number;
 }
 

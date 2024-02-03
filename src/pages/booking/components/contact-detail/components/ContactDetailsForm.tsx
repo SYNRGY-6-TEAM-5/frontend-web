@@ -22,11 +22,12 @@ const validationSchema = Yup.object().shape({
 
 const ContactDetailsForm = () => {
   const { updateContactDetails: handleAddToPassengerDetails, contactDetails } = usePassengerStore();
+  
   const formik = useFormik({
     initialValues: {
-      fullName: "",
-      email: "",
-      phone: "",
+      fullName: contactDetails.fullName ? contactDetails.fullName : "",
+      email: contactDetails.email ? contactDetails.email : "",
+      phone: contactDetails.phone ? contactDetails.phone : "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {

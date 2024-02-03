@@ -1,12 +1,41 @@
 import { Card, CardHeader } from "@/components/ui/card";
 
 import { BaggageInsurance, FlightDelay, FullProtect } from "@/assets/svg";
-import React, { useState } from "react";
+import React from "react";
+import { useTicketContext } from "@/context/TicketContext";
 
 const ExtraProtect: React.FC = () => {
-  const [checkbox1, setCheckbox1] = useState(false);
-  const [checkbox2, setCheckbox2] = useState(false);
-  const [checkbox3, setCheckbox3] = useState(false);
+  const { tripInsurance, setTripInsurance } = useTicketContext();
+
+  const handleFullProtectionChange = () => {
+    setTripInsurance((prevState) => ({
+      ...prevState,
+      full_insurance:
+        prevState.full_insurance.type === ""
+          ? { type: "Full Protection", price: 95000 }
+          : { type: "", price: 0 },
+    }));
+  };
+
+  const handleBaggageInsuranceChange = () => {
+    setTripInsurance((prevState) => ({
+      ...prevState,
+      baggage_insurance:
+        prevState.baggage_insurance.type === ""
+          ? { type: "Baggage Insurance", price: 16000 }
+          : { type: "", price: 0 },
+    }));
+  };
+
+  const handleFlightDelayChange = () => {
+    setTripInsurance((prevState) => ({
+      ...prevState,
+      flight_delay_insurance:
+        prevState.flight_delay_insurance.type === ""
+          ? { type: "Flight Delay", price: 16000 }
+          : { type: "", price: 0 },
+    }));
+  };
 
   return (
     <>
@@ -45,12 +74,12 @@ const ExtraProtect: React.FC = () => {
               </div>
             </div>
             <div className="flex items-center justify-between">
-              <p className="text-xs font-medium">IDR 95.000/pax</p>
+              <p className="text-xs font-medium">{`IDR ${95000}/pax`}</p>
               <div className="flex items-center gap-2">
                 <label
                   htmlFor="full-protection-checkbox"
                   className={
-                    checkbox1
+                    tripInsurance.full_insurance.type === "Full Protection"
                       ? "text-sm font-medium text-black"
                       : "text-sm font-medium text-gray-300"
                   }
@@ -60,9 +89,8 @@ const ExtraProtect: React.FC = () => {
                 <input
                   type="checkbox"
                   id="full-protection-checkbox"
-                  checked={checkbox1}
-                  onChange={() => setCheckbox1(!checkbox1)}
-                  value=""
+                  checked={tripInsurance.full_insurance.type === "Full Protection"}
+                  onChange={handleFullProtectionChange}
                   className="h-4 w-4 accent-primary-500"
                 />
               </div>
@@ -103,12 +131,12 @@ const ExtraProtect: React.FC = () => {
               </div>
             </div>
             <div className="flex items-center justify-between">
-              <p className="text-xs font-medium">IDR 16.000/pax</p>
+              <p className="text-xs font-medium">{`IDR ${16000}/pax`}</p>
               <div className="flex items-center gap-2">
                 <label
-                  htmlFor="baggage-insurance-checkbox"
+                  htmlFor="full-protection-checkbox"
                   className={
-                    checkbox2
+                    tripInsurance.baggage_insurance.type === "Baggage Insurance"
                       ? "text-sm font-medium text-black"
                       : "text-sm font-medium text-gray-300"
                   }
@@ -117,10 +145,9 @@ const ExtraProtect: React.FC = () => {
                 </label>
                 <input
                   type="checkbox"
-                  id="baggage-insurance-checkbox"
-                  checked={checkbox2}
-                  onChange={() => setCheckbox2(!checkbox2)}
-                  value=""
+                  id="full-protection-checkbox"
+                  checked={tripInsurance.baggage_insurance.type === "Baggage Insurance"}
+                  onChange={handleBaggageInsuranceChange}
                   className="h-4 w-4 accent-primary-500"
                 />
               </div>
@@ -161,12 +188,12 @@ const ExtraProtect: React.FC = () => {
               </div>
             </div>
             <div className="flex items-center justify-between">
-              <p className="text-xs font-medium">IDR 16.000/pax</p>
+              <p className="text-xs font-medium">{`IDR ${16000}/pax`}</p>
               <div className="flex items-center gap-2">
                 <label
-                  htmlFor="flight-delay-checkbox"
+                  htmlFor="full-protection-checkbox"
                   className={
-                    checkbox3
+                    tripInsurance.flight_delay_insurance.type === "Flight Delay"
                       ? "text-sm font-medium text-black"
                       : "text-sm font-medium text-gray-300"
                   }
@@ -175,10 +202,9 @@ const ExtraProtect: React.FC = () => {
                 </label>
                 <input
                   type="checkbox"
-                  id="flight-delay-checkbox"
-                  checked={checkbox3}
-                  onChange={() => setCheckbox3(!checkbox3)}
-                  value=""
+                  id="full-protection-checkbox"
+                  checked={tripInsurance.flight_delay_insurance.type === "Flight Delay"}
+                  onChange={handleFlightDelayChange}
                   className="h-4 w-4 accent-primary-500"
                 />
               </div>

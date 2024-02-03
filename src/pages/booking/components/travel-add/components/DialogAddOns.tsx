@@ -12,15 +12,14 @@ import { useAddOnsStore } from "@/store/useAddOnsStore";
 
 interface props {
   type: "Baggage" | "Meal";
-  image: string;
 }
 
-const DialogAddOns = ({ type, image }: props) => {
-  const { isSelecting, setSelect, setType } = useAddOnsStore();
+const DialogAddOns = ({ type }: props) => {
+  const { isSelecting, setSelect, setType, selectedFlightIndex } = useAddOnsStore();
 
   const selectAddOns = () => {
     setSelect(false);
-    setType(image);
+    setType(type);
   };
 
   return (
@@ -36,7 +35,7 @@ const DialogAddOns = ({ type, image }: props) => {
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[85vh] overflow-auto sm:max-w-md">
-        {isSelecting ? <AddOnsContent /> : <FlightContent />}
+        {isSelecting ? <AddOnsContent cart_index={selectedFlightIndex} /> : <FlightContent />}
       </DialogContent>
     </Dialog>
   );

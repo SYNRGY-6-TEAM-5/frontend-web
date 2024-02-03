@@ -2,9 +2,19 @@ import { Text } from "@mantine/core";
 import { MealData } from "@/components/particles/AddOnsData";
 import { useAddOnsStore } from "@/store/useAddOnsStore";
 import { Button } from "@/components/ui/button";
+import { Trash } from "@phosphor-icons/react";
 
-const Meal = () => {
-  const { addMeals: handleAddMeals, removeMeal: handleRemoveMeal } = useAddOnsStore();
+interface MealProps {
+  flight: string;
+}
+
+const Meal: React.FC<MealProps> = ({ flight }) => {
+  const {
+    addMeals: handleAddMeals,
+    addReturnMeals: handleAddReturnMeals,
+    removeMeal: handleRemoveMeal,
+    removeReturnMeal: handleRemoveReturnMeal,
+  } = useAddOnsStore();
 
   return (
     <>
@@ -12,8 +22,18 @@ const Meal = () => {
         {MealData.map((meal, index) => (
           <label
             key={index}
-            className="relative flex cursor-pointer items-center py-5"
+            className="relative flex cursor-pointer items-center gap-2 py-5"
           >
+            <Button
+              variant="ghost"
+              onClick={
+                flight === "Depart"
+                  ? () => handleRemoveMeal(meal.meal_name)
+                  : () => handleRemoveReturnMeal(meal.meal_name)
+              }
+            >
+              <Trash size={22} className="text-slate-400" />
+            </Button>
             <img
               className="aspect-[3/2] max-h-16 rounded-lg object-cover"
               src={meal.meal_img}
@@ -26,22 +46,17 @@ const Meal = () => {
                   IDR {parseFloat(meal.meal_price).toLocaleString()}/portion
                 </Text>
               </div>
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="primary"
-                  onClick={() => handleRemoveMeal(meal.meal_name)}
-                  className="h-5 w-5 p-3"
-                >
-                  <Text className="text-sm">-</Text>
-                </Button>
-                <Button
-                  variant="primary"
-                  onClick={() => handleAddMeals(meal)}
-                  className="h-5 w-5 p-3"
-                >
-                  <Text className="text-sm">+</Text>
-                </Button>
-              </div>
+              <Button
+                variant="primary"
+                onClick={
+                  flight === "Depart"
+                    ? () => handleAddMeals(meal)
+                    : () => handleAddReturnMeals(meal)
+                }
+                className="h-5 w-5 p-3"
+              >
+                <Text className="text-sm">+</Text>
+              </Button>
             </div>
           </label>
         ))}

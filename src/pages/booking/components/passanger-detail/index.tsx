@@ -13,6 +13,7 @@ import { Accordion } from "@/components/ui/accordion";
 
 import AccordionFormItem from "./component/containers/AccordionItem";
 import { useTicketContext } from "@/context/TicketContext";
+import { usePassengerStore } from "@/store/useBooking";
 
 const PassangerDetail = () => {
   // const { mutateAsync } = useFillPassenger();
@@ -21,7 +22,7 @@ const PassangerDetail = () => {
   let passengersData: Record<string, any> = {};
   const { adult_seat, child_seat, infant_seat, isInternational } = tripData;
 
-  console.log(tripData);
+  const { contactDetails } = usePassengerStore();
 
   const generatePassengerAccordionItems = () => {
     const items: JSX.Element[] = [];
@@ -71,8 +72,16 @@ const PassangerDetail = () => {
 
   const { items } = generatePassengerAccordionItems();
 
+  const areContactDetailsFilled =
+    contactDetails &&
+    Object.values(contactDetails).every(
+      (value) => typeof value === "string" && value.trim() !== "",
+    );
+
+  console.log(areContactDetailsFilled);
+
   return (
-    <section className="flex flex-col gap-2">
+    <section className={`flex flex-col gap-2 mb-8 ${!areContactDetailsFilled ? "opacity-45 pointer-events-none" : ""}`}>
       <div className="px-2">
         <Text className="pb-2 text-lg font-normal text-black">
           Passenger Details

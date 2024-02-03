@@ -1,11 +1,13 @@
 import { create } from 'zustand';
 import { IAddOns, PassengerData } from '@/types/Booking';
+import { ICompleteBooking } from '@/pages/booking/components/ui/CheckoutButton';
+import { completeBooking } from '@/components/particles/completeBookingData';
 
 export interface PassengerDetailsItem extends PassengerData {
     count: number;
 }
 
-interface IContactDetails {
+export interface IContactDetails {
     fullName: string;
     email: string;
     phone: string;
@@ -14,8 +16,10 @@ interface IContactDetails {
 type PassengerStore = {
     contactDetails: IContactDetails;
     passengerDetails: PassengerDetailsItem[];
+    completeBookingData: ICompleteBooking;
     count: () => number;
     updateContactDetails: (contactDetails: Partial<IContactDetails>) => void;
+    updateCompleteBookingData: (completeBookingData: Partial<ICompleteBooking>) => void;
     add: (passengerDetails: PassengerData) => void;
     remove: (idPassenger: string) => void;
     removeAll: () => void;
@@ -30,6 +34,7 @@ export const usePassengerStore = create<PassengerStore>((set, get) => ({
         phone: ""
     },
     passengerDetails: [],
+    completeBookingData: completeBooking,
     count: () => {
         const { passengerDetails } = get();
         if (passengerDetails.length)
@@ -38,6 +43,9 @@ export const usePassengerStore = create<PassengerStore>((set, get) => ({
     },
     updateContactDetails: (contactDetails: Partial<IContactDetails>) => {
         set(state => ({ contactDetails: { ...state.contactDetails, ...contactDetails } }));
+    },
+    updateCompleteBookingData: (completeBookingData: Partial<ICompleteBooking>) => {
+        set(state => ({ completeBookingData: { ...state.completeBookingData, ...completeBookingData } }));
     },
     add: (passengerDetails: PassengerData) => {
         const { passengerDetails: existingPassengers } = get();
@@ -57,7 +65,6 @@ export const usePassengerStore = create<PassengerStore>((set, get) => ({
                 return {
                     ...passenger,
                     add_ons: {
-                        ...passenger.add_ons,
                         ...addOn
                     }
                 };

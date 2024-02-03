@@ -19,6 +19,7 @@ interface BookingSectionProps {
   time: string;
   price: string;
   airlineLogo: string;
+  transit: number;
 }
 
 
@@ -30,6 +31,7 @@ const BookingSection: React.FC<BookingSectionProps> = ({
   time,
   price,
   airlineLogo,
+  transit,
 }) => {
   return (
     <div className="flex h-[334px] flex-col items-start justify-start gap-3 bg-white px-4 py-6">
@@ -66,7 +68,7 @@ const BookingSection: React.FC<BookingSectionProps> = ({
               <div className="h-[0px] shrink grow basis-0 border border-zinc-200"></div>
             </div>
             <div className="inline-flex h-6 items-center justify-start gap-2.5 rounded-[33px] bg-white px-2">
-              <Text className="text-xs font-medium">Non-stop</Text>
+              <Text className="text-xs font-medium">{transit !== 0 ? `${transit} Transit` : "Non-Stop" }</Text>
             </div>
           </div>
           <div className="inline-flex flex-col items-start justify-start gap-1">
@@ -150,6 +152,7 @@ const BookingDetail = () => {
             }}
             time={timeDifference(ticket)}
             price={parseFloat(ticket.fare_amount).toLocaleString()}
+            transit={ticket.flight.transit}
           />
         ))}
         <div className="flex h-16 flex-col items-center justify-between self-stretch border-t border-zinc-200 px-3 py-5">
