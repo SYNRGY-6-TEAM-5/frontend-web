@@ -26,3 +26,6 @@ export { default as Airflight } from "./airflight.svg?react";
 export { default as Passenger } from "./passenger.svg?react";
 export { default as Faq } from "./faq.svg?react";
 export { default as Notification } from "./notification.svg?react";
+export { default as AirplaneFill } from "./airplane-fill.svg?react";
+export { default as Receipt } from "./receipt.svg?react";
+export { default as Percentage } from "./percentage.svg?react";
