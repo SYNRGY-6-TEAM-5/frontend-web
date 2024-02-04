@@ -1,7 +1,7 @@
 import ArrowCircle from "@/assets/ArrowCircleRight.png";
 import { GarudaLogo } from "@/assets/svg";
-import { Text } from "@mantine/core";
 import DetailRuteBtn from "../ui/DetailRuteBtn";
+import { Text } from "@mantine/core";
 
 const DetailRuteOrder = () => {
   return(
@@ -21,11 +21,26 @@ const DetailRuteOrder = () => {
             </div>
           </div>
           <div className="flex justify-between font-medium">
-            <Text className="text-lg">Fri, 19 Jan 2024</Text>
-            <Text className="">06:25 AM</Text>
+            <Text className="text-lg ">Fri, 19 Jan 2024</Text>
+            <Text className="text-gray-500 text-sm">06:25 AM</Text>
           </div>
           <DetailRuteBtn />
         </div>
+        <div className="p-3 space-y-3 border-t border-dashed border-gray-300">
+          <div className="flex justify-between text-base font-medium">
+            <Text className="text-primary-500">Return</Text>
+            <div className="flex flex-row items-center">
+              <GarudaLogo className="h-2" />
+              <Text>GA207</Text>
+            </div>
+          </div>
+          <div className="flex justify-between font-medium">
+            <Text className="text-lg">Fri, 19 Jan 2024</Text>
+            <Text className="text-gray-500 text-sm">06:25 AM</Text>
+          </div>
+          <DetailRuteBtn />
+        </div>
+        
       </div>
     </div>
   )

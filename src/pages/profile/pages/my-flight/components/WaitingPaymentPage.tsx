@@ -2,6 +2,8 @@ import { ChevronLeft } from "lucide-react";
 import TimerMyFlight from "./ui/TimerMyFlight";
 import useTimer from "@/lib/hooks/useTimer";
 import DetailRuteOrder from "./containers/DetailRuteOrder";
+import PassangerDetails from "./containers/PassangerDetails";
+import { Button } from "@mantine/core";
 
 const WaitingPayment = () => {
   const date = new Date().getTime();
@@ -30,6 +32,11 @@ const WaitingPayment = () => {
       <div className="flex flex-col gap-8">
         <TimerMyFlight hours={hours} minutes={minutes} seconds={seconds} />
         <DetailRuteOrder />
+        <PassangerDetails />
+        <Button
+          type="button"
+          className="w-full h-14 rounded-xl bg-primary-500 py-4 text-white font-medium text-sm"
+        >Complete the Payment in {hours}:{minutes}:{seconds}</Button>
       </div>
     </section>
   )
