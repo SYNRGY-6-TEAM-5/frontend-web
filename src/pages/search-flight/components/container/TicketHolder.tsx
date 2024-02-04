@@ -8,6 +8,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import Cookies from "js-cookie";
+import {
+  Dialog,
+  DialogContent,
+  DialogOverlay,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 import SkeletonCard from "../ui/SkeletonCard";
 import { TicketIcon } from "lucide-react";
@@ -16,14 +23,23 @@ import { useCartStore } from "@/store/useCart";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Toaster, toast } from "sonner";
+import { useSearchTicketStore } from "@/store/useSearchTicketStore";
+import { useLocation } from "react-router-dom";
 
 interface props {
   tripType: string;
 }
 
 const TicketsHolder = ({ tripType }: props) => {
+
+// Inside your component function
+  const location = useLocation();
+  const currentPath = location.pathname + location.search;
   const { count, cart } = useCartStore();
+  const { setPreviousPath } = useSearchTicketStore();
   const [effect, setEffect] = useState<boolean>(false);
+  const token = Cookies.get("accesstoken");
+  const [showDialog, setShowDialog] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const oneWayTitileArray: string[] = ["Departure"];
@@ -34,12 +50,18 @@ const TicketsHolder = ({ tripType }: props) => {
       (tripType === "one-way" && count() === 1) ||
       (tripType === "roundtrip" && count() === 2)
     ) {
-      navigate("/flight/booking");
+      if (!token) {
+        console.log(currentPath);
+        setPreviousPath(currentPath)
+        setShowDialog(true);
+      } else {
+        navigate("/user/booking");
+      }
     } else {
       setEffect(true);
       toast.error("No Ticket Selected", {
         description: "Please, Select ticket to continue",
-      })
+      });
     }
   };
 
@@ -49,6 +71,14 @@ const TicketsHolder = ({ tripType }: props) => {
       collapsible
       className="flex h-full w-full flex-col rounded-lg bg-white px-4 py-8 shadow-lg"
     >
+      <Dialog open={showDialog} onOpenChange={setShowDialog}>
+        <DialogOverlay className="bg-transparent" />
+        <DialogContent className="max-h-[85vh] overflow-auto sm:max-w-md">
+          <h2>Please Log In</h2>
+          <p>You need to be logged in to access this page.</p>
+          <Button variant={"primary"} onClick={() => navigate("/login")}>Login</Button>
+        </DialogContent>
+      </Dialog>
       <AccordionItem value="item-1">
         <AccordionTrigger>
           <div className="flex flex-row items-center justify-between px-4 pb-2">

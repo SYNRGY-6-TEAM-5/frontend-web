@@ -7,17 +7,17 @@ import {
 } from "@/components/ui/card";
 import DialogAddOns from "./components/DialogAddOns";
 import { usePassengerStore } from "@/store/useBooking";
-import { useTicketContext } from "@/context/TicketContext";
 import FlightAddOnCard from "./components/ui/FlightAddOnCard";
 import { useAddOnsStore } from "@/store/useAddOnsStore";
+import { useSearchTicketStore } from "@/store/useSearchTicketStore";
 
 const TravelAddOns = () => {
-  const { tripData } = useTicketContext();
+  const { tripDetails } = useSearchTicketStore();
   const { passengerDetails } = usePassengerStore();
   const { mealsAddOn, baggageAddOn } = useAddOnsStore();
 
   const areAllDetaiilsFilled =
-    passengerDetails.length === tripData.total_seat &&
+    passengerDetails.length === tripDetails.total_seat &&
     passengerDetails.length !== 0;
 
   return (

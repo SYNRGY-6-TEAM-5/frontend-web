@@ -11,6 +11,21 @@ export interface MealsItem extends IMealAddOns {
   count: number;
 }
 
+export interface TripInsurance {
+  full_insurance: {
+    type: string;
+    price: number;
+  };
+  baggage_insurance: {
+    type: string;
+    price: number;
+  };
+  flight_delay_insurance: {
+    type: string;
+    price: number;
+  };
+}
+
 type AddOnsStore = {
   personAddOns: IPersonAddOns[];
   mealsAddOn: MealsItem[];
@@ -21,6 +36,8 @@ type AddOnsStore = {
   type?: string;
   flight?: string;
   selectedFlightIndex: number;
+  tripInsurance: TripInsurance;
+  updateTripInsurance: (insuranceType: keyof TripInsurance, checked: boolean) => void;
   setSelectedFlightIndex: (flight_index: number) => void;
   addPersonAddOns: (personAddOns: IPersonAddOns) => void;
   addMeals: (meals: IMealAddOns) => void;
@@ -48,8 +65,32 @@ export const useAddOnsStore = create<AddOnsStore>((set, get) => ({
     baggage_weight: "",
     baggage_price: ""
   },
+  tripInsurance: {
+    full_insurance: { type: "", price: 0 },
+    baggage_insurance: { type: "", price: 0 },
+    flight_delay_insurance: { type: "", price: 0 }
+  },
   isSelecting: false,
   selectedFlightIndex: 0,
+  updateTripInsurance: (insuranceType, checked) => {
+    const currentInsurance = get().tripInsurance;
+    const updatedInsurance = { ...currentInsurance };
+
+    if (checked) {
+      updatedInsurance[insuranceType] = {
+        type: insuranceType === 'full_insurance' ? 'Full Protection' :
+          insuranceType === 'baggage_insurance' ? 'Baggage Insurance' :
+            'Flight Delay',
+        price: insuranceType === 'full_insurance' ? 95000 :
+          insuranceType === 'baggage_insurance' ? 16000 :
+            16000
+      };
+    } else {
+      updatedInsurance[insuranceType] = { type: '', price: 0 };
+    }
+
+    set({ tripInsurance: updatedInsurance });
+  },
   setSelectedFlightIndex: (selectedFlightIndex) => set({ selectedFlightIndex }),
   addPersonAddOns: (personAddOns: IPersonAddOns) => {
     const { personAddOns: existingPersonAddOns } = get();

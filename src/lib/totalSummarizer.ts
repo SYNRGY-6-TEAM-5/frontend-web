@@ -1,4 +1,5 @@
 import { ICompleteBooking } from "@/pages/booking/components/ui/CheckoutButton";
+import { CartItem } from "@/store/useCart";
 
 interface TripInsurance {
     type: string;
@@ -35,9 +36,9 @@ export interface IPricePassenger {
     trip_insurance: TripInsurance[];
 }
 
-export function summarizeBooking(bookingData: ICompleteBooking): IPricePassenger[] {
-    const departureFlight = bookingData.ticket_details.booked_ticket[0];
-    const returnFlight = bookingData.ticket_details.booked_ticket ? bookingData.ticket_details.booked_ticket[1] : undefined;
+export function summarizeBooking(bookingData: ICompleteBooking, cart: CartItem[]): IPricePassenger[] {
+    const departureFlight = cart[0];
+    const returnFlight = cart[1] ? cart[1] : undefined;
     const passengers = bookingData.passenger_details.reduce((acc, passenger) => {
         if (passenger.id.includes('adult')) acc.adult += passenger.count || 0;
         else if (passenger.id.includes('child')) acc.child += passenger.count || 0;
@@ -65,7 +66,7 @@ export function summarizeBooking(bookingData: ICompleteBooking): IPricePassenger
             passenger: passengers,
             add_ons: departureAddOns,
             trip_insurance: Object.values(bookingData.trip_insurance)
-            .filter(insurance => Object.keys(insurance).length > 0),
+                .filter(insurance => Object.keys(insurance).length > 0),
         },
         {
             route: 'return',
@@ -75,34 +76,46 @@ export function summarizeBooking(bookingData: ICompleteBooking): IPricePassenger
             passenger: passengers,
             add_ons: returnAddOns,
             trip_insurance: Object.values(bookingData.trip_insurance)
-            .filter(insurance => Object.keys(insurance).length > 0),
+                .filter(insurance => Object.keys(insurance).length > 0),
         }
     ];
 }
 
 export const calculateTotalPrice = (data: IPricePassenger[]) => {
     let totalPrice = 0;
-
-    data.forEach((item) => {
-
-        totalPrice += parseFloat(item.price) * (item.passenger.adult + item.passenger.child + item.passenger.infant);
-
-
+  
+    if (data.length > 1 && data[1]?.departCity !== "") {
+      data.forEach((item) => {
+        totalPrice +=
+          parseFloat(item.price) *
+          (item.passenger.adult + item.passenger.child + item.passenger.infant);
         item.add_ons.forEach((addOn) => {
-    
-            addOn.meals.forEach((meal) => {
-                totalPrice += parseFloat(meal.meal_price);
-            });
-
-    
-            totalPrice += parseFloat(addOn.baggage.baggage_price);
+          addOn.meals.forEach((meal) => {
+            totalPrice += parseFloat(meal.meal_price);
+          });
+          totalPrice += parseFloat(addOn.baggage.baggage_price);
         });
-
-
-        item.trip_insurance.forEach((insurance) => {
-            totalPrice += insurance.price;
+      });
+  
+      data[0]?.trip_insurance.forEach((insurance) => {
+        totalPrice += insurance.price;
+      });
+    } else if (data.length > 0 && data[0]?.departCity !== "") {
+      totalPrice +=
+        parseFloat(data[0].price) *
+        (data[0].passenger.adult + data[0].passenger.child + data[0].passenger.infant);
+      data[0].add_ons.forEach((addOn) => {
+        addOn.meals.forEach((meal) => {
+          totalPrice += parseFloat(meal.meal_price);
         });
-    });
-
+        totalPrice += parseFloat(addOn.baggage.baggage_price);
+      });
+  
+      data[0]?.trip_insurance.forEach((insurance) => {
+        totalPrice += insurance.price;
+      });
+    }
+  
     return totalPrice;
-};
+  };
+  

@@ -12,15 +12,15 @@ import {
 import { Accordion } from "@/components/ui/accordion";
 
 import AccordionFormItem from "./component/containers/AccordionItem";
-import { useTicketContext } from "@/context/TicketContext";
 import { usePassengerStore } from "@/store/useBooking";
+import { useSearchTicketStore } from "@/store/useSearchTicketStore";
 
 const PassangerDetail = () => {
   // const { mutateAsync } = useFillPassenger();
-  const { tripData } = useTicketContext();
+  const { tripDetails } = useSearchTicketStore();
 
   let passengersData: Record<string, any> = {};
-  const { adult_seat, child_seat, infant_seat, isInternational } = tripData;
+  const { adult_seat, child_seat, infant_seat, isInternational } = tripDetails;
 
   const { contactDetails } = usePassengerStore();
 

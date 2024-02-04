@@ -2,39 +2,14 @@ import { Card, CardHeader } from "@/components/ui/card";
 
 import { BaggageInsurance, FlightDelay, FullProtect } from "@/assets/svg";
 import React from "react";
-import { useTicketContext } from "@/context/TicketContext";
+import { TripInsurance, useAddOnsStore } from "@/store/useAddOnsStore";
 
 const ExtraProtect: React.FC = () => {
-  const { tripInsurance, setTripInsurance } = useTicketContext();
+  const tripInsurance: TripInsurance = useAddOnsStore((state) => state.tripInsurance);
+  const updateTripInsurance = useAddOnsStore((state) => state.updateTripInsurance);
 
-  const handleFullProtectionChange = () => {
-    setTripInsurance((prevState) => ({
-      ...prevState,
-      full_insurance:
-        prevState.full_insurance.type === ""
-          ? { type: "Full Protection", price: 95000 }
-          : { type: "", price: 0 },
-    }));
-  };
-
-  const handleBaggageInsuranceChange = () => {
-    setTripInsurance((prevState) => ({
-      ...prevState,
-      baggage_insurance:
-        prevState.baggage_insurance.type === ""
-          ? { type: "Baggage Insurance", price: 16000 }
-          : { type: "", price: 0 },
-    }));
-  };
-
-  const handleFlightDelayChange = () => {
-    setTripInsurance((prevState) => ({
-      ...prevState,
-      flight_delay_insurance:
-        prevState.flight_delay_insurance.type === ""
-          ? { type: "Flight Delay", price: 16000 }
-          : { type: "", price: 0 },
-    }));
+  const handleInsuranceChange = (insuranceType: keyof TripInsurance, checked: boolean) => {
+    updateTripInsurance(insuranceType, checked);
   };
 
   return (
@@ -90,7 +65,7 @@ const ExtraProtect: React.FC = () => {
                   type="checkbox"
                   id="full-protection-checkbox"
                   checked={tripInsurance.full_insurance.type === "Full Protection"}
-                  onChange={handleFullProtectionChange}
+                  onChange={(e) => handleInsuranceChange('full_insurance', e.target.checked)}
                   className="h-4 w-4 accent-primary-500"
                 />
               </div>
@@ -131,7 +106,7 @@ const ExtraProtect: React.FC = () => {
               </div>
             </div>
             <div className="flex items-center justify-between">
-              <p className="text-xs font-medium">{`IDR ${16000}/pax`}</p>
+              <p className="text-xs font-medium">{`IDR ${95000}/pax`}</p>
               <div className="flex items-center gap-2">
                 <label
                   htmlFor="full-protection-checkbox"
@@ -147,7 +122,7 @@ const ExtraProtect: React.FC = () => {
                   type="checkbox"
                   id="full-protection-checkbox"
                   checked={tripInsurance.baggage_insurance.type === "Baggage Insurance"}
-                  onChange={handleBaggageInsuranceChange}
+                  onChange={(e) => handleInsuranceChange('baggage_insurance', e.target.checked)}
                   className="h-4 w-4 accent-primary-500"
                 />
               </div>
@@ -188,12 +163,12 @@ const ExtraProtect: React.FC = () => {
               </div>
             </div>
             <div className="flex items-center justify-between">
-              <p className="text-xs font-medium">{`IDR ${16000}/pax`}</p>
+              <p className="text-xs font-medium">{`IDR ${95000}/pax`}</p>
               <div className="flex items-center gap-2">
                 <label
                   htmlFor="full-protection-checkbox"
                   className={
-                    tripInsurance.flight_delay_insurance.type === "Flight Delay"
+                    tripInsurance.baggage_insurance.type === "Flight Delay"
                       ? "text-sm font-medium text-black"
                       : "text-sm font-medium text-gray-300"
                   }
@@ -204,7 +179,7 @@ const ExtraProtect: React.FC = () => {
                   type="checkbox"
                   id="full-protection-checkbox"
                   checked={tripInsurance.flight_delay_insurance.type === "Flight Delay"}
-                  onChange={handleFlightDelayChange}
+                  onChange={(e) => handleInsuranceChange('flight_delay_insurance', e.target.checked)}
                   className="h-4 w-4 accent-primary-500"
                 />
               </div>

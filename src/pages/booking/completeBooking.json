@@ -1,0 +1,285 @@
+{
+    "ticket_details": {
+        "booked_ticket": [
+            {
+                "ticket_id": 13,
+                "flight_id": 1,
+                "ticket_type": "first",
+                "ticket_amount": 20,
+                "fare_amount": "200000.00",
+                "valid_until": "2024-01-27T05:00:00.000Z",
+                "created_at": "2024-01-26T13:02:48.153Z",
+                "updated_at": null,
+                "flight": {
+                    "flight_id": 1,
+                    "departure_id": 38,
+                    "arrival_id": 60,
+                    "airline_id": 15,
+                    "transit": 0,
+                    "first_seat": 20,
+                    "business_seat": 120,
+                    "economy_seat": 220,
+                    "flight_status": "scheduled",
+                    "flight_number": "6811",
+                    "iata": "AA6811",
+                    "created_at": "2023-12-09T09:05:20.986Z",
+                    "updated_at": null,
+                    "departure": {
+                        "departure_id": 38,
+                        "airport_id": 38,
+                        "terminal": "3",
+                        "scheduled_time": "2024-01-06T09:00:00.000Z",
+                        "created_at": "2023-12-09T09:05:20.986Z",
+                        "updated_at": null,
+                        "airport_details": {
+                            "airport_id": 38,
+                            "airport_name": "Dougherty County",
+                            "iata_code": "ABY",
+                            "gmt": "-5",
+                            "city_name": "Albina",
+                            "city_iata_code": "ABY",
+                            "country_iso_code": "US",
+                            "country_name": "United States",
+                            "created_at": "2023-12-09T09:05:20.986Z",
+                            "updated_at": null
+                        }
+                    },
+                    "arrival": {
+                        "arrival_id": 60,
+                        "airport_id": 60,
+                        "terminal": "1",
+                        "scheduled_time": "2024-01-06T15:05:00.000Z",
+                        "created_at": "2023-12-09T09:05:20.986Z",
+                        "updated_at": null,
+                        "airport_details": {
+                            "airport_id": 60,
+                            "airport_name": "Aden International Airport",
+                            "iata_code": "ADE",
+                            "gmt": "3",
+                            "city_name": "Aguaclara",
+                            "city_iata_code": "ADE",
+                            "country_iso_code": "YE",
+                            "country_name": "Yemen",
+                            "created_at": "2023-12-09T09:05:20.986Z",
+                            "updated_at": null
+                        }
+                    },
+                    "airline": {
+                        "airline_id": 15,
+                        "name": "Iberia",
+                        "iata": "IB",
+                        "image": "https://res.cloudinary.com/ddpriosuk/image/upload/v1694179155/icon_24hrs_bmttbd.png",
+                        "created_at": "2023-12-09T09:05:20.986Z",
+                        "updated_at": null
+                    }
+                },
+                "count": 1
+            },
+            {
+                "ticket_id": 12,
+                "flight_id": 10,
+                "ticket_type": "first",
+                "ticket_amount": 50,
+                "fare_amount": "1500000.00",
+                "valid_until": "2024-01-30T17:00:00.000Z",
+                "created_at": "2024-01-24T17:04:22.710Z",
+                "updated_at": null,
+                "flight": {
+                    "flight_id": 10,
+                    "departure_id": 62,
+                    "arrival_id": 54,
+                    "airline_id": 77,
+                    "transit": 0,
+                    "first_seat": 20,
+                    "business_seat": 120,
+                    "economy_seat": 220,
+                    "flight_status": "scheduled",
+                    "flight_number": "6300",
+                    "iata": "X16300",
+                    "created_at": "2023-12-09T09:05:20.986Z",
+                    "updated_at": null,
+                    "departure": {
+                        "departure_id": 62,
+                        "airport_id": 62,
+                        "terminal": "2",
+                        "scheduled_time": "2024-01-06T08:55:00.000Z",
+                        "created_at": "2023-12-09T09:05:20.986Z",
+                        "updated_at": null,
+                        "airport_details": {
+                            "airport_id": 62,
+                            "airport_name": "Lenawee County",
+                            "iata_code": "ADG",
+                            "gmt": "-5",
+                            "city_name": "Acuna",
+                            "city_iata_code": "ADG",
+                            "country_iso_code": "US",
+                            "country_name": "United States",
+                            "created_at": "2023-12-09T09:05:20.986Z",
+                            "updated_at": null
+                        }
+                    },
+                    "arrival": {
+                        "arrival_id": 54,
+                        "airport_id": 54,
+                        "terminal": "8",
+                        "scheduled_time": "2024-01-06T12:00:00.000Z",
+                        "created_at": "2023-12-09T09:05:20.986Z",
+                        "updated_at": null,
+                        "airport_details": {
+                            "airport_id": 54,
+                            "airport_name": "Arcata",
+                            "iata_code": "ACV",
+                            "gmt": "-8",
+                            "city_name": "Acandi",
+                            "city_iata_code": "ACV",
+                            "country_iso_code": "US",
+                            "country_name": "United States",
+                            "created_at": "2023-12-09T09:05:20.986Z",
+                            "updated_at": null
+                        }
+                    },
+                    "airline": {
+                        "airline_id": 77,
+                        "name": "Sichuan Airlines",
+                        "iata": "3U",
+                        "image": "https://res.cloudinary.com/ddpriosuk/image/upload/v1694179155/icon_24hrs_bmttbd.png",
+                        "created_at": "2023-12-09T09:05:20.986Z",
+                        "updated_at": null
+                    }
+                },
+                "count": 1
+            }
+        ],
+        "total_ticket_price": 1700000
+    },
+    "contact_details": {
+        "fullName": "Saifulloh Fadli",
+        "email": "saifulloh.fadli@gmail.com",
+        "phone": "2323124123"
+    },
+    "passenger_details": [
+        {
+            "id": "adult-1",
+            "nik": "123223213221",
+            "fullName": "Saifulloh Fadli",
+            "dateOfBirth": "2024-01-31T17:00:00.000Z",
+            "courtesy_title": "Mr",
+            "vaccinated": "yes",
+            "travel_docs": [
+                {
+                    "doc_type": "passport",
+                    "nationality": "Indonesia",
+                    "document_number": "123223213221",
+                    "expire_date": "2024-02-04T17:00:00.000Z",
+                    "image_url": ""
+                }
+            ],
+            "count": 1
+        },
+        {
+            "id": "adult-2",
+            "nik": "123223213221",
+            "fullName": "Ivana Wijaya",
+            "dateOfBirth": "2024-01-31T17:00:00.000Z",
+            "courtesy_title": "Mr",
+            "vaccinated": "yes",
+            "travel_docs": [
+                {
+                    "doc_type": "passport",
+                    "nationality": "Indonesia",
+                    "document_number": "123223213221",
+                    "expire_date": "2024-02-04T12:08:49.484Z",
+                    "image_url": ""
+                }
+            ],
+            "count": 1
+        }
+    ],
+    "passenger_addOns": [
+        {
+            "passenger_name": "Ivana Wijaya",
+            "departure": {
+                "meals": [
+                    {
+                        "meal_img": "https://images.pexels.com/photos/1099680/pexels-photo-1099680.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        "meal_name": "Salad",
+                        "meal_price": "79000",
+                        "count": 1
+                    },
+                    {
+                        "meal_name": "Fried Noodle",
+                        "meal_price": "49000",
+                        "meal_img": "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        "count": 1
+                    }
+                ],
+                "baggage": {
+                    "baggage_weight": "10 KG",
+                    "baggage_price": "99000"
+                }
+            },
+            "return": {
+                "meals": [
+                    {
+                        "meal_img": "https://images.pexels.com/photos/1099680/pexels-photo-1099680.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        "meal_name": "Salad",
+                        "meal_price": "79000",
+                        "count": 1
+                    },
+                    {
+                        "meal_img": "https://images.pexels.com/photos/262959/pexels-photo-262959.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        "meal_name": "Roasted Chicken",
+                        "meal_price": "99000",
+                        "count": 1
+                    }
+                ],
+                "baggage": {
+                    "baggage_weight": "10 KG",
+                    "baggage_price": "99000"
+                }
+            }
+        },
+        {
+            "passenger_name": "Saifulloh Fadli",
+            "departure": {
+                "meals": [
+                    {
+                        "meal_img": "https://images.pexels.com/photos/1099680/pexels-photo-1099680.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        "meal_name": "Salad",
+                        "meal_price": "79000",
+                        "count": 1
+                    },
+                    {
+                        "meal_name": "Fried Noodle",
+                        "meal_price": "49000",
+                        "meal_img": "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        "count": 1
+                    }
+                ],
+                "baggage": {
+                    "baggage_weight": "10 KG",
+                    "baggage_price": "99000"
+                }
+            },
+            "return": {
+                "meals": [
+                    {
+                        "meal_img": "https://images.pexels.com/photos/1099680/pexels-photo-1099680.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        "meal_name": "Salad",
+                        "meal_price": "79000",
+                        "count": 1
+                    }
+                ],
+                "baggage": {
+                    "baggage_weight": "10 KG",
+                    "baggage_price": "99000"
+                }
+            }
+        }
+    ],
+    "trip_insurance": {
+        "full_insurance": {},
+        "baggage_insurance": {},
+        "flight_delay_insurance": {}
+    }
+}

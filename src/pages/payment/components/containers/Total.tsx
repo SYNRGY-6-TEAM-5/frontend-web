@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 import TablePrice from "../ui/components/TablePrice";
 
 import { usePassengerStore } from "@/store/useBooking";
-import { useTicketContext } from "@/context/TicketContext";
 import { useProfileUserStore } from "@/store/useProfileUserStore";
 import { useCartStore } from "@/store/useCart";
 import { useAddOnsStore } from "@/store/useAddOnsStore";
@@ -19,7 +18,6 @@ import { IPricePassenger, calculateTotalPrice, summarizeBooking } from "@/lib/to
 
 const Total = () => {
   const [dialog, setDialog] = useState<boolean>(false);
-  const { tripInsurance } = useTicketContext();
   const { userData } = useProfileUserStore();
 
   const { cart, totalFare } = useCartStore();
@@ -28,7 +26,8 @@ const Total = () => {
     passengerDetails,
     updateCompleteBookingData: handleAddToCompleteBooking,
   } = usePassengerStore();
-  const { personAddOns } = useAddOnsStore();
+  const { personAddOns, tripInsurance } = useAddOnsStore();
+  const lastArrivalScheduledTime = cart[cart.length - 1].flight.arrival.scheduled_time;
 
   const [summaryTotal, setSummaryTotal] = useState<IPricePassenger[]>([]);
 
@@ -36,8 +35,9 @@ const Total = () => {
     const handleCheckout = () => {
       const completeBookingData: ICompleteBooking = {
         ticket_details: {
-          booked_ticket: cart,
+          booked_ticket: cart.map(ticket => ticket.ticket_id),
           total_ticket_price: totalFare(),
+          expired_time: new Date(lastArrivalScheduledTime),
         },
         user_data: userData,
         contact_details: contactDetails,
@@ -48,23 +48,18 @@ const Total = () => {
 
       handleAddToCompleteBooking(completeBookingData);
 
-      const summary = summarizeBooking(completeBookingData);
+      const summary = summarizeBooking(completeBookingData, cart);
+      console.log("Summary Data >>> ", completeBookingData);
       setSummaryTotal(summary);
     };
 
     if (dialog) {
       handleCheckout();
+      console.log("Summary Data >>> ", summaryTotal);
     }
   }, [
     dialog,
-    cart,
-    totalFare,
-    userData,
-    contactDetails,
-    passengerDetails,
-    personAddOns,
-    tripInsurance,
-    handleAddToCompleteBooking,
+    tripInsurance
   ]);
 
   const handleDialog = () => {
@@ -80,7 +75,7 @@ const Total = () => {
         <Text className="text-lg">Total</Text>
         <input type="button" id="prices" name="prices" onClick={handleDialog} />
         <ChevronDown size={20} className="font-base text-primary-500" />
-        <Text className="grow text-right text-primary-500">{`IDR ${calculateTotalPrice(summaryTotal).toLocaleString()}`}</Text>
+        <Text className="grow text-right text-primary-500">{`IDR ${summaryTotal[0]?.departCity !== "" ? calculateTotalPrice(summaryTotal).toLocaleString() : "0"}`}</Text>
       </label>
       <Dialog open={dialog} onOpenChange={handleDialog}>
         <DialogContent className="max-h-screen max-w-[500px] overflow-y-scroll p-4 backdrop-blur-md sm:max-w-[500px]">

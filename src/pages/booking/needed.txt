@@ -1,0 +1,60 @@
+booked_ticket: {
+    tickets: [ticket_id-1, ticket_id-2]
+    total_price: total_ticket_price
+},
+contact_details: {
+    fullName: "Saifulloh Fadli",
+    email: "saifulloh.fadli@gmail.com",
+    phone: "256424315743"
+},
+passenger_details: [
+    {
+        id: "adult-2",
+        nik: "256424315743",
+        fullName: "Ivana Wijaya",
+        dateOfBirth: "2024-01-31T17:00:00.000Z",
+        courtesy_title: "Mr",
+        vaccinated: "yes",
+        travel_docs: [
+            {
+                doc_type: "visa",
+                nationality: "Indonesia",
+                document_number: "256424315743",
+                expire_date: "2024-02-04T07:45:02.692Z",
+                image_url: ""
+            }
+        ],
+        add_ons: {
+            "departure": {
+                "meals": [
+                    {
+                        meal_img: "https://images.pexels.com/photos/1099680/pexels-photo-1099680.jpeg?auto=compress&cs=tinysrgb&w=600",
+                        meal_name: "Salad",
+                        meal_price: "79000",
+                        count: 1
+                    },
+                    ... other meals
+                ],
+                "baggage": {
+                    "baggage_weight": "16 KG",
+                    "baggage_price": "199000"
+                }
+            },
+            "return": {
+                "meals": [],
+                "baggage": {
+                    "baggage_weight": "10 KG",
+                    "baggage_price": "99000"
+                }
+            }
+        }
+        count: 1
+    },
+    ... other passenger details
+],
+trip_insurance: {
+    full_insurance: {
+        type: "Full Protection",
+        price: 95000
+    }
+}

@@ -1,156 +1,8 @@
 export const completeBooking = {
     ticket_details: {
-        booked_ticket: [
-            {
-                ticket_id: 13,
-                flight_id: 1,
-                ticket_type: "",
-                ticket_amount: 20,
-                fare_amount: "",
-                valid_until: "",
-                created_at: "",
-                updated_at: null,
-                flight: {
-                    flight_id: 1,
-                    departure_id: 38,
-                    arrival_id: 60,
-                    airline_id: 15,
-                    transit: 0,
-                    first_seat: 20,
-                    business_seat: 120,
-                    economy_seat: 220,
-                    flight_status: "",
-                    flight_number: "",
-                    iata: "",
-                    created_at: "",
-                    updated_at: null,
-                    departure: {
-                        departure_id: 38,
-                        airport_id: 38,
-                        terminal: "",
-                        scheduled_time: "",
-                        created_at: "",
-                        updated_at: null,
-                        airport_details: {
-                            airport_id: 38,
-                            airport_name: "",
-                            iata_code: "",
-                            gmt: "",
-                            city_name: "",
-                            city_iata_code: "",
-                            country_iso_code: "",
-                            country_name: "",
-                            created_at: "",
-                            updated_at: null
-                        }
-                    },
-                    arrival: {
-                        arrival_id: 60,
-                        airport_id: 60,
-                        terminal: "",
-                        scheduled_time: "",
-                        created_at: "",
-                        updated_at: null,
-                        airport_details: {
-                            airport_id: 60,
-                            airport_name: "",
-                            iata_code: "",
-                            gmt: "",
-                            city_name: "",
-                            city_iata_code: "",
-                            country_iso_code: "",
-                            country_name: "",
-                            created_at: "",
-                            updated_at: null
-                        }
-                    },
-                    airline: {
-                        airline_id: 15,
-                        name: "",
-                        iata: "",
-                        image: "",
-                        created_at: "",
-                        updated_at: null
-                    }
-                },
-                count: 1
-            },
-            {
-                ticket_id: 10,
-                flight_id: 9,
-                ticket_type: "",
-                ticket_amount: 15,
-                fare_amount: "",
-                valid_until: "",
-                created_at: "",
-                updated_at: null,
-                flight: {
-                    flight_id: 9,
-                    departure_id: 51,
-                    arrival_id: 78,
-                    airline_id: 92,
-                    transit: 0,
-                    first_seat: 20,
-                    business_seat: 120,
-                    economy_seat: 220,
-                    flight_status: "",
-                    flight_number: "",
-                    iata: "",
-                    created_at: "",
-                    updated_at: null,
-                    departure: {
-                        departure_id: 51,
-                        airport_id: 51,
-                        terminal: "",
-                        scheduled_time: "",
-                        created_at: "",
-                        updated_at: null,
-                        airport_details: {
-                            airport_id: 51,
-                            airport_name: "",
-                            iata_code: "",
-                            gmt: "",
-                            city_name: "",
-                            city_iata_code: "",
-                            country_iso_code: "",
-                            country_name: "",
-                            created_at: "",
-                            updated_at: null
-                        }
-                    },
-                    arrival: {
-                        arrival_id: 78,
-                        airport_id: 78,
-                        terminal: "",
-                        scheduled_time: "",
-                        created_at: "",
-                        updated_at: null,
-                        airport_details: {
-                            airport_id: 78,
-                            airport_name: "",
-                            iata_code: "",
-                            gmt: "",
-                            city_name: "",
-                            city_iata_code: "",
-                            country_iso_code: "",
-                            country_name: "",
-                            created_at: "",
-                            updated_at: null
-                        }
-                    },
-                    airline: {
-                        airline_id: 92,
-                        name: "",
-                        iata: "",
-                        image: "",
-                        created_at: "",
-                        updated_at: null
-                    }
-                },
-                count: 1
-            }
-        ],
-        total_ticket_price: 1400000
+        booked_ticket: [0, 0],
+        total_ticket_price: 0,
+        expired_time: new Date(),
     },
     user_data: {
         user_id: "",
@@ -227,11 +79,17 @@ export const completeBooking = {
         }
     ],
     trip_insurance: {
-        full_insurance: {},
+        full_insurance: {
+            type: "",
+            price: 0
+        },
         baggage_insurance: {
             type: "",
             price: 0
         },
-        flight_delay_insurance: {}
+        flight_delay_insurance: {
+            type: "",
+            price: 0
+        }
     }
 }
