@@ -52,15 +52,15 @@ const PassangerDetails = () => {
       <Tabs defaultValue="0" className="w-auto bg-white p-2 pb-0 rounded-lg shadow-3xl">
         <TabsList className="grid grid-cols-2 w-fit gap-4 bg-white mb-8">
           {passengers.map((p, index) => (
-          <TabsTrigger value={String(index)} className="p-3 rounded-xl text-black bg-gray-50 border border-gray-100 data-[state=active]:text-primary-500 data-[state=active]:border-error-500 data-[state=active]:bg-error-50">
+          <TabsTrigger key={String(index)} value={String(index)} className="p-3 rounded-xl text-black bg-gray-50 border border-gray-100 data-[state=active]:text-primary-500 data-[state=active]:border-error-500 data-[state=active]:bg-error-50">
             {p.name}
           </TabsTrigger>
           ))}
         </TabsList>
         {passengers.map((p, index) => (
-          <TabsContent value={String(index)} className="flex gap-3 flex-col">
+          <TabsContent value={String(index)} key={String(index)} className="flex gap-3 flex-col">
             {order.map((order, index) => (
-              <div key={index} className=" border-t border-dashed border-t-gray-200 pt-3 ">
+              <div key={String(index)} className=" border-t border-dashed border-t-gray-200 pt-3 ">
                 <div className="flex space-x-1 mb-4">
                   <Text>{order.departCity}</Text>
                   <ArrowRight size={24} className="text-primary-500" />
