@@ -36,7 +36,7 @@ const Total = () => {
     <div className="border-0 border-t p-4">
       <label
         htmlFor="prices"
-        className="group flex items-center hover:text-primary-200"
+        className="group flex items-center hover:text-primary-200 cursor-pointer"
       >
         <Text className="text-lg">Total</Text>
         <input

@@ -1,4 +1,4 @@
-import ArrowCircle from "../../../../assets/ArrowCircleRight.png";
+import ArrowCircle from "@/assets/ArrowCircleRight.png";
 interface PlaneRoute {
   departure:string,
   departureTime:number,

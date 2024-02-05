@@ -29,7 +29,7 @@ const ActiveOrder = ({orderActive} : orderArr) => {
   const navigate = useNavigate();
   const handleWaiting = (orderId:number) => {
     console.log({orderId});
-    navigate('/profile/order/payment/');
+    navigate('/profile/payment');
   }
 
   return(

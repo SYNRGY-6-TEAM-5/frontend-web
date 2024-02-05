@@ -27,6 +27,7 @@ import Order from "@/pages/profile/pages/order";
 import Passenger from "@/pages/profile/pages/passenger";
 import Notification from "@/pages/profile/pages/notification";
 import Faq from "@/pages/profile/pages/faq";
+import WaitingPayment from "@/pages/profile/pages/my-flight/components/WaitingPaymentPage";
 
 const router = createBrowserRouter([
   {
@@ -134,6 +135,10 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <MyFlight />,
+      },
+      {
+        path: "/profile/payment",
+        element: <WaitingPayment />,
       },
       {
         path: "/profile/edit",
