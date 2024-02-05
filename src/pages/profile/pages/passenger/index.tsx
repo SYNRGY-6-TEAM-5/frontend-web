@@ -1,6 +1,8 @@
 const Passenger = () => {
   return (
-    <div>Passenger</div>
+    <div>
+      
+    </div>
   )
 }
 
