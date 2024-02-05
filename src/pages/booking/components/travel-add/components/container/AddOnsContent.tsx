@@ -256,7 +256,7 @@ const AddOnsContent: React.FC<AddOnsContentProps> = ({ cart_index }) => {
             <div className="flex items-center justify-between">
               <div className="flex gap-2">
                 <Image
-                  className="w-6"
+                  className="max-w-12"
                   image={cart[cart_index].flight.airline.image}
                   alt={cart[cart_index].flight.airline.name}
                 />
