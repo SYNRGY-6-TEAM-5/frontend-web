@@ -24,7 +24,7 @@ export const useBooking = () => {
         return response;
       },
       onSuccess(data) {
-        if (data.status === 200) {
+        if (data.status === 201) {
           navigate("/user/payment");
         }
       },
