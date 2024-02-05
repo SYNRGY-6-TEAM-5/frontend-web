@@ -28,6 +28,7 @@ import Passenger from "@/pages/profile/pages/passenger";
 import Notification from "@/pages/profile/pages/notification";
 import Faq from "@/pages/profile/pages/faq";
 import WaitingPayment from "@/pages/profile/pages/my-flight/components/WaitingPaymentPage";
+import SuccessfullPayment from "@/pages/profile/pages/my-flight/components/SuccessfullPaymentPage";
 
 const router = createBrowserRouter([
   {
@@ -139,6 +140,10 @@ const router = createBrowserRouter([
       {
         path: "/profile/payment",
         element: <WaitingPayment />,
+      },
+      {
+        path: "/profile/success",
+        element: <SuccessfullPayment />,
       },
       {
         path: "/profile/edit",
