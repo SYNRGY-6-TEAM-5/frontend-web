@@ -4,6 +4,8 @@ import {
   MoneySend,
   RepeateMusic,
 } from "@/assets/svg";
+import Globe from "@/assets/globe.png";
+import OrderIcon from "@/assets/order-icon.png";
 import { Text } from "@mantine/core";
 
 const Order = () => {
@@ -78,8 +80,8 @@ const Order = () => {
               <p className="text-xs font-normal text-gray-500">Yogyakarta</p>
             </div>
             <div className="flex flex-col self-end">
-              <img src="/src/assets/order-icon.png" alt="Order Icon" />
-              <img src="/src/assets/globe.png" alt="Globe Icon" />
+              <img src={OrderIcon} alt="Order Icon" />
+              <img src={Globe} alt="Globe Icon" />
             </div>
             <div className="pb-3 text-right">
               <p className="text-xs font-medium text-gray-600">24 Oct, 09:50</p>
