@@ -31,3 +31,7 @@ export { default as Receipt } from "./receipt.svg?react";
 export { default as Percentage } from "./percentage.svg?react";
 export { default as BaggageBlack } from "./baggage-black.svg?react";
 export { default as MealBlack } from "./meal-black.svg?react";
+export { default as ChartSuccess } from "./chart-success.svg?react";
+export { default as MoneyRemove } from "./money-remove.svg?react";
+export { default as MoneySend } from "./money-send.svg?react";
+export { default as RepeateMusic } from "./repeate-music.svg?react";
