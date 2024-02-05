@@ -27,7 +27,7 @@ export interface ICompleteBooking {
 }
 
 const CheckoutButton = () => {
-  const { mutateAsync, isPending } = useBooking();
+  const { mutateAsync } = useBooking();
   const { userData } = useProfileUserStore();
 
   const { cart, totalFare } = useCartStore();

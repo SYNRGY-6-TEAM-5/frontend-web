@@ -13,7 +13,6 @@ import {
   Dialog,
   DialogContent,
   DialogOverlay,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 
 import SkeletonCard from "../ui/SkeletonCard";
@@ -31,8 +30,6 @@ interface props {
 }
 
 const TicketsHolder = ({ tripType }: props) => {
-
-// Inside your component function
   const location = useLocation();
   const currentPath = location.pathname + location.search;
   const { count, cart } = useCartStore();
