@@ -1,9 +1,10 @@
 import { Card, CardHeader } from "@/components/ui/card";
-import { ArrowCircleRight, EatLogo, GarudaLogo, WorkLogo } from "@/assets/svg";
+import { ArrowCircleRight, EatLogo, WorkLogo } from "@/assets/svg";
 import { Text } from "@mantine/core";
 import { Ticket } from "@/types/Ticket";
 import { useCartStore } from "@/store/useCart";
 import { differenceInMinutes, format } from "date-fns";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface DepartureArrival {
   code: string;
@@ -17,6 +18,8 @@ interface BookingSectionProps {
   arrival: DepartureArrival;
   time: string;
   price: string;
+  airlineLogo: string;
+  transit: number;
 }
 
 
@@ -27,19 +30,21 @@ const BookingSection: React.FC<BookingSectionProps> = ({
   arrival,
   time,
   price,
+  airlineLogo,
+  transit,
 }) => {
   return (
     <div className="flex h-[334px] flex-col items-start justify-start gap-3 bg-white px-4 py-6">
       <div className="inline-flex items-center justify-between self-stretch p-2">
         <Text className="text-2xl font-normal text-black">{title}</Text>
-        <div className="flex items-center justify-center gap-2">
-          <div className="relative h-[22px] w-12">
-            <div className="absolute left-0 top-[-0px] h-[22px] w-12">
-              <GarudaLogo />
-            </div>
+        
+          <div className="flex items-center justify-center gap-4">
+            <Avatar className="z-10">
+              <AvatarImage src={airlineLogo} alt="@shadcn" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            <Text className="text-2xl font-medium">{flightNumber}</Text>
           </div>
-          <Text className="text-2xl font-medium">{flightNumber}</Text>
-        </div>
       </div>
       <div className="flex h-[226px] flex-col items-start justify-center gap-6 self-stretch">
         <div className="inline-flex items-center justify-between self-stretch rounded-2xl bg-neutral-900 p-3">
@@ -63,7 +68,7 @@ const BookingSection: React.FC<BookingSectionProps> = ({
               <div className="h-[0px] shrink grow basis-0 border border-zinc-200"></div>
             </div>
             <div className="inline-flex h-6 items-center justify-start gap-2.5 rounded-[33px] bg-white px-2">
-              <Text className="text-xs font-medium">Non-stop</Text>
+              <Text className="text-xs font-medium">{transit !== 0 ? `${transit} Transit` : "Non-Stop" }</Text>
             </div>
           </div>
           <div className="inline-flex flex-col items-start justify-start gap-1">
@@ -136,6 +141,7 @@ const BookingDetail = () => {
             key={index}
             title={index === 0 ? "Departure" : "Return"}
             flightNumber={ticket.flight.iata}
+            airlineLogo={ticket.flight.airline.image}
             departure={{
               code: ticket.flight.departure.airport_details.iata_code,
               time: formatTime(ticket.flight.departure.scheduled_time),
@@ -146,6 +152,7 @@ const BookingDetail = () => {
             }}
             time={timeDifference(ticket)}
             price={parseFloat(ticket.fare_amount).toLocaleString()}
+            transit={ticket.flight.transit}
           />
         ))}
         <div className="flex h-16 flex-col items-center justify-between self-stretch border-t border-zinc-200 px-3 py-5">

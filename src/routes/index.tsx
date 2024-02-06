@@ -97,10 +97,6 @@ const router = createBrowserRouter([
         path: "/flight/search-flight",
         element: <SearchFlight />,
       },
-      {
-        path: "/flight/booking",
-        element: <Booking />,
-      },
     ],
   },
   {
@@ -111,6 +107,10 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
     children: [
+      {
+        path: "/user/booking",
+        element: <Booking />
+      },
       {
         path: "/user/payment",
         element: (

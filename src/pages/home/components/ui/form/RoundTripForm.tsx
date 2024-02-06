@@ -80,7 +80,6 @@ const RoundTripForm = ({ tripType }: props) => {
   const handleTicketDetails = (details: Seat) => {
     setTicketDetails(details);
 
-    console.log("Ticket Details:", details);
   };
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -89,22 +88,19 @@ const RoundTripForm = ({ tripType }: props) => {
     !selectedOriginAirport || !selectedDestinationAirport;
 
   useEffect(() => {
-    // Check if either selectedOriginAirport or selectedDestinationAirport has changed
     if (selectedOriginAirport && selectedDestinationAirport) {
-      setIsOriginActive(false); // Change isActive prop accordingly
+      setIsOriginActive(false);
     }
   }, [selectedOriginAirport, selectedDestinationAirport]);
 
   const handleOriginAirportSelection = (airportData: any) => {
     setSelectedOriginAirport(airportData);
 
-    console.log("Selected Origin Airport:", airportData);
   };
 
   const handleDestinationAirportSelection = (airportData: any) => {
     setSelectedDestinationAirport(airportData);
 
-    console.log("Selected Destination Airport:", airportData);
   };
 
   const handleAirportSelection = () => {

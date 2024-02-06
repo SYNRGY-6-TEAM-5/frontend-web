@@ -1,8 +1,8 @@
 import React from "react";
 
-import { Text } from "@mantine/core";
+import { Box, Group, LoadingOverlay, Text, rem } from "@mantine/core";
 import { Input } from "@/components/ui/input";
-
+import { Image } from "@/components/ui/Image";
 import { FieldArray, FormikValues } from "formik";
 import ExpirationDateForm from "./ExpDateForm";
 
@@ -14,7 +14,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Plus } from "@phosphor-icons/react";
+import { Cross, ImageSquare, Plus, Upload } from "@phosphor-icons/react";
+import { useBooking } from "@/lib/hooks/usePassengerTravel";
+import { Dropzone, DropzoneProps, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 
 interface TravelDocFormProps {
   _index: number;
@@ -22,12 +24,14 @@ interface TravelDocFormProps {
   formik: FormikValues;
 }
 
-const TravelDocForm: React.FC<TravelDocFormProps> = ({
+const TravelDocForm: React.FC<TravelDocFormProps & Partial<DropzoneProps>> = ({
   _index,
   _nthPassenger,
   formik,
+  ...dropzoneProps
 }) => {
   const { values, handleChange, handleBlur } = formik;
+  const { loadingCovers, fileItems, handleUploadTravelDoc } = useBooking();
 
   return (
     <div className="space-y-8">
@@ -35,6 +39,8 @@ const TravelDocForm: React.FC<TravelDocFormProps> = ({
         {({ push, remove }) => (
           <div>
             {values.travel_docs.map((travel_doc: any, index: number) => {
+              const isLastIndex = index === values.travel_docs.length - 1;
+
               const docTypeKey = `travel_docs.${index}.doc_type`;
               const nationalityKey = `travel_docs.${index}.nationality`;
               const docNumberKey = `travel_docs.${index}.document_number`;
@@ -110,56 +116,97 @@ const TravelDocForm: React.FC<TravelDocFormProps> = ({
                     fieldName={expireDateKey}
                     index={index}
                   />
-                  <label
-                    htmlFor="image"
-                    className="dark:hover:bg-bray-800 flex h-56 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-                  >
-                    <div className="flex flex-col items-center justify-center pb-6 pt-5">
-                      <svg
-                        className="mb-4 h-8 w-8 text-gray-500 dark:text-gray-400"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 20 16"
-                      >
-                        <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                        />
-                      </svg>
-                      <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                        <span>Upload your scanned document</span>
-                      </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
-                        Accepted file types: PDF, PNG, or JPEG
-                      </p>
-                    </div>
-                    <Input
-                      id="image"
-                      type="file"
-                      className="hidden h-full w-full border-4 border-dashed"
+                  <Box pos="relative" className="pb-8">
+                    <LoadingOverlay
+                      visible={loadingCovers[index]}
+                      zIndex={1000}
+                      overlayProps={{ radius: "sm", blur: 2 }}
                     />
-                  </label>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="flex flex-row gap-2"
-                    onClick={() =>
-                      push({
-                        doc_type: "",
-                        nationality: "",
-                        document_number: "",
-                        expire_date: new Date(),
-                        image_url: "",
-                      })
-                    }
-                  >
-                    Add Other Travel Documents
-                    <Plus size={18} />
-                  </Button>
+                    <Dropzone
+                      id={`travel_docs-${index}-image`}
+                      onDrop={(files) => handleUploadTravelDoc(files, index, formik)}
+                      onReject={(files) => console.log("rejected files", files)}
+                      maxSize={5 * 1024 ** 2}
+                      accept={IMAGE_MIME_TYPE}
+                      {...dropzoneProps}
+                    >
+                      <Group
+                        justify="center"
+                        gap="xl"
+                        mih={220}
+                        className="cursor-pointer rounded-lg border-4 border-dashed bg-slate-200 hover:bg-slate-100"
+                      >
+                        <Dropzone.Accept>
+                          <Upload
+                            style={{
+                              width: rem(52),
+                              height: rem(52),
+                              color: "var(--mantine-color-blue-6)",
+                            }}
+                          />
+                        </Dropzone.Accept>
+                        <Dropzone.Reject>
+                          <Cross
+                            style={{
+                              width: rem(52),
+                              height: rem(52),
+                              color: "var(--mantine-color-red-6)",
+                            }}
+                          />
+                        </Dropzone.Reject>
+                        <Dropzone.Idle>
+                          {fileItems[index]?.secure_url ? (
+                            <Image
+                              className="w-full"
+                              image={fileItems[index].secure_url}
+                              objectCover="cover"
+                              alt="Hero Background Vector"
+                            />
+                          ) : (
+                            <ImageSquare
+                              style={{
+                                width: rem(52),
+                                height: rem(52),
+                                color: "var(--mantine-color-dimmed)",
+                              }}
+                            />
+                          )}
+                        </Dropzone.Idle>
+                        {fileItems[index]?.secure_url ? (
+                          ""
+                        ) : (
+                          <div>
+                            <Text size="xl" inline>
+                              Drag or Select Your Travel Docs here
+                            </Text>
+                            <Text size="sm" c="dimmed" inline mt={7}>
+                              Attach as many files as you like, each file should
+                              not exceed 5mb
+                            </Text>
+                          </div>
+                        )}
+                      </Group>
+                    </Dropzone>
+                  </Box>
+                  {isLastIndex && (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="flex flex-row gap-2"
+                      onClick={() =>
+                        push({
+                          doc_type: "",
+                          nationality: "",
+                          document_number: "",
+                          expire_date: new Date(),
+                          image_url: "",
+                        })
+                      }
+                    >
+                      Add Other Travel Documents
+                      <Plus size={18} />
+                    </Button>
+                  )}
                 </div>
               );
             })}
