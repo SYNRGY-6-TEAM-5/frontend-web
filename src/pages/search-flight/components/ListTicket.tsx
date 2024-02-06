@@ -11,13 +11,11 @@ import LoadingTicket from "./ui/LoadingTicket";
 import TicketsHolder from "./container/TicketHolder";
 import { ITripDetails, Ticket } from "@/types/Ticket";
 import { useCartStore } from "@/store/useCart";
-import { useTicketContext } from "@/context/TicketContext";
 // Mock Data for dev purpose
 // import { data } from "@/components/particles/TicketData";
 // import { ret_data } from "@/components/particles/ReturnTicketData";
 
 const ListTicket = () => {
-  const { setTripData } = useTicketContext();
   const location = useLocation();
   const { cart } = useCartStore();
   const searchParams = new URLSearchParams(location.search);
@@ -44,16 +42,17 @@ const ListTicket = () => {
     trip_type: searchParams.get("trip-type") || "",
   };
 
+  const { setIsFetchedAfterMount, setTripDetails } = useSearchTicketStore();
+
   useEffect(() => {
-    setTripData(tripData);
-  }, [setTripData, tripData]);
+    setTripDetails(tripData);
+  }, [setTripDetails]);
 
   const { data: depData, isFetching: depIsFetching } =
     useSearchTicket(paramsData);
   const { data: retData, isFetching: retIsFetching } =
     useSearchTicket(returnParamsData);
 
-  const { setIsFetchedAfterMount } = useSearchTicketStore();
 
   useEffect(() => {
     setIsFetchedAfterMount(depIsFetching || retIsFetching);
