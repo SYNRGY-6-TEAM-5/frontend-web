@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-import { usePassengerStore } from "@/store/useBooking";
+import { usePassengerStore } from "@/store/useBookingStore";
 
 const validationSchema = Yup.object().shape({
   fullName: Yup.string()

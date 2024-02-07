@@ -5,7 +5,7 @@ export const completeBooking = {
         expired_time: new Date(),
     },
     user_data: {
-        user_id: "",
+        id: "",
         email_address: "",
         imageUrl: "",
         fullName: "",

@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import DialogAddOns from "./components/DialogAddOns";
-import { usePassengerStore } from "@/store/useBooking";
+import { usePassengerStore } from "@/store/useBookingStore";
 import FlightAddOnCard from "./components/ui/FlightAddOnCard";
 import { useAddOnsStore } from "@/store/useAddOnsStore";
 import { useSearchTicketStore } from "@/store/useSearchTicketStore";

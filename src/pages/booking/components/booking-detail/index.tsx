@@ -2,7 +2,7 @@ import { Card, CardHeader } from "@/components/ui/card";
 import { ArrowCircleRight, EatLogo, WorkLogo } from "@/assets/svg";
 import { Text } from "@mantine/core";
 import { Ticket } from "@/types/Ticket";
-import { useCartStore } from "@/store/useCart";
+import { useCartStore } from "@/store/useCartStore";
 import { differenceInMinutes, format } from "date-fns";
 
 interface DepartureArrival {

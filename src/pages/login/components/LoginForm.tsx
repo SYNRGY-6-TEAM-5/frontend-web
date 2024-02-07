@@ -114,10 +114,10 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
         <div className="grid gap-6">
           <div className="grid gap-5">
             <div className="grid gap-1.5">
-              <Label htmlFor="email">Email / Phone Number</Label>
+              <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
-                placeholder="Enter your email / phone number"
+                placeholder="Enter your email"
                 type="text"
                 autoCapitalize="none"
                 autoComplete="off"

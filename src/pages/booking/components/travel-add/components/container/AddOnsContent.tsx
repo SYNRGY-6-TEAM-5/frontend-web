@@ -22,7 +22,7 @@ import { CaretDown } from "@phosphor-icons/react";
 import Meal from "../ui/Meal";
 import Baggage from "../ui/Baggage";
 import { IPersonAddOns, useAddOnsStore } from "@/store/useAddOnsStore";
-import { PassengerDetailsItem, usePassengerStore } from "@/store/useBooking";
+import { PassengerDetailsItem, usePassengerStore } from "@/store/useBookingStore";
 import React, { useState } from "react";
 import { Toaster, toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -30,7 +30,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Form, FormField, FormItem } from "@/components/ui/form";
-import { useCartStore } from "@/store/useCart";
+import { useCartStore } from "@/store/useCartStore";
 import { Image } from "@/components/ui/Image";
 
 const formSchema = z.object({

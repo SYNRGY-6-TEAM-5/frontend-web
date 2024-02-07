@@ -66,7 +66,7 @@ const TabsPayment = () => {
               <Text className="mb-1 text-sm font-medium">{order.departAirport}</Text>
               <Text className="text-xs">{order.departTerminal}</Text>
             </div>
-            <Rute departure="YIA" departureTime={6.25} desc="non-stop" arrival="CGK" arrivalTime={7.40} />
+            <Rute departure="YIA" departureTime={"2024-02-28T01:05:00.000Z"} desc="non-stop" arrival="CGK" arrivalTime={"2024-01-06T07:30:00.000Z"} />
             <div>
               <Text className="mb-2"><span className="text-primary-500">Arrived</span> {order.arriveTime}</Text> 
               <Text className="mb-1 text-sm font-medium">{order.arriveAirport}</Text>

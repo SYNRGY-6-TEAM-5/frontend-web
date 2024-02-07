@@ -2,7 +2,7 @@ import { ArrowCircleRight } from "@/assets/svg";
 import { Button } from "@/components/ui/button";
 import { DialogClose, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useAddOnsStore } from "@/store/useAddOnsStore";
-import { useCartStore } from "@/store/useCart";
+import { useCartStore } from "@/store/useCartStore";
 import { Text } from "@mantine/core";
 
 const ChooseFlight = () => {

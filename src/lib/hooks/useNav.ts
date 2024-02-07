@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 import { useProfileUserStore } from "@/store/useProfileUserStore";
 
 export interface IUser {
-    user_id: string;
+    id: string;
     fullName: string;
     email_address: string;
     password: string;

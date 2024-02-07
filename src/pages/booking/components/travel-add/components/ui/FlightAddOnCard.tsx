@@ -1,6 +1,6 @@
 import { ArrowCircleRight } from "@/assets/svg";
 import { useAddOnsStore } from "@/store/useAddOnsStore";
-import { useCartStore } from "@/store/useCart";
+import { useCartStore } from "@/store/useCartStore";
 import { Text } from "@mantine/core";
 import React from "react";
 

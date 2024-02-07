@@ -6,56 +6,54 @@ import {
 } from "@/components/ui/dialog";
 import { Text } from "@mantine/core";
 import { ChevronDown } from "lucide-react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import TablePrice from "../ui/components/TablePrice";
 
-import { usePassengerStore } from "@/store/useBooking";
-import { useProfileUserStore } from "@/store/useProfileUserStore";
-import { useCartStore } from "@/store/useCart";
+import { usePassengerStore } from "@/store/useBookingStore";
+import { CartItem, useCartStore } from "@/store/useCartStore";
 import { useAddOnsStore } from "@/store/useAddOnsStore";
-import { ICompleteBooking } from "@/pages/booking/components/ui/CheckoutButton";
+import { ICompleteBooking } from "@/types/Booking";
 import { IPricePassenger, calculateTotalPrice, summarizeBooking } from "@/lib/totalSummarizer";
+import { useSavedBooking } from "@/lib/hooks/usePayment";
+import { transformCartData } from "@/lib/dataformatter";
 
-const Total = () => {
+interface TotalPrps {
+  completeBooking: ICompleteBooking;
+}
+
+const Total: React.FC<TotalPrps> = ({ completeBooking }) => {
   const [dialog, setDialog] = useState<boolean>(false);
-  const { userData } = useProfileUserStore();
 
-  const { cart, totalFare } = useCartStore();
-  const {
-    contactDetails,
-    passengerDetails,
-    updateCompleteBookingData: handleAddToCompleteBooking,
-  } = usePassengerStore();
-  const { personAddOns, tripInsurance } = useAddOnsStore();
-  const lastArrivalScheduledTime = cart[cart.length - 1].flight.arrival.scheduled_time;
-
+  const { updateCompleteBookingData: handleAddToCompleteBooking } = usePassengerStore();
+  const { tripInsurance } = useAddOnsStore();
+  
   const [summaryTotal, setSummaryTotal] = useState<IPricePassenger[]>([]);
 
+  let cartTicket: CartItem[];
+  
+  const isInPaymentPage: boolean = window.location.pathname.includes("/user/payment/");
+  if (isInPaymentPage) {
+    cartTicket = transformCartData(completeBooking);
+  } else {
+    const { cart } = useCartStore();
+    const { completeBookingData } = useSavedBooking();
+    completeBooking = completeBookingData;
+    cartTicket = cart;
+  }
+
   useEffect(() => {
-    const handleCheckout = () => {
-      const completeBookingData: ICompleteBooking = {
-        ticket_details: {
-          booked_ticket: cart.map(ticket => ticket.ticket_id),
-          total_ticket_price: totalFare(),
-          expired_time: new Date(lastArrivalScheduledTime),
-        },
-        user_data: userData,
-        contact_details: contactDetails,
-        passenger_details: passengerDetails,
-        passenger_addOns: personAddOns,
-        trip_insurance: tripInsurance,
-      };
+    const handleShowSummary = () => {
+      const bookingData: ICompleteBooking = completeBooking;
+      console.log("bookingData >>> ", bookingData);
+      handleAddToCompleteBooking(bookingData);
 
-      handleAddToCompleteBooking(completeBookingData);
+      const summary = summarizeBooking(bookingData, cartTicket);
 
-      const summary = summarizeBooking(completeBookingData, cart);
-      console.log("Summary Data >>> ", completeBookingData);
       setSummaryTotal(summary);
     };
 
     if (dialog) {
-      handleCheckout();
-      console.log("Summary Data >>> ", summaryTotal);
+      handleShowSummary();
     }
   }, [
     dialog,
