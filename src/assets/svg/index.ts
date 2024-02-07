@@ -32,3 +32,5 @@ export { default as Percentage } from "./percentage.svg?react";
 export { default as BaggageBlack } from "./baggage-black.svg?react";
 export { default as MealBlack } from "./meal-black.svg?react";
 export { default as DirectBox } from "./directbox-send.svg?react";
+export { default as Seat } from "./seat.svg?react";
+export { default as Airfly } from "./airfly.svg?react";

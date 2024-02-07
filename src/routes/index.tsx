@@ -29,6 +29,8 @@ import Notification from "@/pages/profile/pages/notification";
 import Faq from "@/pages/profile/pages/faq";
 import WaitingPayment from "@/pages/profile/pages/my-flight/components/WaitingPaymentPage";
 import SuccessfullPayment from "@/pages/profile/pages/my-flight/components/SuccessfullPaymentPage";
+import SelectSeat from "@/pages/profile/pages/selectSeat";
+import CheckInPage from "@/pages/profile/pages/checkin";
 
 const router = createBrowserRouter([
   {
@@ -144,6 +146,14 @@ const router = createBrowserRouter([
       {
         path: "/profile/success",
         element: <SuccessfullPayment />,
+      },
+      {
+        path: "/profile/checkin",
+        element: <CheckInPage />,
+      },
+      {
+        path: "/profile/select-seat",
+        element: <SelectSeat />,
       },
       {
         path: "/profile/edit",
