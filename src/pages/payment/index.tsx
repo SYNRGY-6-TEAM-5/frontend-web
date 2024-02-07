@@ -48,6 +48,8 @@ const Payment = () => {
     cartTicket = cart;
   }
 
+  console.log(cartTicket);
+
   const navigate = useNavigate();
   const handleOnClick = () => {
     if (method) {
