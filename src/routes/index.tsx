@@ -27,6 +27,8 @@ import Order from "@/pages/profile/pages/order";
 import Passenger from "@/pages/profile/pages/passenger";
 import Notification from "@/pages/profile/pages/notification";
 import Faq from "@/pages/profile/pages/faq";
+import BookingRoute from "./BookingRoute";
+import FlightListRoute from "./FlightListRoute";
 
 const router = createBrowserRouter([
   {
@@ -87,7 +89,9 @@ const router = createBrowserRouter([
     path: "/flight/",
     element: (
       <TicketProvider>
-        <Outlet></Outlet>
+        <FlightListRoute>
+          <Outlet></Outlet>
+        </FlightListRoute>
       </TicketProvider>
     ),
     children: [
@@ -101,16 +105,28 @@ const router = createBrowserRouter([
     path: "/user",
     element: (
       <ProtectedRoute>
-        <Outlet></Outlet>
+        <BookingRoute>
+          <Outlet></Outlet>
+        </BookingRoute>
       </ProtectedRoute>
     ),
     children: [
       {
         path: "/user/booking",
-        element: <Booking />
+        element: <Booking />,
       },
+    ],
+  },
+  {
+    path: "/user/payment",
+    element: (
+      <ProtectedRoute>
+        <Outlet></Outlet>
+      </ProtectedRoute>
+    ),
+    children: [
       {
-        path: "/user/payment",
+        path: "/user/payment/:user_id/:booking_id",
         element: (
           <LayoutUser>
             <Payment />

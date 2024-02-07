@@ -1,17 +1,7 @@
 import { create } from 'zustand';
-import { IAddOns, PassengerData } from '@/types/Booking';
-import { ICompleteBooking } from '@/pages/booking/components/ui/CheckoutButton';
+import { IAddOns, ICompleteBooking, IContactDetails, PassengerData, PassengerDetailsItem } from '@/types/Booking';
 import { completeBooking } from '@/components/particles/completeBookingData';
 
-export interface PassengerDetailsItem extends PassengerData {
-    count: number;
-}
-
-export interface IContactDetails {
-    fullName: string;
-    email: string;
-    phone: string;
-}
 
 type PassengerStore = {
     contactDetails: IContactDetails;

@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -5,63 +6,35 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Text } from "@mantine/core";
+import { ChevronRightIcon } from "@radix-ui/react-icons";
 
 const SelectPassenger = () => {
   return (
-    <Card
-      className={`${
-        !areAllDetaiilsFilled ? "pointer-events-none opacity-45" : ""
-      } mb-8`}
-    >
+    <Card>
       <CardHeader>
-        <CardTitle>Travel Add Ons</CardTitle>
-        <CardDescription>Card Description</CardDescription>
+        <CardTitle>Saved Passengers</CardTitle>
+        <CardDescription>
+          Here are list of your saved passengers details
+        </CardDescription>
       </CardHeader>
 
       <CardContent>
-        <section className="flex flex-col items-center justify-center gap-8 pb-8">
-          <div className="mt-1 flex h-full w-full max-w-[756px] items-center justify-center">
-            <div className="flex w-full flex-col justify-around rounded-lg bg-white px-4 py-3 shadow-md">
-              <div className="flex flex-row justify-between">
-                <div className="lead flex-shrink-0 text-base font-medium leading-6">
-                  Baggage
-                </div>
-                <div className="flex-shrink-0">
-                  <DialogAddOns type="Baggage" />
-                </div>
+        <section className="flex flex-col items-center justify-center gap-6 px-8 pb-12">
+          <Button variant="ghost" className="h-16 w-full">
+            <div className="mt-1 flex h-full w-full items-center justify-between border-b py-2 pb-4">
+              <div className="mt-1 flex w-full flex-col items-start justify-between gap-2">
+                <Text className="text-lg font-normal">Bella Hadid</Text>
+                <Text className="text-md font-medium text-slate-300">
+                  Account Owner
+                </Text>
               </div>
-              <div className="flex flex-col items-center justify-start rounded-lg bg-white px-3 py-6">
-                {baggageAddOn.baggage_price !== "" ? (
-                  <FlightAddOnCard type="Baggage" />
-                ) : (
-                  <p className="w-full rounded-md bg-slate-300 p-3 text-xs font-normal leading-4 text-slate-600">
-                    Adding baggage here is cheaper than at the airport
-                  </p>
-                )}
-              </div>
+              <ChevronRightIcon
+                fontSize={12}
+                className="h-6 w-6 text-xl font-normal text-primary-500"
+              />
             </div>
-          </div>
-          <div className="mt-1 flex h-full w-full max-w-[756px] items-center justify-center">
-            <div className="flex w-full flex-col justify-around rounded-lg bg-white px-4 py-3 shadow-md">
-              <div className="flex flex-row justify-between">
-                <div className="lead flex-shrink-0 text-base font-medium leading-6">
-                  Meal
-                </div>
-                <div className="flex-shrink-0">
-                  <DialogAddOns type="Meal" />
-                </div>
-              </div>
-              <div className="flex flex-col items-center justify-start rounded-lg bg-white px-3 py-6">
-                {mealsAddOn.length > 0 ? (
-                  <FlightAddOnCard type="Meal" />
-                ) : (
-                  <p className="w-full rounded-md bg-slate-300 p-3 text-xs font-normal leading-4 text-slate-600">
-                    Don’t let others hear your tummy growl for the whole flight
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
+          </Button>
         </section>
       </CardContent>
     </Card>

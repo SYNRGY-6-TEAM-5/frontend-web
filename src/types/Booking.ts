@@ -1,3 +1,17 @@
+import { IPersonAddOns } from "@/store/useAddOnsStore";
+import { TripInsurance } from "@/store/useAddOnsStore";
+import { IUser } from "@/lib/hooks/useNav";
+
+export interface PassengerDetailsItem extends PassengerData {
+    count: number;
+}
+
+export interface IContactDetails {
+    fullName: string;
+    email: string;
+    phone: string;
+}
+
 export interface IMealAddOns {
     meal_img: string;
     meal_name: string;
@@ -30,4 +44,17 @@ export interface PassengerData {
     courtesy_title: string;
     vaccinated: string;
     travel_docs: ITravelDocs[];
+}
+
+export interface ICompleteBooking {
+    ticket_details: {
+        booked_ticket: number[];
+        total_ticket_price: number;
+        expired_time: Date;
+    };
+    user_data?: IUser;
+    contact_details: IContactDetails;
+    passenger_details: PassengerDetailsItem[];
+    passenger_addOns: IPersonAddOns[];
+    trip_insurance: TripInsurance;
 }

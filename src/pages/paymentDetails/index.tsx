@@ -20,7 +20,6 @@ const PaymentDetails = () => {
     }
   })
   
-
   return(
     <section className="grid gap-12 pb-4 px-20 lg:grid-cols-3 xs:grid-cols-1">
       <div className="col-span-2 flex flex-col space-y-9">

@@ -18,7 +18,7 @@ import {
 import SkeletonCard from "../ui/SkeletonCard";
 import { TicketIcon } from "lucide-react";
 
-import { useCartStore } from "@/store/useCart";
+import { useCartStore } from "@/store/useCartStore";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Toaster, toast } from "sonner";

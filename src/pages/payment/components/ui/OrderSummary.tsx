@@ -1,12 +1,17 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle} from "@/components/ui/dialog";
 import { Text } from "@mantine/core";
 import { ChevronRight } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 import TabsPayment from "./components/TabsPayment";
+import { ICompleteBooking } from "@/types/Booking";
 
-const OrderSummary = () => {
+interface OrderSummaryProps {
+  completeBooking: ICompleteBooking;
+}
+
+const OrderSummary: React.FC<OrderSummaryProps> = ({ completeBooking }) => {
   const [dialog, setDialog] = useState<boolean>(false);
-  
+  console.log("Complete Booking OrderSummary >>> ", completeBooking);
   const handleDialog = () => {
     setDialog(!dialog);
   }

@@ -4,7 +4,7 @@ import { differenceInMinutes, format, parseISO } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Text } from "@mantine/core";
-import { useCartStore } from "@/store/useCart";
+import { useCartStore } from "@/store/useCartStore";
 
 interface props {
   ticket: Ticket;
