@@ -2,9 +2,8 @@ import { Card, CardHeader } from "@/components/ui/card";
 import { ArrowCircleRight, EatLogo, WorkLogo } from "@/assets/svg";
 import { Text } from "@mantine/core";
 import { Ticket } from "@/types/Ticket";
-import { useCartStore } from "@/store/useCart";
+import { useCartStore } from "@/store/useCartStore";
 import { differenceInMinutes, format } from "date-fns";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface DepartureArrival {
   code: string;
@@ -22,7 +21,6 @@ interface BookingSectionProps {
   transit: number;
 }
 
-
 const BookingSection: React.FC<BookingSectionProps> = ({
   title,
   flightNumber,
@@ -37,14 +35,15 @@ const BookingSection: React.FC<BookingSectionProps> = ({
     <div className="flex h-[334px] flex-col items-start justify-start gap-3 bg-white px-4 py-6">
       <div className="inline-flex items-center justify-between self-stretch p-2">
         <Text className="text-2xl font-normal text-black">{title}</Text>
-        
-          <div className="flex items-center justify-center gap-4">
-            <Avatar className="z-10">
-              <AvatarImage src={airlineLogo} alt="@shadcn" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-            <Text className="text-2xl font-medium">{flightNumber}</Text>
-          </div>
+
+        <div className="flex items-center justify-center gap-4">
+          <img
+            className="aspect-[3/2] max-h-8 rounded-sm object-contain"
+            src={airlineLogo}
+            alt={flightNumber}
+          />
+          <Text className="text-2xl font-medium">{flightNumber}</Text>
+        </div>
       </div>
       <div className="flex h-[226px] flex-col items-start justify-center gap-6 self-stretch">
         <div className="inline-flex items-center justify-between self-stretch rounded-2xl bg-neutral-900 p-3">
@@ -68,7 +67,9 @@ const BookingSection: React.FC<BookingSectionProps> = ({
               <div className="h-[0px] shrink grow basis-0 border border-zinc-200"></div>
             </div>
             <div className="inline-flex h-6 items-center justify-start gap-2.5 rounded-[33px] bg-white px-2">
-              <Text className="text-xs font-medium">{transit !== 0 ? `${transit} Transit` : "Non-Stop" }</Text>
+              <Text className="text-xs font-medium">
+                {transit !== 0 ? `${transit} Transit` : "Non-Stop"}
+              </Text>
             </div>
           </div>
           <div className="inline-flex flex-col items-start justify-start gap-1">

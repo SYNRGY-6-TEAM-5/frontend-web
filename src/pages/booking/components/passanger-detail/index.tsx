@@ -12,7 +12,7 @@ import {
 import { Accordion } from "@/components/ui/accordion";
 
 import AccordionFormItem from "./component/containers/AccordionItem";
-import { usePassengerStore } from "@/store/useBooking";
+import { usePassengerStore } from "@/store/useBookingStore";
 import { useSearchTicketStore } from "@/store/useSearchTicketStore";
 
 const PassangerDetail = () => {

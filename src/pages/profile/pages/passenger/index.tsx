@@ -1,7 +1,9 @@
+import SelectPassenger from "./component/SelectPassenger"
+
 const Passenger = () => {
   return (
     <div>
-      
+      <SelectPassenger />
     </div>
   )
 }

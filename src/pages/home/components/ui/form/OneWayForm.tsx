@@ -27,6 +27,7 @@ import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import { AirportDetails } from "@/types/Ticket";
 import { Seat } from "@/types/Ticket";
+import { useSearchTicketStore } from "@/store/useSearchTicketStore";
 
 const FormSchema = z.object({
   departureDate: z
@@ -66,6 +67,12 @@ interface props {
 
 const OneWayForm = ({ tripType }: props) => {
   const { airports, handleSearch, fetchAirports, params } = useHome();
+  const {
+    setParamsData: handleSetDepParams,
+    setReturnParamsData: handleSetRetParams,
+    setTripDetails: handleSetTripDetails,
+  } = useSearchTicketStore();
+
   const navigate = useNavigate();
 
   const [selectedOriginAirport, setSelectedOriginAirport] =
@@ -139,6 +146,33 @@ const OneWayForm = ({ tripType }: props) => {
     for (const key in ticketDetails) {
       searchParams.append(key, (ticketDetails as Record<string, any>)[key]);
     }
+
+    handleSetDepParams({
+      departure_airport: selectedOriginAirport.iata_code,
+      arrival_airport: selectedDestinationAirport.iata_code,
+      departure_date: format(data.departureDate!, "yyyy-MM-dd"),
+    });
+    
+    handleSetRetParams({
+      departure_airport: selectedOriginAirport.iata_code,
+      arrival_airport: selectedDestinationAirport.iata_code,
+      departure_date: format(data.departureDate!, "yyyy-MM-dd"),
+      return_date: format(data.arrivalDate || data.departureDate!, "yyyy-MM-dd"),
+    });
+
+    if(ticketDetails){
+      const isInternational: boolean = selectedOriginAirport.country_iso_code === selectedDestinationAirport.country_iso_code ? false : true;
+      handleSetTripDetails({
+        ticket_class: ticketDetails.ticket_class,
+        adult_seat: ticketDetails.adult_seat,
+        infant_seat: ticketDetails.infant_seat,
+        child_seat: ticketDetails.child_seat,
+        total_seat: ticketDetails.total_seat,
+        isInternational: isInternational,
+        trip_type: tripType
+      })
+    }
+
 
     navigate(`/flight/search-flight?${searchParams}`);
   };
