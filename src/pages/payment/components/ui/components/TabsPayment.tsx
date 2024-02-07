@@ -2,85 +2,99 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Text } from "@mantine/core";
 import Rute from "../../containers/Rute";
 import TabsPassanger from "./TabsPassanger";
+import { ICompleteBooking } from "@/types/Booking";
+import React from "react";
+import { CartItem } from "@/store/useCartStore";
+import { transformCartData } from "@/lib/dataformatter";
+import { format, parseISO } from "date-fns";
 
-const order = [
-  {
-    name:"Depart",
-    departCity:"Jakarta",
-    departTime:"Tue, 2 Jan 2024",
-    departAirport:"Soekarno Hatta",
-    departTerminal:"Terminal 3 Domestic",
-    arriveCity:"Yogyakarta",
-    arriveTime:"Tue, 2 Jan 2024",
-    arriveAirport:"Yogyakarta Kulon Progo",
-    arriveTerminal:"Terminal 1 Domestic"
-  },
-  {
-    name:"Return",
-    departTime:"Fri, 5 Jan 2024",
-    departCity:"Yogyakarta",
-    departAirport:"Yogyakarta Kulon Progo",
-    departTerminal:"Terminal 1 Domestic",
-    arriveCity:"Jakarta",
-    arriveTime:"Fri, 5 Jan 2024",
-    arriveAirport:"Soekarno Hatta",
-    arriveTerminal:"Terminal 3 Domestic"
-  },
-];
+interface TabsPaymentProps {
+  completeBooking: ICompleteBooking;
+}
 
-const passengers = [
-  {
-    name:"Bella Hadid",
-    extra_baggage : 16,
-    meal : 1,
-    flight_delay: "Insured",
-    baggage_insurance :"Insured"
-  },
-  {
-    name:"Jack Harris",
-    extra_baggage : 20,
-    meal : 1,
-    flight_delay: "Insured",
-    baggage_insurance :"Insured"
+const TabsPayment: React.FC<TabsPaymentProps> = ({ completeBooking }) => {
+  let cartTicket: CartItem[] = transformCartData(completeBooking);
+
+  function modifyDateString(dateString: string): string {
+    const date = parseISO(dateString);
+    const formattedDate = format(date, "EEE, d LLL yyyy");
+
+    return formattedDate;
   }
-]
 
-const TabsPayment = () => {
   return (
     <Tabs defaultValue="0" className="w-auto">
-      <TabsList className="grid grid-cols-2 w-fit bg-white gap-4">
-        {order.map((order, index) => (
-          <TabsTrigger value={String(index)} className="p-0 text-lg text-gray-300 data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-b data-[state=active]:border-primary-500">
-            {order.name}
+      <TabsList className="grid w-fit grid-cols-2 gap-4 bg-white">
+        {cartTicket.map((_, index) => (
+          <TabsTrigger
+            key={`route-${index}`}
+            value={String(index)}
+            className="p-0 text-lg text-gray-300 data-[state=active]:border-b data-[state=active]:border-primary-500 data-[state=active]:bg-white data-[state=active]:text-black"
+          >
+            {index === 0 ? "Depart" : "Return"}
           </TabsTrigger>
         ))}
       </TabsList>
-      {order.map((order, index) => (
-        <TabsContent
-          value={String(index)}
-          className="flex flex-col gap-8"
-        >
-          <div className="mt-6 bg-white shadow-3xl py-3 px-4 rounded-xl space-y-6">
+      {cartTicket.map((ticket_details, index) => (
+        <TabsContent key={`flight-details-${index}`} value={String(index)} className="flex flex-col gap-8">
+          <div className="mt-6 space-y-6 rounded-xl bg-white px-4 py-3 shadow-3xl">
             <div>
-              <Text className="mb-2"><span className="text-primary-500">Depart</span> {order.departTime}</Text> 
-              <Text className="mb-1 text-sm font-medium">{order.departAirport}</Text>
-              <Text className="text-xs">{order.departTerminal}</Text>
+              <Text className="mb-2">
+                <span className="text-primary-500">Depart</span>{" "}
+                {modifyDateString(
+                  ticket_details.flight.departure.scheduled_time,
+                )}
+              </Text>
+              <Text className="mb-1 text-sm font-medium">
+                {ticket_details.flight.departure.airport_details.airport_name},{" "}
+                {ticket_details.flight.departure.airport_details.city_name}
+              </Text>
+              <Text className="text-xs">
+                Terminal {ticket_details.flight.departure.terminal}
+              </Text>
             </div>
-            <Rute departure="YIA" departureTime={"2024-02-28T01:05:00.000Z"} desc="non-stop" arrival="CGK" arrivalTime={"2024-01-06T07:30:00.000Z"} />
+            <Rute
+              departure={
+                ticket_details.flight?.departure?.airport_details?.iata_code ??
+                ""
+              }
+              departureTime={ticket_details.flight?.departure?.scheduled_time}
+              desc={
+                ticket_details.flight?.transit !== 0
+                  ? `${ticket_details.flight.transit} Transit`
+                  : "Non-Stop"
+              }
+              arrival={
+                ticket_details.flight?.arrival?.airport_details?.iata_code ?? ""
+              }
+              arrivalTime={ticket_details.flight?.arrival?.scheduled_time}
+            />
             <div>
-              <Text className="mb-2"><span className="text-primary-500">Arrived</span> {order.arriveTime}</Text> 
-              <Text className="mb-1 text-sm font-medium">{order.arriveAirport}</Text>
-              <Text className="text-xs">{order.arriveTerminal}</Text>
+              <Text className="mb-2">
+                <span className="text-primary-500">Arrived</span>{" "}
+                {modifyDateString(ticket_details.flight.arrival.scheduled_time)}
+              </Text>
+              <Text className="mb-1 text-sm font-medium">
+                {ticket_details.flight.arrival.airport_details.airport_name},{" "}
+                {ticket_details.flight.arrival.airport_details.city_name}
+              </Text>
+              <Text className="text-xs">
+                Terminal {ticket_details.flight.arrival.terminal}
+              </Text>
             </div>
           </div>
           <div>
-            <Text className="mb-6 text-l font-medium">Passenger & Add-ons</Text>
-            <TabsPassanger depart={order.departCity} arrive={order.arriveCity} passengers={passengers}/>
+            <Text className="text-l mb-6 font-medium">Passenger & Add-ons</Text>
+            <TabsPassanger
+              depart={ticket_details.flight.departure.airport_details.city_name}
+              arrive={ticket_details.flight.arrival.airport_details.city_name}
+              completeBooking={completeBooking}
+            />
           </div>
         </TabsContent>
       ))}
     </Tabs>
-  )
-}
+  );
+};
 
 export default TabsPayment;

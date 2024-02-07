@@ -61,35 +61,6 @@ export const usePaymentStripe = () => {
     return { mutateAsync, error, isPending };
 };
 
-// export const useFetchBooking = () => {
-//     const { toast } = useToast();
-//     const token = Cookies.get("accesstoken");
-//     const [fetchedBooking, setFetchedBooking] = useState<ICompleteBooking>(completeBooking)
-
-//     const { mutateAsync, error, isPending } = useMutation({
-//         mutationKey: ["userBooking"],
-//         mutationFn: async (bookingId: number) => {
-//             const response = await axiosFSW.get(`/user/booking/${bookingId}`, {
-//                 headers: {
-//                     Authorization: `Bearer ${token}`,
-//                 },
-//             });
-//             return response.data;
-//         },
-//         onSuccess(data) {
-//             console.log("data >>> ", data);
-//             if (data.status === 200) {
-//                 const formattedData = transformData(data.data);
-//                 console.log("Formatted Data:", formattedData);
-//                 setFetchedBooking(formattedData)
-//             }
-//         },
-//         onError: (error: ApiError) => handleApiError(error, toast),
-//     });
-
-//     return { mutateAsync, error, isPending, fetchedBooking };
-// };
-
 export const useFetchBooking = (bookingId: number | null) => {
     const token = Cookies.get("accesstoken");
     const { data = completeBooking, error, isFetching } = useQuery({

@@ -173,7 +173,7 @@ export function transformData(data: any): CompleteBooking {
         trip_insurance: {
             full_insurance: data.full_insurance ? tripInsurance[0] : { type: "", price: 0 }, 
             baggage_insurance: data.bag_insurance ? tripInsurance[1] : { type: "", price: 0 }, 
-            flight_delay_insurance: data.flight_delay ? tripInsurance[3] : { type: "", price: 0 }, 
+            flight_delay_insurance: data.flight_delay ? tripInsurance[2] : { type: "", price: 0 }, 
         },
     };
 }

@@ -44,7 +44,6 @@ const Total: React.FC<TotalPrps> = ({ completeBooking }) => {
   useEffect(() => {
     const handleShowSummary = () => {
       const bookingData: ICompleteBooking = completeBooking;
-      console.log("bookingData >>> ", bookingData);
       handleAddToCompleteBooking(bookingData);
 
       const summary = summarizeBooking(bookingData, cartTicket);

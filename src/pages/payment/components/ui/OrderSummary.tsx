@@ -11,7 +11,7 @@ interface OrderSummaryProps {
 
 const OrderSummary: React.FC<OrderSummaryProps> = ({ completeBooking }) => {
   const [dialog, setDialog] = useState<boolean>(false);
-  console.log("Complete Booking OrderSummary >>> ", completeBooking);
+  
   const handleDialog = () => {
     setDialog(!dialog);
   }
@@ -36,7 +36,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ completeBooking }) => {
           <DialogHeader>
             <DialogTitle>Order Summary</DialogTitle>
           </DialogHeader>
-          <TabsPayment />
+          <TabsPayment completeBooking={completeBooking} />
         </DialogContent>
       </Dialog>
     </>

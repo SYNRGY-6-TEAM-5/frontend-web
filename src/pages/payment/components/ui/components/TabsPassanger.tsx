@@ -1,34 +1,26 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ICompleteBooking } from "@/types/Booking";
 import { Text } from "@mantine/core";
 import { ArrowRight } from "lucide-react";
-
-interface passenger {
-  name:string,
-  extra_baggage : number,
-  meal : number,
-  flight_delay: string,
-  baggage_insurance :string
-}
-
 interface flightInterface {
-  passengers:passenger[],
+  completeBooking: ICompleteBooking,
   depart:string,
   arrive:string
 }
 
-const TabsPassanger = ({passengers, depart, arrive}:flightInterface) => {
+const TabsPassanger = ({completeBooking, depart, arrive}:flightInterface) => {
   return (
     <Tabs defaultValue="0" className="w-auto p-2">
       <TabsList className="grid grid-cols-2 w-fit gap-4 bg-white mb-8 p-0">
-        {passengers.map((p, index) => (
+        {completeBooking.passenger_details.map((p, index) => (
         <TabsTrigger value={String(index)} className="p-3 rounded-xl text-black bg-gray-50 border border-gray-100 data-[state=active]:text-primary-500 data-[state=active]:border-error-500 data-[state=active]:bg-error-50">
-          {p.name}
+          {p.fullName}
         </TabsTrigger>
         ))}
       </TabsList>
-      {passengers.map((p, index) => (
-        <TabsContent value={String(index)}>
+      {completeBooking.passenger_addOns.map((p, index) => (
+        <TabsContent key={`addon-${index}`} value={String(index)}>
           <div className="flex space-x-1 mb-4">
             <Text>{depart}</Text>
             <ArrowRight size={24} className="text-primary-500" />
@@ -44,19 +36,23 @@ const TabsPassanger = ({passengers, depart, arrive}:flightInterface) => {
             <TableBody>
               <TableRow>
                 <TableCell>Extra Baggage</TableCell>
-                <TableCell>{p.extra_baggage} kg</TableCell>
+                <TableCell>{p.departure.baggage.baggage_weight}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Meal</TableCell>
-                <TableCell>{p.meal} Meal</TableCell>
+                <TableCell>{p.departure.meals.length} Meal</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>Flight Delay</TableCell>
-                <TableCell>{p.flight_delay}</TableCell>
+                <TableCell>Full Insurance</TableCell>
+                <TableCell>{completeBooking.trip_insurance.full_insurance.type !== "" ? "Insured" : "Not-insured"}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Baggage Insurance</TableCell>
-                <TableCell>{p.baggage_insurance}</TableCell>
+                <TableCell>{completeBooking.trip_insurance.baggage_insurance.type !== "" ? "Insured" : "Not-insured"}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Flight Delay</TableCell>
+                <TableCell>{completeBooking.trip_insurance.flight_delay_insurance.type !== "" ? "Insured" : "Not-insured"}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
