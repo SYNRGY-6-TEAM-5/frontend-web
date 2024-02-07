@@ -3,7 +3,7 @@ import { differenceInMinutes, format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import ArrowCircle from "../../../../assets/arrowCircle.png";
 
-import { useCartStore } from "@/store/useCart";
+import { useCartStore } from "@/store/useCartStore";
 import { Ticket } from "@/types/Ticket";
 
 interface props {

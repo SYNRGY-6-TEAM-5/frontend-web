@@ -28,6 +28,9 @@ import Passenger from "@/pages/profile/pages/passenger";
 import Notification from "@/pages/profile/pages/notification";
 import Faq from "@/pages/profile/pages/faq";
 import WaitingPayment from "@/pages/profile/pages/my-flight/components/WaitingPaymentPage";
+import SuccessfullPayment from "@/pages/profile/pages/my-flight/components/SuccessfullPaymentPage";
+import BookingRoute from "./BookingRoute";
+import FlightListRoute from "./FlightListRoute";
 
 const router = createBrowserRouter([
   {
@@ -88,7 +91,9 @@ const router = createBrowserRouter([
     path: "/flight/",
     element: (
       <TicketProvider>
-        <Outlet></Outlet>
+        <FlightListRoute>
+          <Outlet></Outlet>
+        </FlightListRoute>
       </TicketProvider>
     ),
     children: [
@@ -96,14 +101,26 @@ const router = createBrowserRouter([
         path: "/flight/search-flight",
         element: <SearchFlight />,
       },
+    ],
+  },
+  {
+    path: "/user",
+    element: (
+      <ProtectedRoute>
+        <BookingRoute>
+          <Outlet></Outlet>
+        </BookingRoute>
+      </ProtectedRoute>
+    ),
+    children: [
       {
-        path: "/flight/booking",
+        path: "/user/booking",
         element: <Booking />,
       },
     ],
   },
   {
-    path: "/user",
+    path: "/user/payment",
     element: (
       <ProtectedRoute>
         <Outlet></Outlet>
@@ -111,7 +128,7 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "/user/payment",
+        path: "/user/payment/:user_id/:booking_id",
         element: (
           <LayoutUser>
             <Payment />
@@ -119,7 +136,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/user/payment-details",
+        path: "/user/payment/payment-details",
         element: (
           <LayoutUser>
             <PaymentDetails />
@@ -139,6 +156,10 @@ const router = createBrowserRouter([
       {
         path: "/profile/payment",
         element: <WaitingPayment />,
+      },
+      {
+        path: "/profile/success",
+        element: <SuccessfullPayment />,
       },
       {
         path: "/profile/edit",

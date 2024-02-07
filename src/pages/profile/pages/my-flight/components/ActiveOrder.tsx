@@ -32,6 +32,10 @@ const ActiveOrder = ({orderActive} : orderArr) => {
     navigate('/profile/payment');
   }
 
+  const handleETicket = () => {
+    navigate('/profile/success');
+  }
+
   return(
     <div className="grid lg:grid-cols-2 gap-x-8 gap-y-8 grid-cols-1">
       {filteredOrder.map((order, index) => (
@@ -118,6 +122,7 @@ const ActiveOrder = ({orderActive} : orderArr) => {
                 type="button"
                 id="eTicket"
                 name="eTicket"
+                onClick={handleETicket}
               />
               <ChevronRight size={20} className="font-base" />
             </label>
