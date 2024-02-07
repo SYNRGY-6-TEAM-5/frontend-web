@@ -1,12 +1,26 @@
-import { createContext, useState, useContext, ReactNode, Dispatch, SetStateAction } from 'react';
+import {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  Dispatch,
+  SetStateAction,
+} from "react";
+import { Ticket, ITripDetails } from "@/types/Ticket";
 
-import { Ticket, ITripDetails  } from '@/types/Ticket';
+export interface TripInsurance {
+  full_insurance: any;
+  baggage_insurance: any;
+  flight_delay_insurance: any;
+}
 
 interface TicketContextType {
   selectedTicket: Ticket | null;
   tripData: ITripDetails;
+  tripInsurance: TripInsurance;
   selectTicket: (ticket: Ticket | null) => void;
   setTripData: Dispatch<SetStateAction<ITripDetails>>;
+  setTripInsurance: Dispatch<SetStateAction<TripInsurance>>;
 }
 
 const TicketContext = createContext<TicketContextType>({
@@ -20,17 +34,35 @@ const TicketContext = createContext<TicketContextType>({
     isInternational: false,
     trip_type: "",
   },
+  tripInsurance: {
+    full_insurance: {
+      type: "",
+      price: 0,
+    },
+    baggage_insurance: {
+      type: "",
+      price: 0,
+    },
+    flight_delay_insurance: {
+      type: "",
+      price: 0,
+    },
+  },
   selectTicket: () => {},
   setTripData: () => {},
+  setTripInsurance: () => {},
 });
 
-export const useTicketContext = (): TicketContextType => useContext(TicketContext);
+export const useTicketContext = (): TicketContextType =>
+  useContext(TicketContext);
 
 interface TicketProviderProps {
   children: ReactNode;
 }
 
-export const TicketProvider = ({ children }: TicketProviderProps): JSX.Element => {
+export const TicketProvider = ({
+  children,
+}: TicketProviderProps): JSX.Element => {
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
   const [tripData, setTripData] = useState<ITripDetails>({
     ticket_class: "",
@@ -41,6 +73,11 @@ export const TicketProvider = ({ children }: TicketProviderProps): JSX.Element =
     isInternational: false,
     trip_type: "",
   });
+  const [tripInsurance, setTripInsurance] = useState<TripInsurance>({
+    full_insurance: {},
+    baggage_insurance: {},
+    flight_delay_insurance: {},
+  });
 
   const selectTicket = (ticket: Ticket | null) => {
     setSelectedTicket(ticket);
@@ -49,8 +86,10 @@ export const TicketProvider = ({ children }: TicketProviderProps): JSX.Element =
   const contextValue: TicketContextType = {
     selectedTicket,
     tripData,
+    tripInsurance,
     selectTicket,
     setTripData,
+    setTripInsurance,
   };
 
   return (

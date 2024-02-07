@@ -1,25 +1,51 @@
 import { create } from 'zustand';
-import { PassengerData } from '@/types/Booking';
+import { IAddOns, PassengerData } from '@/types/Booking';
+import { ICompleteBooking } from '@/pages/booking/components/ui/CheckoutButton';
+import { completeBooking } from '@/components/particles/completeBookingData';
 
-interface PassengerDetailsItem extends PassengerData {
+export interface PassengerDetailsItem extends PassengerData {
     count: number;
 }
 
+export interface IContactDetails {
+    fullName: string;
+    email: string;
+    phone: string;
+}
+
 type PassengerStore = {
+    contactDetails: IContactDetails;
     passengerDetails: PassengerDetailsItem[];
+    completeBookingData: ICompleteBooking;
     count: () => number;
+    updateContactDetails: (contactDetails: Partial<IContactDetails>) => void;
+    updateCompleteBookingData: (completeBookingData: Partial<ICompleteBooking>) => void;
     add: (passengerDetails: PassengerData) => void;
     remove: (idPassenger: string) => void;
     removeAll: () => void;
+    addOnToPassenger: (fullName: string, addOn: IAddOns) => void;
+    removeAddOnFromPassenger: (fullName: string) => void;
 };
 
 export const usePassengerStore = create<PassengerStore>((set, get) => ({
+    contactDetails: {
+        fullName: "",
+        email: "",
+        phone: ""
+    },
     passengerDetails: [],
+    completeBookingData: completeBooking,
     count: () => {
         const { passengerDetails } = get();
         if (passengerDetails.length)
             return passengerDetails.map(item => item.count).reduce((prev, curr) => prev + curr);
         return 0;
+    },
+    updateContactDetails: (contactDetails: Partial<IContactDetails>) => {
+        set(state => ({ contactDetails: { ...state.contactDetails, ...contactDetails } }));
+    },
+    updateCompleteBookingData: (completeBookingData: Partial<ICompleteBooking>) => {
+        set(state => ({ completeBookingData: { ...state.completeBookingData, ...completeBookingData } }));
     },
     add: (passengerDetails: PassengerData) => {
         const { passengerDetails: existingPassengers } = get();
@@ -32,6 +58,40 @@ export const usePassengerStore = create<PassengerStore>((set, get) => ({
         set({ passengerDetails: updatedPassengerDetails });
     },
     removeAll: () => set({ passengerDetails: [] }),
+    addOnToPassenger: (fullName: string, addOn: IAddOns) => {
+        const passengers = get().passengerDetails;
+        const updatedPassengers = passengers.map(passenger => {
+            if (passenger.fullName === fullName) {
+                return {
+                    ...passenger,
+                    add_ons: {
+                        ...addOn
+                    }
+                };
+            }
+            return passenger;
+        });
+        set({ passengerDetails: updatedPassengers });
+    },
+    removeAddOnFromPassenger: (fullName: string) => {
+        const passengers = get().passengerDetails;
+        const updatedPassengers = passengers.map(passenger => {
+            if (passenger.fullName === fullName) {
+                return {
+                    ...passenger,
+                    add_ons: {
+                        meals: [],
+                        baggage: {
+                            baggage_weight: "",
+                            baggage_price: ""
+                        }
+                    }
+                };
+            }
+            return passenger;
+        });
+        set({ passengerDetails: updatedPassengers });
+    },
 }));
 
 function updatePassengerDetails(passengerDetailsToAdd: PassengerData, existingPassengers: PassengerDetailsItem[]): PassengerDetailsItem[] {

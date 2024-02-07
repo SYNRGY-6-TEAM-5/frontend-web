@@ -29,3 +29,6 @@ export { default as Notification } from "./notification.svg?react";
 export { default as AirplaneFill } from "./airplane-fill.svg?react";
 export { default as Receipt } from "./receipt.svg?react";
 export { default as Percentage } from "./percentage.svg?react";
+export { default as BaggageBlack } from "./baggage-black.svg?react";
+export { default as MealBlack } from "./meal-black.svg?react";
+export { default as DirectBox } from "./directbox-send.svg?react";

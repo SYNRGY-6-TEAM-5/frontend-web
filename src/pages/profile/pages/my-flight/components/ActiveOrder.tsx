@@ -29,7 +29,11 @@ const ActiveOrder = ({orderActive} : orderArr) => {
   const navigate = useNavigate();
   const handleWaiting = (orderId:number) => {
     console.log({orderId});
-    navigate('/profile/order/payment/');
+    navigate('/profile/payment');
+  }
+
+  const handleETicket = () => {
+    navigate('/profile/success');
   }
 
   return(
@@ -118,6 +122,7 @@ const ActiveOrder = ({orderActive} : orderArr) => {
                 type="button"
                 id="eTicket"
                 name="eTicket"
+                onClick={handleETicket}
               />
               <ChevronRight size={20} className="font-base" />
             </label>
