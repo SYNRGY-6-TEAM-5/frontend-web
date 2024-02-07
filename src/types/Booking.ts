@@ -1,6 +1,7 @@
 import { IPersonAddOns } from "@/store/useAddOnsStore";
 import { TripInsurance } from "@/store/useAddOnsStore";
 import { IUser } from "@/lib/hooks/useNav";
+import { Ticket } from "./Ticket";
 
 export interface PassengerDetailsItem extends PassengerData {
     count: number;
@@ -49,6 +50,19 @@ export interface PassengerData {
 export interface ICompleteBooking {
     ticket_details: {
         booked_ticket: number[];
+        total_ticket_price: number;
+        expired_time: Date;
+    };
+    user_data?: IUser;
+    contact_details: IContactDetails;
+    passenger_details: PassengerDetailsItem[];
+    passenger_addOns: IPersonAddOns[];
+    trip_insurance: TripInsurance;
+}
+
+export interface ICompleteBookingWithTicket {
+    ticket_details: {
+        booked_ticket: Ticket[];
         total_ticket_price: number;
         expired_time: Date;
     };

@@ -1,38 +1,60 @@
-import useTimer from "@/lib/hooks/useTimer";
-import Timer from "../payment/components/containers/Timer"
+import Timer from "../payment/components/containers/Timer";
 import MethodDetails from "./components/MethodDetails";
 import OrderDetail from "../payment/components/containers/OrderDetail";
 import Total from "../payment/components/containers/Total";
 import { Toaster, toast } from "sonner";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { usePassengerStore } from "@/store/useBookingStore";
+import { differenceInSeconds, isFuture } from "date-fns";
 
 const PaymentDetails = () => {
   const bankMethod = localStorage.getItem("bankMethod");
-  const date = new Date().getTime();
-  const countDownTime = 5;
-  const {seconds, minutes, hours, runTimer} = useTimer({date, countDownTime});
+  const [count_down, setCountDown] = useState<number>(0);
+  const [isRunOut, setIsRunOut] = useState<boolean>(false);
+  const { completeBookingData } = usePassengerStore();
+
+  const handleTimerStatusChange = (timerStatus: boolean) => {
+    setIsRunOut(timerStatus);
+  };
+
+  const expiryTime = completeBookingData?.ticket_details.expired_time;
+  const currentTime = new Date();
 
   useEffect(() => {
-    if(!runTimer) {
-      toast.error("Transaction Timeout", {
-        description: "Please, repeate the procedure"
-      })
+    if (expiryTime && isFuture(new Date(expiryTime))) {
+      setCountDown(differenceInSeconds(new Date(expiryTime), currentTime));
     }
-  })
-  
-  return(
-    <section className="grid gap-12 pb-4 px-20 lg:grid-cols-3 xs:grid-cols-1">
+    if (!isRunOut) {
+      toast.error("Transaction Timeout", {
+        description: "Please, repeate the procedure",
+      });
+    }
+  }, [completeBookingData]);
+
+  return (
+    <section className="grid gap-12 px-20 pb-4 xs:grid-cols-1 lg:grid-cols-3">
       <div className="col-span-2 flex flex-col space-y-9">
-        <Timer hours={hours} minutes={minutes} seconds={seconds} />
+        {count_down > 0 ? (
+          <Timer
+            countDown={count_down}
+            onTimerStatusChange={handleTimerStatusChange}
+          />
+        ) : (
+          ""
+        )}
         <MethodDetails bankMethod={String(bankMethod)} />
       </div>
-      <div className="bg-white shadow-3xl flex flex-col">
-        <OrderDetail />
-        <Total />
+      <div className="flex flex-col bg-white shadow-3xl">
+        {completeBookingData.contact_details.email !== "" ? (
+          <OrderDetail completeBooking={completeBookingData} />
+        ) : (
+          ""
+        )}
+        <Total completeBooking={completeBookingData} />
       </div>
       <Toaster />
     </section>
-  )
-}
+  );
+};
 
 export default PaymentDetails;

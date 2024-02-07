@@ -134,7 +134,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/user/payment-details",
+        path: "/user/payment/payment-details",
         element: (
           <LayoutUser>
             <PaymentDetails />

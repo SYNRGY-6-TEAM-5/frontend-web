@@ -19,6 +19,11 @@ const methodData = [
     title: "BCA Virtual Acount",
     value: "bca",
   },
+  {
+    image_logo: Bca,
+    title: "MasterCard/Visa",
+    value: "debit",
+  },
 ];
 
 const PaymentMethod = ({runTimer}:{runTimer:boolean}) => {
