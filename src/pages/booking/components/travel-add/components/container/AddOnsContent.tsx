@@ -22,7 +22,8 @@ import { CaretDown } from "@phosphor-icons/react";
 import Meal from "../ui/Meal";
 import Baggage from "../ui/Baggage";
 import { IPersonAddOns, useAddOnsStore } from "@/store/useAddOnsStore";
-import { PassengerDetailsItem, usePassengerStore } from "@/store/useBooking";
+import { PassengerDetailsItem } from "@/types/Booking";
+import { usePassengerStore } from "@/store/useBookingStore";
 import React, { useState } from "react";
 import { Toaster, toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -30,7 +31,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Form, FormField, FormItem } from "@/components/ui/form";
-import { useCartStore } from "@/store/useCart";
+import { useCartStore } from "@/store/useCartStore";
 import { Image } from "@/components/ui/Image";
 
 const formSchema = z.object({
@@ -256,7 +257,7 @@ const AddOnsContent: React.FC<AddOnsContentProps> = ({ cart_index }) => {
             <div className="flex items-center justify-between">
               <div className="flex gap-2">
                 <Image
-                  className="w-6"
+                  className="max-w-12"
                   image={cart[cart_index].flight.airline.image}
                   alt={cart[cart_index].flight.airline.name}
                 />

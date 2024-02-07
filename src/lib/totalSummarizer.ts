@@ -1,5 +1,5 @@
-import { ICompleteBooking } from "@/pages/booking/components/ui/CheckoutButton";
-import { CartItem } from "@/store/useCart";
+import { ICompleteBooking } from "@/types/Booking";
+import { CartItem } from "@/store/useCartStore";
 
 interface TripInsurance {
     type: string;

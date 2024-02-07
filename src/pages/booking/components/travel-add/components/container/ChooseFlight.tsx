@@ -2,9 +2,8 @@ import { ArrowCircleRight } from "@/assets/svg";
 import { Button } from "@/components/ui/button";
 import { DialogClose, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useAddOnsStore } from "@/store/useAddOnsStore";
-import { useCartStore } from "@/store/useCart";
+import { useCartStore } from "@/store/useCartStore";
 import { Text } from "@mantine/core";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const ChooseFlight = () => {
   const { cart } = useCartStore();
@@ -48,15 +47,11 @@ const ChooseFlight = () => {
             <div className="flex flex-col gap-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center justify-start gap-2">
-                  <Avatar className="z-10">
-                    <AvatarImage
-                      src={cartItem.flight.airline.image}
-                      alt="@shadcn"
-                    />
-                    <AvatarFallback>
-                      {cartItem.flight.airline.iata}
-                    </AvatarFallback>
-                  </Avatar>
+                  <img
+                    className="aspect-[3/2] max-h-8 rounded-sm object-contain"
+                    src={cartItem.flight.airline.image}
+                    alt={cartItem.flight.airline.name}
+                  />
                   <Text className="font-medium">{cartItem.flight.iata}</Text>
                 </div>
                 <div className="inline-flex h-6 items-center justify-center rounded-full bg-gray-100 px-2">
