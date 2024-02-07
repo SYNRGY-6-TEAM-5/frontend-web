@@ -25,3 +25,16 @@ export const useSearchTicket = (params: FlightSearchParams) => {
 
   return { data, error, isFetching };
 };
+
+export const useFindTicket = (ticket_id: number) => {
+  const { data, error, isFetching } = useQuery({
+    queryKey: ["findTicket"],
+    queryFn: async () => {
+      const response = await axiosFSW.get(`/ticket/${ticket_id}`);
+      return response.data.data;
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  return { data, error, isFetching };
+};

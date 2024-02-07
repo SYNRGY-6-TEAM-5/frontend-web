@@ -16,7 +16,7 @@ import TravelDocForm from "../ui/TravelDocForm";
 import { Label } from "@/components/ui/label";
 import * as Yup from "yup";
 import { PassengerData } from "@/types/Booking";
-import { usePassengerStore } from "@/store/useBooking";
+import { usePassengerStore } from "@/store/useBookingStore";
 import { Button } from "@/components/ui/button";
 
 const validationSchema = Yup.object().shape({

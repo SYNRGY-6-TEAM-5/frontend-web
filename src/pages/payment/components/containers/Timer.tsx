@@ -1,23 +1,42 @@
 import { Card, CardContent } from "@/components/ui/card";
+import useTimer from "@/lib/hooks/useTimer";
+import { useEffect } from "react";
+import { Toaster, toast } from "sonner";
 
 interface timeProps {
-  hours:string,
-  minutes:string,
-  seconds:string,
+  countDown: number;
+  onTimerStatusChange: (timerStatus: boolean) => void;
 }
 
-const Timer = ({hours, minutes, seconds}:timeProps) => {
-  return(
-    <Card className="bg-black h-fit">
-      <CardContent className="grid p-2 md:grid-cols-3 gap-1 md:text-left xs:text-center xs:grid-cols-1">
-          <div className="text-white">Complet payment in</div>
+const Timer = ({ countDown, onTimerStatusChange }: timeProps) => {
+  const { seconds, minutes, hours, runTimer } = useTimer({
+    date: countDown,
+    countDownTime: countDown,
+  });
+
+  useEffect(() => {
+    if (!runTimer) {
+      toast.error("Transaction Timeout", {
+        description: "Please, repeate the procedure",
+      });
+    }
+    onTimerStatusChange(true);
+  }, [runTimer, onTimerStatusChange]);
+
+  return (
+    <>
+      <Card className="h-fit bg-black">
+        <CardContent className="grid gap-1 p-2 xs:grid-cols-1 xs:text-center md:grid-cols-3 md:text-left">
+          <div className="text-white">Complete payment in</div>
           <div></div>
-          <div className="rounded-md bg-white text-error-500 text-center">
+          <div className="rounded-md bg-white text-center text-error-500">
             {hours}:{minutes}:{seconds}
           </div>
-      </CardContent>
-    </Card>
-  )
-}
+        </CardContent>
+      </Card>
+      <Toaster />
+    </>
+  );
+};
 
 export default Timer;

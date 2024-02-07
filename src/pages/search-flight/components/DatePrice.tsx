@@ -1,7 +1,7 @@
 import { addDays, subDays } from "date-fns";
 import DateButton from "./ui/DateButton";
 import { useLocation } from "react-router-dom";
-import { useCartStore } from "@/store/useCart";
+import { useCartStore } from "@/store/useCartStore";
 
 interface props {
   tripType: string;

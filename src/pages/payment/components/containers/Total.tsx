@@ -1,63 +1,89 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Text } from "@mantine/core"
-import { ChevronDown } from "lucide-react"
-import { useState } from "react"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Text } from "@mantine/core";
+import { ChevronDown } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import TablePrice from "../ui/components/TablePrice";
 
-const pricePassenger = [
-  {
-    departCity:"Jakarta",
-    arriveCity:"Yogyakarta",
-    adult:1,
-    child:1
-  },
-  {
-    departCity:"Yogyakarta",
-    arriveCity:"Jakarta",
-    adult:1,
-    child:1
-  },
-];
+import { usePassengerStore } from "@/store/useBookingStore";
+import { CartItem, useCartStore } from "@/store/useCartStore";
+import { useAddOnsStore } from "@/store/useAddOnsStore";
+import { ICompleteBooking } from "@/types/Booking";
+import { IPricePassenger, calculateTotalPrice, summarizeBooking } from "@/lib/totalSummarizer";
+import { useSavedBooking } from "@/lib/hooks/usePayment";
+import { transformCartData } from "@/lib/dataformatter";
 
-const addOns = [
-  {
-    name:"Full protection",
-    price:95000
-  }
-]
+interface TotalPrps {
+  completeBooking: ICompleteBooking;
+}
 
-const Total = () => {
+const Total: React.FC<TotalPrps> = ({ completeBooking }) => {
   const [dialog, setDialog] = useState<boolean>(false);
+
+  const { updateCompleteBookingData: handleAddToCompleteBooking } = usePassengerStore();
+  const { tripInsurance } = useAddOnsStore();
+  
+  const [summaryTotal, setSummaryTotal] = useState<IPricePassenger[]>([]);
+
+  let cartTicket: CartItem[];
+  
+  const isInPaymentPage: boolean = window.location.pathname.includes("/user/payment/");
+  if (isInPaymentPage) {
+    cartTicket = transformCartData(completeBooking);
+  } else {
+    const { cart } = useCartStore();
+    const { completeBookingData } = useSavedBooking();
+    completeBooking = completeBookingData;
+    cartTicket = cart;
+  }
+
+  useEffect(() => {
+    const handleShowSummary = () => {
+      const bookingData: ICompleteBooking = completeBooking;
+      handleAddToCompleteBooking(bookingData);
+
+      const summary = summarizeBooking(bookingData, cartTicket);
+
+      setSummaryTotal(summary);
+    };
+
+    if (dialog) {
+      handleShowSummary();
+    }
+  }, [
+    dialog,
+    tripInsurance
+  ]);
 
   const handleDialog = () => {
     setDialog(!dialog);
-  }
-  return(
+  };
+
+  return (
     <div className="border-0 border-t p-4">
       <label
         htmlFor="prices"
         className="group flex items-center hover:text-primary-200 cursor-pointer"
       >
         <Text className="text-lg">Total</Text>
-        <input
-          type="button"
-          id="prices"
-          name="prices"
-          onClick={handleDialog}
-        />
+        <input type="button" id="prices" name="prices" onClick={handleDialog} />
         <ChevronDown size={20} className="font-base text-primary-500" />
-        <Text className="grow text-right text-primary-500">IDR 2,230,900</Text>
+        <Text className="grow text-right text-primary-500">{`IDR ${summaryTotal[0]?.departCity !== "" ? calculateTotalPrice(summaryTotal).toLocaleString() : "0"}`}</Text>
       </label>
       <Dialog open={dialog} onOpenChange={handleDialog}>
-        <DialogContent className="max-w-[500px] backdrop-blur-md p-4 sm:max-w-[500px] overflow-y-scroll max-h-screen">
+        <DialogContent className="max-h-screen max-w-[500px] overflow-y-scroll p-4 backdrop-blur-md sm:max-w-[500px]">
           <DialogHeader>
             <DialogTitle>Price Details</DialogTitle>
           </DialogHeader>
-          <TablePrice routes={pricePassenger} addOns={addOns} />
+          <TablePrice summary_data={summaryTotal} />
         </DialogContent>
       </Dialog>
     </div>
-  )
-}
+  );
+};
 
 export default Total;

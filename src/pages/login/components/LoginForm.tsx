@@ -11,6 +11,7 @@ import { GoogleLogo } from "@/assets/svg";
 import { Loader } from "lucide-react";
 import { useGoogleLogin } from '@react-oauth/google';
 import Allert from "@/components/containers/Allert";
+import { useSearchTicketStore } from "@/store/useSearchTicketStore";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 interface PostLogin {
@@ -24,6 +25,8 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
   const navigate = useNavigate();
   const [googleIsPending, setGoogleIsPending] = useState<boolean>();
   const [isPending, setIsPending] = useState<boolean>();
+
+  const { previousPath } = useSearchTicketStore();
 
   const token = Cookies.get('accesstoken');
   const role = Cookies.get('role');
@@ -97,12 +100,13 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
 
   if(token){
     if(role === 'USER') {
-      return <Navigate to={'/user/payment'} replace/>;
+      return <Navigate to={previousPath !== "/" ? previousPath : "/"} replace/>;
     }
     if(role === 'ADMIN') {
       return <Navigate to={'/admin/dashboard'} replace/>;
     }
   }
+
   return (
     <div className={cn("grid gap-3", className)} {...props}>
       {error && <Allert position={"top-left"} variant="destructive" tittle="Error" desc={message}/>}
@@ -110,10 +114,10 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
         <div className="grid gap-6">
           <div className="grid gap-5">
             <div className="grid gap-1.5">
-              <Label htmlFor="email">Email / Phone Number</Label>
+              <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
-                placeholder="Enter your email / phone number"
+                placeholder="Enter your email"
                 type="text"
                 autoCapitalize="none"
                 autoComplete="off"
