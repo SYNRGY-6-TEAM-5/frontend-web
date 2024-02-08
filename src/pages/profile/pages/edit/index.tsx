@@ -17,7 +17,7 @@ const EditProfile: React.FC = () => {
     phoneNum: 0,
   });
 
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   useEffect(() => {
