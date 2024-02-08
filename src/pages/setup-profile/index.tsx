@@ -20,7 +20,7 @@ interface FormValues {
 }
 
 const SetupProfile = () => {
-  const { mutateAsync, isPending } = useRegisterFillProfile();
+  const { mutateAsync, isPending } = useRegisterFillProfile(true);
   const { mutateAsync: mutateImage, isPending: isImagePending } =
     useRegisterUploadImage();
 
