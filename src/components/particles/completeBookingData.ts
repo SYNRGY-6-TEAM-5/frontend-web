@@ -4,16 +4,6 @@ export const completeBooking = {
         total_ticket_price: 0,
         expired_time: new Date(),
     },
-    user_data: {
-        id: "",
-        email_address: "",
-        imageUrl: "",
-        fullName: "",
-        password: "",
-        dob: 0,
-        roleName: "",
-        createdAt: 1706180739690
-    },
     contact_details: {
         fullName: "",
         email: "",
