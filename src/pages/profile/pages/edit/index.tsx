@@ -9,7 +9,6 @@ import {
 } from "@/lib/hooks/useRegister";
 
 import { useProfileUserStore } from "@/store/useProfileUserStore";
-import useNav from "@/lib/hooks/useNav";
 import { Loader } from "lucide-react";
 import { useEffect } from "react";
 
@@ -23,7 +22,6 @@ interface FormValues {
 
 const EditProfile = () => {
   const { userData } = useProfileUserStore();
-  const { fetchUserData } = useNav();
   const { mutateAsync, isPending } = useRegisterFillProfile();
   const { mutateAsync: mutateImage, isPending: isImagePending } =
     useRegisterUploadImage();
