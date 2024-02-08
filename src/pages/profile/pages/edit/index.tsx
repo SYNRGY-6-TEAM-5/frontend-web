@@ -1,208 +1,128 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import axiosClient from "@/lib/axios";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { useFormik } from "formik";
+import { Input } from "@/components/ui/input";
+import UploadImage from "./component/UploadImage";
+import CalendarForm from "./component/CalendarForm";
+import {
+  useRegisterFillProfile,
+  useRegisterUploadImage,
+} from "@/lib/hooks/useRegister";
 
-interface userData {
-  imageUrl: string;
+import { useProfileUserStore } from "@/store/useProfileUserStore";
+import useNav from "@/lib/hooks/useNav";
+import { Loader } from "lucide-react";
+import { useEffect } from "react";
+
+interface FormValues {
   fullName: string;
-  dob: string;
-  phoneNum: number;
+  dateOfBirth: Date | null;
+  phoneNumber: string;
+  image: File | null;
+  imageUrl: string;
 }
 
-const EditProfile: React.FC = () => {
-  const [userData, setUserData] = useState<userData>({
-    imageUrl: "",
-    fullName: "",
-    dob: "",
-    phoneNum: 0,
+const EditProfile = () => {
+  const { userData } = useProfileUserStore();
+  const { fetchUserData } = useNav();
+  const { mutateAsync, isPending } = useRegisterFillProfile();
+  const { mutateAsync: mutateImage, isPending: isImagePending } =
+    useRegisterUploadImage();
+
+  const formik = useFormik<FormValues>({
+    initialValues: {
+      fullName: "",
+      dateOfBirth: null,
+      phoneNumber: "",
+      image: null,
+      imageUrl: ""
+    },
+    validate: (values) => {
+      const errors: Partial<{ dateOfBirth: string }> = {};
+      if (!values.dateOfBirth) {
+        errors.dateOfBirth = "Select your date of birth!";
+      }
+      return errors;
+    },
+    onSubmit: async (values) => {
+      if (values.image) {
+        await mutateImage(values.image);
+      }
+      const data = {
+        fullName: values.fullName,
+        dob: values.dateOfBirth!,
+        phoneNumber: parseInt(values.phoneNumber, 10),
+      };
+      await mutateAsync(data);
+      formik.resetForm();
+    },
   });
 
-  const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axiosClient.get("/user/detail-user");
-        const { imageUrl, fullName, dob, phoneNum } = response.data;
-        setUserData({
-          imageUrl,
-          fullName,
-          dob,
-          phoneNum,
-        });
-      } catch (error) {
-        handleApiError(error);
-      }
-    };
-    fetchUserData();
-  }, []);
-
-  useEffect(() => {
-    const storedImageUrl = localStorage.getItem("userImageUrl");
-    if (storedImageUrl) {
-      setUserData((prevData) => ({
-        ...prevData,
-        imageUrl: storedImageUrl,
-      }));
-    }
-  }, []);
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setUserData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    setSelectedFile(file);
-
-    if (file) {
-      const fileReader = new FileReader();
-      fileReader.onload = () => {
-        setPreviewUrl(fileReader.result as string);
-      };
-      fileReader.readAsDataURL(file);
-    } else {
-      setPreviewUrl(null);
-    }
-  };
-
-  const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    try {
-      const { fullName, dob, phoneNum } = userData;
-      await axiosClient.put("/user/profile", {
-        fullName,
-        dob,
-        phoneNumber: phoneNum,
+    if (userData?.dob) {
+      formik.setValues({
+        fullName: userData.fullName || "",
+        dateOfBirth: userData.dob ? new Date(userData.dob) : null,
+        phoneNumber: userData.phoneNum ? userData.phoneNum.toString() : "",
+        image: null,
+        imageUrl: userData.imageUrl,
       });
-
-      console.log("Profile updated successfully");
-      localStorage.setItem("userImageUrl", userData.imageUrl);
-    } catch (error) {
-      handleApiError(error);
     }
-  };
-
-  const handleUploadImage = async () => {
-    if (!selectedFile) return;
-
-    try {
-      const formData = new FormData();
-      formData.append("file", selectedFile);
-
-      let response;
-      if (userData.imageUrl) {
-        response = await axiosClient.put("/user/profile-image", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${axiosClient.defaults.headers.common.Authorization}`,
-          },
-        });
-      } else {
-        response = await axiosClient.post("/user/profile-image", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${axiosClient.defaults.headers.common.Authorization}`,
-          },
-        });
-      }
-
-      const { urlImage } = response.data;
-
-      setUserData((prevData) => ({
-        ...prevData,
-        imageUrl: urlImage,
-      }));
-      setPreviewUrl(null);
-
-      console.log("Profile image updated successfully");
-      localStorage.setItem("userImageUrl", urlImage);
-    } catch (error) {
-      handleApiError(error);
-    }
-  };
-
-  const handleApiError = (error: any) => {
-    if (error.response) {
-      console.error("Error response from server:", error.response.data);
-    } else if (error.request) {
-      console.error("No response received from server:", error.request);
-    } else {
-      console.error("Error setting up the request:", error.message);
-    }
-  };
+  }, [userData]);
 
   return (
     <>
-      <form onSubmit={handleFormSubmit}>
+      <form
+        onSubmit={formik.handleSubmit}
+        className="flex items-start gap-10 pt-8"
+      >
         <div className="ml-[140px] flex gap-10">
           <div className="flex flex-col items-center gap-4">
-            <Avatar
-              className="h-[120px] w-[120px]"
-              onClick={() => document.getElementById("image-upload")?.click()}
-            >
-              <AvatarImage src={previewUrl || userData.imageUrl} />
-              <AvatarFallback>{"NA"}</AvatarFallback>
-            </Avatar>
-            <input
-              type="file"
-              id="image-upload"
-              accept="image/*"
-              style={{ display: "none" }}
-              onChange={handleFileChange}
-            />
-            <button
-              type="button"
-              onClick={handleUploadImage}
-              className="text-sm font-medium text-primary-500"
-            >
-              Change
-            </button>
+            <UploadImage formik={formik} />
           </div>
-          <div>
-            <div className="flex w-[343px] flex-col gap-5">
-              <input
-                type="text"
-                name="fullName"
-                value={userData.fullName}
-                onChange={handleInputChange}
-                placeholder="Full name"
-                className="border-b border-gray-200 bg-[#FBFBFB] py-3 text-base font-normal text-black placeholder:text-gray-300 focus:outline-none"
+        </div>
+        <div>
+          <div className="flex w-[343px] flex-col gap-5">
+            <Input
+              type="text"
+              id="fullName"
+              name="fullName"
+              placeholder="Full Name"
+              autoComplete="off"
+              className="border-b border-gray-200 bg-[#FBFBFB] py-3 text-base font-normal text-black placeholder:text-gray-300 focus:outline-none"
+              onChange={formik.handleChange}
+              value={formik.values.fullName}
+              required
+            />
+            <CalendarForm formik={formik} />
+            <div className="border-b-grey-500 group mb-5 flex items-center border-b has-[:active]:text-black ">
+              <span className="text-gray-300 group-has-[:valid]:text-black">
+                +62
+              </span>
+              <div className="mx-2 text-gray-300">|</div>
+              <Input
+                type="tel"
+                id="phoneNumber"
+                name="phoneNumber"
+                placeholder="Phone Number"
+                autoComplete="off"
+                className="before:content-['+62 |'] border-b border-gray-200 bg-[#FBFBFB] py-3 text-base font-normal text-black placeholder:text-gray-300 focus:outline-none"
+                onChange={formik.handleChange}
+                value={formik.values.phoneNumber}
+                required
               />
-              <input
-                type="text"
-                name="dob"
-                value={userData.dob}
-                onChange={handleInputChange}
-                placeholder="Date of birth (DD/MM/YYYY)"
-                className="border-b border-gray-200 bg-[#FBFBFB] py-3 text-base font-normal text-black placeholder:text-gray-300 focus:outline-none"
-              />
-              <div className="flex gap-3 border-b border-gray-200 py-3 text-base font-normal text-black">
-                <p>+62</p>
-                <span>|</span>
-                <input
-                  type="number"
-                  name="phoneNum"
-                  value={userData.phoneNum}
-                  onChange={handleInputChange}
-                  placeholder="Phone number"
-                  className="bg-[#FBFBFB] text-black [appearance:textfield] placeholder:text-gray-300 focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                />
-              </div>
-              <button
-                type="submit"
-                className="mt-8 h-14 rounded-xl bg-primary-500 py-4 text-sm font-medium text-white"
-              >
-                Save
-              </button>
             </div>
           </div>
+          <Button
+            type="submit"
+            variant={"primary"}
+            className="mt-7 h-14 w-full"
+            disabled={isPending || isImagePending}
+          >
+            {(isPending || isImagePending) && (
+              <Loader className="mr-2 h-4 w-4 animate-spin" />
+            )}
+            Confirm
+          </Button>
         </div>
       </form>
     </>
