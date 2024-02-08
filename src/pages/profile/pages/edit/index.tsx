@@ -22,7 +22,7 @@ interface FormValues {
 
 const EditProfile = () => {
   const { userData } = useProfileUserStore();
-  const { mutateAsync, isPending } = useRegisterFillProfile();
+  const { mutateAsync, isPending } = useRegisterFillProfile(false);
   const { mutateAsync: mutateImage, isPending: isImagePending } =
     useRegisterUploadImage();
 
