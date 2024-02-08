@@ -21,7 +21,7 @@ interface FormValues {
 }
 
 const EditProfile = () => {
-  const { userData } = useProfileUserStore();
+  const { userData, setUserData } = useProfileUserStore();
   const { mutateAsync, isPending } = useRegisterFillProfile(false);
   const { mutateAsync: mutateImage, isPending: isImagePending } =
     useRegisterUploadImage();
@@ -51,6 +51,13 @@ const EditProfile = () => {
         phoneNumber: parseInt(values.phoneNumber, 10),
       };
       await mutateAsync(data);
+      setUserData({
+        ...userData,
+        fullName: data.fullName,
+        phoneNum: data.phoneNumber,
+        imageUrl: formik.values.imageUrl,
+        dob: data.dob.getTime(),
+      });
     },
   });
 
@@ -61,7 +68,7 @@ const EditProfile = () => {
         dateOfBirth: userData.dob ? new Date(userData.dob) : null,
         phoneNumber: userData.phoneNum ? userData.phoneNum.toString() : "",
         image: null,
-        imageUrl: userData.imageUrl,
+        imageUrl: userData.imageUrl ? userData.imageUrl : "",
       });
     }
   }, [userData]);
