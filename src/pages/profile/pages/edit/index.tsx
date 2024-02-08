@@ -51,7 +51,6 @@ const EditProfile = () => {
         phoneNumber: parseInt(values.phoneNumber, 10),
       };
       await mutateAsync(data);
-      formik.resetForm();
     },
   });
 
