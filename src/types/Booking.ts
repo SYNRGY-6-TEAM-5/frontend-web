@@ -53,7 +53,6 @@ export interface ICompleteBooking {
         total_ticket_price: number;
         expired_time: Date;
     };
-    user_data?: IUser;
     contact_details: IContactDetails;
     passenger_details: PassengerDetailsItem[];
     passenger_addOns: IPersonAddOns[];

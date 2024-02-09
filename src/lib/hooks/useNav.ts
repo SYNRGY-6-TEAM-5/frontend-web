@@ -4,14 +4,15 @@ import Cookies from "js-cookie";
 import { useProfileUserStore } from "@/store/useProfileUserStore";
 
 export interface IUser {
-    id: string;
-    fullName: string;
-    email_address: string;
-    password: string;
-    roleName: string;
-    imageUrl: string;
-    dob: number;
-    createdAt: number;
+    id?: string;
+    fullName?: string;
+    email_address?: string;
+    phoneNum?: number;
+    password?: string;
+    roleName?: string;
+    imageUrl?: string;
+    dob?: number;
+    createdAt?: number;
 }
 
 export default function useNav() {
