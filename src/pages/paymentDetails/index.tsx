@@ -11,9 +11,7 @@ import { usePaymentStripe } from "@/lib/hooks/usePayment";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 
-const stripePromise = loadStripe(
-  "pk_test_51Nl0LBAB9ked6PM5u4Oj2nlhbiPStfn0Y9nI7gUI5xJoXdnHIeU0e285JEm6xj4gufnNkUKtfaG0CCXykwalqmwO00qRMlPdS5",
-);
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 const PaymentDetails = () => {
   const [clientSecret, setClientSecret] = useState("");
@@ -34,7 +32,7 @@ const PaymentDetails = () => {
 
   useEffect(() => {
     const fetchIntentPaymentData = async () => {
-      const { data } = await makeStripePayment();
+      const { data } = await makeStripePayment(completeBookingData);
       setClientSecret(data.clientSecret);
     };
 

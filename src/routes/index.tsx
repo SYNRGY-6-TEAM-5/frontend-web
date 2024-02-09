@@ -145,6 +145,22 @@ const router = createBrowserRouter([
           </LayoutUser>
         ),
       },
+      {
+        path: "/user/payment/payment-status/:booking_id/complete",
+        element: (
+          <LayoutUser>
+            <PaymentDetails />
+          </LayoutUser>
+        ),
+      },
+      {
+        path: "/user/payment/payment-status/:booking_id/cancelled",
+        element: (
+          <LayoutUser>
+            <PaymentDetails />
+          </LayoutUser>
+        ),
+      },
     ],
   },
   {

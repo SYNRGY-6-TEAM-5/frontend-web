@@ -14,6 +14,7 @@ import { PaymentElement } from "@stripe/react-stripe-js";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 import { Button } from "@/components/ui/button";
 import { FormEvent, useState } from "react";
+import { toast } from "@/components/ui/use-toast";
 
 const methodData = [
   {
@@ -42,7 +43,6 @@ const MethodDetails = ({ bankMethod }: { bankMethod: string }) => {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [message, setMessage] = useState<string | undefined>("");
   const [loading, setLoading] = useState(false);
 
   const filteredData = methodData
@@ -70,19 +70,37 @@ const MethodDetails = ({ bankMethod }: { bankMethod: string }) => {
       confirmParams: {
         return_url: `${window.location.origin}/complete`,
       },
-      redirect: "if_required",
+      redirect: "if_required"
     });
 
     if (error) {
-      setMessage(error.message)
-    } else if (paymentIntent && paymentIntent.status === "requires_payment_method") {
-      setMessage("Payment status: " + paymentIntent.status)
+      toast({
+        title: "Payment Failed",
+        variant: "destructive",
+        description: error.message,
+      });
+    } else if (paymentIntent && paymentIntent.status === "succeeded") {
+      toast({
+        title: "Payment Success",
+        variant: "success",
+        description: paymentIntent.status,
+      });
+    }else if (paymentIntent && paymentIntent.status === "requires_confirmation") {
+      toast({
+        title: "Payment Failed",
+        variant: "destructive",
+        description: paymentIntent.status,
+      });
     } else {
-      setMessage("Unexpected Status")
+      toast({
+        title: "Payment Failed",
+        variant: "destructive",
+        description: paymentIntent.status,
+      });
     }
 
     setLoading(false);
-  }
+  };
 
   return (
     <div className="flex flex-col space-y-10">
@@ -179,7 +197,11 @@ const MethodDetails = ({ bankMethod }: { bankMethod: string }) => {
           </div>
         </>
       ) : (
-        <form id="stripe-form" onSubmit={(event) => handleSubmit(event)} className="flex flex-col gap-10">
+        <form
+          id="stripe-form"
+          onSubmit={(event) => handleSubmit(event)}
+          className="flex flex-col gap-10"
+        >
           <PaymentElement />
           <div className="flex w-full content-end justify-start gap-14">
             <Button

@@ -6,7 +6,6 @@ import { useQuery } from "@tanstack/react-query";
 import axiosFSW from "../axiosFSW";
 
 import { ApiError } from "@/types/ApiError";
-// import { loadStripe } from "@stripe/stripe-js";
 import { useCartStore } from "@/store/useCartStore";
 import { usePassengerStore } from "@/store/useBookingStore";
 import { useAddOnsStore } from "@/store/useAddOnsStore";
@@ -21,13 +20,14 @@ export const usePaymentStripe = () => {
 
     const { mutateAsync, error, isPending } = useMutation({
         mutationKey: ["stripePayment"],
-        mutationFn: async () => { // Load Stripe instance
-            const response = await axiosFSW.post(`/user/payment/${booking_id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-            });
+        mutationFn: async (data: ICompleteBooking) => { // Load Stripe instance
+            const response = await axiosFSW.post(`/user/payment/${booking_id}`, data,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                });
 
             const responseData = await response.data;
             return responseData;
