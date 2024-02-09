@@ -1,7 +1,7 @@
 import { Text } from "@mantine/core";
 import { Image } from "@/components/ui/Image";
 import { useState } from "react";
-import { Bca, BankMandiri, Ocbc } from "@/assets/svg";
+import { Bca, BankMandiri, Ocbc, MasterCard } from "@/assets/svg";
 
 const methodData = [
   {
@@ -20,8 +20,8 @@ const methodData = [
     value: "bca",
   },
   {
-    image_logo: Bca,
-    title: "MasterCard/Visa",
+    image_logo: MasterCard,
+    title: "Master Card",
     value: "debit",
   },
 ];

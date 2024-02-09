@@ -12,6 +12,7 @@ type CartStore = {
     add: (ticket: Ticket, tripType: string) => void;
     remove: (idTicket: number) => void;
     removeAll: () => void;
+    setCart: (items: CartItem[]) => void;
 };
 
 export const useCartStore = create<CartStore>((set, get) => ({
@@ -39,6 +40,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
         set({ cart: updatedCart });
     },
     removeAll: () => set({ cart: [] }),
+    setCart: (items: CartItem[]) => set({ cart: items }),
 }));
 
 function updateCart(ticket: Ticket, cart: CartItem[], tripType: string): CartItem[] {

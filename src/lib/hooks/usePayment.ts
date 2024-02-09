@@ -1,32 +1,28 @@
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Cookies from "js-cookie";
 
-import { useToast } from "@/components/ui/use-toast";
 import { useQuery } from "@tanstack/react-query";
 import axiosFSW from "../axiosFSW";
-import { handleApiError } from "../errorApiHandler";
 
 import { ApiError } from "@/types/ApiError";
-import { loadStripe } from "@stripe/stripe-js";
+// import { loadStripe } from "@stripe/stripe-js";
 import { useCartStore } from "@/store/useCartStore";
 import { usePassengerStore } from "@/store/useBookingStore";
 import { useAddOnsStore } from "@/store/useAddOnsStore";
 import { ICompleteBooking } from "@/types/Booking";
-import { transformData } from "../dataformatter";
+import { transformCartData, transformData } from "../dataformatter";
 import { completeBooking } from '@/components/particles/completeBookingData';
+import { calculateTotalPrice, summarizeBooking } from "../totalSummarizer";
 
 export const usePaymentStripe = () => {
-    const { toast } = useToast();
-    const navigate = useNavigate();
     const token = Cookies.get("otpData");
     const { booking_id } = useParams();
 
     const { mutateAsync, error, isPending } = useMutation({
         mutationKey: ["stripePayment"],
-        mutationFn: async (data: any) => {
-            const stripe = await loadStripe("your-publishable-key"); // Load Stripe instance
-            const response = await axiosFSW.post(`/user/payment/${booking_id}`, data, { // Use extracted booking_id
+        mutationFn: async () => { // Load Stripe instance
+            const response = await axiosFSW.post(`/user/payment/${booking_id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",
@@ -34,28 +30,12 @@ export const usePaymentStripe = () => {
             });
 
             const responseData = await response.data;
-
-            const session = responseData.session_id;
-
-            if (stripe) {
-                const result = await stripe.redirectToCheckout({
-                    sessionId: session.id,
-                });
-                if (result.error) {
-                    console.log(result.error);
-                }
-            } else {
-                console.error('Stripe instance is null');
-            }
-
-            return response;
+            return responseData;
         },
         onSuccess(data) {
-            if (data.status === 200) {
-                navigate("/profile/order");
-            }
+            return data
         },
-        onError: (error: ApiError) => handleApiError(error, toast),
+        onError(error: ApiError) { return error },
     });
 
     return { mutateAsync, error, isPending };
@@ -77,15 +57,19 @@ export const useFetchBooking = (bookingId: number | null) => {
         refetchOnWindowFocus: false,
     });
 
-    return { data, error, isFetching };
+    const cartTicket = transformCartData(data);
+
+    return { data, error, isFetching, cartTicket };
 };
 
 export const useSavedBooking = () => {
     const { cart, totalFare } = useCartStore();
+
     const {
         contactDetails,
         passengerDetails,
     } = usePassengerStore();
+
     const { personAddOns, tripInsurance } = useAddOnsStore();
 
     const lastArrivalScheduledTime = cart[cart.length - 1].flight.arrival.scheduled_time;
@@ -101,5 +85,17 @@ export const useSavedBooking = () => {
         trip_insurance: tripInsurance,
     };
 
-    return { completeBookingData };
+    const summary = summarizeBooking(completeBookingData, cart);
+
+    const totalBooking = calculateTotalPrice(summary)
+
+    const updatedCompleteBookingData = {
+        ...completeBookingData,
+        ticket_details: {
+            ...completeBookingData.ticket_details,
+            total_ticket_price: totalBooking
+        }
+    };
+
+    return { updatedCompleteBookingData, totalBooking };
 }
