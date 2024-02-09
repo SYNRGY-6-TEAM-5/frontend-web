@@ -33,6 +33,7 @@ import SelectSeat from "@/pages/profile/pages/selectSeat";
 import CheckInPage from "@/pages/profile/pages/checkin";
 import BookingRoute from "./BookingRoute";
 import FlightListRoute from "./FlightListRoute";
+import SuccessCheckIn from "@/pages/successCheckIn";
 
 const router = createBrowserRouter([
   {
@@ -192,6 +193,10 @@ const router = createBrowserRouter([
         element: <Faq />,
       },
     ],
+  },
+  {
+    path: "/profile/successCheckIn",
+    element: <SuccessCheckIn />,
   },
   {
     path: "/dashboard",
