@@ -6,12 +6,22 @@ import { Toaster, toast } from "sonner";
 import { useEffect, useState } from "react";
 import { usePassengerStore } from "@/store/useBookingStore";
 import { differenceInSeconds, isFuture } from "date-fns";
+import TimerExpired from "../payment/components/containers/TimerExpired";
+import { usePaymentStripe } from "@/lib/hooks/usePayment";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 const PaymentDetails = () => {
+  const [clientSecret, setClientSecret] = useState("");
+
+  const { mutateAsync: makeStripePayment } = usePaymentStripe();
+
   const bankMethod = localStorage.getItem("bankMethod");
   const [count_down, setCountDown] = useState<number>(0);
   const [isRunOut, setIsRunOut] = useState<boolean>(false);
-  const { completeBookingData } = usePassengerStore();
+  const { completeBookingData, totalAmount } = usePassengerStore();
 
   const handleTimerStatusChange = (timerStatus: boolean) => {
     setIsRunOut(timerStatus);
@@ -19,6 +29,17 @@ const PaymentDetails = () => {
 
   const expiryTime = completeBookingData?.ticket_details.expired_time;
   const currentTime = new Date();
+
+  useEffect(() => {
+    const fetchIntentPaymentData = async () => {
+      const { data } = await makeStripePayment(completeBookingData);
+      setClientSecret(data.clientSecret);
+    };
+
+    fetchIntentPaymentData();
+
+    return;
+  }, []);
 
   useEffect(() => {
     if (expiryTime && isFuture(new Date(expiryTime))) {
@@ -40,9 +61,13 @@ const PaymentDetails = () => {
             onTimerStatusChange={handleTimerStatusChange}
           />
         ) : (
-          ""
+          <TimerExpired />
         )}
-        <MethodDetails bankMethod={String(bankMethod)} />
+        {stripePromise && clientSecret && (
+          <Elements stripe={stripePromise} options={{ clientSecret }}>
+            <MethodDetails bankMethod={String(bankMethod)} />
+          </Elements>
+        )}
       </div>
       <div className="flex flex-col bg-white shadow-3xl">
         {completeBookingData.contact_details.email !== "" ? (
@@ -50,7 +75,10 @@ const PaymentDetails = () => {
         ) : (
           ""
         )}
-        <Total completeBooking={completeBookingData} />
+        <Total
+          completeBooking={completeBookingData}
+          totalPrice={totalAmount}
+        />
       </div>
       <Toaster />
     </section>

@@ -129,9 +129,9 @@ const TablePrice = ({ summary_data }: priceDetails) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {summary_data[0].trip_insurance.map((insurance) =>
+            {summary_data[0].trip_insurance.map((insurance, index) =>
               insurance.type !== "" ? (
-                <TableRow>
+                <TableRow key={`insurance-${index}`}>
                   <TableCell>{insurance.type}</TableCell>
                   <TableCell>IDR {insurance.price}</TableCell>
                 </TableRow>

@@ -138,7 +138,23 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/user/payment/payment-details",
+        path: "/user/payment/payment-details/:booking_id",
+        element: (
+          <LayoutUser>
+            <PaymentDetails />
+          </LayoutUser>
+        ),
+      },
+      {
+        path: "/user/payment/payment-status/:booking_id/complete",
+        element: (
+          <LayoutUser>
+            <PaymentDetails />
+          </LayoutUser>
+        ),
+      },
+      {
+        path: "/user/payment/payment-status/:booking_id/cancelled",
         element: (
           <LayoutUser>
             <PaymentDetails />

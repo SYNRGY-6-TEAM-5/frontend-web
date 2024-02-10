@@ -7,6 +7,8 @@ type PassengerStore = {
     contactDetails: IContactDetails;
     passengerDetails: PassengerDetailsItem[];
     completeBookingData: ICompleteBooking;
+    totalAmount: number;
+    setTotalAmount:(total: number) => void;
     count: () => number;
     updateContactDetails: (contactDetails: Partial<IContactDetails>) => void;
     updateCompleteBookingData: (completeBookingData: Partial<ICompleteBooking>) => void;
@@ -25,6 +27,10 @@ export const usePassengerStore = create<PassengerStore>((set, get) => ({
     },
     passengerDetails: [],
     completeBookingData: completeBooking,
+    totalAmount: 0,
+    setTotalAmount: (total: number) => {
+        set({ totalAmount: total });
+    },
     count: () => {
         const { passengerDetails } = get();
         if (passengerDetails.length)

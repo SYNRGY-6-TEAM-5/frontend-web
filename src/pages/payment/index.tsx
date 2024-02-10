@@ -7,53 +7,39 @@ import PromoForm from "./components/form/PromoForm";
 import { useNavigate, useParams } from "react-router-dom";
 import { Toaster, toast } from "sonner";
 import { useEffect, useState } from "react";
-import { ICompleteBooking } from "@/types/Booking";
-import { CartItem } from "@/store/useCartStore";
-import { useFetchBooking, useSavedBooking } from "@/lib/hooks/usePayment";
-import { transformCartData } from "@/lib/dataformatter";
-import { useCartStore } from "@/store/useCartStore";
+import { useFetchBooking } from "@/lib/hooks/usePayment";
 import { usePassengerStore } from "@/store/useBookingStore";
 import { differenceInSeconds, isFuture } from "date-fns";
+import TimerExpired from "./components/containers/TimerExpired";
+import { calculateTotalPrice, summarizeBooking } from "@/lib/totalSummarizer";
 
 const Payment = () => {
   const { booking_id } = useParams<{ booking_id?: string }>();
   const parsedBookingId = booking_id ? parseInt(booking_id, 10) : null;
 
+  const navigate = useNavigate();
   const method = localStorage.getItem("bankMethod");
 
   const [count_down, setCountDown] = useState<number>(0);
   const [isRunOut, setIsRunOut] = useState<boolean>(false);
 
+  const [total, setTotal] = useState(0);
+
   const handleTimerStatusChange = (timerStatus: boolean) => {
     setIsRunOut(timerStatus);
   };
 
-  const { updateCompleteBookingData: handleAddToCompleteBooking } =
+  window.location.pathname.includes("/user/payment/");
+
+  const { setTotalAmount, updateCompleteBookingData: handleAddToCompleteBooking } =
     usePassengerStore();
+  const { data, cartTicket } = useFetchBooking(parsedBookingId);
 
-  let completeBooking: ICompleteBooking;
-  let cartTicket: CartItem[];
+  const completeBooking = data;
 
-  const isInPaymentPage: boolean =
-    window.location.pathname.includes("/user/payment/");
-
-  if (isInPaymentPage) {
-    const { data } = useFetchBooking(parsedBookingId);
-    completeBooking = data;
-    cartTicket = transformCartData(data);
-  } else {
-    const { cart } = useCartStore();
-    const { completeBookingData } = useSavedBooking();
-    completeBooking = completeBookingData;
-    cartTicket = cart;
-  }
-
-  console.log(cartTicket);
-
-  const navigate = useNavigate();
   const handleOnClick = () => {
     if (method) {
-      navigate("/user/payment/payment-details/");
+      navigate(`/user/payment/payment-details/${booking_id}`);
     } else {
       toast.error("Payment Method", {
         description: "Please, Select Payment Method",
@@ -61,16 +47,26 @@ const Payment = () => {
     }
   };
 
-  const expiryTime = completeBooking?.ticket_details.expired_time;
-  const currentTime = new Date();
-
+  // Call hooks unconditionally
   useEffect(() => {
-    const bookingData: ICompleteBooking = completeBooking;
-    handleAddToCompleteBooking(bookingData);
+    if (data.contact_details.email === "" && count_down < 1 && total < 1) {
+      return;
+    }
+    handleAddToCompleteBooking(data);
+    setTotalAmount(total);
+
+    const summary = summarizeBooking(data, cartTicket);
+
+    setTotal(calculateTotalPrice(summary));
+
+    const expiryTime = completeBooking?.ticket_details.expired_time;
+    const currentTime = new Date();
+
     if (expiryTime && isFuture(new Date(expiryTime))) {
       setCountDown(differenceInSeconds(new Date(expiryTime), currentTime));
     }
-  }, [completeBooking]);
+  }, [data, total]);
+  console.log("total >>> ", total);
 
   return (
     <section className="grid gap-12 px-20 pb-4 xs:grid-cols-1 lg:grid-cols-3">
@@ -81,9 +77,8 @@ const Payment = () => {
             onTimerStatusChange={handleTimerStatusChange}
           />
         ) : (
-          ""
+          <TimerExpired />
         )}
-
         <PaymentMethod runTimer={isRunOut} />
       </div>
       <div className="flex flex-col bg-white shadow-3xl">
@@ -93,7 +88,9 @@ const Payment = () => {
           ""
         )}
         <PromoForm />
-        <Total completeBooking={completeBooking} />
+        {total > 0 && (
+          <Total completeBooking={completeBooking} totalPrice={total} />
+        )}
         <Button
           disabled={!isRunOut}
           type="submit"

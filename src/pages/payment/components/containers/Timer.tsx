@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import useTimer from "@/lib/hooks/useTimer";
 import { useEffect } from "react";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 
 interface timeProps {
   countDown: number;
@@ -34,7 +34,6 @@ const Timer = ({ countDown, onTimerStatusChange }: timeProps) => {
           </div>
         </CardContent>
       </Card>
-      <Toaster />
     </>
   );
 };

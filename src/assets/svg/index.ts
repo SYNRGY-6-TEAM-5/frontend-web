@@ -19,6 +19,7 @@ export { default as BaggageInsurance } from "./baggage-insurance.svg?react";
 export { default as FlightDelay } from "./flight-delay.svg?react";
 export { default as CheckedBox } from "./checkedbox.svg?react";
 export { default as Bca } from "./BCA.svg";
+export { default as MasterCard } from "./MasterCard.svg";
 export { default as BankMandiri } from "./BankMandiri.svg";
 export { default as Ocbc } from "./OCBC.svg";
 export { default as EditPencil } from "./edit-pencil.svg?react";
