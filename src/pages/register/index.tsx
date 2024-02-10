@@ -9,7 +9,7 @@ const Register = () => {
 
   if (token) {
     return role === "USER" ? (
-      <Navigate to={"/user/payment"} replace />
+      <Navigate to={"/"} replace />
     ) : (
       <Navigate to={"/admin/dashboard"} replace />
     );

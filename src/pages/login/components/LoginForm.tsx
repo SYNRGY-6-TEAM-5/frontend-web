@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
@@ -9,9 +9,10 @@ import PasswordInput from "@/components/ui/password-input";
 import { cn } from "@/lib/utils";
 import { GoogleLogo } from "@/assets/svg";
 import { Loader } from "lucide-react";
-import { useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from "@react-oauth/google";
 import Allert from "@/components/containers/Allert";
 import { useSearchTicketStore } from "@/store/useSearchTicketStore";
+import axiosFSW from "@/lib/axiosFSW";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 interface PostLogin {
@@ -20,70 +21,63 @@ interface PostLogin {
 }
 
 const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
-  const API = 'https://backend-java-production-ece2.up.railway.app/api/v1/auth/login';
-  const GoogleAPI = 'http://localhost:8000/v1/users/googleAuth';
-  const navigate = useNavigate();
+  const API =
+    "https://backend-java-production-ece2.up.railway.app/api/v1/auth/login";
   const [googleIsPending, setGoogleIsPending] = useState<boolean>();
   const [isPending, setIsPending] = useState<boolean>();
 
   const { previousPath } = useSearchTicketStore();
 
-  const token = Cookies.get('accesstoken');
-  const role = Cookies.get('role');
+  const token = Cookies.get("accesstoken");
+  const role = Cookies.get("role");
   const [error, setError] = useState<boolean>(false);
-	const [message, setMessage] = useState<string>('');
+  const [message, setMessage] = useState<string>("");
 
   const login = useGoogleLogin({
     onSuccess: async (tokenResp) => {
-      const response = await fetch(GoogleAPI, {
-        method: 'POST',
-				headers: {
-          Accept: 'application/json',
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${tokenResp.access_token}`,
-				},
-			});
-
-      console.log("masuk");
-			const resJson = await response.json();
-			console.log({response: resJson});
-      setGoogleIsPending(false);
-			if(resJson.data) {
-				navigate('/admin/flight/list');
-			}
-		},
-	});
-
-	const handleLogin = () => {
-    setGoogleIsPending(true);
-		login();
-	};
-
-  const post = ({email, password}:PostLogin) =>{
-    axios.post(API,{
-      emailAddress:email,
-      password:password
-    }).then((res) => {
-      if(res.status === 401) {
-        setError(true);
-        setMessage("Email yang Anda masukkan belum terdaftar");
+      const res = await axiosFSW.post("/g-auth", tokenResp);
+      console.log(res.data);
+      if (res.status === 201) {
+        Cookies.set("accesstoken", res.data.data.token);
+        Cookies.set("role", res.data.data.roles);
+        setGoogleIsPending(false);
       }
-      if(res.status === 200) {
-        setError(false);
-        setMessage("Successfully Login")
-        Cookies.set('accesstoken', res.data.token);
-        Cookies.set('role',res.data.roles);
-        setIsPending(false);
-    } else {
+    },
+  });
+
+  const handleLogin = () => {
+    setGoogleIsPending(true);
+    login();
+  };
+
+  const post = ({ email, password }: PostLogin) => {
+    axios
+      .post(API, {
+        emailAddress: email,
+        password: password,
+      })
+      .then((res) => {
+        if (res.status === 401) {
+          setError(true);
+          setMessage("Email yang Anda masukkan belum terdaftar");
+        }
+        if (res.status === 200) {
+          setError(false);
+          setMessage("Successfully Login");
+          Cookies.set("accesstoken", res.data.token);
+          Cookies.set("role", res.data.roles);
+          setIsPending(false);
+        } else {
+          setError(true);
+          setMessage("Login Error, Pastikan data benar");
+        }
+      })
+      .catch(() => {
         setError(true);
         setMessage("Login Error, Pastikan data benar");
-      }
-    }).catch(() =>{
-      setError(true);
-      setMessage("Login Error, Pastikan data benar");
-      setIsPending(false);
-    })
-  }
+        setIsPending(false);
+      });
+  };
 
   const handleOnSubmit = async (e: React.SyntheticEvent) => {
     setIsPending(true);
@@ -95,21 +89,30 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
     const email = target.email.value;
     const password = target.password.value;
 
-    await post({email, password});
+    await post({ email, password });
   };
 
-  if(token){
-    if(role === 'USER') {
-      return <Navigate to={previousPath !== "/" ? previousPath : "/"} replace/>;
+  if (token) {
+    if (role === "USER") {
+      return (
+        <Navigate to={previousPath !== "/" ? previousPath : "/"} replace />
+      );
     }
-    if(role === 'ADMIN') {
-      return <Navigate to={'/admin/dashboard'} replace/>;
+    if (role === "ADMIN") {
+      return <Navigate to={"/admin/dashboard"} replace />;
     }
   }
 
   return (
     <div className={cn("grid gap-3", className)} {...props}>
-      {error && <Allert position={"top-left"} variant="destructive" tittle="Error" desc={message}/>}
+      {error && (
+        <Allert
+          position={"top-left"}
+          variant="destructive"
+          tittle="Error"
+          desc={message}
+        />
+      )}
       <form onSubmit={handleOnSubmit}>
         <div className="grid gap-6">
           <div className="grid gap-5">

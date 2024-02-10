@@ -4,13 +4,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Loader } from "lucide-react";
-import { GoogleLogo } from "@/assets/svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import PasswordInput from "@/components/ui/password-input";
 import Allert from "@/components/containers/Allert";
 import Cookies from "js-cookie";
-import { useGoogleLogin } from "@react-oauth/google";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -22,50 +20,11 @@ interface PostRegister {
 const RegisterForm = ({ className, ...props }: UserAuthFormProps) => {
   const API =
     "https://backend-java-production-ece2.up.railway.app/api/v1/auth/signup";
-  const GoogleAPI = "http://localhost:8000/v1/users/googleAuth";
   const navigate = useNavigate();
-  const [googleIsPending, setGoogleIsPending] = useState<boolean>();
   const [isPending, setIsPending] = useState<boolean>();
 
   const [error, setError] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-
-  const register = useGoogleLogin({
-    onSuccess: async (tokenResp) => {
-      try {
-        // Make a request to your backend for user registration
-        const registrationResponse = await fetch(GoogleAPI, {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${tokenResp.access_token}`,
-          },
-        });
-
-        const registrationJson = await registrationResponse.json();
-
-        if (registrationJson.data) {
-          // Registration successful, navigate to the login page
-          navigate("/login");
-        } else {
-          // Handle registration failure, show an error message or take appropriate action
-          console.error("Registration failed:", registrationJson.error);
-        }
-      } catch (error) {
-        // Handle network or other errors
-        console.error("Error during registration:", error);
-      } finally {
-        // Set loading state to false
-        setGoogleIsPending(false);
-      }
-    },
-  });
-
-  const handleRegister = () => {
-    setGoogleIsPending(true);
-    register();
-  };
 
   const post = async ({ email, password }: PostRegister) => {
     try {
@@ -121,7 +80,14 @@ const RegisterForm = ({ className, ...props }: UserAuthFormProps) => {
 
   return (
     <div className={cn("grid gap-3", className)} {...props}>
-      {error && <Allert position={"top-left"} variant="destructive" tittle="Error" desc={message} />}
+      {error && (
+        <Allert
+          position={"top-left"}
+          variant="destructive"
+          tittle="Error"
+          desc={message}
+        />
+      )}
       <form onSubmit={handleOnSubmit}>
         <div className="grid gap-6">
           <div className="grid gap-5">
@@ -156,22 +122,6 @@ const RegisterForm = ({ className, ...props }: UserAuthFormProps) => {
           </Button>
         </div>
       </form>
-      <div className="grid">
-        <Button
-          variant="outline"
-          type="button"
-          disabled={googleIsPending}
-          onClick={handleRegister}
-          className="h-14 gap-2 rounded-xl border-gray-200"
-        >
-          {googleIsPending ? (
-            <Loader className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <GoogleLogo />
-          )}
-          Sign Up with Google
-        </Button>
-      </div>
     </div>
   );
 };
