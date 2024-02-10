@@ -6,7 +6,7 @@ import { useProfileUserStore } from "@/store/useProfileUserStore";
 export interface IUser {
     id?: string;
     fullName?: string;
-    email_address?: string;
+    email?: string;
     phoneNum?: number;
     password?: string;
     roleName?: string;

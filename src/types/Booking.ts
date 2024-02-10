@@ -47,6 +47,17 @@ export interface PassengerData {
     travel_docs: ITravelDocs[];
 }
 
+export interface ISavedPassengerData {
+    saved_passenger_id: number;
+    id: string;
+    NIK: string;
+    name: string;
+    dateOfBirth: Date | null;
+    courtesy_title: string;
+    vaccinated: string;
+    travel_docs: ITravelDocs[];
+}
+
 export interface ICompleteBooking {
     ticket_details: {
         booked_ticket: number[];

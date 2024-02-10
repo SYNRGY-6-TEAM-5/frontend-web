@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Cross, ImageSquare, Plus, Upload } from "@phosphor-icons/react";
-import { useBooking } from "@/lib/hooks/usePassengerTravel";
+import { usePassengerTravel } from "@/lib/hooks/usePassengerTravel";
 import { Dropzone, DropzoneProps, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 
 interface TravelDocFormProps {
@@ -31,7 +31,7 @@ const TravelDocForm: React.FC<TravelDocFormProps & Partial<DropzoneProps>> = ({
   ...dropzoneProps
 }) => {
   const { values, handleChange, handleBlur } = formik;
-  const { loadingCovers, fileItems, handleUploadTravelDoc } = useBooking();
+  const { loadingCovers, fileItems, handleUploadTravelDoc } = usePassengerTravel();
 
   return (
     <div className="space-y-8">
