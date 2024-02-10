@@ -1,80 +1,71 @@
-import { Button, Text } from "@mantine/core";
-import useTimer from "@/lib/hooks/useTimer";
+import { Text } from "@mantine/core";
 import OrderIcon from "@/assets/order-icon.png";
 import Globe from "@/assets/globe.png";
 import { ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { BookingUser } from "@/types/BookingUser";
+import WaitingBtn from "./ui/WaitingBtn";
+import useFormatDateTime from "@/lib/hooks/useFormatDateTIme";
 
-interface order {
-  orderId:number,
-  payment:string,
-  checkIn:boolean,
-  checkInStatus:string
+interface BookingUserArr {
+  BookingUser: BookingUser[];
 }
 
-interface orderArr {
-  orderActive:order[]
-}
-
-const ActiveOrder = ({orderActive} : orderArr) => {
-  const date = new Date().getTime();
-  const countDownTime = 1000;
-  const {seconds, minutes, hours} = useTimer({date, countDownTime});
-
-  const filteredOrder = orderActive.filter(order => order.payment !== "expired")
+const ActiveOrder = ({BookingUser} : BookingUserArr) => {
+  const filteredOrder = BookingUser.filter(bookingUser => bookingUser.status !== "expired")
     .map(order => {
       return order
     });
-
+  
   const navigate = useNavigate();
-  const handleWaiting = (orderId:number) => {
+  const handleETicket = (orderId:number) => {
     console.log({orderId});
-    navigate('/profile/payment');
+    navigate('/profile/success', {
+      state: {
+        orderId: orderId,
+      }
+    });
   }
 
-  const handleETicket = () => {
-    navigate('/profile/success');
-  }
+  const {formatDateTime} = useFormatDateTime();
+  const formatMoney = (amount: string) => {
+    const parsedAmount = parseFloat(amount.replace(/,/g, ""));
+    return new Intl.NumberFormat("id-ID").format(parsedAmount);
+  };
 
   return(
     <div className="grid lg:grid-cols-2 gap-x-8 gap-y-8 grid-cols-1">
-      {filteredOrder.map((order, index) => (
+      {filteredOrder.map((order, index) => {
+        const departure = order.tickets[0].flight.departure;
+        const arrival = order.tickets[0].flight.arrival;
+        const total = formatMoney(String(order.total_amount))
+        return(
         <div key={index} className="space-y-3 p-3 bg-white shadow-3xl h-fit rounded-xl">
           <div className="flex justify-between items-center">
-            <Text className="text-xs font-normal text-gray-400">Order ID: {order.orderId}</Text>
+            <Text className="text-xs font-normal text-gray-400">Order ID: {order.booking_id}</Text>
             <Text className="bg-gray-100 rounded-3xl px-2 py-1 text-primary-500 text-xs font-medium">Roundtrip</Text>
           </div>
           <div className="pt-3 flex justify-between border-b border-gray-100 items-center">
             <div className="grid gap-1 pb-3">
-              <Text className="text-xs font-medium text-gray-600">24 Oct, 09:50</Text>
-              <Text className="font-medium text-2xl text-gray-900">YIA</Text>
-              <Text className="text-xs font-normal text-gray-500">Yogyakarta</Text>
+              <Text className="text-xs font-medium text-gray-600">{formatDateTime(departure.scheduled_time)}</Text>
+              <Text className="font-medium text-2xl text-gray-900">{departure.airport_details.iata_code}</Text>
+              <Text className="text-xs font-normal text-gray-500">{departure.airport_details.city_name}</Text>
             </div>
             <div className="flex flex-col self-end">
               <img src={OrderIcon} />
               <img src={Globe} />
             </div>
             <div className=" text-right pb-3">
-              <Text className="text-xs font-medium text-gray-600">24 Oct, 09:50</Text>
-              <Text className="font-medium text-2xl text-gray-900">YIA</Text>
-              <Text className="text-xs font-normal text-gray-500">Yogyakarta</Text>
+              <Text className="text-xs font-medium text-gray-600">{formatDateTime(arrival.scheduled_time)}</Text>
+              <Text className="font-medium text-2xl text-gray-900">{arrival.airport_details.iata_code}</Text>
+              <Text className="text-xs font-normal text-gray-500">{arrival.airport_details.city_name}</Text>
             </div>
           </div>
-
-          {order.payment === "waiting" ? (
-          <div className="flex justify-between">
-            <Text className="font-medium text-sm">Total</Text>
-            <Text className="font-semibold text-primary-500">IDR 2,230,900</Text>
-          </div>
-          ): ""}
-
-          {order.payment === "waiting" ? (
-            <Button
-              type="button"
-              onClick={() => handleWaiting(order.orderId)}
-              className="w-full h-14 rounded-xl bg-primary-500 py-4 text-white font-medium text-sm"
-            >Complete the Payment in {hours}:{minutes}:{seconds}</Button>
-          ) : order.checkIn === true && order.checkInStatus === "true" ?(
+          {/* status null maka tampil btn waiting for payment */}
+          {order.status === null ? (
+            <WaitingBtn expiredTime={order.expired_time} orderId={order.booking_id} total={total} />
+          ) : order.status === "true" && order.status === "true" ?(
+            // sudah payment dan bisa checkin
             <>
               <label
                 htmlFor="prices"
@@ -90,7 +81,8 @@ const ActiveOrder = ({orderActive} : orderArr) => {
               </label>
               <Text className="text-sm font-normal text-primary-500">Your e-ticket is available!</Text>
             </>
-          ) : order.checkIn === true && order.checkInStatus === "expired" ?(
+            // sudah paymeny bisa checkin tapi expired jadi ga bisa checkin
+          ) : order.status === "true" && order.fullName === "expired" ?(
             <>
               <label
                 htmlFor="prices"
@@ -107,12 +99,13 @@ const ActiveOrder = ({orderActive} : orderArr) => {
               </label>
               <Text className="text-sm font-normal text-primary-500">Your e-ticket is available!</Text>
             </>
-          ) : order.checkIn === true && order.checkInStatus === "false" ?(
+          ) : order.status === "true" ?(
             <>
               <Text className="text-center text-error-500 bg-error-100 rounded px-1 py-[6px] text-sm">Can't check in yet</Text>
               <Text className="text-sm font-normal text-primary-500">Your e-ticket is available!</Text>
             </>
           ) : (
+            // sudah payment tapi belum bisa chekin
             <label
               htmlFor="eTicket"
               className="group flex items-center justify-between text-primary-500 cursor-pointer"
@@ -122,16 +115,18 @@ const ActiveOrder = ({orderActive} : orderArr) => {
                 type="button"
                 id="eTicket"
                 name="eTicket"
-                onClick={handleETicket}
+                onClick={() => handleETicket(order.booking_id)}
               />
               <ChevronRight size={20} className="font-base" />
             </label>
           )}
           
         </div>
-      ))}
-    </div>
-  )
+       
+        )})
+      }
+     </div>
+    )
 }
 
 export default ActiveOrder;

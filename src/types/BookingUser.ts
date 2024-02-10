@@ -1,40 +1,18 @@
-import { Ticket } from "./Ticket";
-
-interface BookingDetails {
-  bookingId:number;
-  booking_code: string | null;
-  totalPassenger: number;
-  expiredTime: string;
-  totalAmount: number;
-  fullProtection: boolean;
-  bagInsurance: boolean;
-  flightDelay: boolean;
-  paymentMethod: string | null;
-  status: string;
-  createdAt: string;
-  updatedAt: null | string;
-}
-
-interface TicketDetails {
-  booked_ticket: Ticket[];
-  expired_time: string
-}
-
-interface ContactDetails {
-  fullName: string;
-  email: string;
-  phone: string;
-}
-
 interface TravelDocs {
+  travel_doc_id: number;
+  passenger_id: number;
   doc_type: string;
   nationality: string;
-  document_number: string;
-  expire_date: string;
-  image_url: string;
+  doc_number: string;
+  expired_date: string;
+  file: string;
+  valid: boolean;
+  created_at: string;
+  updated_at: string | null;
 }
 
 interface AddOns {
+  addon_id: number;
   passenger_id: number;
   trip_type: string;
   meal_name: string;
@@ -47,21 +25,127 @@ interface AddOns {
   updated_at: string | null;
 }
 
-interface PassengerDetails {
-  id: string;
+export interface Passenger {
+  passenger_id: number;
+  booking_id: number;
   nik: string;
-  fullName: string;
-  dateOfBirth: string;
+  name: string;
+  date_of_birth: string;
+  vaccinated: boolean;
+  created_at: string;
+  updated_at: string | null;
   courtesy_title: string;
-  vaccinated: string;
   travel_docs: TravelDocs[];
   add_ons: AddOns[];
-  count: number
+}
+
+interface MapTicket {
+  map_ticket_id: number;
+  booking_id: number;
+  ticket_id: number;
+}
+
+interface Departure {
+  departure_id: number;
+  airport_id: number;
+  terminal: string;
+  scheduled_time: string;
+  created_at: string;
+  updated_at: null | string; // Adjust the type accordingly
+  airport_details: AirportDetails;
+}
+
+interface AirportDetails {
+  airport_id: number;
+  airport_name: string;
+  iata_code: string;
+  gmt: string;
+  city_name: string;
+  city_iata_code: string;
+  country_iso_code: string;
+  country_name: string;
+  created_at: string;
+  updated_at: null | string; // Adjust the type accordingly
+}
+
+interface Arrival {
+  arrival_id: number;
+  airport_id: number;
+  terminal: string | null;
+  scheduled_time: string;
+  created_at: string;
+  updated_at: null | string; // Adjust the type accordingly
+  airport_details: AirportDetails;
+}
+
+interface Airline {
+  airline_id: number;
+  name: string;
+  iata: string;
+  image: string;
+  created_at: string;
+  updated_at: null | string; // Adjust the type accordingly
+}
+
+interface Flight {
+  flight_id: number;
+  departure_id: number;
+  arrival_id: number;
+  airline_id: number;
+  transit: number;
+  first_seat: number;
+  business_seat: number;
+  economy_seat: number;
+  flight_status: string;
+  flight_number: string;
+  iata: string;
+  created_at: string;
+  updated_at: null | string; // Adjust the type accordingly
+  departure: Departure;
+  arrival: Arrival;
+  airline: Airline;
+}
+
+interface Benefit{
+  benefit_id: number;
+  flight_id: number;
+  name: string;
+  detail: string;
+  created_at: string;
+  updated_at: string | null;
+}
+
+export interface TicketDetail {
+  ticket_id: number;
+  flight_id: number;
+  ticket_type: string;
+  ticket_amount: number;
+  fare_amount: string;
+  valid_until: string;
+  created_at: string;
+  updated_at: string | null;
+  flight: Flight;
+  benefits: Benefit[]
 }
 
 export interface BookingUser {
-  booking_details: BookingDetails;
-  ticket_details: TicketDetails;
-  contact_details: ContactDetails;
-  passenger_details: PassengerDetails[];
+  booking_id: number;
+  user_id: string;
+  booking_code: string | null;
+  total_passenger: number;
+  expired_time: string;
+  total_amount: number;
+  full_protection: boolean;
+  bag_insurance: boolean;
+  flight_delay: boolean;
+  payment_method: string | null;
+  status: string | null;
+  created_at: string;
+  updated_at: string | null;
+  fullName: string;
+  email: string;
+  phone: string;
+  map_ticket: MapTicket[];
+  passengers: Passenger[];
+  tickets: TicketDetail[];
 }
