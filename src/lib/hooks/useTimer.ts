@@ -9,7 +9,7 @@ const useTimer = ({date, countDownTime}:countDown) => {
   const deadline = date + countDownTime;
   const timeDiffrence = deadline - date;
   
-  const [count, setCount] = useState<number>(timeDiffrence);
+  const [count, setCount] = useState<number>(timeDiffrence / 1000);
   const [runTimer, setRunTimer] = useState<boolean>(true);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let interval:any;
@@ -33,11 +33,15 @@ const useTimer = ({date, countDownTime}:countDown) => {
     }
   }, [count, runTimer]);
 
-  const seconds = (count % 60).toString().padStart(2, "0");
-  const minutes = (Math.floor(count / 60)).toString().padStart(2, "0");
-  const hours = (Math.floor(count / 360)).toString().padStart(2, "0");
+  // const seconds = (count % 60).toString().padStart(2, "0");
+  // const minutes = (Math.floor(count / 60)).toString().padStart(2, "0");
+  // const hours = (Math.floor(count / 3600)).toString().padStart(2, "0");
 
-  return {seconds, minutes, hours, runTimer}
+  const days = Math.floor(count / (60 * 60 * 24)).toString().padStart(2, "0")
+  const hours= Math.floor((count / ( 60 * 60)) % 24).toString().padStart(2, "0")
+  const minutes= Math.floor((count / 60) % 60).toString().padStart(2, "0")
+  const seconds= Math.floor(count  % 60).toString().padStart(2, "0")
+  return {days, seconds, minutes, hours, runTimer}
 }
 
 export default useTimer;
