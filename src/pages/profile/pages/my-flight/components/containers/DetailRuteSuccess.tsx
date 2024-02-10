@@ -29,7 +29,7 @@ const DetailRuteSuccess = ({BookingUser}:{BookingUser:BookingUser}) => {
               </div>
               <div className="row-span-3 flex justify-center self-center py-3"> <img src={Line} width={3} /> </div>
               <div className="text-left space-y-1 col-span-2 self-start">
-                  <Text className="text-sm font-medium">{ticket.flight.departure.airport_details.country_name}</Text>
+                  <Text className="text-sm font-medium">{ticket.flight.departure.airport_details.city_name}</Text>
                   <Text className="text-xs font-normal">Terminal {ticket.flight.departure.terminal} Domestic</Text>
               </div>
               <Text className="self-center font-medium col-span-2">1h 33m</Text>
@@ -38,7 +38,7 @@ const DetailRuteSuccess = ({BookingUser}:{BookingUser:BookingUser}) => {
                   <Text className="text-sm font-medium text-gray-300">{formatTime(ticket.flight.arrival.scheduled_time)}</Text>
               </div>
               <div className="text-left space-y-1 col-span-2 self-end ">
-              <Text className="text-sm font-medium">{ticket.flight.arrival.airport_details.country_name}</Text>
+              <Text className="text-sm font-medium">{ticket.flight.arrival.airport_details.city_name}</Text>
                   <Text className="text-xs font-normal">Terminal {ticket.flight.arrival.terminal} Domestic</Text>
               </div>
             </div>
