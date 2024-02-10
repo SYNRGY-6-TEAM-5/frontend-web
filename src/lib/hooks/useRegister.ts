@@ -6,7 +6,7 @@ import { useToast } from "@/components/ui/use-toast";
 
 import { ApiError } from "@/types/ApiError";
 import Cookies from "js-cookie";
-import { handleApiError } from "../errorApiHandler";
+import { handleApiError, handleUpdateApiSuccess } from "../errorApiHandler";
 
 interface propsValidateOTP {
   otp: string;
@@ -85,7 +85,7 @@ interface formFillProfile {
   phoneNumber: number;
 }
 
-export const useRegisterFillProfile = () => {
+export const useRegisterFillProfile = (isRegister: boolean) => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -102,8 +102,10 @@ export const useRegisterFillProfile = () => {
       return response;
     },
     onSuccess(data) {
-      if (data.status === 200) {
+      if (data.status === 200 && isRegister) {
         navigate("/account-created");
+      } else if (data.status === 200 && !isRegister) {
+        handleUpdateApiSuccess("Profile Updated Succesfully", toast)
       }
     },
     onError: (error: ApiError) => handleApiError(error, toast),

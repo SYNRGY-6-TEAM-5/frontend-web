@@ -26,3 +26,13 @@ export const handleApiError = (
     });
   }
 };
+
+export const handleUpdateApiSuccess = (
+  message: string,
+  toast: ({ ...props }: Toast) => void,
+) => {
+  toast({
+    variant: "success",
+    title: message,
+  });
+};
