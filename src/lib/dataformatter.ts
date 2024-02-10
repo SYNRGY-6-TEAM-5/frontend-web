@@ -113,6 +113,18 @@ export function transformCartData(data: any): CartItem[] {
     }));
 }
 
+export function formatVirtualAccount(input: string): string {
+    const groups = input.match(/(\d{1})(\d{3})(\d{4})(\d{7})(\d{1})/);
+    
+    if (!groups) {
+      throw new Error('Invalid input format');
+    }
+  
+    const formattedString = groups.slice(1).join(' ');
+  
+    return formattedString;
+  }
+
 export function transformData(data: any): CompleteBooking {
     return {
         ticket_details: {

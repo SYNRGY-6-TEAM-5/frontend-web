@@ -13,8 +13,12 @@ import { BankMandiri, Bca, MasterCard, Ocbc } from "@/assets/svg";
 import { PaymentElement } from "@stripe/react-stripe-js";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 import { Button } from "@/components/ui/button";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { toast } from "@/components/ui/use-toast";
+import { usePaymentXendit } from "@/lib/hooks/usePayment";
+import { useParams } from "react-router-dom";
+import { usePassengerStore } from "@/store/useBookingStore";
+
 
 const methodData = [
   {
@@ -40,10 +44,16 @@ const methodData = [
 ];
 
 const MethodDetails = ({ bankMethod }: { bankMethod: string }) => {
+  const { mutateAsync: makeXenditPayment } = usePaymentXendit();
+  const { booking_id } = useParams();
+  const { totalAmount } =
+    usePassengerStore();
+
   const stripe = useStripe();
   const elements = useElements();
 
   const [loading, setLoading] = useState(false);
+  const [virtualAccount, setVirtualAccount] = useState<string>("");
 
   const filteredData = methodData
     .filter((data) => data.value === bankMethod)
@@ -85,7 +95,7 @@ const MethodDetails = ({ bankMethod }: { bankMethod: string }) => {
         variant: "success",
         description: paymentIntent.status,
       });
-    }else if (paymentIntent && paymentIntent.status === "requires_confirmation") {
+    } else if (paymentIntent && paymentIntent.status === "requires_confirmation") {
       toast({
         title: "Payment Failed",
         variant: "destructive",
@@ -102,6 +112,24 @@ const MethodDetails = ({ bankMethod }: { bankMethod: string }) => {
     setLoading(false);
   };
 
+  useEffect(() => {
+    if (!booking_id) {
+      return
+    }
+
+    const xenditPayload: any = {
+      bookingId: parseInt(booking_id, 10),
+      bankCode: bankMethod.toUpperCase()
+    };
+    const fetchVirtualAccount = async () => {
+      const { data } = await makeXenditPayment(xenditPayload);
+      setVirtualAccount(data.va);
+    };
+    if (!virtualAccount) {
+      fetchVirtualAccount();
+    }
+  }, [booking_id, virtualAccount]);
+
   return (
     <div className="flex flex-col space-y-10">
       {bankMethod !== "debit" ? (
@@ -115,19 +143,21 @@ const MethodDetails = ({ bankMethod }: { bankMethod: string }) => {
               />
               <Text>{filteredData[0].title}</Text>
             </div>
-            <InputCopy
-              id="account"
-              name="account"
-              value="7 800 8291 0221220"
-              className="mb-5"
-            />
+            {virtualAccount && virtualAccount !== "" && (
+              <InputCopy
+                id="account"
+                name="account"
+                value={virtualAccount}
+                className="mb-5"
+              />)}
+
             <div className="space-y-4">
               <Text className="text-base font-medium">Total Payment</Text>
               <Input
                 disabled
                 className="rounded-lg bg-gray-100 text-sm font-medium text-black"
                 type="text"
-                value="IDR 2,930,900"
+                value={`IDR ${totalAmount.toLocaleString()}`}
               />
               <div className="flex flex-row space-x-1 text-xs">
                 <AlertTriangle size={24} className="text-warning-500" />
