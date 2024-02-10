@@ -5,17 +5,20 @@ import { Toaster } from "./components/ui/toaster";
 import { RouterProvider } from "react-router-dom";
 import router from "./routes";
 import { theme } from "./theme";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 function App() {
   const queryClient = new QueryClient();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <MantineProvider theme={theme}>
-        <RouterProvider router={router} />
-        <Toaster />
-      </MantineProvider>
-    </QueryClientProvider>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_G_CLIENT_ID}>
+      <QueryClientProvider client={queryClient}>
+        <MantineProvider theme={theme}>
+          <RouterProvider router={router} />
+          <Toaster />
+        </MantineProvider>
+      </QueryClientProvider>
+    </GoogleOAuthProvider>
   );
 }
 

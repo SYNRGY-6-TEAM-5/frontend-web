@@ -38,6 +38,5 @@ export { default as MoneyRemove } from "./money-remove.svg?react";
 export { default as MoneySend } from "./money-send.svg?react";
 export { default as RepeateMusic } from "./repeate-music.svg?react";
 export { default as DirectBox } from "./directbox-send.svg?react";
-export { default as DirectBox } from "./directbox-send.svg?react";
 export { default as Seat } from "./seat.svg?react";
 export { default as Airfly } from "./airfly.svg?react";
