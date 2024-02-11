@@ -3,6 +3,13 @@ import { TripInsurance } from "@/store/useAddOnsStore";
 import { IUser } from "@/lib/hooks/useNav";
 import { Ticket } from "./Ticket";
 
+export interface TimeValues {
+    days: number;
+    hours: number;
+    minutes: number;
+    seconds: number;
+}
+
 export interface PassengerDetailsItem extends PassengerData {
     count: number;
 }

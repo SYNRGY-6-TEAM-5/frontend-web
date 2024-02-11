@@ -1,47 +1,27 @@
 import { useEffect, useState } from "react";
 
 interface countDown {
-  date:number,
   countDownTime: number,
 }
 
-const useTimer = ({date, countDownTime}:countDown) => {
-  const deadline = date + countDownTime;
-  const timeDiffrence = deadline - date;
-  
-  const [count, setCount] = useState<number>(timeDiffrence / 1000);
-  const [runTimer, setRunTimer] = useState<boolean>(true);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let interval:any;
-  
-  useEffect(() => {
-    if (runTimer) {
-      interval = setInterval(() => {
-          setCount((count) => count - 1);
-      }, 1000);
-    } else {
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  }, [runTimer]);
+const useParseTime = ({countDownTime}:countDown) => {
+  const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [hours, setHours] = useState(0);
 
   useEffect(() => {
-    if (count < 0 && runTimer) {
-      console.log("expired");
-      setRunTimer(false);
-      setCount(0);
+    if (countDownTime > 1) {
+      const secondsRemaining = Math.floor(countDownTime % 60);
+      const minutesRemaining = Math.floor((countDownTime / 60) % 60);
+      const hoursRemaining = Math.floor(countDownTime / 3600);
+
+      setSeconds(secondsRemaining);
+      setMinutes(minutesRemaining);
+      setHours(hoursRemaining);
     }
-  }, [count, runTimer]);
+  }, [countDownTime]);
 
-  // const seconds = (count % 60).toString().padStart(2, "0");
-  // const minutes = (Math.floor(count / 60)).toString().padStart(2, "0");
-  // const hours = (Math.floor(count / 3600)).toString().padStart(2, "0");
-
-  const days = Math.floor(count / (60 * 60 * 24)).toString().padStart(2, "0")
-  const hours= Math.floor((count / ( 60 * 60)) % 24).toString().padStart(2, "0")
-  const minutes= Math.floor((count / 60) % 60).toString().padStart(2, "0")
-  const seconds= Math.floor(count  % 60).toString().padStart(2, "0")
-  return {days, seconds, minutes, hours, runTimer}
+  return { seconds, minutes, hours };
 }
 
-export default useTimer;
+export default useParseTime;
