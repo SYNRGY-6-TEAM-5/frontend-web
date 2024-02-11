@@ -37,9 +37,9 @@ const NavProfile = () => {
               Not Assigned
             </Text>
           )}
-          {userData?.email_address && (
+          {userData?.email && (
             <Text className="text-md mt-2 font-normal text-slate-500">
-              {userData?.email_address}
+              {userData?.email}
             </Text>
           )}
         </div>

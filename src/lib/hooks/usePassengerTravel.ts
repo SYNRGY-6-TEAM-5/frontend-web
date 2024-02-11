@@ -1,21 +1,11 @@
-import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
-import axiosClient from "../axios";
-import { useToast } from "@/components/ui/use-toast";
-
-import { ApiError } from "@/types/ApiError";
 import Cookies from "js-cookie";
-import { handleApiError } from "../errorApiHandler";
 import { useState } from "react";
 import axiosFSW from "../axiosFSW";
 import { FormikValues } from "formik";
 
-interface IBookingData {
-  fullName: string;
-  dob: Date;
-  nik: string;
-}
+import { PassengerData } from "@/types/Booking";
 
 export interface IFileItem {
   url: string;
@@ -25,17 +15,13 @@ export interface IFileItem {
   resourceType?: string;
 }
 
-export const useBooking = () => {
+export const usePassengerTravel = () => {
   const [loadingCovers, setLoadingCovers] = useState<boolean[]>([]);
   const [fileItems, setFileItems] = useState<IFileItem[]>([]);
-
-  const { toast } = useToast();
-  const navigate = useNavigate();
 
   const token = Cookies.get("accesstoken");
 
   const handleUploadTravelDoc = async (files: any, formIndex: number, formik: FormikValues) => {
-    console.log("selected files >>> ", files);
     if (files && files.length > 0) {
       try {
         setLoadingCovers((prevLoadingCovers) => {
@@ -59,7 +45,7 @@ export const useBooking = () => {
             },
           }
         );
-        
+
         formik.setFieldValue(`travel_docs.${formIndex}.image_url`, response.data.data.secure_url);
         setFileItems((prevItems) => {
           const updatedItems = [...prevItems];
@@ -78,30 +64,47 @@ export const useBooking = () => {
     }
   };
 
-  const { mutateAsync, error, isPending } = useMutation({
-    mutationKey: ["fillPassengerDetails"],
-    mutationFn: async (data: IBookingData) => {
-      const response = await axiosClient.put(`/user/profile`, data, {
+  return {
+    loadingCovers,
+    fileItems,
+    handleUploadTravelDoc
+  };
+};
+
+export const useListPassenger = () => {
+  const token = Cookies.get("accesstoken");
+  
+  const { data, error, isFetching } = useQuery({
+    queryKey: ["listSavedPassengerDetails"],
+    queryFn: async () => {
+      const response = await axiosFSW.get(`/passenger/user/saved-passenger`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      return response;
+      return response.data.data;
     },
-    onSuccess(data) {
-      if (data.status === 200) {
-        navigate("/account-created");
-      }
-    },
-    onError: (error: ApiError) => handleApiError(error, toast),
+    refetchOnWindowFocus: false,
   });
 
-  return {
-    error,
-    isPending,
-    loadingCovers,
-    fileItems,
-    mutateAsync,
-    handleUploadTravelDoc
-  };
+  return { data, error, isFetching };
+};
+
+export const useGetPassenger = (saved_passenger_id: string) => {
+  const token = Cookies.get("accesstoken");
+
+  const { data, error, isFetching } = useQuery<PassengerData[], Error>({
+    queryKey: ["getOneSavedPassengerDetails"],
+    queryFn: async () => {
+      const response = await axiosFSW.get(`/passenger/user/saved-passenger/${saved_passenger_id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data.data;
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  return { data, error, isFetching };
 };
