@@ -36,7 +36,7 @@ const PaymentDetails = () => {
   }, []);
 
   useEffect(() => {
-    const expiryTime = completeBookingData?.ticket_details.expired_time;
+    const expiryTime = completeBookingData.ticket_details.expired_time;
     const currentTime = new Date();
 
     if (expiryTime && isFuture(new Date(expiryTime))) {
@@ -59,7 +59,7 @@ const PaymentDetails = () => {
       timer.stop();
     };
 
-  }, [completeBookingData, count_down]);
+  }, [completeBookingData, count_down, clientSecret]);
 
   return (
     <section className="grid gap-12 px-20 pb-4 xs:grid-cols-1 lg:grid-cols-3">

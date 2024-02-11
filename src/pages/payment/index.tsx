@@ -45,7 +45,7 @@ const Payment = () => {
   };
 
   const [timer, isTargetAchieved] = useTimer({ countdown: true });
-  
+
   const { seconds, minutes, hours } = useParseTime({ countDownTime: count_down })
 
   useEffect(() => {
@@ -56,22 +56,27 @@ const Payment = () => {
     setTotalAmount(total);
     const summary = summarizeBooking(data, cartTicket);
     setTotal(calculateTotalPrice(summary));
-    const expiryTime = completeBooking?.ticket_details.expired_time;
+  }, [data, total]);
+
+  useEffect(() => {
+    const expiryTime = data.ticket_details.expired_time;
     const currentTime = new Date();
+
     if (expiryTime && isFuture(new Date(expiryTime))) {
       setCountDown(differenceInSeconds(new Date(expiryTime), currentTime));
     }
-    
+
     timer.start({
       countdown: true,
       startValues: { hours, minutes, seconds },
     });
 
-    return () => {
-      // Clean up timer when component unmounts
-      timer.stop();
-    };
-  }, [data, total, count_down]);
+    if (isTargetAchieved) {
+      toast.error("Transaction Timeout", {
+        description: "Please, repeate the procedure",
+      });
+    }
+  }, [data, total, completeBooking, cartTicket, setTotalAmount, handleAddToCompleteBooking, timer, seconds, minutes, hours]);
 
   return (
     <section className="grid gap-12 px-20 pb-4 xs:grid-cols-1 lg:grid-cols-3">
