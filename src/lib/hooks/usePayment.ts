@@ -13,9 +13,10 @@ import { ICompleteBooking } from "@/types/Booking";
 import { transformCartData, transformData } from "../dataformatter";
 import { completeBooking } from '@/components/particles/completeBookingData';
 import { calculateTotalPrice, summarizeBooking } from "../totalSummarizer";
+import axiosClient from "../axios";
 
 export const usePaymentStripe = () => {
-    const token = Cookies.get("otpData");
+    const token = Cookies.get("accesstoken");
     const { booking_id } = useParams();
 
     const { mutateAsync, error, isPending } = useMutation({
@@ -31,6 +32,22 @@ export const usePaymentStripe = () => {
 
             const responseData = await response.data;
             return responseData;
+        },
+        onSuccess(data) {
+            return data
+        },
+        onError(error: ApiError) { return error },
+    });
+
+    return { mutateAsync, error, isPending };
+};
+
+export const usePaymentXendit = () => {
+    const { mutateAsync, error, isPending } = useMutation({
+        mutationKey: ["xenditPayment"],
+        mutationFn: async (data: any) => {
+            const response = await axiosClient.post(`/payment/xendit-payment/create-va`, data);
+            return response;
         },
         onSuccess(data) {
             return data
