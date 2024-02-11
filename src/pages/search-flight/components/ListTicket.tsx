@@ -4,22 +4,24 @@ import {
   FlightSearchParams,
   useSearchTicket,
 } from "@/lib/hooks/useSearchTicket";
-import { useEffect } from "react";
+import { useEffect, useState } from "react"; // Import useState
 import { useSearchTicketStore } from "@/store/useSearchTicketStore";
 import TicketEmpty from "./container/TicketEmpty";
 import LoadingTicket from "./ui/LoadingTicket";
 import TicketsHolder from "./container/TicketHolder";
 import { Ticket } from "@/types/Ticket";
 import { useCartStore } from "@/store/useCartStore";
-// Mock Data for dev purpose
-// import { data } from "@/components/particles/TicketData";
-// import { ret_data } from "@/components/particles/ReturnTicketData";
 
 const ListTicket = () => {
   const location = useLocation();
   const { cart } = useCartStore();
   const { setIsFetchedAfterMount, tripDetails } = useSearchTicketStore();
-  const searchParams = new URLSearchParams(location.search);
+  const [searchParams, setSearchParams] = useState<URLSearchParams>(new URLSearchParams(location.search));
+  const [totalData, setTotalData] = useState<number>(0);
+
+  useEffect(() => {
+    setSearchParams(new URLSearchParams(location.search));
+  }, [location.search]);
 
   const paramsData: FlightSearchParams = {
     departure_airport: searchParams.get("origin") || "",
@@ -38,78 +40,79 @@ const ListTicket = () => {
   const { data: retData, isFetching: retIsFetching } =
     useSearchTicket(returnParamsData);
 
-
   useEffect(() => {
     setIsFetchedAfterMount(depIsFetching || retIsFetching);
+    setTotalData(depData?.count);
   }, [depIsFetching, retIsFetching]);
 
-  return (
+  console.log("totalData >>> ", totalData);
 
-      <div className="relative mt-6 grid gap-y-6 px-6 md:px-9 lg:px-20">
-        <div className="flex w-full flex-row items-center justify-between gap-4">
-          <TicketsHolder tripType={tripDetails.trip_type} />
-        </div>
-        {tripDetails.trip_type === "one-way" ? (
-          <>
-            {depIsFetching ? (
-              <LoadingTicket />
-            ) : (
-              <>
-                {!!depData && depData.length > 0 ? (
-                  depData.map((ticket: Ticket) => (
-                    <FlightCard
-                      key={ticket.ticket_id}
-                      ticket={ticket}
-                      tripType={tripDetails.trip_type}
-                    />
-                  ))
-                ) : (
-                  <TicketEmpty />
-                )}
-              </>
-            )}
-          </>
-        ) : (
-          <>
-            {depIsFetching || retIsFetching ? (
-              <LoadingTicket />
-            ) : (
-              <>
-                {cart.length === 0 && (
-                  <>
-                    {!!depData && depData.length > 0 ? (
-                      depData.map((ticket: Ticket) => (
-                        <FlightCard
-                          key={ticket.ticket_id}
-                          ticket={ticket}
-                          tripType="departure"
-                        />
-                      ))
-                    ) : (
-                      <TicketEmpty />
-                    )}
-                  </>
-                )}
-                {cart.length > 0 && (
-                  <>
-                    {!!retData && retData.length > 0 ? (
-                      retData.map((ticket: Ticket) => (
-                        <FlightCard
-                          key={ticket.ticket_id}
-                          ticket={ticket}
-                          tripType="return"
-                        />
-                      ))
-                    ) : (
-                      <TicketEmpty />
-                    )}
-                  </>
-                )}
-              </>
-            )}
-          </>
-        )}
+  return (
+    <div className="relative mt-6 grid gap-y-6 px-6 md:px-9 lg:px-20">
+      <div className="flex w-full flex-row items-center justify-between gap-4">
+        <TicketsHolder tripType={tripDetails.trip_type} />
       </div>
+      {tripDetails.trip_type === "one-way" ? (
+        <>
+          {depIsFetching ? (
+            <LoadingTicket />
+          ) : (
+            <>
+              {!!depData && depData.data.length > 0 ? (
+                depData.data.map((ticket: Ticket) => (
+                  <FlightCard
+                    key={ticket.ticket_id}
+                    ticket={ticket}
+                    tripType={tripDetails.trip_type}
+                  />
+                ))
+              ) : (
+                <TicketEmpty />
+              )}
+            </>
+          )}
+        </>
+      ) : (
+        <>
+          {depIsFetching || retIsFetching ? (
+            <LoadingTicket />
+          ) : (
+            <>
+              {cart.length === 0 && (
+                <>
+                  {!!depData && depData.data.length > 0 ? (
+                    depData.data.map((ticket: Ticket) => (
+                      <FlightCard
+                        key={ticket.ticket_id}
+                        ticket={ticket}
+                        tripType="departure"
+                      />
+                    ))
+                  ) : (
+                    <TicketEmpty />
+                  )}
+                </>
+              )}
+              {cart.length > 0 && (
+                <>
+                  {!!retData && retData.data.length > 0 ? (
+                    retData.data.map((ticket: Ticket) => (
+                      <FlightCard
+                        key={ticket.ticket_id}
+                        ticket={ticket}
+                        tripType="return"
+                      />
+                    ))
+                  ) : (
+                    <TicketEmpty />
+                  )}
+                </>
+              )}
+            </>
+          )}
+        </>
+      )}
+    </div>
   );
 };
 

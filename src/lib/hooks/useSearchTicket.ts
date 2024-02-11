@@ -13,14 +13,15 @@ export interface FlightSearchParams {
 
 export const useSearchTicket = (params: FlightSearchParams) => {
   const { data, error, isFetching } = useQuery({
-    queryKey: ["searchTicket"],
+    queryKey: ["searchTicket", params],
     queryFn: async () => {
       const response = await axiosFSW.get(`/ticket`, {
         params: params,
       });
-      return response.data.data;
+      return { data: response.data.data, count: response.data.meta.totalData };
     },
     refetchOnWindowFocus: false,
+    staleTime: 0,
   });
 
   return { data, error, isFetching };
