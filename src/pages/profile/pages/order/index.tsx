@@ -18,8 +18,8 @@ const Order = () => {
   return (
     <section id="flightOrder">
       <Tabs defaultValue="1">
-        <TabsList className=" mb-10 grid lg:grid-cols-4 md:grid-flow-row h-fit p-0 rounded-t-xl bg-white shadow-3xl">
-          <TabsTrigger value="1" className="px-2 py-4 bg-white border-r border-b border-gray-200 flex flex-row justify-between text-black data-[state=active]:text-white">
+        <TabsList className=" mb-10 grid lg:grid-cols-4 md:w-full md:grid-flows-4 h-fit p-0 rounded-t-xl bg-white shadow-3xl">
+          <TabsTrigger value="1" className="px-2 py-4 md:w-full bg-white border-r border-b border-gray-200 flex flex-row justify-between text-black data-[state=active]:text-white">
             <div className="flex flex-row gap-1 ">
               <MoneySend />
               <Text className="font-normal text-sm ">Awaiting Payment</Text>
@@ -28,21 +28,21 @@ const Order = () => {
               {dataAwaiting.length}
             </Text>
           </TabsTrigger>
-          <TabsTrigger value="2" className="px-2 py-4 bg-white border-r border-b border-gray-200 flex flex-row justify-between text-black data-[state=active]:text-white">
+          <TabsTrigger value="2" className="px-2 py-4 md:w-full bg-white border-r border-b border-gray-200 flex flex-row justify-between text-black data-[state=active]:text-white">
             <div className="flex flex-row gap-1 ">
               <RepeateMusic />
               <Text className="font-normal text-sm">Processing</Text>
             </div>
             <Text className="text-white text-xs bg-primary-500 px-2 py-[2px] rounded-full">{dataProcessing.length}</Text>
           </TabsTrigger>
-          <TabsTrigger value="3" className="px-3 py-4 bg-white border-r border-b border-gray-200 flex flex-row justify-between text-black data-[state=active]:text-white">
+          <TabsTrigger value="3" className="px-2 py-4 md:w-full bg-white border-r border-b border-gray-200 flex flex-row justify-between text-black data-[state=active]:text-white">
             <div className="flex flex-row gap-1 ">
               <ChartSuccess />
               <Text className="font-normal text-sm">Completed</Text>
             </div>
             <Text className="text-white text-xs bg-primary-500 px-2 py-[2px] rounded-full">{dataCompleted.length}</Text>
           </TabsTrigger>
-          <TabsTrigger value="4" className="px-3 py-4 bg-white border-b border-gray-200 flex flex-row justify-between text-black data-[state=active]:text-white">
+          <TabsTrigger value="4" className="px-2 py-4 md:w-full bg-white border-b border-gray-200 flex flex-row justify-between text-black data-[state=active]:text-white">
             <div className="flex flex-row gap-1 ">
               <MoneyRemove />
               <Text className="font-normal text-sm">Canceled</Text>
