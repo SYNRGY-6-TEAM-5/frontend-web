@@ -38,12 +38,13 @@ const ActiveOrder = ({BookingUser} : BookingUserArr) => {
       {filteredOrder.map((order, index) => {
         const departure = order.tickets[0].flight.departure;
         const arrival = order.tickets[0].flight.arrival;
-        const total = formatMoney(String(order.total_amount))
+        const total = formatMoney(String(order.total_amount));
+        const flightType = order.tickets.length > 1 ? "Roundtrip" : "One Way";
         return(
         <div key={index} className="space-y-3 p-3 bg-white shadow-3xl h-fit rounded-xl">
           <div className="flex justify-between items-center">
             <Text className="text-xs font-normal text-gray-400">Order ID: {order.booking_id}</Text>
-            <Text className="bg-gray-100 rounded-3xl px-2 py-1 text-primary-500 text-xs font-medium">Roundtrip</Text>
+            <Text className="bg-gray-100 rounded-3xl px-2 py-1 text-primary-500 text-xs font-medium">{flightType}</Text>
           </div>
           <div className="pt-3 flex justify-between border-b border-gray-100 items-center">
             <div className="grid gap-1 pb-3">
