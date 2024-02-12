@@ -6,9 +6,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 interface props {
   date: Date;
+  lowest_price: string;
 }
 
-const DateButton = ({ date }: props) => {
+const DateButton = ({ date, lowest_price }: props) => {
   const location = useLocation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -38,7 +39,7 @@ const DateButton = ({ date }: props) => {
       disabled={isFetchedAfterMount}
     >
       <div className="text-xs font-semibold">{format(date, "d MMMM")}</div>
-      <div className="text-base font-semibold">IDR 1,165,450</div>
+      <div className="text-base font-semibold">{lowest_price !== "0" ? `IDR ${lowest_price}` : "--,---"}</div>
     </button>
   );
 };

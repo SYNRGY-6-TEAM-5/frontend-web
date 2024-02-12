@@ -13,6 +13,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import Allert from "@/components/containers/Allert";
 import { useSearchTicketStore } from "@/store/useSearchTicketStore";
 import axiosFSW from "@/lib/axiosFSW";
+import { getFirebaseToken } from "@/firebase";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 interface PostLogin {
@@ -23,6 +24,9 @@ interface PostLogin {
 const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
   const API =
     "https://backend-java-production-ece2.up.railway.app/api/v1/auth/login";
+
+  const [isTokenFound, setTokenFound] = useState(false);
+  
   const [googleIsPending, setGoogleIsPending] = useState<boolean>();
   const [isPending, setIsPending] = useState<boolean>();
 
@@ -89,6 +93,8 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
     const email = target.email.value;
     const password = target.password.value;
 
+    getFirebaseToken(setTokenFound);
+
     await post({ email, password });
   };
 
@@ -112,6 +118,22 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
           tittle="Error"
           desc={message}
         />
+      )}
+      {isTokenFound && (
+        <Allert
+        position={"top-left"}
+        variant="default"
+        tittle="Success"
+        desc="Notification permission enabled"
+      />
+      )}
+      {!isTokenFound && (
+        <Allert
+        position={"top-left"}
+        variant="destructive"
+        tittle="Error"
+        desc="Notification permission denied"
+      />
       )}
       <form onSubmit={handleOnSubmit}>
         <div className="grid gap-6">

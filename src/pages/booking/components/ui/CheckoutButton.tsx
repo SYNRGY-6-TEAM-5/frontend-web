@@ -40,7 +40,9 @@ const CheckoutButton = () => {
     handleAddToCompleteBooking(updatedCompleteBookingData);
     setTotal(totalBooking);
 
-  }, [setTotalAmount, total]);
+    setTotalAmount(total);
+
+  }, [setTotalAmount]);
 
   return (
     <section className="flex flex-col gap-2 py-8">
