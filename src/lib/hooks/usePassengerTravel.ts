@@ -5,7 +5,7 @@ import { useState } from "react";
 import axiosFSW from "../axiosFSW";
 import { FormikValues } from "formik";
 
-import { PassengerData } from "@/types/Booking";
+import { ISavedPassengerData } from "@/types/Booking";
 
 export interface IFileItem {
   url: string;
@@ -93,7 +93,7 @@ export const useListPassenger = () => {
 export const useGetPassenger = (saved_passenger_id: string) => {
   const token = Cookies.get("accesstoken");
 
-  const { data, error, isFetching } = useQuery<PassengerData[], Error>({
+  const { data, error, isFetching } = useQuery<ISavedPassengerData[], Error>({
     queryKey: ["getOneSavedPassengerDetails"],
     queryFn: async () => {
       const response = await axiosFSW.get(`/passenger/user/saved-passenger/${saved_passenger_id}`, {

@@ -1,3 +1,9 @@
+import { useEffect, useState } from "react";
+import useTimer from 'easytimer-react-hook';
+import useParseTime from "@/lib/hooks/useTimer";
+import { toast, Toaster } from "sonner";
+import { differenceInSeconds, isFuture } from "date-fns";
+
 import Timer from "./components/containers/Timer";
 import PaymentMethod from "./components/containers/PaymentMethod";
 import OrderDetail from "./components/containers/OrderDetail";
@@ -5,15 +11,9 @@ import Total from "./components/containers/Total";
 import { Button } from "@/components/ui/button";
 import PromoForm from "./components/form/PromoForm";
 import { useNavigate, useParams } from "react-router-dom";
-import { Toaster } from "sonner";
 import { useFetchBooking } from "@/lib/hooks/usePayment";
 import { usePassengerStore } from "@/store/useBookingStore";
-import { differenceInSeconds, isFuture } from "date-fns";
 import { calculateTotalPrice, summarizeBooking } from "@/lib/totalSummarizer";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import useTimer from 'easytimer-react-hook';
-import useParseTime from "@/lib/hooks/useTimer";
 
 const Payment = () => {
   const { booking_id } = useParams<{ booking_id?: string }>();
@@ -46,6 +46,8 @@ const Payment = () => {
 
   const [timer, isTargetAchieved] = useTimer({ countdown: true });
 
+  const [isRunOut, setIsRunOut] = useState<boolean>(false);
+
   const { seconds, minutes, hours } = useParseTime({ countDownTime: count_down })
 
   useEffect(() => {
@@ -64,6 +66,9 @@ const Payment = () => {
 
     if (expiryTime && isFuture(new Date(expiryTime))) {
       setCountDown(differenceInSeconds(new Date(expiryTime), currentTime));
+      setIsRunOut(false);
+    } else {
+      setIsRunOut(true);
     }
 
     timer.start({
@@ -71,7 +76,8 @@ const Payment = () => {
       startValues: { hours, minutes, seconds },
     });
 
-    if (isTargetAchieved) {
+    if (isTargetAchieved || count_down === 0) {
+      setIsRunOut(true);
       toast.error("Transaction Timeout", {
         description: "Please, repeate the procedure",
       });
@@ -84,7 +90,7 @@ const Payment = () => {
         <Timer
           isTargetAchieved={isTargetAchieved} timeValues={timer.getTimeValues()}
         />
-        <PaymentMethod runTimer={!isTargetAchieved} />
+        <PaymentMethod runTimer={!isRunOut} />
       </div>
       <div className="flex flex-col bg-white shadow-3xl">
         {completeBooking.contact_details.email !== "" ? (
@@ -97,7 +103,7 @@ const Payment = () => {
           <Total completeBooking={completeBooking} totalPrice={total} />
         )}
         <Button
-          disabled={isTargetAchieved}
+          disabled={isRunOut}
           type="submit"
           className="mx-4 rounded-xl bg-primary-500 py-4 text-white disabled:bg-gray-600 disabled:text-black"
           onClick={handleOnClick}

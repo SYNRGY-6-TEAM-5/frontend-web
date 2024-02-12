@@ -59,7 +59,7 @@ export interface ISavedPassengerData {
     id: string;
     NIK: string;
     name: string;
-    dateOfBirth: Date | null;
+    date_of_birth: Date | null;
     courtesy_title: string;
     vaccinated: string;
     travel_docs: ITravelDocs[];
