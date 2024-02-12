@@ -11,6 +11,11 @@ export interface FlightSearchParams {
   trip_type?: string;
 }
 
+export interface LowestFare {
+  scheduled_time: string;
+  lowest_fare: number;
+}
+
 export const useSearchTicket = (params: FlightSearchParams) => {
   const { data, error, isFetching } = useQuery({
     queryKey: ["searchTicket", params],
@@ -22,6 +27,21 @@ export const useSearchTicket = (params: FlightSearchParams) => {
     },
     refetchOnWindowFocus: false,
     staleTime: 0,
+  });
+
+  return { data, error, isFetching };
+};
+
+export const useFetchLowestFare = (params: FlightSearchParams) => {
+  const { data, error, isFetching } = useQuery<LowestFare[], Error>({
+    queryKey: ["fetchLowestFare"],
+    queryFn: async () => {
+      const response = await axiosFSW.get(`/ticket/lowest-fare`, {
+        params: params,
+      });
+      return response.data.data;
+    },
+    refetchOnWindowFocus: false,
   });
 
   return { data, error, isFetching };
