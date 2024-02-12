@@ -1,37 +1,27 @@
 import { Card, CardContent } from "@/components/ui/card";
-import useTimer from "@/lib/hooks/useTimer";
-import { useEffect } from "react";
 import { toast } from "sonner";
+import { TimeCounter } from 'easytimer.js';
 
 interface timeProps {
-  countDown: number;
-  onTimerStatusChange: (timerStatus: boolean) => void;
+  isTargetAchieved: boolean;
+  timeValues: TimeCounter;
 }
 
-const Timer = ({ countDown, onTimerStatusChange }: timeProps) => {
-  const { seconds, minutes, hours, runTimer } = useTimer({
-    date: countDown,
-    countDownTime: countDown,
-  });
-
-  useEffect(() => {
-    if (!runTimer) {
-      toast.error("Transaction Timeout", {
-        description: "Please, repeate the procedure",
-      });
-    }
-    onTimerStatusChange(true);
-  }, [runTimer, onTimerStatusChange]);
-
+const Timer = ({ isTargetAchieved, timeValues }: timeProps) => {
+  console.log("timeValues >>> ", timeValues)
   return (
     <>
       <Card className="h-fit bg-black">
         <CardContent className="grid gap-1 p-2 xs:grid-cols-1 xs:text-center md:grid-cols-3 md:text-left">
           <div className="text-white">Complete payment in</div>
           <div></div>
-          <div className="rounded-md bg-white text-center text-error-500">
-            {hours}:{minutes}:{seconds}
-          </div>
+          {isTargetAchieved ? (
+            toast.error("Transaction Timeout", {
+              description: "Please, repeat the procedure",
+            })
+          ) : (
+            <div className="rounded-md bg-white text-error-500 text-center">{timeValues.toString(['hours', 'minutes', 'seconds'])}</div>
+          )}
         </CardContent>
       </Card>
     </>

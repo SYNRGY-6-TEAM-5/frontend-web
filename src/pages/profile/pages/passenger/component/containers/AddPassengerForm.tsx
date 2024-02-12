@@ -44,7 +44,7 @@ const PassengerAddForm: React.FC<PassengerAddFormProps> = ({ saved_passenger_id 
       id: `adult-${saved_passenger_id}`,
       NIK: "",
       name: "",
-      dateOfBirth: null,
+      date_of_birth: null,
       courtesy_title: "Mr",
       vaccinated: "yes",
       travel_docs: [
@@ -66,7 +66,7 @@ const PassengerAddForm: React.FC<PassengerAddFormProps> = ({ saved_passenger_id 
   return (
     <Card className="w-full h-full">
       <CardHeader>
-        <FormHeader />
+        <FormHeader passengerName="Add New Passanger" />
       </CardHeader>
 
       <CardContent>
