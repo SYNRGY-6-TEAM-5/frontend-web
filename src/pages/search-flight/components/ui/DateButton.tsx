@@ -39,7 +39,7 @@ const DateButton = ({ date, lowest_price }: props) => {
       disabled={isFetchedAfterMount}
     >
       <div className="text-xs font-semibold">{format(date, "d MMMM")}</div>
-      <div className="text-base font-semibold">IDR {lowest_price}</div>
+      <div className="text-base font-semibold">{lowest_price !== "0" ? `IDR ${lowest_price}` : "--,---"}</div>
     </button>
   );
 };
