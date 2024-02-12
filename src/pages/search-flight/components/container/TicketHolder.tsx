@@ -87,9 +87,8 @@ const TicketsHolder = ({ tripType }: props) => {
             <Button
               onClick={handleProceedToBooking}
               variant="primary"
-              className={`${
-                effect && "animate-wiggle"
-              }flex w-56 gap-3 text-white`}
+              className={`${effect && "animate-wiggle"
+                }flex w-56 gap-3 text-white`}
               onAnimationEnd={() => setEffect(false)}
             >
               Proceed to booking
@@ -100,18 +99,16 @@ const TicketsHolder = ({ tripType }: props) => {
           <div className="flex flex-col items-center justify-center gap-3">
             {cart.length ? (
               cart.map((item, index) => (
-                <>
-                  <PickedTicketCard
-                    key={index}
-                    ticket={item}
-                    ticketId={item.ticket_id}
-                    ticketTitle={
-                      tripType === "one-way"
-                        ? oneWayTitileArray[index]
-                        : roundtripTitileArray[index]
-                    }
-                  />
-                </>
+                <PickedTicketCard
+                  key={index}
+                  ticket={item}
+                  ticketId={item.ticket_id}
+                  ticketTitle={
+                    tripType === "one-way"
+                      ? oneWayTitileArray[index]
+                      : roundtripTitileArray[index]
+                  }
+                />
               ))
             ) : tripType === "one-way" ? (
               <SkeletonCard cardTitle="Departure" />
