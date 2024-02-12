@@ -2,28 +2,31 @@ import { Text } from "@mantine/core";
 import { Link } from "react-router-dom";
 import NoActiveFlight from "./components/NoActiveFlight";
 import ActiveOrder from "./components/ActiveOrder";
-
-import { data } from "@/components/particles/BookingData";
+import { useGetUserBooking } from "@/lib/hooks/useProfileBooking";
+import LoadingBooking from "./components/containers/LoadingBooking";
 
 const MyFlight = () => {
+  const { data, isFetching } = useGetUserBooking();
 
-  if (data !== null) {
-    return (
-      <section id="order">
-        <div className="flex justify-between items-center mb-10">
-          <Text>Your Flight</Text>
-          <Link to="/" className="text-primary-500">History </Link>
-        </div>
-        <ActiveOrder BookingUser={data} />
-      </section>
-    )
-  } else {
-    return (
-      <section id="order">
+  return (
+    <section id="order" className="mb-8">
+      {isFetching ? (
+        <LoadingBooking />
+      ) : !!data && data.length > 0 ? (
+        <>
+          <div className="mb-10 flex items-center justify-between">
+            <Text>Your Flight</Text>
+            <Link to="/" className="text-primary-500">
+              History{" "}
+            </Link>
+          </div>
+          <ActiveOrder BookingUser={data} />
+        </>
+      ) : (
         <NoActiveFlight />
-      </section>
-    )
-  }
-}
+      )}
+    </section>
+  );
+};
 
-export default MyFlight
+export default MyFlight;

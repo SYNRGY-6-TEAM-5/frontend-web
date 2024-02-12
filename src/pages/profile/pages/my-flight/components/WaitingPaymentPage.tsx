@@ -1,62 +1,87 @@
-import { ChevronLeft } from "lucide-react";
 import TimerMyFlight from "./ui/TimerMyFlight";
 import useTimer from "@/lib/hooks/useTimer";
 import DetailRuteOrder from "./containers/DetailRuteOrder";
 import PassangerDetails from "./containers/PassangerDetails";
-import { Button, Text } from "@mantine/core";
-import { useLocation, useNavigate } from "react-router-dom";
-import { data } from "@/components/particles/BookingData";
+import { Button } from "@mantine/core";
+import { useParams } from "react-router-dom";
+import { useGetDetailUserBooking } from "@/lib/hooks/useProfileBooking";
+import { useEffect, useState } from "react";
+import HeaderDetailBooking from "./ui/HeaderDetailBooking";
+import CodeBooking from "./containers/CodeBooking";
+import DetailRuteSuccess from "./containers/DetailRuteSuccess";
 
 const WaitingPayment = () => {
+  const { id } = useParams();
+  const { data: dataBooking, isFetching } = useGetDetailUserBooking(id);
+  const [time, setTime] = useState(0);
 
-  const location = useLocation();
-  const orderId = location.state.orderId;
-
-  const dataBooking =data.filter(bookingUser => bookingUser.booking_id === orderId);
-  const dataFiltered = dataBooking[0];
-  
-  const expiredSecond = new Date(dataFiltered.expired_time).getTime();
   const date = new Date().getTime();
-  const countDownTime =expiredSecond - date;
-  const { seconds, minutes, hours} = useTimer({date, countDownTime});
+  const { seconds, minutes, hours } = useTimer({ date, countDownTime: time });
 
-  const navigate = useNavigate();
-  const handleOnClick = () => {
-    console.log("hello");
-    navigate('/profile/');
+  useEffect(() => {
+    if (dataBooking) {
+      const expiredSecond = new Date(dataBooking.expired_time).getTime();
+      const countDownTime = expiredSecond - date;
+      setTime(countDownTime);
+      console.log(dataBooking?.expired_time);
+    }
+  }, [dataBooking]);
+
+  if (!dataBooking) {
+    return <div>Loading...</div>;
   }
-  return(
-    <section id="waitingPayment">
-      <div className="grid grid-cols-3 mb-10 items-center">
-        <label
-          htmlFor="back"
-          className="group flex items-center hover:text-primary-200 cursor-pointer"
-        >
-          <input
-            type="button"
-            id="back"
-            name="back"
-            onClick={handleOnClick}
-          />
-          <ChevronLeft size={20} />
-        </label>
-        
-        <div className="flex flex-col text-center sm:max-lg:col-span-2">
-          <Text className="font-medium">Waiting For Payment</Text>
-          <Text className=" text-xs font-normal text-gray-400">Order ID:</Text>
-        </div>
-      </div>
+
+  return !isFetching ? (
+    <section id="waitingPayment" className="mb-8">
+      <HeaderDetailBooking
+        booking_id={dataBooking.booking_id}
+        status={dataBooking.status}
+        airlane={dataBooking.tickets[0].flight.airline.name}
+        iata={dataBooking.tickets[0].flight.iata}
+        ticket_type={dataBooking.tickets[0].ticket_type}
+      />
       <div className="flex flex-col gap-8">
-        <TimerMyFlight hours={hours} minutes={minutes} seconds={seconds} />
-        <DetailRuteOrder BookingUser={dataFiltered} />
-        <PassangerDetails Passangers={dataFiltered.passengers} Tickets={dataFiltered.tickets} />
+        {!(dataBooking.status === "SUCCESS") ? (
+          <>
+            <CodeBooking
+              bookingCode={dataBooking.booking_code || ""}
+              depart={
+                dataBooking.tickets[0].flight.departure.airport_details
+                  .city_iata_code
+              }
+              arive={
+                dataBooking.tickets[0].flight.arrival.airport_details
+                  .city_iata_code
+              }
+              passanger={dataBooking.passengers}
+            />
+            <DetailRuteSuccess BookingUser={dataBooking} />
+          </>
+        ) : (
+          <>
+            <TimerMyFlight hours={hours} minutes={minutes} seconds={seconds} />
+            <DetailRuteOrder BookingUser={dataBooking} />
+          </>
+        )}
+
+        <PassangerDetails
+          Booking={dataBooking}
+          Passangers={dataBooking.passengers}
+          Tickets={dataBooking.tickets}
+        />
         <Button
           type="button"
-          className="w-full h-14 rounded-xl bg-primary-500 py-4 text-white font-medium text-sm"
-        >Complete the Payment in {hours}:{minutes}:{seconds}</Button>
+          className="h-14 w-full rounded-xl bg-primary-500 py-4 text-sm font-medium text-white"
+        >
+          Complete the Payment in {hours}:{minutes}:{seconds}
+        </Button>
       </div>
     </section>
-  )
-}
+  ) : (
+    <>
+      <div>Loading...</div>
+    </>
+  );
+};
 
 export default WaitingPayment;

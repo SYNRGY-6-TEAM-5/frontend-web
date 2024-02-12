@@ -1,38 +1,21 @@
 import { UserSeat } from "@/types/CheckIn";
 import { create } from "zustand";
 
-const dataCheckIn: UserSeat[] = [
-  {
-    id: 1,
-    nama: "Bella Hadid",
-    seat: "",
-  },
-  {
-    id: 2,
-    nama: "Jack Harris",
-    seat: "",
-  },
-  {
-    id: 3,
-    nama: "Jack Morton",
-    seat: "",
-  },
-];
-
 type Store = {
   userData: UserSeat[];
   selectedUser?: number;
   setSelectedUser: (id: number) => void;
-  setUserData: (seat: string) => void;
+  setUserData: (data: UserSeat[]) => void;
+  setChangeSeat: (seat: string) => void;
 };
 
 export const useCheckInStore = create<Store>()((set) => ({
-  userData: dataCheckIn,
-  selectedUser: dataCheckIn[0].id,
+  userData: [],
+  setUserData: (data) => set({ userData: data }),
   setSelectedUser: (id) => set({ selectedUser: id }),
-  setUserData: (seatId) =>
+  setChangeSeat: (seatId) =>
     set((state) => ({
-      userData: state.userData.map((item) =>
+      userData: state.userData?.map((item) =>
         item.id === state.selectedUser ? { ...item, seat: seatId } : item,
       ),
     })),

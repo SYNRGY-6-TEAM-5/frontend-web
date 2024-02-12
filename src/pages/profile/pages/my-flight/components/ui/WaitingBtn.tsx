@@ -10,12 +10,7 @@ const WaitingBtn = ({expiredTime, orderId, total}:{expiredTime:string, orderId:n
 
   const navigate = useNavigate();
   const handleWaiting = (orderId:number) => {
-    console.log({orderId});
-    navigate('/profile/payment/', {
-      state: {
-        orderId: orderId,
-      }
-    });
+    navigate(`/profile/booking/${orderId}`);
   }
 
   if(seconds === "00" && minutes === "00" && hours ==="00") {

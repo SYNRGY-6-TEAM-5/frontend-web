@@ -35,7 +35,10 @@ const UploadImage = ({ formik }: props) => {
                 className="h-[120px] w-[120px]"
                 onClick={() => document.getElementById("image-upload")?.click()}
               >
-                <AvatarImage src={formik.values.imageUrl} />
+                <AvatarImage
+                  src={formik.values.imageUrl}
+                  className="object-cover"
+                />
                 <AvatarFallback>{"NA"}</AvatarFallback>
               </Avatar>
             ) : (

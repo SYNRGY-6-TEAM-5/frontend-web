@@ -32,7 +32,7 @@ const EditProfile = () => {
       dateOfBirth: null,
       phoneNumber: "",
       image: null,
-      imageUrl: ""
+      imageUrl: "",
     },
     validate: (values) => {
       const errors: Partial<{ dateOfBirth: string }> = {};
@@ -62,7 +62,7 @@ const EditProfile = () => {
   });
 
   useEffect(() => {
-    if (userData?.dob) {
+    if (userData) {
       formik.setValues({
         fullName: userData.fullName || "",
         dateOfBirth: userData.dob ? new Date(userData.dob) : null,
@@ -92,7 +92,7 @@ const EditProfile = () => {
               name="fullName"
               placeholder="Full Name"
               autoComplete="off"
-              className="border-b border-gray-200 bg-[#FBFBFB] py-3 text-base font-normal text-black placeholder:text-gray-300 focus:outline-none"
+              className="rounded-none border-b border-gray-200 bg-[#FBFBFB] py-3 text-base font-normal text-black placeholder:text-gray-300 focus:outline-none"
               onChange={formik.handleChange}
               value={formik.values.fullName}
               required
@@ -109,7 +109,7 @@ const EditProfile = () => {
                 name="phoneNumber"
                 placeholder="Phone Number"
                 autoComplete="off"
-                className="before:content-['+62 |'] border-b border-gray-200 bg-[#FBFBFB] py-3 text-base font-normal text-black placeholder:text-gray-300 focus:outline-none"
+                className="before:content-['+62 |'] rounded-none border-none bg-[#FBFBFB] p-0 text-base font-normal text-black placeholder:text-gray-300 focus:outline-none"
                 onChange={formik.handleChange}
                 value={formik.values.phoneNumber}
                 required

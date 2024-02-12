@@ -1,77 +1,102 @@
 import { ArrowRight } from "lucide-react";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Text } from "@mantine/core";
-import { Passenger } from "@/types/BookingUser";
+import { BookingUser, Passenger } from "@/types/BookingUser";
 import { Ticket } from "@/types/Ticket";
 
 interface passengersDetail {
-  Passangers : Passenger[];
-  Tickets: Ticket[]
-} 
+  Booking: BookingUser;
+  Passangers: Passenger[];
+  Tickets: Ticket[];
+}
 
-const passengers = [
-  {
-    name:"Bella Hadid",
-    extra_baggage : 16,
-    meal : 1,
-    flight_delay: "Insured",
-    baggage_insurance :"Insured"
-  },
-  {
-    name:"Jack Harris",
-    extra_baggage : 20,
-    meal : 1,
-    flight_delay: "Insured",
-    baggage_insurance :"Insured"
-  }
-]
-
-const PassangerDetails = ({Passangers, Tickets}:passengersDetail) => {
-  return(
-    <div className="flex gap-3 flex-col">
+const PassangerDetails = ({
+  Booking,
+  Passangers,
+  Tickets,
+}: passengersDetail) => {
+  return (
+    <div className="flex flex-col gap-3">
       <Text>Passenger & Facilities</Text>
-      <Tabs defaultValue="0" className="w-auto bg-white p-2 pb-0 rounded-lg shadow-3xl">
-        <TabsList className="grid grid-cols-2 w-fit gap-4 bg-white mb-8">
+      <Tabs
+        defaultValue="0"
+        className="w-auto rounded-lg bg-white p-2 pb-0 shadow-3xl"
+      >
+        <TabsList className="mb-3 grid h-fit w-fit grid-cols-2 gap-4 bg-white">
           {Passangers.map((p, index) => (
-          <TabsTrigger key={String(index)} value={String(index)} className="p-3 rounded-xl text-black bg-gray-50 border border-gray-100 data-[state=active]:text-primary-500 data-[state=active]:border-error-500 data-[state=active]:bg-error-50">
-            {p.name}
-          </TabsTrigger>
+            <TabsTrigger
+              key={String(index)}
+              value={String(index)}
+              className="rounded-xl border border-gray-100 bg-gray-50 p-3 text-black data-[state=active]:border-error-500 data-[state=active]:bg-error-50 data-[state=active]:text-primary-500"
+            >
+              {p.name}
+            </TabsTrigger>
           ))}
         </TabsList>
-        {passengers.map((p, index) => (
-          <TabsContent value={String(index)} key={String(index)} className="flex gap-3 flex-col">
+        {Passangers.map((p, index) => (
+          <TabsContent
+            value={String(index)}
+            key={p.passenger_id}
+            className="flex flex-col gap-3"
+          >
             {Tickets.map((order, index) => (
-              <div key={String(index)} className=" border-t border-dashed border-t-gray-200 pt-3 ">
-                <div className="flex space-x-1 mb-4">
-                  <Text>{order.flight.departure.airport_details.city_name}</Text>
+              <div
+                key={String(index)}
+                className="border-t border-dashed border-t-gray-200 pt-4"
+              >
+                <div className="mb-4 flex space-x-1">
+                  <Text>
+                    {order.flight.departure.airport_details.city_name}
+                  </Text>
                   <ArrowRight size={24} className="text-primary-500" />
                   <Text>{order.flight.arrival.airport_details.city_name}</Text>
                 </div>
-                <Table className="border border-gray-200">
-                  <TableHeader className="bg-black text-white rounded-lg hover:bg-white hover:text-black">
-                    <TableRow>
-                      <TableHead className="border-white border text-white rounded-ss-lg">Add-ons</TableHead>
-                      <TableHead className="border-white border text-white rounded-se-lg">Evidence</TableHead>
+                <Table className="border-gray-200">
+                  <TableHeader>
+                    <TableRow className="bg-black text-white hover:bg-black hover:text-white [&_th:first-child]:border-r">
+                      <TableHead className="rounded-ss-lg text-inherit">
+                        Add-ons
+                      </TableHead>
+                      <TableHead className="rounded-se-lg text-inherit">
+                        Evidence
+                      </TableHead>
                     </TableRow>
                   </TableHeader>
-                  <TableBody>
+                  <TableBody className="[&_td]:border-x [&_tr:last-child]:rounded-lg [&_tr:last-child]:border">
                     <TableRow>
                       <TableCell>Extra Baggage</TableCell>
-                      <TableCell>{p.extra_baggage} kg</TableCell>
+                      <TableCell>{p.add_ons[0].baggage_weight}</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>Meal</TableCell>
-                      <TableCell>{p.meal} Meal</TableCell>
+                      <TableCell>{p.add_ons.length} Meal</TableCell>
                     </TableRow>
-                    <TableRow>
-                      <TableCell>Flight Delay</TableCell>
-                      <TableCell>{p.flight_delay}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Baggage Insurance</TableCell>
-                      <TableCell>{p.baggage_insurance}</TableCell>
-                    </TableRow>
+                    {Booking.flight_delay && (
+                      <TableRow>
+                        <TableCell>Flight Delay</TableCell>
+                        <TableCell>Insured</TableCell>
+                      </TableRow>
+                    )}
+                    {Booking.bag_insurance && (
+                      <TableRow>
+                        <TableCell>Baggage Insurance</TableCell>
+                        <TableCell>Insured</TableCell>
+                      </TableRow>
+                    )}
+                    {Booking.full_protection && (
+                      <TableRow>
+                        <TableCell>Full Protection</TableCell>
+                        <TableCell>Insured</TableCell>
+                      </TableRow>
+                    )}
                   </TableBody>
                 </Table>
               </div>
@@ -80,7 +105,7 @@ const PassangerDetails = ({Passangers, Tickets}:passengersDetail) => {
         ))}
       </Tabs>
     </div>
-  )
-}
+  );
+};
 
 export default PassangerDetails;

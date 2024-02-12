@@ -24,7 +24,11 @@ const NavProfile = () => {
         className="flex items-center gap-3 py-2"
       >
         <Avatar>
-          <AvatarImage src={userData?.imageUrl} alt="@shadcn" />
+          <AvatarImage
+            src={userData?.imageUrl}
+            alt="@shadcn"
+            className="object-cover"
+          />
           <AvatarFallback>{initialName}</AvatarFallback>
         </Avatar>
         <div className="flex max-w-[170px] flex-col">
@@ -35,11 +39,6 @@ const NavProfile = () => {
           ) : (
             <Text className="text-lg font-semibold text-slate-500">
               Not Assigned
-            </Text>
-          )}
-          {userData?.email && (
-            <Text className="text-md mt-2 font-normal text-slate-500">
-              {userData?.email}
             </Text>
           )}
         </div>

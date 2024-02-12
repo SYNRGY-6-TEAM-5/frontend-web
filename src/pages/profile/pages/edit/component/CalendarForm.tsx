@@ -22,7 +22,7 @@ const CalendarForm = ({ formik }: props) => {
         <Button
           variant={"link"}
           className={cn(
-            "border-b border-gray-200 bg-[#FBFBFB] py-3 pl-2 text-base font-normal text-gray-300 placeholder:text-gray-300 focus:outline-none",
+            "rounded-none border-b border-gray-200 bg-[#FBFBFB] py-3 pl-2 text-base font-normal text-gray-300 decoration-transparent placeholder:text-gray-300 focus:outline-none",
             formik.values.dateOfBirth && "text-black",
             formik.errors.dateOfBirth && "border-b-red-500 text-red-500",
           )}
