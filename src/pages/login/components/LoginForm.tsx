@@ -69,7 +69,9 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
         if (res.status === 200) {
           setError(false);
           setMessage("Successfully Login");
+          console.log(res.data);
           Cookies.set("accesstoken", res.data.token);
+          Cookies.set("refreshtoken", res.data.refreshToken);
           Cookies.set("role", res.data.roles);
           setIsPending(false);
         } else {

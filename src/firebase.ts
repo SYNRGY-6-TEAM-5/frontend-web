@@ -22,7 +22,6 @@ export const getFirebaseToken = async (setTokenFound: (arg0: boolean) => void) =
     try {
         const currentToken = await getToken(messaging, { vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY });
         if (currentToken) {
-            console.log('current token for client: ', currentToken);
             setTokenFound(true);
             await useSaveToken(currentToken);
         } else {

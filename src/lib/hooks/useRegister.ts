@@ -41,6 +41,7 @@ export const useRegisterValidateOTP = ({ otp }: propsValidateOTP) => {
       if (data.status === 200) {
         Cookies.remove("otpData");
         Cookies.set("accesstoken", data.data.token);
+        Cookies.set("refreshtoken", data.data.refreshToken);
         navigate("/setup-profile");
       }
     },
