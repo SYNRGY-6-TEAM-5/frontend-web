@@ -33,6 +33,7 @@ import { z } from "zod";
 import { Form, FormField, FormItem } from "@/components/ui/form";
 import { useCartStore } from "@/store/useCartStore";
 import { Image } from "@/components/ui/Image";
+import { useSavedBooking } from "@/lib/hooks/usePayment";
 
 const formSchema = z.object({
   passengerName: z.string().min(2).max(50),
@@ -175,8 +176,8 @@ const AddOnsContent: React.FC<AddOnsContentProps> = ({ cart_index }) => {
   } = useAddOnsStore();
 
   const { cart } = useCartStore();
-
-  const { passengerDetails } = usePassengerStore();
+  const { updatedCompleteBookingData } = useSavedBooking();
+  const { passengerDetails, updateCompleteBookingData } = usePassengerStore();
 
   const [selectedPassenger, setSelectedPassenger] = useState<string>("");
 
@@ -201,6 +202,7 @@ const AddOnsContent: React.FC<AddOnsContentProps> = ({ cart_index }) => {
 
       console.log(personAddOns);
       handleAddPassengersAddOns(personAddOns);
+      updateCompleteBookingData(updatedCompleteBookingData, cart);
     } else {
       toast.error("No Passenger Selected", {
         description: "Please, Select passenger to continue",
