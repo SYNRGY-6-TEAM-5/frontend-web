@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import BookingDetail from "./components/booking-detail";
 import ContactDetail from "./components/contact-detail";
 import ExtraProtect from "./components/extra-protect";
@@ -6,7 +7,16 @@ import PassangerDetail from "./components/passanger-detail";
 import TravelAddOns from "./components/travel-add";
 import CheckoutButton from "./components/ui/CheckoutButton";
 
+import { usePassengerStore } from "@/store/useBookingStore";
+
 const Booking = () => {
+  const { completeBookingData, updateCompleteBookingData } = usePassengerStore();
+  const [_, setBookingDataChanged] = useState(false);
+
+  useEffect(() => {
+    setBookingDataChanged(prev => !prev);
+  }, [completeBookingData, updateCompleteBookingData]);
+
   return (
     <div className="min-h-screen bg-[#FBFBFB]">
       <BookingNavbar />

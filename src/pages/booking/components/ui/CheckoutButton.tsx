@@ -7,42 +7,45 @@ import { useSavedBooking } from "@/lib/hooks/usePayment";
 import { ICompleteBooking } from "@/types/Booking";
 import { addHours } from "date-fns";
 import { useEffect, useState } from "react";
+import { useCartStore } from "@/store/useCartStore";
 
 const CheckoutButton = () => {
-  const [total, setTotal] = useState(0);
   
   const { mutateAsync } = useBooking();
-  const { setTotalAmount, updateCompleteBookingData: handleAddToCompleteBooking } =
+  const { cart, totalFare } = useCartStore();
+  const [total, setTotal] = useState<number>(totalFare);
+  const { setTotalAmount, updateCompleteBookingData: handleAddToCompleteBooking, totalAmount } =
     usePassengerStore();
 
-  const { updatedCompleteBookingData, totalBooking } = useSavedBooking();
+  const { updatedCompleteBookingData } = useSavedBooking();
 
   const currentDatetime = new Date();
     const newExpiryDatetime = addHours(currentDatetime, 3);
 
-  const handleCheckout = async () => {
-    const bookingData: ICompleteBooking = updatedCompleteBookingData;
+  const handleCheckout = async (bookingData: ICompleteBooking) => {
     if (bookingData) {
       bookingData.ticket_details.expired_time = newExpiryDatetime;
       await mutateAsync(bookingData);
     }
-
+    
     setTotalAmount(total);
-
-    handleAddToCompleteBooking(bookingData);
-    console.log(bookingData.ticket_details.expired_time);
+    
+    handleAddToCompleteBooking(bookingData, cart);
   };
-
+  
   useEffect(() => {
     if (updatedCompleteBookingData.contact_details.email === "" && total < 1) {
       return;
     }
-    handleAddToCompleteBooking(updatedCompleteBookingData);
-    setTotal(totalBooking);
+    handleAddToCompleteBooking(updatedCompleteBookingData, cart);
+    if (totalAmount !== 0) {
+      setTotal(totalAmount);
+    } else {
+      setTotal(totalFare);
+    }
 
-    setTotalAmount(total);
 
-  }, [setTotalAmount]);
+  }, [totalAmount, total]);
 
   return (
     <section className="flex flex-col gap-2 py-8">
@@ -55,7 +58,7 @@ const CheckoutButton = () => {
           )}
           <Button
             type="submit"
-            onClick={handleCheckout}
+            onClick={() => handleCheckout(updatedCompleteBookingData)}
             variant="primary"
             className="h-14 w-full"
           >

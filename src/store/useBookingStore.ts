@@ -1,17 +1,19 @@
 import { create } from 'zustand';
 import { IAddOns, ICompleteBooking, IContactDetails, PassengerData, PassengerDetailsItem } from '@/types/Booking';
 import { completeBooking } from '@/components/particles/completeBookingData';
+import { calculateTotalPrice, summarizeBooking } from '@/lib/totalSummarizer';
+import { CartItem, useCartStore } from './useCartStore';
 
 
 type PassengerStore = {
+    totalAmount: number;
     contactDetails: IContactDetails;
     passengerDetails: PassengerDetailsItem[];
     completeBookingData: ICompleteBooking;
-    totalAmount: number;
     setTotalAmount:(total: number) => void;
     count: () => number;
     updateContactDetails: (contactDetails: Partial<IContactDetails>) => void;
-    updateCompleteBookingData: (completeBookingData: Partial<ICompleteBooking>) => void;
+    updateCompleteBookingData: (completeBookingData: Partial<ICompleteBooking>, cart: CartItem[]) => void;
     add: (passengerDetails: PassengerData) => void;
     remove: (idPassenger: string) => void;
     removeAll: () => void;
@@ -40,8 +42,13 @@ export const usePassengerStore = create<PassengerStore>((set, get) => ({
     updateContactDetails: (contactDetails: Partial<IContactDetails>) => {
         set(state => ({ contactDetails: { ...state.contactDetails, ...contactDetails } }));
     },
-    updateCompleteBookingData: (completeBookingData: Partial<ICompleteBooking>) => {
-        set(state => ({ completeBookingData: { ...state.completeBookingData, ...completeBookingData } }));
+    updateCompleteBookingData: (completeBookingData: Partial<ICompleteBooking>, cart: CartItem[]) => {
+        set(state => {
+            const newState = { completeBookingData: { ...state.completeBookingData, ...completeBookingData } };
+            const summarizedBooking = summarizeBooking(newState.completeBookingData, cart);
+            const totalPrice = calculateTotalPrice(summarizedBooking);
+            return { ...newState, totalAmount: totalPrice };
+        });
     },
     add: (passengerDetails: PassengerData) => {
         const { passengerDetails: existingPassengers } = get();
