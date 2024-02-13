@@ -34,7 +34,7 @@ export const getFirebaseToken = async (setTokenFound: (arg0: boolean) => void) =
     }
 }
 
-export const onMessageListener = () =>
+export const onMessageListener = () => 
     new Promise((resolve) => {
         onMessage(messaging, (payload) => {
             resolve(payload);
@@ -44,7 +44,7 @@ export const onMessageListener = () =>
 const useSaveToken = async (currentToken: string) => {
     try {
         const token = Cookies.get("accesstoken")
-        const response = await axiosClient.put(`/user/fcm-token`, { fcmToken: currentToken }, {
+        const response = await axiosClient.post(`/user/fcm-token`, { fcmToken: currentToken }, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
