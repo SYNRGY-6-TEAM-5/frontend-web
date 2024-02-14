@@ -16,8 +16,9 @@ import { Button } from "@/components/ui/button";
 import { FormEvent, useEffect, useState } from "react";
 import { toast } from "@/components/ui/use-toast";
 import { usePaymentXendit } from "@/lib/hooks/usePayment";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { usePassengerStore } from "@/store/useBookingStore";
+import { ToastAction } from "@radix-ui/react-toast";
 
 
 const methodData = [
@@ -48,6 +49,11 @@ const MethodDetails = ({ bankMethod }: { bankMethod: string }) => {
   const { booking_id } = useParams();
   const { totalAmount } =
     usePassengerStore();
+
+  const navigate = useNavigate();
+
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [countdown, setCountdown] = useState(5);
 
   const stripe = useStripe();
   const elements = useElements();
@@ -90,10 +96,18 @@ const MethodDetails = ({ bankMethod }: { bankMethod: string }) => {
         description: error.message,
       });
     } else if (paymentIntent && paymentIntent.status === "succeeded") {
+      setPaymentSuccess(true);
       toast({
         title: "Payment Success",
         variant: "success",
         description: paymentIntent.status,
+        action: (
+          <ToastAction altText="Goto My-Flight">
+            <Button variant="ghost" onClick={() => navigate("/profile")}>
+              Go to my flight
+            </Button>
+          </ToastAction>
+        ),
       });
     } else if (paymentIntent && paymentIntent.status === "requires_confirmation") {
       toast({
@@ -129,6 +143,23 @@ const MethodDetails = ({ bankMethod }: { bankMethod: string }) => {
       fetchVirtualAccount();
     }
   }, [booking_id, virtualAccount]);
+
+  useEffect(() => {
+    if (paymentSuccess) { // Step 4: Start countdown on payment success
+      const redirectTimer = setInterval(() => {
+        setCountdown((prevCountdown) => prevCountdown - 1);
+      }, 1000);
+
+      // Redirect to home when countdown reaches 0
+      if (countdown === 0) {
+        clearInterval(redirectTimer);
+        navigate("/profile"); // Navigate to profile on countdown complete
+      }
+
+      // Clear the timer when the component unmounts
+      return () => clearInterval(redirectTimer);
+    }
+  }, [countdown, navigate, paymentSuccess]);
 
   return (
     <div className="flex flex-col space-y-10">

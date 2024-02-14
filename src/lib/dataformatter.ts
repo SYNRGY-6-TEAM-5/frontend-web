@@ -45,6 +45,11 @@ interface PassengerDetails {
 }
 
 interface CompleteBooking {
+    booking_details?: {
+        booking_code: string;
+        external_id: string;
+        status: string;
+    },
     ticket_details: {
         booked_ticket: number[];
         total_ticket_price: number;
@@ -127,6 +132,11 @@ export function formatVirtualAccount(input: string): string {
 
 export function transformData(data: any): CompleteBooking {
     return {
+        booking_details: {
+            booking_code: data.booking_code,
+            external_id: data.external_id,
+            status: data.status
+        },
         ticket_details: {
             booked_ticket: data.tickets.map((ticket: Ticket) => ticket),
             total_ticket_price: data.total_amount,

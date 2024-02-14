@@ -78,7 +78,7 @@ const PassangerDetail = () => {
       (value) => typeof value === "string" && value.trim() !== "",
     );
 
-  console.log(areContactDetailsFilled);
+  console.log("isInternational:", isInternational);
 
   return (
     <section className={`flex flex-col gap-2 mb-8 ${!areContactDetailsFilled ? "opacity-45 pointer-events-none" : ""}`}>

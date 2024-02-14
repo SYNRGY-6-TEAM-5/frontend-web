@@ -50,12 +50,11 @@ const PaymentDetails = () => {
 
     if (isTargetAchieved) {
       toast.error("Transaction Timeout", {
-        description: "Please, repeate the procedure",
+        description: "Please, repeat the procedure",
       });
     }
 
     return () => {
-      // Clean up timer when component unmounts
       timer.stop();
     };
 

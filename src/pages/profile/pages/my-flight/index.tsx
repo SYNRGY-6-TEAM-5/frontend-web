@@ -12,7 +12,7 @@ const MyFlight = () => {
       <section id="order">
         <div className="flex justify-between items-center mb-10">
           <Text>Your Flight</Text>
-          <Link to="/" className="text-primary-500">History </Link>
+          <Link to="/profile/order" className="text-primary-500">History </Link>
         </div>
         <ActiveOrder BookingUser={data} />
       </section>

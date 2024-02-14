@@ -61,7 +61,7 @@ export const usePaymentXendit = () => {
 export const useFetchBooking = (bookingId: number | null) => {
     const token = Cookies.get("accesstoken");
     const { data = completeBooking, error, isFetching } = useQuery({
-        queryKey: ["userBooking", bookingId], // Include bookingId in the queryKey
+        queryKey: ["userBooking", bookingId],
         queryFn: async () => {
             const response = await axiosFSW.get(`/user/booking/${bookingId}`, {
                 headers: {

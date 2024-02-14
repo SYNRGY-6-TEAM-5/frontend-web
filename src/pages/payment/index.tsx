@@ -54,7 +54,7 @@ const Payment = () => {
     if (data.contact_details.email === "" && count_down < 1 && total < 1) {
       return
     }
-    handleAddToCompleteBooking(data);
+    handleAddToCompleteBooking(data, cartTicket);
     setTotalAmount(total);
     const summary = summarizeBooking(data, cartTicket);
     setTotal(calculateTotalPrice(summary));
@@ -86,31 +86,35 @@ const Payment = () => {
 
   return (
     <section className="grid gap-12 px-20 pb-4 xs:grid-cols-1 lg:grid-cols-3">
-      <div className="col-span-2 flex flex-col space-y-9">
-        <Timer
-          isTargetAchieved={isTargetAchieved} timeValues={timer.getTimeValues()}
-        />
-        <PaymentMethod runTimer={!isRunOut} />
-      </div>
-      <div className="flex flex-col bg-white shadow-3xl">
-        {completeBooking.contact_details.email !== "" ? (
-          <OrderDetail completeBooking={completeBooking} />
-        ) : (
-          ""
-        )}
-        <PromoForm />
-        {total > 0 && (
-          <Total completeBooking={completeBooking} totalPrice={total} />
-        )}
-        <Button
-          disabled={isRunOut}
-          type="submit"
-          className="mx-4 rounded-xl bg-primary-500 py-4 text-white disabled:bg-gray-600 disabled:text-black"
-          onClick={handleOnClick}
-        >
-          Pay
-        </Button>
-      </div>
+      {data?.booking_details?.status !== "PAID" && (
+        <>
+          <div className="col-span-2 flex flex-col space-y-9">
+            <Timer
+              isTargetAchieved={isTargetAchieved} timeValues={timer.getTimeValues()}
+            />
+            <PaymentMethod runTimer={!isRunOut} />
+          </div>
+          <div className="flex flex-col bg-white shadow-3xl">
+            {completeBooking.contact_details.email !== "" ? (
+              <OrderDetail completeBooking={completeBooking} />
+            ) : (
+              ""
+            )}
+            <PromoForm />
+            {total > 0 && (
+              <Total completeBooking={completeBooking} totalPrice={total} />
+            )}
+            <Button
+              disabled={isRunOut}
+              type="submit"
+              className="mx-4 rounded-xl bg-primary-500 py-4 text-white disabled:bg-gray-600 disabled:text-black"
+              onClick={handleOnClick}
+            >
+              Pay
+            </Button>
+          </div>
+        </>
+      )}
       <Toaster />
     </section>
   );

@@ -43,6 +43,7 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
       console.log(res.data);
       if (res.status === 201) {
         Cookies.set("accesstoken", res.data.data.token);
+        Cookies.set("refreshtoken", res.data.data.refreshToken);
         Cookies.set("role", res.data.data.roles);
         setGoogleIsPending(false);
       }
@@ -68,7 +69,9 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
         if (res.status === 200) {
           setError(false);
           setMessage("Successfully Login");
+          console.log(res.data);
           Cookies.set("accesstoken", res.data.token);
+          Cookies.set("refreshtoken", res.data.refreshToken);
           Cookies.set("role", res.data.roles);
           setIsPending(false);
         } else {
