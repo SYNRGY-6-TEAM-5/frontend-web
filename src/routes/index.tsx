@@ -210,7 +210,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/profile/successCheckIn",
+    path: "/profile/booking/success/:id",
     element: <SuccessCheckIn />,
   },
   {

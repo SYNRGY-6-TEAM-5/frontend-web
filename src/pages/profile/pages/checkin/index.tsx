@@ -5,11 +5,12 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Arrow from "@/assets/ArrowCircleRight.png";
 import { Dot } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import React from "react";
 import { useCheckInStore } from "@/store/useCheckInStore";
 import { useGetDetailUserBooking } from "@/lib/hooks/useProfileBooking";
 import { TicketDetail } from "@/types/BookingUser";
 import { format } from "date-fns";
+import { useCheckInBooking } from "@/lib/hooks/useCheckIn";
+import { useEffect } from "react";
 
 const formatTime = (time: string) => {
   const date = new Date(time);
@@ -24,19 +25,28 @@ const formatDate = (time: string) => {
 };
 
 const CheckInPage = () => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const navigate = useNavigate();
   const { id } = useParams();
 
   const { data, isFetching } = useGetDetailUserBooking(id);
-  const { userData, setSelectedUser } = useCheckInStore();
+  const { userData, setUserData, setSelectedUser } = useCheckInStore();
+  const { mutateAsync, isPending } = useCheckInBooking(id!);
 
-  const loading = () => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
+  const handleCheckIn = async () => {
+    await mutateAsync();
   };
+
+  useEffect(() => {
+    if (data) {
+      const formatPass = data?.passengers.map((item) => ({
+        id: item.passenger_id,
+        nama: item.name,
+        seat: item.seat ?? "",
+      }));
+      setUserData(formatPass);
+      setSelectedUser(formatPass[0].id);
+    }
+  }, [data]);
 
   return (
     <>
@@ -56,7 +66,7 @@ const CheckInPage = () => {
             <div className="flex flex-1 flex-col text-center">
               <Text className="font-medium">Check-In Data</Text>
               <Text className="mt-1 text-xs font-normal text-gray-400">
-                Booking Code: {data?.booking_id}
+                Booking Code: {data?.booking_code}
               </Text>
             </div>
           </div>
@@ -132,13 +142,13 @@ const CheckInPage = () => {
             })}
           </div>
           <Button
-            onClick={loading}
+            onClick={handleCheckIn}
             type="button"
             variant={"primary"}
             className="mt-8 h-14 w-full rounded-xl"
-            disabled={isLoading}
+            disabled={isPending}
           >
-            {isLoading && (
+            {isPending && (
               <Spinner className="mr-1 h-5 w-5 animate-spin text-white" />
             )}
             Check-In

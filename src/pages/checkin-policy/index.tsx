@@ -77,6 +77,7 @@ const CheckinPolicy = ({ booking, passanger }: props) => {
           type="button"
           variant="primary"
           className="h-14 w-full rounded-xl text-sm"
+          disabled
         >
           You can check in at{" "}
           {format(sehariSebelumBerangkat, "EEEE, dd MMM yyyy hh:mm")}
