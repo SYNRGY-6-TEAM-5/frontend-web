@@ -40,36 +40,30 @@ interface PassengerUpdateFormProps {
 
 const PassengerUpdateForm: React.FC<PassengerUpdateFormProps> = ({ saved_passenger_id }) => {
   const [passengerName, setPassengerName] = useState<string>("");
+  const [formikValues, setFormikValues] = useState<ISavedPassengerData>({
+    saved_passenger_id: 0,
+    id: "",
+    NIK: "",
+    name: "",
+    date_of_birth: new Date(),
+    courtesy_title: "",
+    vaccinated: "",
+    travel_docs: []
+  });
 
   const { data } = useGetPassenger(saved_passenger_id.toString());
-  console.log(passengerName);
-
-  useEffect(() => {
-    if (data && data[0].name !== undefined) {
-      setPassengerName(data[0].name);
-    }
-  }, [data])
-
-  if (!data) {
-    return;
-  }
+  console.log("data >>>", data);
 
   const formikHook = useFormik<ISavedPassengerData>({
     initialValues: {
       saved_passenger_id: saved_passenger_id,
       id: `adult-${saved_passenger_id}`,
-      NIK: data[0].NIK,
-      name: data[0].name,
-      date_of_birth: data[0].date_of_birth,
-      courtesy_title: data[0].courtesy_title,
-      vaccinated: data[0].vaccinated,
-      travel_docs: data[0].travel_docs.map((doc: any) => ({
-        doc_type: doc.doc_type,
-        nationality: doc.nationality,
-        document_number: doc.doc_number,
-        expired_date: new Date(doc.expired_date),
-        image_url: doc.file,
-      })),
+      NIK: formikValues.NIK,
+      name: formikValues.name,
+      date_of_birth: formikValues.date_of_birth,
+      courtesy_title: formikValues.courtesy_title,
+      vaccinated: formikValues.vaccinated,
+      travel_docs: formikValues.travel_docs
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
@@ -77,6 +71,32 @@ const PassengerUpdateForm: React.FC<PassengerUpdateFormProps> = ({ saved_passeng
     },
   });
 
+  console.log("Formik date value >>> ", formikHook.values.date_of_birth);
+
+  useEffect(() => {
+    if (data && data[0].name !== undefined) {
+      setPassengerName(data[0].name);
+      setFormikValues({
+        saved_passenger_id: saved_passenger_id,
+        id: `adult-${saved_passenger_id}`,
+        NIK: data[0].NIK,
+        name: data[0].name,
+        date_of_birth: data[0].date_of_birth,
+        courtesy_title: data[0].courtesy_title,
+        vaccinated: data[0].vaccinated,
+        travel_docs: data[0].travel_docs.map((doc: any) => ({
+          doc_type: doc.doc_type,
+          nationality: doc.nationality,
+          document_number: doc.doc_number,
+          expired_date: new Date(doc.expired_date),
+          image_url: doc.file,
+        })),
+      },)
+      console.log("data [0] date value >>> ", data[0].date_of_birth);
+    }
+
+    console.log("formikValues >>> ", formikValues)
+  }, [data])
 
   return (
     <Card className="w-full h-full">
