@@ -4,41 +4,27 @@ import { Copy } from "lucide-react";
 import { toast } from "sonner";
 import { HalfCircle } from "@/assets/svg";
 import { Button } from "@/components/ui/button";
-import { useNavigate, useParams } from "react-router-dom";
-import { useCheckInStore } from "@/store/useCheckInStore";
-import { Passenger } from "@/types/BookingUser";
+import { BookingUser, Passenger } from "@/types/BookingUser";
+import CheckinPolicy from "@/pages/checkin-policy";
+import DialogBoardingPass from "./DialogBoardingPass";
 
 interface bookingTypes {
+  booking: BookingUser;
   bookingCode: string;
   depart: string;
   arive: string;
   passanger: Passenger[];
 }
 const CodeBooking = ({
+  booking,
   bookingCode,
   depart,
   arive,
   passanger,
 }: bookingTypes) => {
-  const navigate = useNavigate();
-  const { id } = useParams();
-
-  const { setUserData, setSelectedUser } = useCheckInStore();
-
   const handleCopyText = () => {
     navigator.clipboard.writeText(bookingCode);
     toast.success("Text Copied", {});
-  };
-
-  const setupCheckin = () => {
-    const formatPass = passanger.map((item) => ({
-      id: item.passenger_id,
-      nama: item.name,
-      seat: "",
-    }));
-    setUserData(formatPass);
-    setSelectedUser(formatPass[0].id);
-    navigate(`/profile/checkin/${id}`);
   };
 
   return (
@@ -62,7 +48,6 @@ const CodeBooking = ({
               type="button"
               className="h-fit p-0 pl-2 text-primary-500"
               onClick={handleCopyText}
-              value="BHJCYAA"
             >
               <Copy size={18} />
             </Button>
@@ -72,14 +57,11 @@ const CodeBooking = ({
         <HalfCircle className="absolute right-0 top-1/2 -translate-y-1/2 rotate-180" />
       </div>
       <div className="w-full p-3 pt-4">
-        <Button
-          type="button"
-          variant="primary"
-          className="h-14 w-full rounded-xl text-sm"
-          onClick={setupCheckin}
-        >
-          Check-In Online Now
-        </Button>
+        {!booking.map_ticket[0].boarding_code ? (
+          <DialogBoardingPass booking={booking} />
+        ) : (
+          <CheckinPolicy booking={booking} passanger={passanger} />
+        )}
       </div>
     </div>
   );

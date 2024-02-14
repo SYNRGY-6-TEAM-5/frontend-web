@@ -1,11 +1,10 @@
 import { Text } from "@mantine/core";
 import OrderIcon from "@/assets/order-icon.png";
 import Globe from "@/assets/globe.png";
-import { ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { BookingUser } from "@/types/BookingUser";
-import WaitingBtn from "./ui/WaitingBtn";
 import useFormatDateTime from "@/lib/hooks/useFormatDateTIme";
+import OrderStatusComponent from "./ui/Checkin";
 
 interface BookingUserArr {
   BookingUser: BookingUser[];
@@ -74,68 +73,11 @@ const ActiveOrder = ({ BookingUser }: BookingUserArr) => {
                 </Text>
               </div>
             </div>
-            {/* status null maka tampil btn waiting for payment */}
-            {order.status === null || order.status === "PENDING" ? (
-              <WaitingBtn
-                expiredTime={order.expired_time}
-                orderId={order.booking_id}
-                total={total}
-              />
-            ) : order.status === "true" && order.status === "true" ? (
-              // sudah payment dan bisa checkin
-              <>
-                <label
-                  htmlFor="prices"
-                  className="group flex cursor-pointer items-center justify-between rounded-lg bg-success-500 p-[6px] text-white"
-                >
-                  <Text className="text-sm font-normal ">
-                    You can check-in now
-                  </Text>
-                  <input type="button" id="prices" name="prices" />
-                  <ChevronRight size={20} className="font-base" />
-                </label>
-                <Text className="text-sm font-normal text-primary-500">
-                  Your e-ticket is available!
-                </Text>
-              </>
-            ) : // sudah paymeny bisa checkin tapi expired jadi ga bisa checkin
-            order.status === "true" && order.fullName === "expired" ? (
-              <>
-                <label
-                  htmlFor="prices"
-                  className="group flex cursor-not-allowed items-center justify-between rounded-lg bg-gray-300 p-[6px] text-gray-500"
-                >
-                  <Text className="text-sm font-normal ">
-                    Time for check in has expired
-                  </Text>
-                  <input type="button" id="prices" name="prices" disabled />
-                  <ChevronRight size={20} className="font-base" />
-                </label>
-                <Text className="text-sm font-normal text-primary-500">
-                  Your e-ticket is available!
-                </Text>
-              </>
-            ) : order.status === "true" ? (
-              <>
-                <Text className="rounded bg-error-100 px-1 py-[6px] text-center text-sm text-error-500">
-                  Can't check in yet
-                </Text>
-                <Text className="text-sm font-normal text-primary-500">
-                  Your e-ticket is available!
-                </Text>
-              </>
-            ) : (
-              // sudah payment tapi belum bisa chekin
-              <div
-                className="flex cursor-pointer items-center justify-between text-primary-500"
-                onClick={() => handleETicket(order.booking_id)}
-              >
-                <Text className="text-sm font-normal">
-                  Your e-ticket is available!
-                </Text>
-                <ChevronRight size={20} className="font-base" />
-              </div>
-            )}
+            <OrderStatusComponent
+              order={order}
+              total={total}
+              handleETicket={handleETicket}
+            />
           </div>
         );
       })}

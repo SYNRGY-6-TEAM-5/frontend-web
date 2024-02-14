@@ -19,27 +19,32 @@ import { Text } from "@mantine/core";
 import Barcode from "react-jsbarcode";
 import { toJpeg } from "html-to-image";
 import { useRef } from "react";
+import { BookingUser, Passenger } from "@/types/BookingUser";
+import { format } from "date-fns";
+interface props {
+  booking: BookingUser;
+}
 
-function SelectPassanger() {
+function SelectPassanger({ passanger }: { passanger: Passenger[] }) {
   return (
-    <Select>
+    <Select defaultValue={passanger[0].name}>
       <SelectTrigger className="mx-auto mt-5 w-fit border-none text-lg font-medium">
         <SelectValue placeholder="Select a fruit" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectItem value="apple">Apple</SelectItem>
-          <SelectItem value="banana">Banana</SelectItem>
-          <SelectItem value="blueberry">Blueberry</SelectItem>
-          <SelectItem value="grapes">Grapes</SelectItem>
-          <SelectItem value="pineapple">Pineapple</SelectItem>
+          {passanger.map((item: Passenger) => (
+            <SelectItem key={item.nik} value={item.name} >
+              {item.name}
+            </SelectItem>
+          ))}
         </SelectGroup>
       </SelectContent>
     </Select>
   );
 }
 
-const DialogBoardingPass = () => {
+const DialogBoardingPass = ({ booking }: props) => {
   const myElementRef = useRef<HTMLDivElement>(null);
 
   const downloadAsImage = async () => {
@@ -57,7 +62,7 @@ const DialogBoardingPass = () => {
 
   return (
     <Dialog>
-      <DialogTrigger className="mt-4 h-14 w-full rounded-xl bg-primary-500 text-sm text-white">
+      <DialogTrigger className="h-14 w-full rounded-xl bg-primary-500 text-sm text-white">
         See Boarding Pass
       </DialogTrigger>
       <DialogContent className="max-h-[80vh] max-w-[430px] overflow-auto">
@@ -66,24 +71,48 @@ const DialogBoardingPass = () => {
             <DialogTitle>Boarding Pass</DialogTitle>
           </DialogHeader>
           <div>
-            <SelectPassanger />
+            <SelectPassanger passanger={booking.passengers} />
             <Text className="text-center text-sm">Seat B3</Text>
           </div>
           <div className="mt-6 flex justify-between">
-            <Text className="text-7xl font-medium">YIA</Text>
-            <Text className="text-7xl font-medium">CGK</Text>
+            <Text className="text-7xl font-medium">
+              {booking.tickets[0].flight.departure.airport_details.iata_code}
+            </Text>
+            <Text className="text-7xl font-medium">
+              {booking.tickets[0].flight.arrival.airport_details.iata_code}
+            </Text>
           </div>
           <div className="mt-5 flex items-center justify-between">
             <div className="flex flex-col gap-1 text-xs">
               <p className="font-medium text-primary-500">Depart</p>
-              <p>Tue, 4 Jan 2024</p>
-              <p className="font-medium text-gray-300">07:40 AM</p>
+              <p>
+                {format(
+                  booking.tickets[0].flight.departure.scheduled_time,
+                  "E, d MMM yyyy",
+                )}
+              </p>
+              <p className="font-medium text-gray-300">
+                {format(
+                  booking.tickets[0].flight.departure.scheduled_time,
+                  "hh:mm a",
+                )}
+              </p>
             </div>
             <Airfly />
             <div className="flex flex-col gap-1 text-right text-xs">
-              <p className="font-medium text-primary-500">Depart</p>
-              <p>Tue, 4 Jan 2024</p>
-              <p className="font-medium text-gray-300">07:40 AM</p>
+              <p className="font-medium text-primary-500">Arrival</p>
+              <p>
+                {format(
+                  booking.tickets[0].flight.arrival.scheduled_time,
+                  "E, d MMM yyyy",
+                )}
+              </p>
+              <p className="font-medium text-gray-300">
+                {format(
+                  booking.tickets[0].flight.arrival.scheduled_time,
+                  "hh:mm a",
+                )}
+              </p>
             </div>
           </div>
           <div className="my-8 rounded-xl bg-black p-7">
@@ -92,7 +121,9 @@ const DialogBoardingPass = () => {
             </Text>
             <div className="mt-6 flex flex-wrap gap-y-6">
               <div className="w-1/2">
-                <Text className="text-2xl font-medium text-primary-500">4</Text>
+                <Text className="text-2xl font-medium text-primary-500">
+                  {booking.tickets[0].flight.departure.terminal}
+                </Text>
                 <Text className="mt-2 text-sm text-white">Terminal</Text>
               </div>
               <div className="w-1/2">
@@ -103,7 +134,7 @@ const DialogBoardingPass = () => {
               </div>
               <div className="w-1/2">
                 <Text className="text-2xl font-medium text-primary-500">
-                  GA207
+                  {booking.tickets[0].flight.iata}
                 </Text>
                 <Text className="mt-2 text-sm text-white">Flight</Text>
               </div>
@@ -115,13 +146,19 @@ const DialogBoardingPass = () => {
               </div>
               <div className="w-1/2">
                 <Text className="text-2xl font-medium text-primary-500">
-                  4 Jan
+                  {format(
+                    booking.tickets[0].flight.departure.scheduled_time,
+                    "d MMM",
+                  )}
                 </Text>
                 <Text className="mt-2 text-sm text-white">Date</Text>
               </div>
               <div className="w-1/2">
                 <Text className="text-2xl font-medium text-primary-500">
-                  07:40 AM
+                  {format(
+                    booking.tickets[0].flight.departure.scheduled_time,
+                    "hh:mm a",
+                  )}
                 </Text>
                 <Text className="mt-2 text-sm text-white">Boarding</Text>
               </div>

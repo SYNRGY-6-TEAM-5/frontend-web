@@ -16,7 +16,7 @@ const MyFlight = () => {
         <>
           <div className="mb-10 flex items-center justify-between">
             <Text>Your Flight</Text>
-            <Link to="/" className="text-primary-500">
+            <Link to="/profile/order" className="text-primary-500">
               History{" "}
             </Link>
           </div>

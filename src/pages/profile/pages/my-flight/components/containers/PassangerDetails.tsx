@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Text } from "@mantine/core";
-import { BookingUser, Passenger } from "@/types/BookingUser";
+import { BookingUser, Passenger, AddOns } from "@/types/BookingUser";
 import { Ticket } from "@/types/Ticket";
 
 interface passengersDetail {
@@ -23,6 +23,13 @@ const PassangerDetails = ({
   Passangers,
   Tickets,
 }: passengersDetail) => {
+  const addOnsMap = (addOns: AddOns[], index: number) => {
+    if (index === 0) {
+      return addOns.filter((addon) => addon.trip_type === "departure");
+    } else {
+      return addOns.filter((addon) => addon.trip_type !== "departure");
+    }
+  };
   return (
     <div className="flex flex-col gap-3">
       <Text>Passenger & Facilities</Text>
@@ -73,11 +80,15 @@ const PassangerDetails = ({
                   <TableBody className="[&_td]:border-x [&_tr:last-child]:rounded-lg [&_tr:last-child]:border">
                     <TableRow>
                       <TableCell>Extra Baggage</TableCell>
-                      <TableCell>{p.add_ons[0].baggage_weight}</TableCell>
+                      <TableCell>
+                        {addOnsMap(p.add_ons, index)[0]?.baggage_weight ?? "0 KG"}
+                      </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>Meal</TableCell>
-                      <TableCell>{p.add_ons.length} Meal</TableCell>
+                      <TableCell>
+                        {addOnsMap(p.add_ons, index)?.length ?? 0} Meal
+                      </TableCell>
                     </TableRow>
                     {Booking.flight_delay && (
                       <TableRow>

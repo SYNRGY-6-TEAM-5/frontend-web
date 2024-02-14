@@ -9,10 +9,10 @@ import { useEffect, useState } from "react";
 import HeaderDetailBooking from "./ui/HeaderDetailBooking";
 import CodeBooking from "./containers/CodeBooking";
 import DetailRuteSuccess from "./containers/DetailRuteSuccess";
-import useNav from "@/lib/hooks/useNav";
 import { data } from "@/components/particles/BookingData";
 import { differenceInSeconds, isFuture } from "date-fns";
 import useTimer from "easytimer-react-hook";
+import { useProfileUserStore } from "@/store/useProfileUserStore";
 
 const WaitingPayment = () => {
   const { id } = useParams();
@@ -22,7 +22,7 @@ const WaitingPayment = () => {
   const [isRunOut, setIsRunOut] = useState<boolean>(false);
 
   const { data: dataBooking, isFetching } = useGetDetailUserBooking(id);
-  const { userData } = useNav();
+  const { userData } = useProfileUserStore();
   const [timer] = useTimer({ countdown: true });
 
   const { seconds, minutes, hours } = useParseTime({
@@ -31,7 +31,7 @@ const WaitingPayment = () => {
 
   const handlePay = () => {
     if (userData) {
-      navigate(`/user/payment/${userData.id}/${dataBooking?.booking_id}`);
+      navigate(`/user/payment/${userData.id}/${id}`);
     } else {
       console.log(userData);
     }
@@ -52,7 +52,7 @@ const WaitingPayment = () => {
       countdown: true,
       startValues: { hours, minutes, seconds },
     });
-  }, [data, seconds, minutes, hours]);
+  }, [data, seconds, minutes, hours, dataBooking]);
 
   if (!dataBooking) {
     return <div>Loading...</div>;
@@ -68,9 +68,10 @@ const WaitingPayment = () => {
         ticket_type={dataBooking.tickets[0].ticket_type}
       />
       <div className="flex flex-col gap-8">
-        {(dataBooking.status === "SUCCESS") ? (
+        {dataBooking.status !== "PENDING" && dataBooking.status !== "FAILED" ? (
           <>
             <CodeBooking
+              booking={dataBooking}
               bookingCode={dataBooking.booking_code || ""}
               depart={
                 dataBooking.tickets[0].flight.departure.airport_details
