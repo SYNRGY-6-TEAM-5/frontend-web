@@ -18,6 +18,8 @@ import * as Yup from "yup";
 import { PassengerData } from "@/types/Booking";
 import { usePassengerStore } from "@/store/useBookingStore";
 import { Button } from "@/components/ui/button";
+import { useSavedBooking } from "@/lib/hooks/usePayment";
+import { useCartStore } from "@/store/useCartStore";
 
 const validationSchema = Yup.object().shape({
   nik: Yup.string()
@@ -46,18 +48,20 @@ const AccordionFormItem: React.FC<AccordionFormItemProps> = ({
   _age,
   isInternational,
 }) => {
-  const { add: handleAddToPassengerDetails, passengerDetails } = usePassengerStore();
+  const { cart } = useCartStore();
+  const { passengerDetails, add: handleAddToPassengerDetails, updateCompleteBookingData: handleAddToCompleteBooking } = usePassengerStore();
+  const { updatedCompleteBookingData } = useSavedBooking();
 
   const passengerType = `${_age}-${_index + 1}`;
 
   const formikHook = useFormik<PassengerData>({
     initialValues: {
       id: `${passengerType}`,
-      nik: "",
-      fullName: "",
-      dateOfBirth: null,
-      courtesy_title: "Mr",
-      vaccinated: "yes",
+      nik: passengerDetails.length > 0 ? passengerDetails[_nthPassenger].nik : "",
+      fullName: passengerDetails.length > 0 ? passengerDetails[_nthPassenger].fullName : "",
+      dateOfBirth: passengerDetails.length > 0 ? passengerDetails[_nthPassenger].dateOfBirth : new Date("1900-01-01"),
+      courtesy_title: passengerDetails.length > 0 ? passengerDetails[_nthPassenger].courtesy_title : "",
+      vaccinated: passengerDetails.length > 0 ? passengerDetails[_nthPassenger].vaccinated : "",
       travel_docs: [
         {
           doc_type: "",
@@ -108,7 +112,7 @@ const AccordionFormItem: React.FC<AccordionFormItemProps> = ({
               onSubmit={(values) => {
                 console.log("onSubmit", JSON.stringify(values, null, 2));
                 handleAddToPassengerDetails(values);
-                console.log(passengerDetails);
+                handleAddToCompleteBooking(updatedCompleteBookingData, cart);
               }}
               validateOnBlur
             >

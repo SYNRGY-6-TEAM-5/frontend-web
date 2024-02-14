@@ -4,13 +4,13 @@ importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compa
 
 // Initialize the Firebase app in the service worker by passing the generated config
 const firebaseConfig = {
-    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-    projectId: import.meta.env.VITE_FIREBASE_PROJECTID,
-    storageBucket: import.meta.env.VITE_FIREBASE_STORAGEBUCKET,
-    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGINGSENDERID,
-    appId: import.meta.env.VITE_FIREBASE_APPID,
-    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENTID
+    apiKey: "AIzaSyDdduzyhHDy0U-8mMKV_JYJn720G08V29o",
+    authDomain: "aeroswift-3cd95.firebaseapp.com",
+    projectId: "aeroswift-3cd95",
+    storageBucket: "aeroswift-3cd95.appspot.com",
+    messagingSenderId: "157685447698",
+    appId: "1:157685447698:web:9a0e64b2b1fb4e0b3daccb",
+    measurementId: "G-ECSE5G039"
 };
 
 firebase.initializeApp(firebaseConfig);

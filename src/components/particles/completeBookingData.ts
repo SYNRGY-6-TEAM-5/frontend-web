@@ -1,4 +1,7 @@
 export const completeBooking = {
+    booking_details: {
+        status: ""
+    },
     ticket_details: {
         booked_ticket: [0, 0],
         total_ticket_price: 0,

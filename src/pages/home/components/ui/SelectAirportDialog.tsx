@@ -53,7 +53,7 @@ const SelectAirportDialog: React.FC<SelectAirportDialogProps> = ({
     onAirportSelect({
       airport_name: airport.airport_name,
       city_iata_code: airport.city_iata_code,
-      country_iso_code: airport.country_iso2,
+      country_iso_code: airport.country_iso_code,
       city_name: airport.city_name,
       iata_code: airport.iata_code,
     });
@@ -61,7 +61,7 @@ const SelectAirportDialog: React.FC<SelectAirportDialogProps> = ({
     setSelectedAirport({
       airport_name: airport.airport_name,
       city_iata_code: airport.city_iata_code,
-      country_iso_code: airport.country_iso2,
+      country_iso_code: airport.country_iso_code,
       city_name: airport.city_name,
       iata_code: airport.iata_code,
     });
@@ -70,14 +70,6 @@ const SelectAirportDialog: React.FC<SelectAirportDialogProps> = ({
       search: "",
       page: 1,
       size: 10,
-    });
-
-    console.log({
-      airport_name: airport.airport_name,
-      city_iata_code: airport.city_iata_code,
-      country_iso_code: airport.country_iso2,
-      city_name: airport.city_name,
-      iata_code: airport.iata_code,
     });
   };
 

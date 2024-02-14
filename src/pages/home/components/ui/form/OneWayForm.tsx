@@ -159,9 +159,11 @@ const OneWayForm = ({ tripType }: props) => {
       departure_date: format(data.departureDate!, "yyyy-MM-dd"),
       return_date: format(data.arrivalDate || data.departureDate!, "yyyy-MM-dd"),
     });
+    
+    const isInternational: boolean = selectedOriginAirport.country_iso_code === selectedDestinationAirport.country_iso_code ? false : true;
 
     if(ticketDetails){
-      const isInternational: boolean = selectedOriginAirport.country_iso_code === selectedDestinationAirport.country_iso_code ? false : true;
+      console.log("isInternational one-way form:", isInternational)
       handleSetTripDetails({
         ticket_class: ticketDetails.ticket_class,
         adult_seat: ticketDetails.adult_seat,

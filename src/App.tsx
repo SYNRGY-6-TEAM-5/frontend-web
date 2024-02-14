@@ -9,27 +9,34 @@ import { theme } from "./theme";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { onMessageListener } from "./firebase";
 import { useState } from "react";
-import { toast } from "./components/ui/use-toast";
+import Message from "./components/ui/message";
+import toast, { Toaster as ReactHotToast } from "react-hot-toast";
 
 function App() {
   const queryClient = new QueryClient();
-  
+
   const [show, setShow] = useState(false);
-  const [notification, setNotification] = useState({title: '', body: ''});
-  
+  const [notification, setNotification] = useState({
+    image: "",
+    title: "",
+    body: "",
+  });
+
   if (show) {
-    toast({
-      title: notification.title,
-      variant: "destructive",
-      description: notification.body,
-    });
+    toast(() => <Message notification={notification} />);
   }
 
-  onMessageListener().then((payload: any) => {
-    setShow(true);
-    setNotification({title: payload.notification.title, body: payload.notification.body})
-    console.log(payload);
-  }).catch(err => console.log('failed: ', err));
+  onMessageListener()
+    .then((payload: any) => {
+      setShow(true);
+      setNotification({
+        title: payload.notification.title,
+        body: payload.notification.body,
+        image: payload.notification.image,
+      });
+      console.log(payload);
+    })
+    .catch((err) => console.log("failed: ", err));
 
   return (
     <GoogleOAuthProvider clientId={import.meta.env.VITE_G_CLIENT_ID}>
@@ -38,6 +45,7 @@ function App() {
           <RouterProvider router={router} />
           <Toaster />
           <ToasterSonner />
+          <ReactHotToast position="bottom-right" reverseOrder={true} />
         </MantineProvider>
       </QueryClientProvider>
     </GoogleOAuthProvider>
