@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
@@ -15,11 +15,13 @@ import {
 } from "@/components/ui/dialog";
 
 import { AirportDetails } from "@/types/Ticket";
+import { IParams } from "@/types/ApiResponse";
 
 interface SelectAirportDialogProps {
   airports: AirportDetails[];
   handleSearch: (event: ChangeEvent<HTMLInputElement>) => void;
   onAirportSelect: (airport: any) => void;
+  setParams: Dispatch<SetStateAction<IParams>>;
   isActive: boolean;
   switchedAirport: Partial<AirportDetails> | null;
 }
@@ -28,6 +30,7 @@ const SelectAirportDialog: React.FC<SelectAirportDialogProps> = ({
   airports,
   handleSearch,
   onAirportSelect,
+  setParams,
   isActive,
   switchedAirport,
 }) => {
@@ -61,6 +64,12 @@ const SelectAirportDialog: React.FC<SelectAirportDialogProps> = ({
       country_iso_code: airport.country_iso2,
       city_name: airport.city_name,
       iata_code: airport.iata_code,
+    });
+
+    setParams({
+      search: "",
+      page: 1,
+      size: 10,
     });
 
     console.log({

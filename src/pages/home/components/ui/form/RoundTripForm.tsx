@@ -67,7 +67,8 @@ interface props {
 }
 
 const RoundTripForm = ({ tripType }: props) => {
-  const { airports, handleSearch, fetchAirports, params } = useHome();
+  const { airports, handleSearch, fetchAirports, params, setParams } =
+    useHome();
   const navigate = useNavigate();
   const {
     setParamsData: handleSetDepParams,
@@ -185,7 +186,9 @@ const RoundTripForm = ({ tripType }: props) => {
       fetchAirports();
     }, 300);
 
-    return () => clearTimeout(debounceTimeout);
+    return () => {
+      clearTimeout(debounceTimeout);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
 
@@ -210,6 +213,7 @@ const RoundTripForm = ({ tripType }: props) => {
                       </label>
                     </div>
                     <SelectAirportDialog
+                      setParams={setParams}
                       airports={airports}
                       handleSearch={handleSearch}
                       onAirportSelect={handleOriginAirportSelection}
@@ -238,6 +242,7 @@ const RoundTripForm = ({ tripType }: props) => {
                       </label>
                     </div>
                     <SelectAirportDialog
+                      setParams={setParams}
                       airports={airports}
                       handleSearch={handleSearch}
                       onAirportSelect={handleDestinationAirportSelection}

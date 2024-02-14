@@ -11,7 +11,7 @@ const HeaderDetailBooking = ({
   ticket_type,
 }: {
   status: string;
-  booking_id: string;
+  booking_id: number;
   airlane: string;
   iata: string;
   ticket_type: string;
@@ -28,7 +28,7 @@ const HeaderDetailBooking = ({
         className="cursor-pointer hover:text-primary-500"
       />
       <div className="flex flex-col text-center sm:max-lg:col-span-2">
-        {!(status === "SUCCESS") ? (
+        {(status === "SUCCESS") ? (
           <div className="mb-3">
             <Text className="font-medium">{airlane}</Text>
             <Text className="text-xs">

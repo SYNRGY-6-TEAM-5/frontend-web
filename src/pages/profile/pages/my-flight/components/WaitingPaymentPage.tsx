@@ -18,7 +18,6 @@ const WaitingPayment = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [time, setTime] = useState(0);
   const [count_down, setCountDown] = useState<number>(0);
   const [isRunOut, setIsRunOut] = useState<boolean>(false);
 
@@ -55,17 +54,6 @@ const WaitingPayment = () => {
     });
   }, [data, seconds, minutes, hours]);
 
-  const date = new Date().getTime();
-
-  useEffect(() => {
-    if (dataBooking) {
-      const expiredSecond = new Date(dataBooking.expired_time).getTime();
-      const countDownTime = expiredSecond - date;
-      setTime(countDownTime);
-      console.log(dataBooking?.expired_time);
-    }
-  }, [dataBooking]);
-
   if (!dataBooking) {
     return <div>Loading...</div>;
   }
@@ -74,13 +62,13 @@ const WaitingPayment = () => {
     <section id="waitingPayment" className="mb-8">
       <HeaderDetailBooking
         booking_id={dataBooking.booking_id}
-        status={dataBooking.status}
+        status={dataBooking.status!}
         airlane={dataBooking.tickets[0].flight.airline.name}
         iata={dataBooking.tickets[0].flight.iata}
         ticket_type={dataBooking.tickets[0].ticket_type}
       />
       <div className="flex flex-col gap-8">
-        {!(dataBooking.status === "SUCCESS") ? (
+        {(dataBooking.status === "SUCCESS") ? (
           <>
             <CodeBooking
               bookingCode={dataBooking.booking_code || ""}
