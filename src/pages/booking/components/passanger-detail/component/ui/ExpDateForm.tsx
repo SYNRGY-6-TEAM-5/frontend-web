@@ -13,7 +13,7 @@ interface ExpirationDateFormProps {
 }
 
 const ExpirationDateForm: React.FC<ExpirationDateFormProps> = ({ formik, fieldName, index }) => {
-  const value = formik.values.travel_docs[index].expire_date;
+  const value = formik.values.travel_docs[index].expired_date;
   const expKey = fieldName;
 
   return (
@@ -38,7 +38,7 @@ const ExpirationDateForm: React.FC<ExpirationDateFormProps> = ({ formik, fieldNa
           mode="single"
           selected={value}
           onSelect={(date) => {
-            formik.setFieldValue(`travel_docs[${index}].expire_date`, date);
+            formik.setFieldValue(`travel_docs[${index}].expired_date`, date);
           }}
           disabled={(date) => date < new Date()}
           defaultMonth={value}

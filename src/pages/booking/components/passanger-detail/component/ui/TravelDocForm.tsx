@@ -44,7 +44,7 @@ const TravelDocForm: React.FC<TravelDocFormProps & Partial<DropzoneProps>> = ({
               const docTypeKey = `travel_docs.${index}.doc_type`;
               const nationalityKey = `travel_docs.${index}.nationality`;
               const docNumberKey = `travel_docs.${index}.document_number`;
-              const expireDateKey = `travel_docs.${index}.expire_date`;
+              const expireDateKey = `travel_docs.${index}.expired_date`;
 
               return (
                 <div key={index} className="space-y-8">
@@ -198,7 +198,7 @@ const TravelDocForm: React.FC<TravelDocFormProps & Partial<DropzoneProps>> = ({
                           doc_type: "",
                           nationality: "",
                           document_number: "",
-                          expire_date: new Date(),
+                          expired_date: new Date(),
                           image_url: "",
                         })
                       }

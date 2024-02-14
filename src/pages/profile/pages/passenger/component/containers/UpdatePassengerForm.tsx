@@ -67,7 +67,7 @@ const PassengerUpdateForm: React.FC<PassengerUpdateFormProps> = ({ saved_passeng
         doc_type: doc.doc_type,
         nationality: doc.nationality,
         document_number: doc.doc_number,
-        expire_date: new Date(doc.expired_date),
+        expired_date: new Date(doc.expired_date),
         image_url: doc.file,
       })),
     },

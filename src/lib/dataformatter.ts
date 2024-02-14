@@ -5,7 +5,7 @@ interface TravelDocument {
     doc_type: string;
     nationality: string;
     document_number: string;
-    expire_date: Date;
+    expired_date: Date;
     image_url: string;
 }
 
@@ -168,7 +168,7 @@ export function transformData(data: any): CompleteBooking {
                 doc_type: doc.doc_type,
                 nationality: doc.nationality,
                 document_number: doc.doc_number,
-                expire_date: new Date(doc.expired_date),
+                expired_date: new Date(doc.expired_date),
                 image_url: doc.file,
             })),
             count: 1, 
