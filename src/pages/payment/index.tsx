@@ -76,7 +76,7 @@ const Payment = () => {
       startValues: { hours, minutes, seconds },
     });
 
-    if (isTargetAchieved || count_down === 0) {
+    if (isTargetAchieved && count_down === 1) {
       setIsRunOut(true);
       toast.error("Transaction Timeout", {
         description: "Please, repeate the procedure",

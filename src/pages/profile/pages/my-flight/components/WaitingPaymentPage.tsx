@@ -96,7 +96,7 @@ const WaitingPayment = () => {
           Passangers={dataBooking.passengers}
           Tickets={dataBooking.tickets}
         />
-        {!isRunOut && (
+        {!isRunOut && dataBooking.status !== "SUCCESS" && (
           <Button
             type="button"
             className="h-14 w-full rounded-xl bg-primary-500 py-4 text-sm font-medium text-white"
