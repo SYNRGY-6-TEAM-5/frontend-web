@@ -33,7 +33,7 @@ axiosClient.interceptors.response.use(
 
       try {
         const token = Cookies.get("refreshtoken");
-        const response: any = await axios.post('/auth/refresh-token', {
+        const response: any = await axiosClient.post('/auth/refresh-token', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

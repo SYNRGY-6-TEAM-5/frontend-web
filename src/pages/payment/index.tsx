@@ -82,7 +82,6 @@ const Payment = () => {
         description: "Please, repeate the procedure",
       });
     }
-    console.log("data >>> ", data);
   }, [data, total, completeBooking, cartTicket, setTotalAmount, handleAddToCompleteBooking, timer, seconds, minutes, hours]);
 
   return (

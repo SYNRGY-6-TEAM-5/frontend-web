@@ -32,6 +32,7 @@ export default function useNav() {
 
     const handleLogout = () => {
         Cookies.remove("accesstoken");
+        Cookies.remove("refreshtoken");
         window.location.href = "/login";
     };
 
