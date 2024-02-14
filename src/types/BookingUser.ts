@@ -30,7 +30,7 @@ export interface Passenger {
   booking_id: number;
   nik: string;
   name: string;
-  seat: string;
+  seat: string | null;
   date_of_birth: string;
   vaccinated: boolean;
   created_at: string;
