@@ -18,23 +18,29 @@ import {
 import { Text } from "@mantine/core";
 import Barcode from "react-jsbarcode";
 import { toJpeg } from "html-to-image";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { BookingUser, Passenger } from "@/types/BookingUser";
 import { format } from "date-fns";
 interface props {
   booking: BookingUser;
 }
 
-function SelectPassanger({ passanger }: { passanger: Passenger[] }) {
+function SelectPassanger({
+  passanger,
+  setSelected,
+}: {
+  passanger: Passenger[];
+  setSelected: React.Dispatch<React.SetStateAction<string>>;
+}) {
   return (
-    <Select defaultValue={passanger[0].name}>
+    <Select defaultValue={"0"} onValueChange={(select) => setSelected(select)}>
       <SelectTrigger className="mx-auto mt-5 w-fit border-none text-lg font-medium">
         <SelectValue placeholder="Select a fruit" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          {passanger.map((item: Passenger) => (
-            <SelectItem key={item.nik} value={item.name} >
+          {passanger.map((item: Passenger, index) => (
+            <SelectItem key={item.nik} value={`${index}`}>
               {item.name}
             </SelectItem>
           ))}
@@ -45,6 +51,7 @@ function SelectPassanger({ passanger }: { passanger: Passenger[] }) {
 }
 
 const DialogBoardingPass = ({ booking }: props) => {
+  const [selected, setSelected] = useState("0");
   const myElementRef = useRef<HTMLDivElement>(null);
 
   const downloadAsImage = async () => {
@@ -71,8 +78,13 @@ const DialogBoardingPass = ({ booking }: props) => {
             <DialogTitle>Boarding Pass</DialogTitle>
           </DialogHeader>
           <div>
-            <SelectPassanger passanger={booking.passengers} />
-            <Text className="text-center text-sm">Seat B3</Text>
+            <SelectPassanger
+              passanger={booking.passengers}
+              setSelected={setSelected}
+            />
+            <Text className="text-center text-sm">
+              Seat: {booking.passengers[parseInt(selected)].seat}
+            </Text>
           </div>
           <div className="mt-6 flex justify-between">
             <Text className="text-7xl font-medium">
@@ -117,7 +129,7 @@ const DialogBoardingPass = ({ booking }: props) => {
           </div>
           <div className="my-8 rounded-xl bg-black p-7">
             <Text className="text-2xl font-medium uppercase text-white">
-              Bella Hadid
+              {booking.passengers[parseInt(selected)].name}
             </Text>
             <div className="mt-6 flex flex-wrap gap-y-6">
               <div className="w-1/2">
@@ -140,7 +152,7 @@ const DialogBoardingPass = ({ booking }: props) => {
               </div>
               <div className="w-1/2">
                 <Text className="text-2xl font-medium text-primary-500">
-                  B3
+                  {booking.passengers[parseInt(selected)].seat}
                 </Text>
                 <Text className="mt-2 text-sm text-white">Seat</Text>
               </div>

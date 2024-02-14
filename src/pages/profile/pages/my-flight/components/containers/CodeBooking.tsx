@@ -57,7 +57,7 @@ const CodeBooking = ({
         <HalfCircle className="absolute right-0 top-1/2 -translate-y-1/2 rotate-180" />
       </div>
       <div className="w-full p-3 pt-4">
-        {!booking.map_ticket[0].boarding_code ? (
+        {booking.map_ticket[0].boarding_code ? (
           <DialogBoardingPass booking={booking} />
         ) : (
           <CheckinPolicy booking={booking} passanger={passanger} />
