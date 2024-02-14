@@ -12,7 +12,7 @@ export const data: BookingUser[] = [
         "bag_insurance": true,
         "flight_delay": true,
         "payment_method": null,
-        "status": "hello",
+        "status": "expired",
         "created_at": "2024-02-06T05:01:32.166Z",
         "updated_at": null,
         "fullName": "Saifulloh Fadli",
