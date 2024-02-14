@@ -7,7 +7,6 @@ import { Dot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { useCheckInStore } from "@/store/useCheckInStore";
-import DialogBoardingPass from "../my-flight/components/containers/DialogBoardingPass";
 import { useGetDetailUserBooking } from "@/lib/hooks/useProfileBooking";
 import { TicketDetail } from "@/types/BookingUser";
 import { format } from "date-fns";
@@ -57,12 +56,12 @@ const CheckInPage = () => {
             <div className="flex flex-1 flex-col text-center">
               <Text className="font-medium">Check-In Data</Text>
               <Text className="mt-1 text-xs font-normal text-gray-400">
-                Booking Code: {data.booking_id}
+                Booking Code: {data?.booking_id}
               </Text>
             </div>
           </div>
           <div className="flex gap-8">
-            {data.tickets.map((ticket: TicketDetail, index: number) => {
+            {data?.tickets.map((ticket: TicketDetail, index: number) => {
               const flightRute = index === 0 ? "Depart" : "Return";
               const transit =
                 ticket.flight.transit === 0 ? "Non-stop" : "Transit";
@@ -144,7 +143,6 @@ const CheckInPage = () => {
             )}
             Check-In
           </Button>
-          <DialogBoardingPass />
         </>
       )}
     </>

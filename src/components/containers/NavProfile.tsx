@@ -31,9 +31,9 @@ const NavProfile = () => {
           />
           <AvatarFallback>{initialName}</AvatarFallback>
         </Avatar>
-        <div className="flex max-w-[170px] flex-col items-start justify-center">
+        <div className="flex flex-col items-start justify-center">
           {userData?.fullName ? (
-            <Text className="truncate text-lg font-semibold">
+            <Text className="max-w-[170px] truncate text-lg font-semibold">
               {userData?.fullName}
             </Text>
           ) : (
@@ -42,7 +42,7 @@ const NavProfile = () => {
             </Text>
           )}
           {userData?.email && (
-            <Text className="text-md font-normal text-slate-500">
+            <Text className="max-w-[170px] text-md font-normal text-slate-500">
               {userData?.email}
             </Text>
           )}

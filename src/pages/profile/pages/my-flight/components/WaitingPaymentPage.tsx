@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import HeaderDetailBooking from "./ui/HeaderDetailBooking";
 import CodeBooking from "./containers/CodeBooking";
 import DetailRuteSuccess from "./containers/DetailRuteSuccess";
-import { data } from "@/components/particles/BookingData";
 import { differenceInSeconds, isFuture } from "date-fns";
 import useTimer from "easytimer-react-hook";
 import { useProfileUserStore } from "@/store/useProfileUserStore";
@@ -52,7 +51,7 @@ const WaitingPayment = () => {
       countdown: true,
       startValues: { hours, minutes, seconds },
     });
-  }, [data, seconds, minutes, hours, dataBooking]);
+  }, [seconds, minutes, hours, dataBooking]);
 
   if (!dataBooking) {
     return <div>Loading...</div>;
