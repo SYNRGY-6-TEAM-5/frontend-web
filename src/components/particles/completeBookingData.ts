@@ -25,7 +25,7 @@ export const completeBooking = {
                     doc_type: "",
                     nationality: "",
                     document_number: "",
-                    expire_date: new Date("2024-02-03T07:20:19.462Z"),
+                    expired_date: new Date("2024-02-03T07:20:19.462Z"),
                     image_url: "g"
                 }
             ],

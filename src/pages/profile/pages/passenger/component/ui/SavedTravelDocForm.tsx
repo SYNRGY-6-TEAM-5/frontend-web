@@ -4,7 +4,7 @@ import { Box, Group, LoadingOverlay, Text, rem } from "@mantine/core";
 import { Input } from "@/components/ui/input";
 import { Image } from "@/components/ui/Image";
 import { FieldArray, FormikValues } from "formik";
-import ExpirationDateForm from "@/pages/booking/components/passanger-detail/component/ui/ExpDateForm";
+import SavedExpirationDateForm from "./SavedExpDateForm";
 
 import {
   Select,
@@ -111,7 +111,7 @@ const SavedTravelDocForm: React.FC<SavedTravelDocFormProps & Partial<DropzonePro
                     onBlur={handleBlur}
                     required
                   />
-                  <ExpirationDateForm
+                  <SavedExpirationDateForm
                     formik={formik}
                     fieldName={expireDateKey}
                     index={index}
@@ -198,7 +198,7 @@ const SavedTravelDocForm: React.FC<SavedTravelDocFormProps & Partial<DropzonePro
                           doc_type: "",
                           nationality: "",
                           document_number: "",
-                          expire_date: new Date(),
+                          expired_date: new Date(),
                           image_url: "",
                         })
                       }

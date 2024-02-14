@@ -6,13 +6,13 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { FormikValues } from "formik";
 import { Info } from "@phosphor-icons/react";
 
-interface ExpirationDateFormProps {
+interface SavedExpirationDateFormProps {
   formik: FormikValues;
   fieldName: string;
   index: number;
 }
 
-const ExpirationDateForm: React.FC<ExpirationDateFormProps> = ({ formik, fieldName, index }) => {
+const SavedExpirationDateForm: React.FC<SavedExpirationDateFormProps> = ({ formik, fieldName, index }) => {
   const value = formik.values.travel_docs[index].expired_date;
   const expKey = fieldName;
 
@@ -50,4 +50,4 @@ const ExpirationDateForm: React.FC<ExpirationDateFormProps> = ({ formik, fieldNa
   );
 };
 
-export default ExpirationDateForm;
+export default SavedExpirationDateForm;
