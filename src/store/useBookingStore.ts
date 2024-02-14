@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { IAddOns, ICompleteBooking, IContactDetails, PassengerData, PassengerDetailsItem } from '@/types/Booking';
 import { completeBooking } from '@/components/particles/completeBookingData';
 import { calculateTotalPrice, summarizeBooking } from '@/lib/totalSummarizer';
-import { CartItem, useCartStore } from './useCartStore';
+import { CartItem } from './useCartStore';
 
 
 type PassengerStore = {
