@@ -35,7 +35,7 @@ export interface ITravelDocs {
     doc_type: string;
     nationality: string;
     document_number: string;
-    expire_date: Date;
+    expired_date: Date;
     image_url: string;
 }
 
