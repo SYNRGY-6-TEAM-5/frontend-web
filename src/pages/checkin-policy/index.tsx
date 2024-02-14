@@ -11,16 +11,86 @@ import { useState } from "react";
 import PassengerRequirements from "./components/PassengerRequirement";
 import DangerousGoods from "./components/DangerousGoods";
 import ImportantInformation from "./components/InformationImportant";
+import { BookingUser, Passenger } from "@/types/BookingUser";
+import { format, isAfter, isBefore, sub } from "date-fns";
+import { useNavigate, useParams } from "react-router-dom";
+import { useCheckInStore } from "@/store/useCheckInStore";
+interface props {
+  booking: BookingUser;
+  passanger: Passenger[];
+}
 
-const CheckinPolicy = () => {
+const CheckinPolicy = ({ booking, passanger }: props) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { setUserData, setSelectedUser } = useCheckInStore();
+
+  const setupCheckin = () => {
+    const formatPass = passanger.map((item) => ({
+      id: item.passenger_id,
+      nama: item.name,
+      seat: "",
+    }));
+    setUserData(formatPass);
+    setSelectedUser(formatPass[0].id);
+    navigate(`/profile/checkin/${id}`);
+  };
+
+  const canCheckin = () => {
+    const index =
+      booking.tickets.length > 1
+        ? isAfter(
+            new Date(),
+            booking.tickets[0].flight.departure.scheduled_time,
+          )
+          ? 0
+          : 1
+        : 0;
+
+    const sehariSebelumBerangkat = sub(
+      booking.tickets[index].flight.departure.scheduled_time,
+      { days: 1 },
+    );
+    const lastCall = sub(
+      booking.tickets[index].flight.departure.scheduled_time,
+      {
+        minutes: 75,
+      },
+    );
+
+    if (
+      isAfter(new Date(), sehariSebelumBerangkat) &&
+      isBefore(new Date(), lastCall)
+    ) {
+      return (
+        <Button
+          type="button"
+          variant="primary"
+          className="h-14 w-full rounded-xl text-sm"
+        >
+          Check-In Online Now
+        </Button>
+      );
+    } else {
+      return (
+        <Button
+          type="button"
+          variant="primary"
+          className="h-14 w-full rounded-xl text-sm"
+        >
+          You can check in at{" "}
+          {format(sehariSebelumBerangkat, "EEEE, dd MMM yyyy hh:mm")}
+        </Button>
+      );
+    }
+  };
+
   const [checkbox, setCheckbox] = useState(false);
   return (
     <>
       <Dialog>
         <DialogOverlay className="bg-transparent" />
-        <DialogTrigger asChild>
-          <Button variant="outline">Click</Button>
-        </DialogTrigger>
+        <DialogTrigger asChild>{canCheckin()}</DialogTrigger>
         <DialogContent className="max-h-[85vh] overflow-auto sm:max-w-md">
           <DialogHeader style={{ position: "relative" }}>
             <DialogTitle className="absolute top-[-10px]">
@@ -32,7 +102,7 @@ const CheckinPolicy = () => {
                 bottom: "-1.5rem",
                 left: -30,
                 right: -10,
-                width: "1500px",
+                width: "inherit",
               }}
             />
           </DialogHeader>
@@ -71,7 +141,11 @@ const CheckinPolicy = () => {
           <Button
             type="button"
             variant="primary"
-            className="mt-6 h-14 w-full rounded-xl"
+            className={`mt-6 h-14 w-full rounded-xl ${
+              !checkbox && "cursor-not-allowed"
+            }`}
+            disabled={!checkbox}
+            onClick={setupCheckin}
           >
             Continue
           </Button>

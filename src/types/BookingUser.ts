@@ -11,7 +11,7 @@ interface TravelDocs {
   updated_at: string | null;
 }
 
-interface AddOns {
+export interface AddOns {
   addon_id: number;
   passenger_id: number;
   trip_type: string;
@@ -43,6 +43,7 @@ interface MapTicket {
   map_ticket_id: number;
   booking_id: number;
   ticket_id: number;
+  boarding_code: string;
 }
 
 interface Departure {
@@ -106,7 +107,7 @@ interface Flight {
   airline: Airline;
 }
 
-interface Benefit{
+interface Benefit {
   benefit_id: number;
   flight_id: number;
   name: string;
@@ -125,7 +126,7 @@ export interface TicketDetail {
   created_at: string;
   updated_at: string | null;
   flight: Flight;
-  benefits: Benefit[]
+  benefits: Benefit[];
 }
 
 export interface BookingUser {

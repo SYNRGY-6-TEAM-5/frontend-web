@@ -16,13 +16,8 @@ const WaitingBtn = ({ expiredTime, orderId, total }: { expiredTime: string, orde
   const { seconds, minutes, hours } = useParseTime({ countDownTime: count_down });
 
   const navigate = useNavigate();
-  const handleWaiting = (orderId: number) => {
-    console.log({ orderId });
-    navigate('/profile/payment/', {
-      state: {
-        orderId: orderId,
-      }
-    });
+  const handleWaiting = (orderId:number) => {
+    navigate(`/profile/booking/${orderId}`);
   }
 
   useEffect(() => {

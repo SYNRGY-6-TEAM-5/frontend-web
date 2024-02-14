@@ -22,7 +22,8 @@ export const data: BookingUser[] = [
             {
                 "map_ticket_id": 1,
                 "booking_id": 2,
-                "ticket_id": 1
+                "ticket_id": 1,
+                "boarding_code": "PQWEPJASD"
             }
         ],
         "passengers": [
@@ -248,7 +249,8 @@ export const data: BookingUser[] = [
             {
                 "map_ticket_id": 1,
                 "booking_id": 2,
-                "ticket_id": 1
+                "ticket_id": 1,
+                "boarding_code": "PASDPOQW"
             }
         ],
         "passengers": [

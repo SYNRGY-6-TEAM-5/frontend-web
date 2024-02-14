@@ -28,7 +28,6 @@ import Passenger from "@/pages/profile/pages/passenger";
 import Notification from "@/pages/profile/pages/notification";
 import Faq from "@/pages/profile/pages/faq";
 import WaitingPayment from "@/pages/profile/pages/my-flight/components/WaitingPaymentPage";
-import SuccessfullPayment from "@/pages/profile/pages/my-flight/components/SuccessfullPaymentPage";
 import SelectSeat from "@/pages/profile/pages/selectSeat";
 import CheckInPage from "@/pages/profile/pages/checkin";
 import BookingRoute from "./BookingRoute";
@@ -167,7 +166,6 @@ const router = createBrowserRouter([
   {
     path: "/profile",
     element: (
-
       <ProtectedRoute>
         <Profile />
       </ProtectedRoute>
@@ -178,15 +176,11 @@ const router = createBrowserRouter([
         element: <MyFlight />,
       },
       {
-        path: "/profile/payment",
+        path: "/profile/booking/:id",
         element: <WaitingPayment />,
       },
       {
-        path: "/profile/success",
-        element: <SuccessfullPayment />,
-      },
-      {
-        path: "/profile/checkin",
+        path: "/profile/checkin/:id",
         element: <CheckInPage />,
       },
       {

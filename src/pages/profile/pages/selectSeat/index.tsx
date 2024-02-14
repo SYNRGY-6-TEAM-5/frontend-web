@@ -28,7 +28,7 @@ const SeatSelector: React.FC = () => {
   const numbers = Array.from({ length: 140 }, (_, index) => index + 1);
   const column = 6;
   const navigate = useNavigate();
-  const { userData, selectedUser, setSelectedUser, setUserData } =
+  const { userData, selectedUser, setSelectedUser, setChangeSeat } =
     useCheckInStore();
 
   const [seats] = useState<SeatData[][]>(() =>
@@ -50,7 +50,7 @@ const SeatSelector: React.FC = () => {
 
     if (row === -1 || col === -1) return;
 
-    setUserData(seatId);
+    setChangeSeat(seatId);
   };
 
   const numberToAlphabet = (num: number): string => {

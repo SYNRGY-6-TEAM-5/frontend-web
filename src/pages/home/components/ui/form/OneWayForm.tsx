@@ -66,7 +66,7 @@ interface props {
 }
 
 const OneWayForm = ({ tripType }: props) => {
-  const { airports, handleSearch, fetchAirports, params } = useHome();
+  const { airports, handleSearch, fetchAirports, params, setParams } = useHome();
   const {
     setParamsData: handleSetDepParams,
     setReturnParamsData: handleSetRetParams,
@@ -212,6 +212,7 @@ const OneWayForm = ({ tripType }: props) => {
                       airports={airports}
                       handleSearch={handleSearch}
                       onAirportSelect={handleOriginAirportSelection}
+                      setParams={setParams}
                       isActive={isOriginActive}
                       switchedAirport={selectedOriginAirport}
                     />
@@ -240,6 +241,7 @@ const OneWayForm = ({ tripType }: props) => {
                       airports={airports}
                       handleSearch={handleSearch}
                       onAirportSelect={handleDestinationAirportSelection}
+                      setParams={setParams}
                       isActive={isOriginActive}
                       switchedAirport={selectedDestinationAirport}
                     />
