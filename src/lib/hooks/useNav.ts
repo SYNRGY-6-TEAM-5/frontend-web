@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 import Cookies from "js-cookie";
 import { useProfileUserStore } from "@/store/useProfileUserStore";
