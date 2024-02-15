@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { ChangeEvent, useCallback, useState } from 'react';
+import axiosFSW from '../axiosFSW';
 
 interface IParams {
     page?: number;
@@ -103,8 +103,8 @@ export default function useFlight() {
     const fetchFlights = useCallback(async () => {
         try {
             setLoading(true);
-            const response = await axios.get<IApiResponse<FlightData>>(
-                'https://backend-node-production-a54c.up.railway.app/api/flight/',
+            const response = await axiosFSW.get<IApiResponse<FlightData>>(
+                '/flight/',
                 {
                     params,
                     headers: {
