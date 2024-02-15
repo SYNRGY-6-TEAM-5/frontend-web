@@ -11,9 +11,14 @@ interface BookingUserArr {
 }
 
 const ActiveOrder = ({ BookingUser }: BookingUserArr) => {
-  const filteredOrder = BookingUser.filter(
-    (bookingUser) => bookingUser.status !== "expired",
-  );
+  const filteredOrder = BookingUser.filter((bookingUser) => {
+    const num = bookingUser.tickets.length - 1;
+    return (
+      bookingUser.status !== "FAILED" &&
+      new Date(bookingUser.tickets[num].flight.arrival.scheduled_time) >
+        new Date()
+    );
+  });
 
   const navigate = useNavigate();
   const handleETicket = (orderId: number) => {

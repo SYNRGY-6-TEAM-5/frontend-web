@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import Cookies from "js-cookie";
 import { useProfileUserStore } from "@/store/useProfileUserStore";
+import axiosClient from "../axios";
 
 export interface IUser {
     id?: string;
@@ -57,8 +58,8 @@ export default function useNav() {
                 return;
             }
 
-            const response = await axios.get(
-                "https://backend-java-production-ece2.up.railway.app/api/v1/user/detail-user",
+            const response = await axiosClient.get(
+                "/user/detail-user",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
