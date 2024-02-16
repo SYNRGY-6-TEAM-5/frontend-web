@@ -42,13 +42,13 @@ const NavBar = () => {
     <header className="fixed left-0 top-0 z-50 h-auto w-full overflow-x-hidden bg-transparent">
       <Slide direction="down">
         <nav
-          className={`md:h-18 flex h-24 w-full items-center justify-end px-2 pr-4 md:px-9 lg:justify-between lg:px-20 ${
+          className={`md:h-18 flex h-24 w-full items-center px-2 pr-4 md:px-9 lg:justify-between lg:px-20 ${
             navBarColor ? "bg-white" : "bg-transparent"
           }`}
         >
           <Link
             to={"/"}
-            className="flex w-96 flex-1 items-center justify-start text-3xl font-medium md:text-5xl lg:text-4xl"
+            className="flex flex-none items-center justify-start text-3xl font-medium md:text-5xl lg:text-4xl"
           >
             <MainLogo className="h-9 md:h-12" />
             <Text className="pl-2 text-xl font-medium tracking-tighter md:pl-4 lg:text-2xl">
@@ -100,7 +100,7 @@ const NavBar = () => {
               </ul>
             )}
           </div>
-          <div className="flex items-center gap-4 lg:hidden">
+          <div className="ml-auto flex items-center gap-4 lg:hidden">
             <div
               className="hamburger cursor-pointer text-gray-950"
               onClick={handleToggle}
