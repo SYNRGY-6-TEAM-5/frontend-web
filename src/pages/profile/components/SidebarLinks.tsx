@@ -36,11 +36,11 @@ const SidebarLinks = () => {
                 isActive
                   ? "border-b-primary-500 text-primary-500"
                   : "text-black"
-              } relative flex items-center border-b py-5 text-xs hover:cursor-pointer`}
+              } relative flex items-center border-none lg:border-b py-5 text-xs hover:cursor-pointer`}
             >
               {item.icon}
               <p className="leading-1 ml-2 font-normal">{item.title}</p>
-              <CaretRight className="ml-auto h-4 w-4" />
+              <CaretRight className="ml-auto h-4 w-4 hidden lg:block" />
             </div>
           )}
         </NavLink>

@@ -3,7 +3,7 @@ const CopyrightSearch = () => {
     <div className="bg-[#111] px-6 md:px-9 lg:px-20">
       <section className="h-[72px] w-full">
         <div className="m-auto flex h-full items-center justify-between text-white">
-          <div className="text-white">
+          <div className="text-xs text-white md:text-base">
             © 2024 Aero Swift. All rights reserved.
           </div>
           <div className="flex gap-6">
