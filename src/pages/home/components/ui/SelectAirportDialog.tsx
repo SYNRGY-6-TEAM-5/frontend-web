@@ -117,7 +117,7 @@ const SelectAirportDialog: React.FC<SelectAirportDialogProps> = ({
           </Text> */}
             <ChevronDown
               size={20}
-              className="font-base absolute -right-2 top-1/4 text-primary-500"
+              className="font-base absolute right-0 top-1/4 text-primary-500"
             />
           </Button>
         </DrawerTrigger>
@@ -212,7 +212,7 @@ const SelectAirportDialog: React.FC<SelectAirportDialogProps> = ({
           </Text> */}
           <ChevronDown
             size={20}
-            className="font-base absolute -right-2 top-1/4 text-primary-500"
+            className="font-base absolute right-0 top-1/4 text-primary-500"
           />
         </Button>
       </DialogTrigger>

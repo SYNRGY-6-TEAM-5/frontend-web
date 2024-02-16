@@ -36,7 +36,7 @@ const SidebarLinks = ({ onClick = () => {} }: { onClick?: () => void }) => {
                 isActive
                   ? "border-b-primary-500 text-primary-500"
                   : "text-black"
-              } relative flex items-center border-none py-5 text-xs hover:cursor-pointer lg:border-b`}
+              } relative flex items-center border-0 py-5 text-xs hover:cursor-pointer lg:border-b`}
             >
               {item.icon}
               <p className="leading-1 ml-2 font-normal">{item.title}</p>
