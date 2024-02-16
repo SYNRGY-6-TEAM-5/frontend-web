@@ -33,6 +33,7 @@ import CheckInPage from "@/pages/profile/pages/checkin";
 import BookingRoute from "./BookingRoute";
 import FlightListRoute from "./FlightListRoute";
 import SuccessCheckIn from "@/pages/successCheckIn";
+import CopyrightSearch from "@/components/containers/Copyright";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
         <NavBar />
         <Home />
         <FooterSearch />
+        <CopyrightSearch />
       </>
     ),
   },

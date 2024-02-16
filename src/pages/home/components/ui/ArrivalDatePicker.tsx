@@ -28,9 +28,9 @@ const ArrivalDatePicker: React.FC<{ field: FieldProps }> = ({ field }) => {
             )}
           >
             {field.value ? (
-              format(field.value, "PPP")
+              format(field.value, "dd MMM yyyy")
             ) : (
-              <Text className="w-full text-start text-sm font-semibold text-slate-400 lg:text-sm">
+              <Text className="w-full text-start text-xs font-semibold text-slate-400 lg:text-sm">
                 Pick arrival date
               </Text>
             )}

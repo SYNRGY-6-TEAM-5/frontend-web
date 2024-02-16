@@ -44,21 +44,20 @@ const NavBar = () => {
     <header className="fixed left-0 top-0 z-50 h-auto w-full overflow-x-hidden bg-transparent">
       <Slide direction="down">
         <nav
-          className={`md:h-18 flex h-24 w-full items-center justify-end px-6 md:px-9 lg:justify-between lg:px-20 ${
+          className={`md:h-18 flex h-24 w-full items-center justify-end px-2 pr-4 md:px-9 lg:justify-between lg:px-20 ${
             navBarColor ? "bg-white" : "bg-transparent"
           }`}
         >
-          <div className="hidden w-full items-center lg:flex">
-            <Link
-              to={"/"}
-              className="text-color3 flex w-96 flex-1 items-center justify-start text-3xl font-medium md:text-5xl lg:text-4xl"
-            >
-              <MainLogo className="h-10 md:h-12" />
-              <Text className="pl-4 text-2xl font-medium tracking-tighter">
-                AeroSwift
-              </Text>
-            </Link>
-
+          <Link
+            to={"/"}
+            className="flex w-96 flex-1 items-center justify-start text-3xl font-medium md:text-5xl lg:text-4xl"
+          >
+            <MainLogo className="h-9 md:h-12" />
+            <Text className="pl-2 text-xl font-medium tracking-tighter md:pl-4 lg:text-2xl">
+              AeroSwift
+            </Text>
+          </Link>
+          <div className="ml-auto hidden w-full items-center justify-end lg:flex">
             <ul className="mr-14 flex items-center justify-end gap-8">
               {NavLinks.map((navlink, index) => (
                 <List className="w-full text-base" key={index}>
@@ -119,11 +118,13 @@ const NavBar = () => {
         className={`fixed top-0 flex h-screen w-full justify-end bg-gray-950/90 lg:hidden  ${
           open ? "right-0" : "-right-[120vw]"
         } transition-all duration-500 ease-out`}
+        onClick={handleToggle}
       >
         <div
           className={`relative flex h-screen w-[70%] flex-col items-center justify-between bg-white ${
             open ? "right-0" : "-right-[120vw]"
           } transition-all delay-300 duration-500 ease-out`}
+          onClick={(e) => e.stopPropagation()}
         >
           <section className="flex w-full flex-col gap-16 px-4 py-6">
             <div className="flex w-full items-center justify-between">
@@ -149,7 +150,7 @@ const NavBar = () => {
             </div>
             {location.pathname.startsWith("/profile") ? (
               <div>
-                <NavLink to={"/profile"} end>
+                <NavLink to={"/profile"} onClick={handleToggle} end>
                   {({ isActive }) => (
                     <div
                       className={`${
@@ -163,7 +164,7 @@ const NavBar = () => {
                     </div>
                   )}
                 </NavLink>
-                <SidebarLinks />
+                <SidebarLinks onClick={handleToggle} />
               </div>
             ) : (
               <ul className="flex flex-col gap-3 pl-2">

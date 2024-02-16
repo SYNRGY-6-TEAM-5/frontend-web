@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 export function CtaSection() {
   return (
     <section>
-      <div className="flex h-96 w-full flex-row items-center justify-start gap-20 bg-zinc-900 pl-20">
+      <div className="hidden md:flex h-96 w-full flex-row items-center justify-start gap-20 bg-zinc-900 md:pl-8 lg:pl-20">
         <div className="inline-flex w-3/5 flex-col items-start justify-center gap-14">
           <div className="flex h-48 flex-col items-start justify-center gap-5 self-stretch">
             <div className="text-4xl font-medium text-white">
@@ -37,7 +37,7 @@ export function CtaSection() {
         <Image
           className="h-[100%] w-[100%] md:h-[100%] md:w-[100%] lg:h-[100%] lg:w-3/5"
           image={NewsCard}
-          objectCover="cover"
+          objectCover="object-cover"
           alt="Hero Background Vector"
         />
       </div>

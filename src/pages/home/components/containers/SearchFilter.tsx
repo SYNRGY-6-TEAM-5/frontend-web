@@ -26,7 +26,7 @@ export function SearchFilter({ className, ...props }: CardProps) {
         <CardContent className="grid gap-4 p-4">
           <div className="flex flex-col items-center justify-center gap-2">
             <div className="rounded-md bg-black">
-              <Tabs defaultValue="one-way" className="w-[400px]" onValueChange={handleTabsChange}>
+              <Tabs defaultValue="one-way" className="w-screen md:w-[400px]" onValueChange={handleTabsChange}>
                 <TabsList className="grid w-72 grid-cols-3 bg-black">
                   <TabsTrigger value="one-way" className="text-white">
                     One-Way

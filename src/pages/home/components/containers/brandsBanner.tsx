@@ -2,7 +2,7 @@ import { AirAsia, Citilink, GarudaIndonesia, LionAir, BatikAir } from "@/assets/
 
 const BrandBanner = () => {
   return (
-    <div className={`md:h-18 flex h-24 w-full items-center justify-end bg-white pb-28 pt-16 px-6 lg:justify-between lg:px-20`}>
+    <div className="hidden md:flex w-full items-center justify-end bg-white pt-20 px-6 lg:justify-between lg:px-20">
       <div className="flex w-full items-center justify-between gap-10">
         <AirAsia className="h-8 md:h-8" />
         <Citilink className="h-8 md:h-8" />
