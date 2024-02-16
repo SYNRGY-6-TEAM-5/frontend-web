@@ -3,8 +3,15 @@ import { Card, CardHeader } from "@/components/ui/card";
 import { BaggageInsurance, FlightDelay, FullProtect } from "@/assets/svg";
 import React from "react";
 import { TripInsurance, useAddOnsStore } from "@/store/useAddOnsStore";
+import { Button } from "@/components/ui/button";
+import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 
-const ExtraProtect: React.FC = () => {
+interface ExtraProtectProps {
+  nextStep: () => void;
+  prevStep: () => void;
+}
+
+const ExtraProtect: React.FC<ExtraProtectProps> = ({ nextStep, prevStep }) => {
   const tripInsurance: TripInsurance = useAddOnsStore((state) => state.tripInsurance);
   const updateTripInsurance = useAddOnsStore((state) => state.updateTripInsurance);
 
@@ -186,6 +193,15 @@ const ExtraProtect: React.FC = () => {
             </div>
           </div>
         </CardHeader>
+        <div className="flex justify-between items-center pt-6">
+          <Button onClick={prevStep} variant="ghost"><ChevronLeftIcon />Back</Button>
+          <Button
+            onClick={nextStep}
+            variant="primary"
+          >
+            Next <ChevronRightIcon />
+          </Button>
+        </div>
       </Card>
     </>
   );
