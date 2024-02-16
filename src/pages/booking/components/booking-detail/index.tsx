@@ -46,7 +46,7 @@ const BookingSection: React.FC<BookingSectionProps> = ({
         </div>
       </div>
       <div className="flex h-[226px] flex-col items-start justify-center gap-6 self-stretch">
-        <div className="inline-flex items-center justify-center md:justify-between self-stretch rounded-2xl bg-neutral-900 p-3">
+        <div className="inline-flex items-center justify-between self-stretch rounded-2xl bg-neutral-900 p-3">
           <div className="inline-flex flex-col items-end justify-center gap-1">
             <Text className="text-3xl font-semibold text-white">
               {departure.code}

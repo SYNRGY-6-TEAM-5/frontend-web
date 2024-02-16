@@ -98,7 +98,7 @@ const AccordionFormItem: React.FC<AccordionFormItemProps> = ({
               disabled
               className="w-1/2 bg-slate-200 data-[state=active]:bg-white"
             >
-              Saved Passenger - Coming Soon
+              Saved Passenger
             </TabsTrigger>
           </TabsList>
           <TabsContent
