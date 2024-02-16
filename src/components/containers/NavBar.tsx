@@ -28,7 +28,10 @@ const NavBar = () => {
   };
 
   const listenScrollEvent = () => {
-    window.scrollY > 10 ? setNavBarColor(true) : setNavBarColor(false);
+    console.log(window.scrollY);
+    if (window.scrollY > 0) {
+      window.scrollY > 10 ? setNavBarColor(true) : setNavBarColor(false);
+    }
   };
 
   useEffect(() => {

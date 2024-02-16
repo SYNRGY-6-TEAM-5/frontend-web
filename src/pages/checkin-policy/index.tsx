@@ -100,7 +100,7 @@ const CheckinPolicy = ({ booking, passanger }: props) => {
     return (
       <Drawer>
         <DrawerTrigger asChild>{canCheckin()}</DrawerTrigger>
-        <DrawerContent className="max-h-[90vh] w-full px-4">
+        <DrawerContent className="max-h-[85vh] w-full px-4">
           <DrawerHeader style={{ position: "relative" }}>
             <DrawerTitle>Check-In Online Policy</DrawerTitle>
           </DrawerHeader>

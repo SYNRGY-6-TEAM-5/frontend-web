@@ -86,7 +86,7 @@ const DialogBoardingPass = ({ booking }: props) => {
         <DrawerTrigger className="h-14 w-full rounded-xl bg-primary-500 text-sm text-white">
           See Boarding Pass
         </DrawerTrigger>
-        <DrawerContent className="max-h-[95vh] w-full">
+        <DrawerContent className="max-h-[90vh] w-full">
           <div className="overflow-auto">
             <div ref={myElementRef} className="bg-white p-4">
               <DrawerHeader>
