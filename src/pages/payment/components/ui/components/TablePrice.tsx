@@ -35,7 +35,7 @@ const TablePrice = ({ summary_data }: priceDetails) => {
               <Text>{data.arriveCity}</Text>
             </div>
             <Table className="border border-gray-200">
-              <TableHeader className="rounded-lg bg-black text-white hover:bg-white hover:text-black">
+              <TableHeader className="rounded-lg bg-black text-white hover:bg-black">
                 <TableRow>
                   <TableHead className="rounded-ss-lg border border-white text-white">
                     Passenger
@@ -78,7 +78,7 @@ const TablePrice = ({ summary_data }: priceDetails) => {
                           {passenger.baggage ? (
                             <div className="flex items-center justify-between">
                               <span>{passenger.baggage.baggage_weight}</span>
-                              <span>IDR {passenger.baggage.baggage_price}</span>
+                              <span>IDR {parseFloat(passenger.baggage.baggage_price)}</span>
                             </div>
                           ) : (
                             <div>No baggage available</div>
@@ -93,7 +93,7 @@ const TablePrice = ({ summary_data }: priceDetails) => {
                                 className="flex items-center justify-between"
                               >
                                 <span>{meal.meal_name}</span>
-                                <span>IDR {meal.meal_price}</span>
+                                <span>IDR {parseFloat(meal.meal_price)}</span>
                               </div>
                             ))
                           ) : (
@@ -117,8 +117,9 @@ const TablePrice = ({ summary_data }: priceDetails) => {
         <div className="mb-4 flex space-x-1">
           <Text>Flight Insurance</Text>
         </div>
+        {summary_data[0].trip_insurance[0].type !== "" ? (
         <Table className="border border-gray-200">
-          <TableHeader className="rounded-lg bg-black text-white hover:bg-white hover:text-black">
+          <TableHeader className="bg-black text-white hover:bg-black">
             <TableRow>
               <TableHead className="rounded-ss-lg border border-white text-white">
                 Type
@@ -141,6 +142,7 @@ const TablePrice = ({ summary_data }: priceDetails) => {
             )}
           </TableBody>
         </Table>
+        ) : (<Text className=" text-xs">No Flight Insurance</Text>)}
       </div>
     </>
   );

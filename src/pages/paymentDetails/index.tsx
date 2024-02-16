@@ -61,9 +61,9 @@ const PaymentDetails = () => {
   }, [completeBookingData, count_down, clientSecret]);
 
   return (
-    <section className="grid gap-12 px-20 pb-4 xs:grid-cols-1 lg:grid-cols-3">
-      <div className="col-span-2 flex flex-col space-y-9">
-      <Timer
+    <section className="grid gap-6 lg:gap-12 lg:px-20 px-10 pb-4 xs:grid-cols-1 lg:grid-cols-3">
+      <div className="lg:col-span-2 flex flex-col space-y-9">
+        <Timer
           isTargetAchieved={isTargetAchieved} timeValues={timer.getTimeValues()}
         />
         {stripePromise && clientSecret && (
