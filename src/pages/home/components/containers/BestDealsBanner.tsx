@@ -12,21 +12,28 @@ import {
 
 export function BestDealsBanner() {
   return (
-    <div className="flex w-full flex-col items-start justify-start gap-8 px-20 py-10">
+    <div className="flex w-full flex-col items-start justify-start gap-0 px-2 py-8 md:gap-8 md:px-8 md:pt-28 lg:h-full lg:px-20">
       <div>
-        <Text className="text-color3 text-4xl font-semibold">
+        <Text className="text-color3 text-lg font-semibold capitalize md:text-4xl">
           Best deals for you
         </Text>
       </div>
-      <Carousel className="w-full py-4">
-        <CarouselContent className="w-full">
+      <Carousel
+        className="relative w-full py-4"
+        opts={{
+          align: "start",
+          loop: true,
+        }}
+      >
+        <CarouselContent className="w-full ml-0">
           {Array.from({ length: 5 }).map((_, index) => (
-            <CarouselItem key={index}>
-              <div className="p-1">
+            <CarouselItem key={index} className="w-screen pl-0">
+              <div className="w-full p-1">
                 <Card>
-                  <CardContent className="flex aspect-auto items-start justify-start">
+                  <CardContent className="w-full h-full">
                     <Image
-                      className="w-[100%] md:w-[100%] lg:w-full"
+                      className="w-full h-full"
+                      objectCover="object-cover rounded-xl"
                       image={FirstCarousel}
                       alt="Hero Background Vector"
                     />
@@ -36,8 +43,8 @@ export function BestDealsBanner() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="absolute -left-4 top-64 -translate-y-1/2 transform" />
-        <CarouselNext className="absolute right-1 top-64 -translate-y-1/2 transform" />
+        <CarouselPrevious className="absolute left-2" />
+        <CarouselNext className="absolute right-2" />
       </Carousel>
     </div>
   );
