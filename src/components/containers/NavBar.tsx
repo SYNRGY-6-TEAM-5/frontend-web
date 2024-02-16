@@ -4,16 +4,19 @@ import { NavButtons, NavLinks } from "../particles/DataLists";
 import { List } from "@/components/ui/List";
 import { MainLogo } from "@/assets/svg";
 import { Text } from "@mantine/core";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { ArrowCircleRight, CirclesFour } from "@phosphor-icons/react";
 import { Slide } from "react-awesome-reveal";
 
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, CircleUserRound } from "lucide-react";
 import Cookies from "js-cookie";
 import NavProfile from "./NavProfile";
+import SidebarLinks from "@/pages/profile/components/SidebarLinks";
+import LogoutButton from "@/pages/profile/components/Logout";
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const token = Cookies.get("accesstoken");
 
   const [open, setOpen] = useState(false);
@@ -34,6 +37,8 @@ const NavBar = () => {
       window.removeEventListener("scroll", listenScrollEvent);
     };
   }, []);
+
+  console.log(location.pathname);
 
   return (
     <header className="fixed left-0 top-0 z-50 h-auto w-full overflow-x-hidden bg-transparent">
@@ -122,9 +127,15 @@ const NavBar = () => {
         >
           <section className="flex w-full flex-col gap-16 px-4 py-6">
             <div className="flex w-full items-center justify-between">
-              <Text className=" text-color3 text-3xl font-medium md:text-5xl lg:text-4xl">
-                AeroSwift
-              </Text>
+              <Link
+                to={"/"}
+                className="text-color3 flex w-96 flex-1 items-center justify-start text-3xl font-medium md:text-5xl lg:text-4xl"
+              >
+                <MainLogo className="h-10 md:h-12" />
+                <Text className="pl-4 text-2xl font-medium tracking-tighter">
+                  AeroSwift
+                </Text>
+              </Link>
               <div
                 className="hamburger cursor-pointer text-gray-950"
                 onClick={handleToggle}
@@ -136,36 +147,72 @@ const NavBar = () => {
                 />
               </div>
             </div>
-            <ul className="flex flex-col gap-3 pl-2">
-              {NavLinks.map((navlink, index) => (
-                <List className="w-full text-base" key={index}>
-                  <NavLink
-                    to={navlink.url}
-                    onClick={handleToggle}
-                    className={`before:bg-color2 relative inline-block overflow-hidden before:absolute before:-left-full before:bottom-0 before:h-0.5 before:w-full before:rounded-full before:transition-all before:duration-200 before:ease-in hover:before:left-0 `}
-                  >
-                    {navlink.name}
-                  </NavLink>
-                </List>
-              ))}
-            </ul>
+            {location.pathname.startsWith("/profile") ? (
+              <div>
+                <NavLink to={"/profile"} end>
+                  {({ isActive }) => (
+                    <div
+                      className={`${
+                        isActive
+                          ? "border-b-primary-500 text-primary-500"
+                          : "text-black"
+                      } relative flex items-center border-none py-5 text-xs hover:cursor-pointer lg:border-b`}
+                    >
+                      <CircleUserRound strokeWidth={1.4} className="h-4 w-4" />
+                      <p className="leading-1 ml-2 font-normal">My Flight</p>
+                    </div>
+                  )}
+                </NavLink>
+                <SidebarLinks />
+              </div>
+            ) : (
+              <ul className="flex flex-col gap-3 pl-2">
+                {NavLinks.map((navlink, index) => (
+                  <List className="w-full text-base" key={index}>
+                    <NavLink
+                      to={navlink.url}
+                      onClick={handleToggle}
+                      className={`before:bg-color2 relative inline-block overflow-hidden before:absolute before:-left-full before:bottom-0 before:h-0.5 before:w-full before:rounded-full before:transition-all before:duration-200 before:ease-in hover:before:left-0 `}
+                    >
+                      {navlink.name}
+                    </NavLink>
+                  </List>
+                ))}
+              </ul>
+            )}
           </section>
-          <ul className="flex w-full items-center justify-end gap-4 pb-24">
-            {NavButtons.map((navbutton, index) => (
-              <List className="w-auto" key={index}>
-                <Button
-                  onClick={() => navigate(navbutton.url)}
-                  type="button"
-                  className={`${
-                    navbutton.name === "Signup"
-                      ? "border-2 border-gray-950 before:top-0"
-                      : "border-b-2 border-white before:bottom-0 hover:border-gray-950"
-                  } before:bg-color2 relative z-10 px-5 py-1.5 text-base before:absolute before:left-0 before:-z-10 before:h-0 before:w-full before:transition-all before:duration-300 before:ease-in before:content-[''] hover:before:h-full`}
-                >
-                  {navbutton.name}
-                </Button>
-              </List>
-            ))}
+          <ul className="flex w-full items-center justify-start gap-4 px-4 pb-4">
+            {token ? (
+              <div className="w-full">
+                <LogoutButton />
+                <NavProfile />
+              </div>
+            ) : (
+              NavButtons.map((navbutton, index) => (
+                <List className="w-auto" key={index}>
+                  <Button
+                    key={index}
+                    onClick={() => navigate(navbutton.url)}
+                    type="button"
+                    variant={`${
+                      navbutton.name === "Sign In" ? "black" : "outline"
+                    }`}
+                    className={`
+                      relative z-10 rounded-xl px-6 py-2 text-lg font-medium
+                      before:absolute before:left-0 before:-z-10 before:h-0 before:w-full
+                      before:transition-all before:duration-300 before:ease-in before:content-[''] 
+                      hover:before:h-full
+                      ${
+                        navbutton.name !== "Sign In"
+                          ? "text-black"
+                          : "text-white"
+                      }`}
+                  >
+                    {navbutton.name}
+                  </Button>
+                </List>
+              ))
+            )}
           </ul>
         </div>
       </nav>

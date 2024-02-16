@@ -32,7 +32,7 @@ const ActiveOrder = ({ BookingUser }: BookingUserArr) => {
   };
 
   return (
-    <div className="grid grid-cols-1 gap-x-8 gap-y-8 lg:grid-cols-2">
+    <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-2">
       {filteredOrder.map((order) => {
         const departure = order.tickets[0].flight.departure;
         const arrival = order.tickets[0].flight.arrival;

@@ -42,10 +42,10 @@ const Notification = ({ data, handleClickNotif }: props) => {
           className="flex cursor-pointer border-b py-6"
           onClick={handleClickNotif}
         >
-          <div className="relative mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-primary-100 text-primary-500">
+          <div className="relative mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-primary-100 text-primary-500 flex-none">
             {logo[data.type]}
             {!data.read && (
-              <div className="absolute right-1 top-0 h-[9px] w-[9px] rounded-full border-[2px] border-white bg-primary-500" />
+              <div className="absolute right-1 top-0 h-[9px] w-[9px] rounded-full border-[2px] border-white bg-primary-500 flex-auto" />
             )}
           </div>
           <div>

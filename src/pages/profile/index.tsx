@@ -12,7 +12,7 @@ const Profile = () => {
     <>
       <NavBar />
       <div className="relative mt-24 flex min-h-screen bg-[#FBFBFB] px-6 md:px-9 lg:justify-between lg:px-20 ">
-        <div className="my-8 mr-20 w-[343px] flex-none">
+        <div className="my-8 mr-10 xl:mr-20 hidden w-[343px] xl:flex-none lg:block">
           <div className="sticky top-32 rounded-xl bg-white shadow-sm">
             <ProfileCard />
             <div className="px-3">

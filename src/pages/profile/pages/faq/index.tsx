@@ -75,7 +75,7 @@ const Faq = () => {
           value="item-5"
           className="rounded-lg border-0 bg-white px-3 shadow"
         >
-          <AccordionTrigger className="text-sm font-medium">
+          <AccordionTrigger className="text-sm font-medium text-start">
             5. What information should I input when ordering?
           </AccordionTrigger>
           <AccordionContent>
