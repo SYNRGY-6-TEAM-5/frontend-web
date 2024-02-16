@@ -54,7 +54,7 @@ const TablePrice = ({ summary_data }: priceDetails) => {
                           1,
                         )} (${value})`}</TableCell>
                         <TableCell>
-                          IDR {value * parseFloat(data.price)}
+                          IDR {(value * parseFloat(data.price)).toLocaleString()}
                         </TableCell>
                       </TableRow>
                     );
@@ -78,7 +78,7 @@ const TablePrice = ({ summary_data }: priceDetails) => {
                           {passenger.baggage ? (
                             <div className="flex items-center justify-between">
                               <span>{passenger.baggage.baggage_weight}</span>
-                              <span>IDR {parseFloat(passenger.baggage.baggage_price)}</span>
+                              <span>IDR {parseFloat(passenger.baggage.baggage_price).toLocaleString()}</span>
                             </div>
                           ) : (
                             <div>No baggage available</div>
@@ -93,7 +93,7 @@ const TablePrice = ({ summary_data }: priceDetails) => {
                                 className="flex items-center justify-between"
                               >
                                 <span>{meal.meal_name}</span>
-                                <span>IDR {parseFloat(meal.meal_price)}</span>
+                                <span>IDR {parseFloat(meal.meal_price).toLocaleString()}</span>
                               </div>
                             ))
                           ) : (
@@ -134,7 +134,7 @@ const TablePrice = ({ summary_data }: priceDetails) => {
               insurance.type !== "" ? (
                 <TableRow key={`insurance-${index}`}>
                   <TableCell>{insurance.type}</TableCell>
-                  <TableCell>IDR {insurance.price}</TableCell>
+                  <TableCell>IDR {insurance.price.toLocaleString()}</TableCell>
                 </TableRow>
               ) : (
                 ""
