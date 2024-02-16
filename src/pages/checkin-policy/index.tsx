@@ -7,6 +7,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import { useState } from "react";
 import PassengerRequirements from "./components/PassengerRequirement";
 import DangerousGoods from "./components/DangerousGoods";
@@ -15,6 +22,7 @@ import { BookingUser, Passenger } from "@/types/BookingUser";
 import { format, isAfter, isBefore, sub } from "date-fns";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCheckInStore } from "@/store/useCheckInStore";
+import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 interface props {
   booking: BookingUser;
   passanger: Passenger[];
@@ -24,6 +32,8 @@ const CheckinPolicy = ({ booking, passanger }: props) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { setUserData, setSelectedUser } = useCheckInStore();
+  const [checkbox, setCheckbox] = useState(false);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const setupCheckin = () => {
     const formatPass = passanger.map((item) => ({
@@ -86,7 +96,60 @@ const CheckinPolicy = ({ booking, passanger }: props) => {
     }
   };
 
-  const [checkbox, setCheckbox] = useState(false);
+  if (!isDesktop) {
+    return (
+      <Drawer>
+        <DrawerTrigger asChild>{canCheckin()}</DrawerTrigger>
+        <DrawerContent className="max-h-[90vh] w-full px-4">
+          <DrawerHeader style={{ position: "relative" }}>
+            <DrawerTitle>Check-In Online Policy</DrawerTitle>
+          </DrawerHeader>
+          <div className="overflow-auto">
+            <PassengerRequirements />
+            <ImportantInformation />
+            <DangerousGoods />
+            <div>
+              <div className=" flex items-start">
+                <div className="flex items-center gap-2 text-xs">
+                  <input
+                    type="checkbox"
+                    id="baggage-insurance-checkbox"
+                    checked={checkbox}
+                    onChange={() => setCheckbox(!checkbox)}
+                    value=""
+                    className="h-3 w-3 text-xs accent-primary-500"
+                  />
+                  <label
+                    htmlFor="baggage-insurance-checkbox"
+                    className={
+                      checkbox
+                        ? "text-xs font-medium  text-black"
+                        : "text-xs font-medium text-gray-300"
+                    }
+                  >
+                    I agree to the{" "}
+                    <span className="font-semibold">check-in policy</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <Button
+              type="button"
+              variant="primary"
+              className={`mt-6 h-14 w-full rounded-xl ${
+                !checkbox && "cursor-not-allowed"
+              }`}
+              disabled={!checkbox}
+              onClick={setupCheckin}
+            >
+              Continue
+            </Button>
+          </div>
+        </DrawerContent>
+      </Drawer>
+    );
+  }
+
   return (
     <>
       <Dialog>

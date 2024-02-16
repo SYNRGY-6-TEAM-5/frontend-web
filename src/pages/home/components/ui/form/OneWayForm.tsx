@@ -204,8 +204,8 @@ const OneWayForm = ({ tripType }: props) => {
           render={({}) => (
             <FormItem>
               <div className="rounded-md border bg-white p-4">
-                <div className="flex flex-1 flex-row items-center justify-between gap-3 bg-white">
-                  <div className="flex flex-col bg-white">
+                <div className="flex flex-1 flex-row items-center gap-4 bg-white">
+                  <div className="flex flex-1 flex-col bg-white">
                     <div className="pointer-events-none inset-y-0 start-0 mb-3 flex flex-row items-start">
                       <AirplaneTakeoff className="h-4 w-4" />
                       <label
@@ -234,7 +234,7 @@ const OneWayForm = ({ tripType }: props) => {
                     <ArrowsLeftRight size={42} className="absolute h-4 w-4" />
                   </Button>
 
-                  <div className="flex flex-col bg-white">
+                  <div className="flex flex-1 flex-col bg-white">
                     <div className="pointer-events-none inset-y-0 start-0 mb-3 flex flex-row items-center">
                       <AirplaneLanding className="h-4 w-4" />
                       <label

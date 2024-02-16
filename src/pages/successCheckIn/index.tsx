@@ -18,9 +18,9 @@ const SuccessCheckIn = () => {
   return (
     <>
       <NavBar />
-      <div className="relative mt-24 flex min-h-screen bg-[#FBFBFB] px-6 md:px-9 lg:justify-between lg:px-20 ">
-        <div className="mt-8 flex grow justify-center">
-          <div className="flex max-w-[607px] flex-col justify-center">
+      <div className="relative mt-24 flex min-h-screen bg-[#FBFBFB] md:px-9 lg:justify-between lg:px-20 ">
+        <div className="my-8 flex grow justify-center">
+          <div className="flex w-screen flex-col justify-center max-w-[607px]">
             <img
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/0881904347f5635c44f30f51f8f4cd2488a37bd1afbbc92ed2799aed75a5fc99?"
