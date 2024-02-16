@@ -251,6 +251,7 @@ const MethodDetails = ({ bankMethod }: { bankMethod: string }) => {
                 type="button"
                 variant="outline"
                 className="h-14 w-40 rounded-xl py-4 text-black"
+                onClick={() => navigate("/profile")}
               >
                 See Order List
               </Button>

@@ -35,8 +35,8 @@ const TablePrice = ({ summary_data }: priceDetails) => {
               <Text>{data.arriveCity}</Text>
             </div>
             <Table className="border border-gray-200">
-              <TableHeader className="rounded-lg bg-black text-white hover:bg-black">
-                <TableRow>
+              <TableHeader >
+                <TableRow className="rounded-lg bg-black text-white hover:bg-black">
                   <TableHead className="rounded-ss-lg border border-white text-white">
                     Passenger
                   </TableHead>
@@ -119,8 +119,8 @@ const TablePrice = ({ summary_data }: priceDetails) => {
         </div>
         {summary_data[0].trip_insurance[0].type !== "" ? (
         <Table className="border border-gray-200">
-          <TableHeader className="bg-black text-white hover:bg-black">
-            <TableRow>
+          <TableHeader>
+            <TableRow className="bg-black text-white hover:bg-black">
               <TableHead className="rounded-ss-lg border border-white text-white">
                 Type
               </TableHead>
