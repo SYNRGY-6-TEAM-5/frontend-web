@@ -17,7 +17,6 @@ const ListTicket = () => {
   const { cart } = useCartStore();
   const { setIsFetchedAfterMount, tripDetails } = useSearchTicketStore();
   const [searchParams, setSearchParams] = useState<URLSearchParams>(new URLSearchParams(location.search));
-  const [totalData, setTotalData] = useState<number>(0);
 
   useEffect(() => {
     setSearchParams(new URLSearchParams(location.search));
@@ -42,7 +41,6 @@ const ListTicket = () => {
 
   useEffect(() => {
     setIsFetchedAfterMount(depIsFetching || retIsFetching);
-    setTotalData(depData?.count);
   }, [depIsFetching, retIsFetching]);
 
   return (

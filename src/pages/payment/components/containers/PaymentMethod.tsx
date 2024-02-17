@@ -1,6 +1,5 @@
 import { Text } from "@mantine/core";
 import { Image } from "@/components/ui/Image";
-import { useState } from "react";
 import { Bca, BankMandiri, Ocbc, MasterCard } from "@/assets/svg";
 
 const methodData = [
