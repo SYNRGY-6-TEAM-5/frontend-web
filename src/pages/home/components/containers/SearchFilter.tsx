@@ -14,7 +14,6 @@ export function SearchFilter({ className, ...props }: CardProps) {
 
   const handleTabsChange = (value: string) => {
     setTripType(value);
-    console.log(tripType);
   };
 
   return (

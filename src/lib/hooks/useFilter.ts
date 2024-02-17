@@ -63,7 +63,7 @@ export default function useFilter() {
             setAirlines(response?.data.data);
             setMeta(response.data.meta);
         } catch (error) {
-            console.log('error > ', error);
+            console.error('error > ', error);
         } finally {
             setLoading(false);
         }

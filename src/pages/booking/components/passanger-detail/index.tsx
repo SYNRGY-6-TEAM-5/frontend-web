@@ -89,8 +89,6 @@ const PassangerDetail: React.FC<PassangerDetailProps> = ({ nextStep, prevStep })
     passengerDetails.length === tripDetails.total_seat &&
     passengerDetails.length !== 0;
 
-  console.log("isInternational:", isInternational);
-
   return (
     <section className={`flex flex-col gap-2 mb-8 ${!areContactDetailsFilled ? "opacity-45 pointer-events-none" : ""}`}>
       <div className="px-2">

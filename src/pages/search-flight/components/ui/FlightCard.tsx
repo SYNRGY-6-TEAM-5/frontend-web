@@ -49,17 +49,17 @@ const FlightCard = ({ ticket, tripType }: props) => {
     <Button
       onClick={() => handleAddToCart(ticket, tripType)}
       variant="ghost"
-      className="h-46 mx-auto flex w-full flex-row items-center justify-between overflow-hidden rounded-xl border border-gray-100 bg-white px-4 py-6"
+      className="mx-auto w-full md:w-full h-full flex flex-col md:flex-row items-center justify-between overflow-hidden rounded-xl border border-gray-100 bg-white px-4 gap-4"
     >
-      <div className="flex items-center">
-        <div className="flex flex-col w-36 items-center justify-center gap-4">
+      <div className="flex flex-col md:flex-row justify-between gap-3 items-center">
+        <div className="flex flex-row md:flex-col items-center justify-between md:justify-center gap-4 md:gap-6">
           <img src={ticket.flight.airline.image} alt={ticket.flight.airline.name} width={48} />
           <div className="text-Base-Black font-inter leading-38 text-[30px] font-semibold">
             {ticket.flight.iata}
           </div>
         </div>
-        <div className="mx-7 h-[116px] w-px bg-gray-200"></div>
-        <div className="flex h-[116px] w-[340px] items-center justify-between rounded-[16px] bg-[#111] p-3 ">
+        <div className="mx-7 hidden md:block h-[116px] w-px bg-gray-200"></div>
+        <div className="flex h-[116px] w-[340px] items-center justify-between rounded-[16px] bg-[#111] p-3 gap-5">
           <div className="text-white">
             <div className="text-3xl font-semibold">
               {ticket.flight.departure.airport_details.iata_code}
@@ -90,7 +90,7 @@ const FlightCard = ({ ticket, tripType }: props) => {
       </div>
       <div className="flex flex-col gap-2">
         <div className="flex gap-3">
-          <div className="flex h-9 w-9 rounded-full bg-[#F74E28]">
+          <div className="flex h-9 w-9 rounded-full bg-primary-500">
             <svg
               className="m-auto"
               xmlns="http://www.w3.org/2000/svg"
@@ -105,7 +105,7 @@ const FlightCard = ({ ticket, tripType }: props) => {
               />
             </svg>
           </div>
-          <div className="flex h-9 w-9 rounded-full bg-[#F74E28]">
+          <div className="flex h-9 w-9 rounded-full bg-primary-500">
             <svg
               className="m-auto"
               xmlns="http://www.w3.org/2000/svg"
@@ -121,7 +121,7 @@ const FlightCard = ({ ticket, tripType }: props) => {
             </svg>
           </div>
         </div>
-        <div className="flex justify-center gap-2">
+        <div className="flex w-80 justify-start gap-2">
           <div className="text-Base-Black leading-24 text-[16px] font-normal">
             {" "}
             Excess baggage (+)
@@ -131,8 +131,8 @@ const FlightCard = ({ ticket, tripType }: props) => {
           </span>
         </div>
       </div>
-      <div className="flex flex-col items-end">
-        <div className="text-3xl font-medium leading-9 text-[#F74E28]">
+      <div className="flex flex-row md:flex-col w-96 md:w-full justify-end gap-2 items-center md:items-end pr-3 md:pr-0">
+        <div className="text-xl font-medium leading-9 text-primary-500">
           IDR {formatMoney(ticket.fare_amount)}
         </div>
         <div className="font-inter leading-32 font-regular text-[24px] text-gray-500">

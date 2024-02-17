@@ -28,11 +28,10 @@ export default function useHome() {
 
                 }
             );
-            console.log("Response hook >>> ", response);
             setAirports(response?.data.data);
             setMeta(response.data.meta);
         } catch (error) {
-            console.log('error > ', error);
+            console.error('error > ', error);
         } finally {
             setLoading(false);
         }
@@ -44,7 +43,6 @@ export default function useHome() {
             ...params,
             search: value,
         });
-        console.log(params)
     };
 
     const handleSubmit = (data: any) => {

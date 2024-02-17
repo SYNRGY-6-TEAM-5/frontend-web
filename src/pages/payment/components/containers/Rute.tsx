@@ -1,5 +1,5 @@
 import { differenceInMinutes, format } from "date-fns";
-import ArrowCircle from "../../../../assets/ArrowCircleRight.png";
+import ArrowCircle from "@/assets/ArrowCircleRight.png";
 interface PlaneRoute {
   departure:string,
   departureTime:string,
@@ -51,9 +51,7 @@ const Rute = ({departure, departureTime, desc, arrival, arrivalTime}:PlaneRoute)
         <div className="text-sm">
           {timeData.timeTravel}
         </div>
-        <div>
           <img src={ArrowCircle} alt="" />
-        </div>
         <div className="rounded-full bg-white px-2 py-1 text-xs  font-medium text-black">
           {desc}
         </div>

@@ -68,8 +68,6 @@ const PassengerUpdateForm: React.FC<PassengerUpdateFormProps> = ({
     },
   });
 
-  console.log("Formik date value >>> ", formikHook.values.date_of_birth);
-
   useEffect(() => {
     if (data && data[0].name !== undefined) {
       setPassengerName(data[0].name);
@@ -89,10 +87,7 @@ const PassengerUpdateForm: React.FC<PassengerUpdateFormProps> = ({
           image_url: doc.file,
         })),
       });
-      console.log("data [0] date value >>> ", data[0].date_of_birth);
     }
-
-    console.log("formikValues >>> ", formikValues);
   }, [data]);
 
   return (
@@ -111,7 +106,6 @@ const PassengerUpdateForm: React.FC<PassengerUpdateFormProps> = ({
               onSubmit={(values) => {
                 console.log("onSubmit", JSON.stringify(values, null, 2));
                 // handleAddToPassengerDetails(values);
-                // console.log(passengerDetails);
               }}
               validateOnBlur
             >

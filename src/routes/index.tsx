@@ -34,6 +34,7 @@ import BookingRoute from "./BookingRoute";
 import FlightListRoute from "./FlightListRoute";
 import SuccessCheckIn from "@/pages/successCheckIn";
 import CopyrightSearch from "@/components/containers/Copyright";
+import ETicketPrint from "@/pages/print/ETicketPrint";
 
 const router = createBrowserRouter([
   {
@@ -213,25 +214,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/profile/booking/success/:id",
-    element: <SuccessCheckIn />,
-  },
-  {
-    path: "/dashboard",
     element: (
       <ProtectedRoute>
-        <></>
+        <SuccessCheckIn />
       </ProtectedRoute>
     ),
-    children: [
-      {
-        path: "/dashboard/cars",
-        element: <></>,
-      },
-      {
-        path: "/dashboard/cars/:id",
-        element: <></>,
-      },
-    ],
+  },
+  {
+    path: "/profile/booking/print/:id",
+    element: (
+      <ProtectedRoute>
+        <ETicketPrint />
+      </ProtectedRoute>
+    ),
   },
 ]);
 

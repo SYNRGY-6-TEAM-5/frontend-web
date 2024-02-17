@@ -12,8 +12,6 @@ const FlightAddOnCard: React.FC<FlightAddOnCardProps> = ({ type }) => {
   const { cart } = useCartStore();
   const { personAddOns } = useAddOnsStore();
 
-  console.log("Person Add On  >>> ", personAddOns);
-
   return (
     <div className="w-full ">
       {cart.map((cartItem, index) => (

@@ -6,8 +6,6 @@ import { useSavedPassengerStore } from "@/store/usePassengerStore";
 const Passenger = () => {
   const { selected_passenger_id, isAddingPassenger } = useSavedPassengerStore();
 
-  console.log("selected_passenger_id: ", selected_passenger_id)
-
   return (
     <div>
       {isAddingPassenger ? (

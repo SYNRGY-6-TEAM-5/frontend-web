@@ -199,8 +199,6 @@ const AddOnsContent: React.FC<AddOnsContentProps> = ({ cart_index }) => {
           baggage: returnBaggageAddOn,
         },
       };
-
-      console.log(personAddOns);
       handleAddPassengersAddOns(personAddOns);
       updateCompleteBookingData(updatedCompleteBookingData, cart);
     } else {

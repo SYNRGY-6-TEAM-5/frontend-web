@@ -17,6 +17,13 @@ const HeaderDetailBooking = ({
   ticket_type: string;
 }) => {
   const navigate = useNavigate();
+  const handleClick = () => {
+    window.open(
+      `/profile/booking/print/${booking_id}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
+  };
 
   return (
     <div className="mb-10 flex items-center justify-between">
@@ -42,7 +49,11 @@ const HeaderDetailBooking = ({
           Order ID: {booking_id}
         </Text>
       </div>
-      <Button className="flex items-center justify-end p-0">
+      <Button
+        type="button"
+        onClick={handleClick}
+        className="flex items-center justify-end p-0"
+      >
         <DirectBox />
       </Button>
     </div>

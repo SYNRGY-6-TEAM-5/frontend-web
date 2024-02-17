@@ -162,7 +162,7 @@ const MethodDetails = ({ bankMethod }: { bankMethod: string }) => {
   }, [countdown, navigate, paymentSuccess]);
 
   return (
-    <div className="flex flex-col space-y-10">
+    <div className="flex flex-col space-y-5 lg:space-y-10">
       {bankMethod !== "debit" ? (
         <>
           <div>
@@ -207,7 +207,7 @@ const MethodDetails = ({ bankMethod }: { bankMethod: string }) => {
               className="w-full rounded-lg border p-2 text-sm"
             >
               <AccordionItem value="item-1">
-                <AccordionTrigger>Transfer via ATM</AccordionTrigger>
+                <AccordionTrigger className="text-left">Transfer via ATM</AccordionTrigger>
                 <AccordionContent className="grid gap-2">
                   {filteredMethod[0].atm.map((atmMethod, i) => (
                     <div className="flex items-center gap-x-3" key={i}>
@@ -218,7 +218,7 @@ const MethodDetails = ({ bankMethod }: { bankMethod: string }) => {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-2">
-                <AccordionTrigger>
+                <AccordionTrigger className="text-left">
                   Transfer via Internet Banking
                 </AccordionTrigger>
                 <AccordionContent className="grid gap-2">
@@ -231,7 +231,7 @@ const MethodDetails = ({ bankMethod }: { bankMethod: string }) => {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-3">
-                <AccordionTrigger>Transfer via Mobile Banking</AccordionTrigger>
+                <AccordionTrigger className="text-left">Transfer via Mobile Banking</AccordionTrigger>
                 <AccordionContent className="grid gap-2">
                   {filteredMethod[0].mobile.map((mobileMethod, i) => (
                     <div className="flex items-center gap-x-3" key={i}>
@@ -251,6 +251,7 @@ const MethodDetails = ({ bankMethod }: { bankMethod: string }) => {
                 type="button"
                 variant="outline"
                 className="h-14 w-40 rounded-xl py-4 text-black"
+                onClick={() => navigate("/profile")}
               >
                 See Order List
               </Button>

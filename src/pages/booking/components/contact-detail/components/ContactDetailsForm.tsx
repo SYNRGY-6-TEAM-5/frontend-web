@@ -38,9 +38,7 @@ const ContactDetailsForm: React.FC<ContactDetailsFormProps> = ({ nextStep, prevS
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log("Formik onSubmit Log: ", values);
       handleAddToPassengerDetails(values);
-      console.log("Booking Store Log: ", contactDetails);
       nextStep();
     },
   });

@@ -77,7 +77,6 @@ const PassengerAddForm: React.FC<PassengerAddFormProps> = ({ saved_passenger_id 
             onSubmit={(values) => {
               console.log("onSubmit", JSON.stringify(values, null, 2));
               // handleAddToPassengerDetails(values);
-              // console.log(passengerDetails);
             }}
             validateOnBlur
           >

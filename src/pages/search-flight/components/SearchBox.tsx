@@ -17,12 +17,13 @@ const SearchBox = () => {
     setEditMode(true);
   };
 
-  const handleInputChange = () => {};
+  const handleInputChange = () => { };
+
   return (
-    <div className="relative mt-28 px-6 md:px-9 lg:px-20  ">
-      <section className="flex max-h-[126px] w-full flex-row items-center justify-between overflow-x-hidden rounded-[16px] bg-[#111] px-9 text-white md:h-[550px]">
-        <div className="flex flex-row justify-between">
-          <div className="flex flex-row items-center justify-center">
+    <div className="relative mt-28 px-6 md:px-9 lg:px-20">
+      <section className="flex flex-col gap-12 md:flex-row items-center justify-between overflow-x-hidden rounded-[16px] bg-[#111] text-white p-8">
+        <div className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-5 md:max-h-[126px] bg-[#111] rounded-[16px] text-[18px]">
+          <div className="flex items-center justify-center md:justify-between space-x-6">
             <div className="flex flex-col items-center justify-center">
               <div className="text-[36px] font-bold text-[#F74E28]">
                 {paramsData.origin}
@@ -39,7 +40,7 @@ const SearchBox = () => {
               <div className="text-[12px] font-extralight">{paramsData.d_city}</div>
             </div>
           </div>
-          <div className="ml-16 flex items-center justify-center text-[18px] text-[#B9C0D4]">
+          <div className="mt-6 md:mt-0 md:ml-16 lg:ml-0 text-[18px] text-[#B9C0D4]">
             {`${format(paramsData.dep_date!, "E, dd MMM yyyy")} - ${paramsData.total_seat} Passengers - ${paramsData.ticket_class} Class`}
           </div>
         </div>
