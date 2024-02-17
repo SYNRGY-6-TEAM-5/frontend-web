@@ -15,7 +15,7 @@ const useFormatDateTime = () => {
 
   const formatDateTime = (time: string) => {
     const date = new Date(time);
-    const formattedTime = format(date, "d MMM, hh:mm");
+    const formattedTime = format(date, "d MMM, HH:mm");
     return formattedTime;
   };
 
