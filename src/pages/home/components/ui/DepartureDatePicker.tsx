@@ -28,9 +28,9 @@ const DepartureDatePicker: React.FC<{ field: FieldProps }> = ({ field }) => {
             )}
           >
             {field.value ? (
-              format(field.value, "PPP")
+              format(field.value, "dd MMM yyyy")
             ) : (
-              <Text className="w-full text-start text-sm font-semibold text-slate-400 lg:text-sm">
+              <Text className="w-full text-start text-xs font-semibold text-slate-400 lg:text-sm">
                 Pick departure date
               </Text>
             )}
@@ -43,7 +43,7 @@ const DepartureDatePicker: React.FC<{ field: FieldProps }> = ({ field }) => {
           mode="single"
           selected={field.value}
           onSelect={(date: Date | undefined) => field.onChange(date)}
-          disabled={(date) => date < new Date()}
+          disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
           initialFocus
         />
       </PopoverContent>

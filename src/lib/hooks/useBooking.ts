@@ -31,7 +31,6 @@ export const useBooking = () => {
       return response;
     },
     onSuccess(data) {
-      console.log("data", data);
       if (data.status === 201) {
         const returnedBookingId = data.data.data.booking_data.bookingId;
         if (userData) {

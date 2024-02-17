@@ -14,15 +14,22 @@ import { Accordion } from "@/components/ui/accordion";
 import AccordionFormItem from "./component/containers/AccordionItem";
 import { usePassengerStore } from "@/store/useBookingStore";
 import { useSearchTicketStore } from "@/store/useSearchTicketStore";
+import { Button } from "@/components/ui/button";
+import { ChevronRightIcon, ChevronLeftIcon } from "@radix-ui/react-icons";
+import React from "react";
 
-const PassangerDetail = () => {
-  // const { mutateAsync } = useFillPassenger();
+interface PassangerDetailProps {
+  nextStep: () => void;
+  prevStep: () => void;
+}
+
+const PassangerDetail: React.FC<PassangerDetailProps> = ({ nextStep, prevStep }) => {
   const { tripDetails } = useSearchTicketStore();
 
   let passengersData: Record<string, any> = {};
   const { adult_seat, child_seat, infant_seat, isInternational } = tripDetails;
 
-  const { contactDetails } = usePassengerStore();
+  const { contactDetails, passengerDetails } = usePassengerStore();
 
   const generatePassengerAccordionItems = () => {
     const items: JSX.Element[] = [];
@@ -78,7 +85,9 @@ const PassangerDetail = () => {
       (value) => typeof value === "string" && value.trim() !== "",
     );
 
-  console.log("isInternational:", isInternational);
+  const areAllDetaiilsFilled =
+    passengerDetails.length === tripDetails.total_seat &&
+    passengerDetails.length !== 0;
 
   return (
     <section className={`flex flex-col gap-2 mb-8 ${!areContactDetailsFilled ? "opacity-45 pointer-events-none" : ""}`}>
@@ -117,6 +126,17 @@ const PassangerDetail = () => {
           <Accordion type="multiple" className="w-full">
             {items}
           </Accordion>
+          <div className="flex justify-between items-center pt-6">
+            <Button onClick={prevStep} variant="ghost"><ChevronLeftIcon />Back</Button>
+            <Button
+              onClick={nextStep}
+              variant="primary"
+              disabled={!areAllDetaiilsFilled}
+              type="submit" className={`${!areAllDetaiilsFilled ? "pointer-events-none opacity-45" : ""}`}
+            >
+              Next <ChevronRightIcon />
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </section>

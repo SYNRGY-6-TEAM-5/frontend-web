@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import { usePassengerStore } from "@/store/useBookingStore";
+import { ChevronRightIcon, ChevronLeftIcon } from "@radix-ui/react-icons";
+import React from "react";
 
 const validationSchema = Yup.object().shape({
   fullName: Yup.string()
@@ -20,9 +22,14 @@ const validationSchema = Yup.object().shape({
     .max(16, "Phone Number must not exceed 16 characters"),
 });
 
-const ContactDetailsForm = () => {
+interface ContactDetailsFormProps {
+  nextStep: () => void;
+  prevStep: () => void;
+}
+
+const ContactDetailsForm: React.FC<ContactDetailsFormProps> = ({ nextStep, prevStep }) => {
   const { updateContactDetails: handleAddToPassengerDetails, contactDetails } = usePassengerStore();
-  
+
   const formik = useFormik({
     initialValues: {
       fullName: contactDetails.fullName ? contactDetails.fullName : "",
@@ -31,9 +38,8 @@ const ContactDetailsForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log("Formik onSubmit Log: ", values);
       handleAddToPassengerDetails(values);
-      console.log("Booking Store Log: ", contactDetails);
+      nextStep();
     },
   });
 
@@ -72,9 +78,11 @@ const ContactDetailsForm = () => {
         value={formik.values.phone}
         required
       />
-      <Button type="submit" variant="primary" className="mt-7 h-14 w-full">
-        Submit
-      </Button>
+
+      <div className="flex justify-between items-center">
+        <Button variant="ghost" onClick={prevStep}><ChevronLeftIcon />Back</Button>
+        <Button variant="primary" type="submit">Next <ChevronRightIcon /></Button>
+      </div>
     </form>
   );
 };

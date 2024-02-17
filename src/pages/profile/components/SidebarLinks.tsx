@@ -25,22 +25,22 @@ const navData = [
   },
 ];
 
-const SidebarLinks = () => {
+const SidebarLinks = ({ onClick = () => {} }: { onClick?: () => void }) => {
   return (
     <>
       {navData.map((item, index) => (
-        <NavLink to={item.url} end key={index}>
+        <NavLink to={item.url} onClick={onClick} end key={index}>
           {({ isActive }) => (
             <div
               className={`${
                 isActive
                   ? "border-b-primary-500 text-primary-500"
                   : "text-black"
-              } relative flex items-center border-b py-5 text-xs hover:cursor-pointer`}
+              } relative flex items-center border-0 py-5 text-xs hover:cursor-pointer lg:border-b`}
             >
               {item.icon}
               <p className="leading-1 ml-2 font-normal">{item.title}</p>
-              <CaretRight className="ml-auto h-4 w-4" />
+              <CaretRight className="ml-auto hidden h-4 w-4 lg:block" />
             </div>
           )}
         </NavLink>

@@ -5,10 +5,10 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Loader } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import PasswordInput from "@/components/ui/password-input";
 import Allert from "@/components/containers/Allert";
 import Cookies from "js-cookie";
+import axiosClient from "@/lib/axios";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -18,8 +18,6 @@ interface PostRegister {
 }
 
 const RegisterForm = ({ className, ...props }: UserAuthFormProps) => {
-  const API =
-    "https://backend-java-production-ece2.up.railway.app/api/v1/auth/signup";
   const navigate = useNavigate();
   const [isPending, setIsPending] = useState<boolean>();
 
@@ -28,8 +26,8 @@ const RegisterForm = ({ className, ...props }: UserAuthFormProps) => {
 
   const post = async ({ email, password }: PostRegister) => {
     try {
-      const res = await axios.post(
-        API,
+      const res = await axiosClient.post(
+        "/auth/signup",
         {
           email: email,
           password: password,

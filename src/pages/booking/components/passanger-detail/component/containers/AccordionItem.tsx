@@ -30,9 +30,9 @@ const validationSchema = Yup.object().shape({
     .required("Full Name must not be empty")
     .min(2, "Full Name must be at least 2 characters")
     .max(50, "Full Name must not exceed 50 characters"),
-  // Add validation rules for other fields as needed
-  // For dateOfBirth, you can use Yup.date() or Yup.mixed().nullable() if it can be null
-  // For courtesy_title and vaccinated, you can define string() schema.
+
+
+
 });
 
 interface AccordionFormItemProps {
@@ -81,9 +81,8 @@ const AccordionFormItem: React.FC<AccordionFormItemProps> = ({
   return (
     <AccordionItem key={passengerType} value={passengerType}>
       <AccordionTrigger className="text-md font-semibold text-black">
-        {`Passenger ${_nthPassenger + 1} (${
-          _age.charAt(0).toUpperCase() + _age.slice(1)
-        })`}
+        {`Passenger ${_nthPassenger + 1} (${_age.charAt(0).toUpperCase() + _age.slice(1)
+          })`}
       </AccordionTrigger>
       <AccordionContent>
         <Tabs defaultValue="new-passenger">
@@ -99,7 +98,7 @@ const AccordionFormItem: React.FC<AccordionFormItemProps> = ({
               disabled
               className="w-1/2 bg-slate-200 data-[state=active]:bg-white"
             >
-              Saved Passenger - Coming Soon
+              Saved Passenger
             </TabsTrigger>
           </TabsList>
           <TabsContent
@@ -110,7 +109,6 @@ const AccordionFormItem: React.FC<AccordionFormItemProps> = ({
               initialValues={formikHook.values}
               validationSchema={validationSchema}
               onSubmit={(values) => {
-                console.log("onSubmit", JSON.stringify(values, null, 2));
                 handleAddToPassengerDetails(values);
                 handleAddToCompleteBooking(updatedCompleteBookingData, cart);
               }}
@@ -158,7 +156,7 @@ const AccordionFormItem: React.FC<AccordionFormItemProps> = ({
                   />
                   <RadioGroup
                     onValueChange={(value) => {
-                      formik.setFieldValue("courtesy_title", value); // Update courtesy_title based on the selected radio button
+                      formik.setFieldValue("courtesy_title", value);
                     }}
                     defaultValue={
                       formik.values.courtesy_title
@@ -204,7 +202,7 @@ const AccordionFormItem: React.FC<AccordionFormItemProps> = ({
                     </Text>
                     <RadioGroup
                       onValueChange={(value) => {
-                        formik.setFieldValue("vaccinated", value); // Update courtesy_title based on the selected radio button
+                        formik.setFieldValue("vaccinated", value);
                       }}
                       defaultValue={
                         formik.values.courtesy_title
@@ -233,13 +231,9 @@ const AccordionFormItem: React.FC<AccordionFormItemProps> = ({
                       </div>
                     </RadioGroup>
                   </div>
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    className="mt-7 h-14 w-full"
-                  >
-                    Submit
-                  </Button>
+                  <div className="flex justify-end items-center pt-6">
+                    <Button variant="primary" type="submit">Add Passenger</Button>
+                  </div>
                 </Form>
               )}
             </Formik>

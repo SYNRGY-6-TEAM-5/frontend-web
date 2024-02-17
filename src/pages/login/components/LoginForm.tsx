@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,6 +13,7 @@ import Allert from "@/components/containers/Allert";
 import { useSearchTicketStore } from "@/store/useSearchTicketStore";
 import axiosFSW from "@/lib/axiosFSW";
 import { getFirebaseToken } from "@/firebase";
+import axiosClient from "@/lib/axios";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 interface PostLogin {
@@ -22,9 +22,6 @@ interface PostLogin {
 }
 
 const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
-  const API =
-    "https://backend-java-production-ece2.up.railway.app/api/v1/auth/login";
-
   const [isTokenFound, setTokenFound] = useState(false);
   
   const [googleIsPending, setGoogleIsPending] = useState<boolean>();
@@ -40,7 +37,6 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
   const login = useGoogleLogin({
     onSuccess: async (tokenResp) => {
       const res = await axiosFSW.post("/g-auth", tokenResp);
-      console.log(res.data);
       if (res.status === 201) {
         Cookies.set("accesstoken", res.data.data.token);
         Cookies.set("refreshtoken", res.data.data.refreshToken);
@@ -56,8 +52,8 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
   };
 
   const post = ({ email, password }: PostLogin) => {
-    axios
-      .post(API, {
+    axiosClient
+      .post("/auth/login", {
         emailAddress: email,
         password: password,
       })
@@ -69,7 +65,6 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
         if (res.status === 200) {
           setError(false);
           setMessage("Successfully Login");
-          console.log(res.data);
           Cookies.set("accesstoken", res.data.token);
           Cookies.set("refreshtoken", res.data.refreshToken);
           Cookies.set("role", res.data.roles);

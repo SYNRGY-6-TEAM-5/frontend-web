@@ -1,9 +1,9 @@
-import axios from 'axios';
 import { ChangeEvent, useCallback, useState } from 'react';
 
 import { IParams, IApiResponse, IMeta } from '@/types/ApiResponse';
 import { Airline } from '@/types/Ticket';
 import { Seat } from '@/types/Ticket';
+import axiosFSW from '../axiosFSW';
 
 type AirlineData = Array<Airline>;
 
@@ -53,8 +53,8 @@ export default function useFilter() {
     const fetchAirlines = useCallback(async () => {
         try {
             setLoading(true);
-            const response = await axios.get<IApiResponse<AirlineData>>(
-                'https://backend-node-production-a54c.up.railway.app/api/airline/',
+            const response = await axiosFSW.get<IApiResponse<AirlineData>>(
+                '/airline/',
                 {
                     params,
 
@@ -63,7 +63,7 @@ export default function useFilter() {
             setAirlines(response?.data.data);
             setMeta(response.data.meta);
         } catch (error) {
-            console.log('error > ', error);
+            console.error('error > ', error);
         } finally {
             setLoading(false);
         }

@@ -66,7 +66,8 @@ interface props {
 }
 
 const OneWayForm = ({ tripType }: props) => {
-  const { airports, handleSearch, fetchAirports, params, setParams } = useHome();
+  const { airports, handleSearch, fetchAirports, params, setParams } =
+    useHome();
   const {
     setParamsData: handleSetDepParams,
     setReturnParamsData: handleSetRetParams,
@@ -152,18 +153,24 @@ const OneWayForm = ({ tripType }: props) => {
       arrival_airport: selectedDestinationAirport.iata_code,
       departure_date: format(data.departureDate!, "yyyy-MM-dd"),
     });
-    
+
     handleSetRetParams({
       departure_airport: selectedOriginAirport.iata_code,
       arrival_airport: selectedDestinationAirport.iata_code,
       departure_date: format(data.departureDate!, "yyyy-MM-dd"),
-      return_date: format(data.arrivalDate || data.departureDate!, "yyyy-MM-dd"),
+      return_date: format(
+        data.arrivalDate || data.departureDate!,
+        "yyyy-MM-dd",
+      ),
     });
-    
-    const isInternational: boolean = selectedOriginAirport.country_iso_code === selectedDestinationAirport.country_iso_code ? false : true;
 
-    if(ticketDetails){
-      console.log("isInternational one-way form:", isInternational)
+    const isInternational: boolean =
+      selectedOriginAirport.country_iso_code ===
+      selectedDestinationAirport.country_iso_code
+        ? false
+        : true;
+
+    if (ticketDetails) {
       handleSetTripDetails({
         ticket_class: ticketDetails.ticket_class,
         adult_seat: ticketDetails.adult_seat,
@@ -171,10 +178,9 @@ const OneWayForm = ({ tripType }: props) => {
         child_seat: ticketDetails.child_seat,
         total_seat: ticketDetails.total_seat,
         isInternational: isInternational,
-        trip_type: tripType
-      })
+        trip_type: tripType,
+      });
     }
-
 
     navigate(`/flight/search-flight?${searchParams}`);
   };
@@ -196,14 +202,14 @@ const OneWayForm = ({ tripType }: props) => {
           name="originDest"
           render={({}) => (
             <FormItem>
-              <div className="flex w-full items-center rounded-md border bg-white p-4">
-                <div className="space-3 flex flex-1 flex-row items-center gap-3 bg-white">
-                  <div className="flex flex-col bg-white">
-                    <div className="pointer-events-none inset-y-0 start-0 mb-3 flex flex-row items-center pr-3 ps-3.5">
-                      <AirplaneTakeoff size={42} className="h-6 w-6" />
+              <div className="rounded-md border bg-white p-4">
+                <div className="flex flex-1 flex-row items-center gap-4 bg-white">
+                  <div className="flex flex-1 flex-col bg-white">
+                    <div className="pointer-events-none inset-y-0 start-0 mb-3 flex flex-row items-start">
+                      <AirplaneTakeoff className="h-4 w-4" />
                       <label
                         htmlFor="origin"
-                        className="ml-2 block text-sm font-medium text-gray-900 dark:text-white"
+                        className="ml-2 block text-xs font-medium text-gray-900 dark:text-white"
                       >
                         Origin
                       </label>
@@ -227,12 +233,12 @@ const OneWayForm = ({ tripType }: props) => {
                     <ArrowsLeftRight size={42} className="absolute h-4 w-4" />
                   </Button>
 
-                  <div className="flex flex-col bg-white">
-                    <div className="pointer-events-none inset-y-0 start-0 mb-3 flex flex-row items-center pr-3 ps-3.5">
-                      <AirplaneLanding size={42} className="h-6 w-6" />
+                  <div className="flex flex-1 flex-col bg-white">
+                    <div className="pointer-events-none inset-y-0 start-0 mb-3 flex flex-row items-center">
+                      <AirplaneLanding className="h-4 w-4" />
                       <label
                         htmlFor="destination"
-                        className="ml-2 block text-sm font-medium text-gray-900 dark:text-white"
+                        className="ml-2 block text-xs font-medium text-gray-900 dark:text-white"
                       >
                         Destination
                       </label>
@@ -280,7 +286,7 @@ const OneWayForm = ({ tripType }: props) => {
           type="submit"
           className="h-12 w-full items-center rounded-md p-4"
         >
-          <MagnifyingGlassIcon className="mr-2 h-4 w-4" /> Cari
+          <MagnifyingGlassIcon className="mr-2 h-4 w-4" /> Search
         </Button>
       </form>
     </Form>

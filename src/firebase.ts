@@ -25,11 +25,11 @@ export const getFirebaseToken = async (setTokenFound: (arg0: boolean) => void) =
             setTokenFound(true);
             await useSaveToken(currentToken);
         } else {
-            console.log('No registration token available. Request permission to generate one.');
+            console.error('No registration token available. Request permission to generate one.');
             setTokenFound(false);
         }
     } catch (err) {
-        console.log('An error occurred while retrieving token. ', err);
+        console.error('An error occurred while retrieving token. ', err);
     }
 }
 
@@ -50,6 +50,6 @@ const useSaveToken = async (currentToken: string) => {
         });
         return response;
     } catch (error) {
-        console.log('Failed to save FCM token:', error);
+        console.error('Failed to save FCM token:', error);
     }
 };

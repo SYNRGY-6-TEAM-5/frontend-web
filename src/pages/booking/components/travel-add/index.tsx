@@ -10,8 +10,16 @@ import { usePassengerStore } from "@/store/useBookingStore";
 import FlightAddOnCard from "./components/ui/FlightAddOnCard";
 import { useAddOnsStore } from "@/store/useAddOnsStore";
 import { useSearchTicketStore } from "@/store/useSearchTicketStore";
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 
-const TravelAddOns = () => {
+interface TravelAddOnsProps {
+  nextStep: () => void;
+  prevStep: () => void;
+}
+
+const TravelAddOns: React.FC<TravelAddOnsProps> = ({ nextStep, prevStep }) => {
   const { tripDetails } = useSearchTicketStore();
   const { passengerDetails } = usePassengerStore();
   const { mealsAddOn, baggageAddOn } = useAddOnsStore();
@@ -20,15 +28,16 @@ const TravelAddOns = () => {
     passengerDetails.length === tripDetails.total_seat &&
     passengerDetails.length !== 0;
 
+  const areAddOnsPicked = mealsAddOn.length !== 0 && baggageAddOn.baggage_price !== "";
+
   return (
     <Card
-      className={`${
-        !areAllDetaiilsFilled ? "pointer-events-none opacity-45" : ""
-      } mb-8`}
+      className={`${!areAllDetaiilsFilled ? "pointer-events-none opacity-45" : ""
+        } mb-8`}
     >
       <CardHeader>
         <CardTitle>Travel Add Ons</CardTitle>
-        <CardDescription>Card Description</CardDescription>
+        <CardDescription>Enhance your journey with travel extras</CardDescription>
       </CardHeader>
 
       <CardContent>
@@ -76,6 +85,17 @@ const TravelAddOns = () => {
             </div>
           </div>
         </section>
+        <div className="flex justify-between items-center pt-6">
+          <Button onClick={prevStep} variant="ghost"><ChevronLeftIcon />Back</Button>
+          <Button
+            onClick={nextStep}
+            variant="primary"
+            disabled={!areAddOnsPicked}
+            className={`${!areAddOnsPicked ? "pointer-events-none opacity-45" : ""}`}
+          >
+            Next <ChevronRightIcon />
+          </Button>
+        </div>
       </CardContent>
     </Card>
   );

@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { ChangeEvent, useCallback, useState } from 'react';
 
 import { IParams, IApiResponse, IMeta } from '@/types/ApiResponse';
 import { AirportDetails } from '@/types/Ticket';
+import axiosFSW from '../axiosFSW';
 
 type AirportData = Array<AirportDetails>;
 
@@ -18,8 +18,8 @@ export default function useHome() {
     const fetchAirports = useCallback(async () => {
         try {
             setLoading(true);
-            const response = await axios.get<IApiResponse<AirportData>>(
-                'https://backend-node-production-a54c.up.railway.app/api/airport/',
+            const response = await axiosFSW.get<IApiResponse<AirportData>>(
+                '/airport/',
                 {
                     params,
                     headers: {
@@ -28,11 +28,10 @@ export default function useHome() {
 
                 }
             );
-            console.log("Response hook >>> ", response);
             setAirports(response?.data.data);
             setMeta(response.data.meta);
         } catch (error) {
-            console.log('error > ', error);
+            console.error('error > ', error);
         } finally {
             setLoading(false);
         }
@@ -44,7 +43,6 @@ export default function useHome() {
             ...params,
             search: value,
         });
-        console.log(params)
     };
 
     const handleSubmit = (data: any) => {

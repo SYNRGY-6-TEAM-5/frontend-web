@@ -17,9 +17,16 @@ const HeaderDetailBooking = ({
   ticket_type: string;
 }) => {
   const navigate = useNavigate();
+  const handleClick = () => {
+    window.open(
+      `/profile/booking/print/${booking_id}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
+  };
 
   return (
-    <div className="mb-10 grid grid-cols-3 items-center">
+    <div className="mb-10 flex items-center justify-between">
       <ArrowLeft
         size={20}
         onClick={() => {
@@ -28,7 +35,7 @@ const HeaderDetailBooking = ({
         className="cursor-pointer hover:text-primary-500"
       />
       <div className="flex flex-col text-center sm:max-lg:col-span-2">
-        {(status === "SUCCESS") ? (
+        {status === "SUCCESS" ? (
           <div className="mb-3">
             <Text className="font-medium">{airlane}</Text>
             <Text className="text-xs">
@@ -42,8 +49,11 @@ const HeaderDetailBooking = ({
           Order ID: {booking_id}
         </Text>
       </div>
-
-      <Button className="flex items-center justify-end p-0">
+      <Button
+        type="button"
+        onClick={handleClick}
+        className="flex items-center justify-end p-0"
+      >
         <DirectBox />
       </Button>
     </div>

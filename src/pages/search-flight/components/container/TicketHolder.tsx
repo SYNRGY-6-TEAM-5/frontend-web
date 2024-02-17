@@ -48,7 +48,6 @@ const TicketsHolder = ({ tripType }: props) => {
       (tripType === "roundtrip" && count() === 2)
     ) {
       if (!token) {
-        console.log(currentPath);
         setPreviousPath(currentPath)
         setShowDialog(true);
       } else {

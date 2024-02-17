@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useState } from "react";
 import Cookies from "js-cookie";
 import { useProfileUserStore } from "@/store/useProfileUserStore";
+import axiosClient from "../axios";
 
 export interface IUser {
     id?: string;
@@ -52,13 +52,12 @@ export default function useNav() {
     const fetchUserData = async () => {
         try {
             const token = Cookies.get("accesstoken");
-            console.log(token);
             if (!token) {
                 return;
             }
 
-            const response = await axios.get(
-                "https://backend-java-production-ece2.up.railway.app/api/v1/user/detail-user",
+            const response = await axiosClient.get(
+                "/user/detail-user",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -68,10 +67,9 @@ export default function useNav() {
 
             const userData: IUser = response.data;
             setDataStore(response.data)
-            console.log("User data >>> ", userData);
             setUserData(userData);
         } catch (error) {
-            console.log('Error fetching user data:', error);
+            console.error('Error fetching user data:', error);
         }
     };
 

@@ -12,7 +12,6 @@ interface FormHeaderProps {
 
 const FormHeader: React.FC<FormHeaderProps> = ({ passengerName }) => {
     const { selected_passenger_id, isAddingPassenger, setSelectedPassengerId, setIsAddingPassenger } = useSavedPassengerStore();
-    console.log(selected_passenger_id)
     return (
         <div className="w-full flex h-16 items-start justify-start">
             <Link to="#" onClick={() => { setSelectedPassengerId(0); setIsAddingPassenger(false); }}>

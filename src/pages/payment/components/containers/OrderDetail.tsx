@@ -3,7 +3,7 @@ import OrderSummary from "../ui/OrderSummary";
 import Rute from "./Rute";
 import { transformCartData } from "@/lib/dataformatter";
 import { CartItem } from "@/store/useCartStore";
-import React, { useEffect } from "react";
+import React from "react";
 import { ICompleteBooking } from "@/types/Booking";
 import { useParams } from "react-router-dom";
 
@@ -17,11 +17,6 @@ const OrderDetail: React.FC<OrderDetailProps> = ({ completeBooking }) => {
     user_id?: string;
   }>();
   let cartTicket: CartItem[] = transformCartData(completeBooking);
-
-  useEffect(() => {
-    console.log(cartTicket);
-    console.log("Complete Booking OrderDetails >>> ", completeBooking);
-  }, [cartTicket, completeBooking]);
 
   return (
     <div className="p-4">

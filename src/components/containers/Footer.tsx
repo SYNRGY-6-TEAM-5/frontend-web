@@ -4,7 +4,7 @@ import AppStore from "../../assets/app-store.png";
 
 const FooterSearch = () => {
   return (
-    <div className="px-6 md:px-9 lg:px-20">
+    <div className="hidden px-6 md:px-9 lg:block lg:px-20">
       <section className="m-auto flex h-[284px] w-full flex-row items-start justify-between overflow-x-hidden rounded-[8px] pt-16">
         <div className="flex flex-col gap-[12px]">
           <div className="flex items-center gap-3">
