@@ -287,7 +287,7 @@ const OneWayForm = ({ tripType }: props) => {
           type="submit"
           className="h-12 w-full items-center rounded-md p-4"
         >
-          <MagnifyingGlassIcon className="mr-2 h-4 w-4" /> Cari
+          <MagnifyingGlassIcon className="mr-2 h-4 w-4" /> Search
         </Button>
       </form>
     </Form>
