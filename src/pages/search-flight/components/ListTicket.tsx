@@ -48,7 +48,7 @@ const ListTicket = () => {
   console.log("totalData >>> ", totalData);
 
   return (
-    <div className="relative mt-6 grid gap-y-6 px-6 md:px-9 lg:px-20">
+    <div className="relative mt-6 grid gap-y-6 px-6 md:px-9 lg:px-20 pb-10">
       <div className="flex w-full flex-row items-center justify-between gap-4">
         <TicketsHolder tripType={tripDetails.trip_type} />
       </div>

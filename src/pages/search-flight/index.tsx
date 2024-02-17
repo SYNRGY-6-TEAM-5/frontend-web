@@ -1,13 +1,13 @@
 import { useLocation } from "react-router-dom";
 
 import NavBar from "@/components/containers/NavBar";
-import DiscountSection from "./components/DiscountSection";
 import FooterSearch from "../../components/containers/Footer";
 import ListTicket from "./components/ListTicket";
 import SearchBox from "./components/SearchBox";
 import DatePrice from "./components/DatePrice";
 import FilterSort from "./components/FiterSort";
 import CopyrightSearch from "@/components/containers/Copyright";
+import { CtaSection } from "../home/components/containers/CtaSection";
 
 const SearchFlight = () => {
   const location = useLocation();
@@ -22,7 +22,7 @@ const SearchFlight = () => {
         <DatePrice tripType={trip_type} />
         <FilterSort />
         <ListTicket />
-        <DiscountSection />
+        <CtaSection />
         <FooterSearch />
         <CopyrightSearch />
       </div>

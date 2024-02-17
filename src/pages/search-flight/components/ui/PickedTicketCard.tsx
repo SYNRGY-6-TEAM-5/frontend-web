@@ -24,8 +24,8 @@ const formatTime = (time: string) => {
 };
 
 const PickedTicketCard = ({ ticket, ticketId, ticketTitle }: props) => {
-    const { remove } = useCartStore();
-    
+  const { remove } = useCartStore();
+
   const formatDate = (dateString: string) => {
     // Parse the ISO date string into a Date object
     const date = parseISO(dateString);
@@ -63,8 +63,8 @@ const PickedTicketCard = ({ ticket, ticketId, ticketTitle }: props) => {
           {ticketTitle}
         </Text>
         <Button variant="ghost" onClick={() => {
-                    remove(ticketId);
-                  }} className="w-36 text-primary-500">
+          remove(ticketId);
+        }} className="w-36 text-primary-500">
           Change
         </Button>
       </div>
@@ -72,7 +72,7 @@ const PickedTicketCard = ({ ticket, ticketId, ticketTitle }: props) => {
         orientation="horizontal"
         className="h-[1px] w-full bg-slate-200"
       />
-      <div className="h-46 mx-auto grid w-full grid-cols-3 items-center justify-between bg-white px-4 py-6">
+      <div className="h-46 mx-auto grid w-full md:grid-cols-3 gap-3 md:gap-0 items-center justify-between bg-white px-4 py-6">
         <div className="flex flex-col items-start justify-between gap-8">
           <div className="flex flex-row items-center justify-center gap-4">
             <img src={ticket.flight.airline.image} alt="" width={48} />
@@ -146,9 +146,9 @@ const PickedTicketCard = ({ ticket, ticketId, ticketTitle }: props) => {
                 </svg>
               </div>
             </div>
-          </div>
-          <div className="text-3xl font-medium leading-9 text-[#F74E28]">
-            IDR {formatMoney(ticket.fare_amount)}
+            <div className="text-xl font-medium leading-9 text-[#F74E28]">
+              IDR {formatMoney(ticket.fare_amount)}
+            </div>
           </div>
         </div>
       </div>
