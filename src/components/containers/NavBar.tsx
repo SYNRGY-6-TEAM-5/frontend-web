@@ -28,7 +28,6 @@ const NavBar = () => {
   };
 
   const listenScrollEvent = () => {
-    console.log(window.scrollY);
     if (window.scrollY > 0) {
       window.scrollY > 10 ? setNavBarColor(true) : setNavBarColor(false);
     }
