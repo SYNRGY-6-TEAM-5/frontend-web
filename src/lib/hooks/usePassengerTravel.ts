@@ -32,9 +32,6 @@ export const usePassengerTravel = () => {
 
         const formData = new FormData();
         formData.append('image', files[0]);
-
-        console.log('formData >>> ', formData);
-
         const response = await axiosFSW.post(
           `/travel-docs/user/upload`,
           formData,
@@ -53,7 +50,7 @@ export const usePassengerTravel = () => {
           return updatedItems;
         });
       } catch (error) {
-        console.log('error > ', error);
+        console.error('error > ', error);
       } finally {
         setLoadingCovers((prevLoadingCovers) => {
           const updatedLoadingCovers = [...prevLoadingCovers];

@@ -171,7 +171,6 @@ const OneWayForm = ({ tripType }: props) => {
         : true;
 
     if (ticketDetails) {
-      console.log("isInternational one-way form:", isInternational);
       handleSetTripDetails({
         ticket_class: ticketDetails.ticket_class,
         adult_seat: ticketDetails.adult_seat,

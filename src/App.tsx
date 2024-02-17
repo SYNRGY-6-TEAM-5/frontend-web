@@ -34,7 +34,6 @@ function App() {
         body: payload.notification.body,
         image: payload.notification.image,
       });
-      console.log(payload);
     })
     .catch((err) => console.log("failed: ", err));
 

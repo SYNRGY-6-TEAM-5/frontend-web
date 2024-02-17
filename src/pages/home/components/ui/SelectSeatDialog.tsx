@@ -108,7 +108,6 @@ const SelectSeatDialog: React.FC<
     const newTicketDetails = updateTicketDetails();
     setTicketDetails(newTicketDetails);
     onTicketDetails(newTicketDetails);
-    console.log(ticketDetails);
   }, [adultSeat, childSeat, infantSeat, ticketClass]);
 
   if (!isDesktop) {

@@ -8,7 +8,6 @@ interface timeProps {
 }
 
 const Timer = ({ isTargetAchieved, timeValues }: timeProps) => {
-  console.log("timeValues >>> ", timeValues)
   return (
     <>
       <Card className="h-fit bg-black">

@@ -31,8 +31,6 @@ const WaitingPayment = () => {
   const handlePay = () => {
     if (userData) {
       navigate(`/user/payment/${userData.id}/${id}`);
-    } else {
-      console.log(userData);
     }
   };
 
