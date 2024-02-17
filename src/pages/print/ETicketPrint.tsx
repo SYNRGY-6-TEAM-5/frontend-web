@@ -26,10 +26,6 @@ const ETicketPrint = () => {
         canvasWidth: 2480,
         canvasHeight: 3508,
       }).then(function (dataUrl) {
-        const link = document.createElement("a");
-        link.download = "booking-pass.jpg";
-        link.href = dataUrl;
-        link.click();
         const pdf = new jsPDF();
         pdf.addImage(dataUrl, "JPEG", 0, 0, 210, 300);
         pdf.save(`E-Ticket-${data?.booking_code || "AERSWFT"}.pdf`);
