@@ -27,8 +27,8 @@ const TabsPassanger = ({completeBooking, depart, arrive}:flightInterface) => {
             <Text>{arrive}</Text>
           </div>
           <Table className="border border-gray-200">
-            <TableHeader className="bg-black text-white rounded-lg hover:bg-white hover:text-black">
-              <TableRow>
+            <TableHeader>
+              <TableRow className="bg-black text-white hover:bg-black ">
                 <TableHead className="border-white border text-white rounded-ss-lg">Add-ons</TableHead>
                 <TableHead className="border-white border text-white rounded-se-lg">Evidence</TableHead>
               </TableRow>

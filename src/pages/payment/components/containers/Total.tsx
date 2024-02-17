@@ -70,7 +70,7 @@ const Total: React.FC<TotalPrps> = ({ completeBooking, totalPrice }) => {
         htmlFor="prices"
         className="group flex items-center hover:text-primary-200 cursor-pointer"
       >
-        <Text className="text-lg">Total</Text>
+        <Text className="text-lg mr-2">Total</Text>
         <input type="button" id="prices" name="prices" onClick={handleDialog} />
         <ChevronDown size={20} className="font-base text-primary-500" />
         <Text className="grow text-right text-primary-500">{`IDR ${totalPrice.toLocaleString()}`}</Text>

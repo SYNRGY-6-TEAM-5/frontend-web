@@ -85,10 +85,10 @@ const Payment = () => {
   }, [data, total, completeBooking, cartTicket, setTotalAmount, handleAddToCompleteBooking, timer, seconds, minutes, hours]);
 
   return (
-    <section className="grid gap-12 px-20 pb-4 xs:grid-cols-1 lg:grid-cols-3">
+    <section className="grid gap-12 lg:px-20 px-9  pb-4 xs:grid-cols-1 lg:grid-cols-3">
       {data?.booking_details?.status !== "PAID" && (
         <>
-          <div className="col-span-2 flex flex-col space-y-9">
+          <div className="lg:col-span-2 flex flex-col space-y-9">
             <Timer
               isTargetAchieved={isTargetAchieved} timeValues={timer.getTimeValues()}
             />
