@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Form, Formik, useFormik } from "formik";
 import * as Yup from "yup";
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -38,7 +34,9 @@ interface PassengerUpdateFormProps {
   saved_passenger_id: number;
 }
 
-const PassengerUpdateForm: React.FC<PassengerUpdateFormProps> = ({ saved_passenger_id }) => {
+const PassengerUpdateForm: React.FC<PassengerUpdateFormProps> = ({
+  saved_passenger_id,
+}) => {
   const [passengerName, setPassengerName] = useState<string>("");
   const [formikValues, setFormikValues] = useState<ISavedPassengerData>({
     saved_passenger_id: 0,
@@ -48,7 +46,7 @@ const PassengerUpdateForm: React.FC<PassengerUpdateFormProps> = ({ saved_passeng
     date_of_birth: new Date(),
     courtesy_title: "",
     vaccinated: "",
-    travel_docs: []
+    travel_docs: [],
   });
 
   const { data } = useGetPassenger(saved_passenger_id.toString());
@@ -62,7 +60,7 @@ const PassengerUpdateForm: React.FC<PassengerUpdateFormProps> = ({ saved_passeng
       date_of_birth: formikValues.date_of_birth,
       courtesy_title: formikValues.courtesy_title,
       vaccinated: formikValues.vaccinated,
-      travel_docs: formikValues.travel_docs
+      travel_docs: formikValues.travel_docs,
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
@@ -88,12 +86,12 @@ const PassengerUpdateForm: React.FC<PassengerUpdateFormProps> = ({ saved_passeng
           expired_date: new Date(doc.expired_date),
           image_url: doc.file,
         })),
-      },)
+      });
     }
-  }, [data])
+  }, [data]);
 
   return (
-    <Card className="w-full h-full">
+    <Card className="h-full w-full">
       <CardHeader>
         {passengerName && passengerName !== "" && (
           <FormHeader passengerName={passengerName} />
@@ -113,7 +111,6 @@ const PassengerUpdateForm: React.FC<PassengerUpdateFormProps> = ({ saved_passeng
               validateOnBlur
             >
               {(formik) => (
-
                 <Form className="space-y-8 pt-8">
                   <Input
                     type="text"
@@ -147,9 +144,7 @@ const PassengerUpdateForm: React.FC<PassengerUpdateFormProps> = ({ saved_passeng
                     required
                   />
                   {formik.errors.name && (
-                    <span className="text-red-500">
-                      {formik.errors.name}
-                    </span>
+                    <span className="text-red-500">{formik.errors.name}</span>
                   )}
                   <SavedDoBForm
                     data={data[0]}
@@ -168,31 +163,49 @@ const PassengerUpdateForm: React.FC<PassengerUpdateFormProps> = ({ saved_passeng
                     className="flex flex-row space-x-1"
                   >
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem
-                        value="Mr"
-                        id={`title-mr`}
-                      />
+                      <RadioGroupItem value="Mr" id={`title-mr`} />
                       <Label htmlFor={`title-mr`}>Mr.</Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem
-                        value="Mrs"
-                        id={`title-mrs`}
-                      />
+                      <RadioGroupItem value="Mrs" id={`title-mrs`} />
                       <Label htmlFor={`title-mrs`}>Mrs.</Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem
-                        value="Ms"
-                        id={`title-ms`}
-                      />
+                      <RadioGroupItem value="Ms" id={`title-ms`} />
                       <Label htmlFor={`title-ms`}>Ms.</Label>
                     </div>
                   </RadioGroup>
-                  <SavedTravelDocForm
-                    data={data[0]}
-                    formik={formik}
-                  />
+                  <SavedTravelDocForm data={data[0]} formik={formik} />
+                  <div className="flex flex-col gap-4 pt-2">
+                    <Text className="text-md font-semibold text-black">
+                      Are you vaccinated?
+                    </Text>
+                    <RadioGroup
+                      onValueChange={(value) => {
+                        formik.setFieldValue("courtesy_title", value);
+                      }}
+                      defaultValue={
+                        formik.values.courtesy_title
+                          ? formik.values.courtesy_title
+                          : data[0].courtesy_title
+                      }
+                      className="flex flex-row space-x-1"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Mr" id={`title-mr`} />
+                        <Label htmlFor={`title-mr`}>Mr.</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Mrs" id={`title-mrs`} />
+                        <Label htmlFor={`title-mrs`}>Mrs.</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Ms" id={`title-ms`} />
+                        <Label htmlFor={`title-ms`}>Ms.</Label>
+                      </div>
+                    </RadioGroup>
+                    <SavedTravelDocForm data={data[0]} formik={formik} />
+                  </div>
                   <div className="flex flex-col gap-4 pt-2">
                     <Text className="text-md font-semibold text-black">
                       Are you vaccinated?
@@ -214,9 +227,7 @@ const PassengerUpdateForm: React.FC<PassengerUpdateFormProps> = ({ saved_passeng
                           value="yes"
                           id={`vaccinated-yes`}
                         />
-                        <Label htmlFor={`vaccinated-yes`}>
-                          Yes
-                        </Label>
+                        <Label htmlFor={`vaccinated-yes`}>Yes</Label>
                       </div>
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem
@@ -224,14 +235,11 @@ const PassengerUpdateForm: React.FC<PassengerUpdateFormProps> = ({ saved_passeng
                           value="no"
                           id={`vaccinated-no`}
                         />
-                        <Label htmlFor={`vaccinated-no`}>
-                          No
-                        </Label>
+                        <Label htmlFor={`vaccinated-no`}>No</Label>
                       </div>
                     </RadioGroup>
                   </div>
-                  <div className="flex justify-betwen items-center gap-10">
-
+                  <div className="justify-betwen flex items-center gap-10">
                     <Button
                       variant="primary"
                       className="mt-7 h-10 w-full bg-primary-200"
