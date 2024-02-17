@@ -90,7 +90,7 @@ const SelectSeatDialog: React.FC<
     }
   };
 
-  let totalPassengers: number = adultSeat + childSeat + infantSeat;
+  const totalPassengers: number = adultSeat + childSeat + infantSeat;
 
   const updateTicketDetails = () => {
     const totalPassengers = adultSeat + childSeat + infantSeat;
