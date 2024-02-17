@@ -113,11 +113,10 @@ export default function useFlight() {
 
                 }
             );
-            console.log("Response hook >>> ", response);
             setFlights(response?.data.data);
             setMeta(response.data.meta);
         } catch (error) {
-            console.log('error > ', error);
+            console.error('error > ', error);
         } finally {
             setLoading(false);
         }
@@ -129,7 +128,6 @@ export default function useFlight() {
             ...params,
             search: value,
         });
-        console.log(params)
     };
 
     const handleFilter = (_paramsData: any) => {

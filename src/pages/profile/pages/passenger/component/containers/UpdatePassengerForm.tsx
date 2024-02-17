@@ -52,7 +52,6 @@ const PassengerUpdateForm: React.FC<PassengerUpdateFormProps> = ({ saved_passeng
   });
 
   const { data } = useGetPassenger(saved_passenger_id.toString());
-  console.log("data >>>", data);
 
   const formikHook = useFormik<ISavedPassengerData>({
     initialValues: {
@@ -70,8 +69,6 @@ const PassengerUpdateForm: React.FC<PassengerUpdateFormProps> = ({ saved_passeng
       console.log("Formik Unstructured Log:", values);
     },
   });
-
-  console.log("Formik date value >>> ", formikHook.values.date_of_birth);
 
   useEffect(() => {
     if (data && data[0].name !== undefined) {
@@ -92,10 +89,7 @@ const PassengerUpdateForm: React.FC<PassengerUpdateFormProps> = ({ saved_passeng
           image_url: doc.file,
         })),
       },)
-      console.log("data [0] date value >>> ", data[0].date_of_birth);
     }
-
-    console.log("formikValues >>> ", formikValues)
   }, [data])
 
   return (
@@ -115,7 +109,6 @@ const PassengerUpdateForm: React.FC<PassengerUpdateFormProps> = ({ saved_passeng
               onSubmit={(values) => {
                 console.log("onSubmit", JSON.stringify(values, null, 2));
                 // handleAddToPassengerDetails(values);
-                // console.log(passengerDetails);
               }}
               validateOnBlur
             >

@@ -1,6 +1,5 @@
 import { Text } from "@mantine/core";
 import { Image } from "@/components/ui/Image";
-import { useState } from "react";
 import { Bca, BankMandiri, Ocbc, MasterCard } from "@/assets/svg";
 
 const methodData = [
@@ -27,13 +26,9 @@ const methodData = [
 ];
 
 const PaymentMethod = ({runTimer}:{runTimer:boolean}) => {
-  const [check, setCheck] = useState<string>();
   const handleOnChange = async (method:string) => { 
-    setCheck(method);
     localStorage.setItem("bankMethod", method);
   }
-  
-  console.log({check});
 
   return(
     <div className="grid gap-4">

@@ -30,8 +30,6 @@ const TravelAddOns: React.FC<TravelAddOnsProps> = ({ nextStep, prevStep }) => {
 
   const areAddOnsPicked = mealsAddOn.length !== 0 && baggageAddOn.baggage_price !== "";
 
-  console.log("meals >> ", mealsAddOn);
-
   return (
     <Card
       className={`${!areAllDetaiilsFilled ? "pointer-events-none opacity-45" : ""

@@ -109,7 +109,6 @@ const AccordionFormItem: React.FC<AccordionFormItemProps> = ({
               initialValues={formikHook.values}
               validationSchema={validationSchema}
               onSubmit={(values) => {
-                console.log("onSubmit", JSON.stringify(values, null, 2));
                 handleAddToPassengerDetails(values);
                 handleAddToCompleteBooking(updatedCompleteBookingData, cart);
               }}

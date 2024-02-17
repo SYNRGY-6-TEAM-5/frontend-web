@@ -34,9 +34,8 @@ function App() {
         body: payload.notification.body,
         image: payload.notification.image,
       });
-      console.log(payload);
     })
-    .catch((err) => console.log("failed: ", err));
+    .catch((err) => console.error("failed: ", err));
 
   return (
     <GoogleOAuthProvider clientId={import.meta.env.VITE_G_CLIENT_ID}>

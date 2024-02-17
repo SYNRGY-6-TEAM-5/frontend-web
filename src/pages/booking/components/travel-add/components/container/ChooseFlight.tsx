@@ -15,8 +15,6 @@ const ChooseFlight = () => {
     setFlight(flight);
   };
 
-  console.log("Person Add On  >>> ", personAddOns);
-
   return (
     <>
       <DialogHeader>

@@ -21,9 +21,7 @@ const AirlineTabContent: React.FC<AirlineTabContentProps> = () => {
       fetchAirlines();
     }
   }, []);
-
-  console.log(airlines);
-
+  
   return (
     <TabsContent value="airline" className="w-full">
       <Card className="h-full w-full">

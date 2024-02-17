@@ -19,7 +19,6 @@ interface props {
 }
 
 const SavedDoBForm = ({ formik, _id, data }: props) => {
-  console.log(data.date_of_birth);
   return (
     <Popover>
       <PopoverTrigger asChild>

@@ -37,7 +37,6 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
   const login = useGoogleLogin({
     onSuccess: async (tokenResp) => {
       const res = await axiosFSW.post("/g-auth", tokenResp);
-      console.log(res.data);
       if (res.status === 201) {
         Cookies.set("accesstoken", res.data.data.token);
         Cookies.set("refreshtoken", res.data.data.refreshToken);

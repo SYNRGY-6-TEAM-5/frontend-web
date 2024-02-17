@@ -14,7 +14,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -23,7 +22,6 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -41,13 +39,6 @@ const SelectSeatDialog: React.FC<
   const [infantSeat, setInfantSeat] = useState<number>(0);
   const [ticketClass, setTicketClass] = useState<string>("");
   // eslint-disable-next-line no-unused-vars
-  const [ticketDetails, setTicketDetails] = useState<Seat>({
-    ticket_class: "",
-    adult_seat: 0,
-    child_seat: 0,
-    total_seat: 0,
-    infant_seat: 0,
-  });
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const handleTicketClassChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -90,7 +81,7 @@ const SelectSeatDialog: React.FC<
     }
   };
 
-  let totalPassengers: number = adultSeat + childSeat + infantSeat;
+  const totalPassengers: number = adultSeat + childSeat + infantSeat;
 
   const updateTicketDetails = () => {
     const totalPassengers = adultSeat + childSeat + infantSeat;
@@ -106,9 +97,7 @@ const SelectSeatDialog: React.FC<
 
   useEffect(() => {
     const newTicketDetails = updateTicketDetails();
-    setTicketDetails(newTicketDetails);
     onTicketDetails(newTicketDetails);
-    console.log(ticketDetails);
   }, [adultSeat, childSeat, infantSeat, ticketClass]);
 
   if (!isDesktop) {
@@ -139,7 +128,7 @@ const SelectSeatDialog: React.FC<
             <DrawerTitle className="pb-4">
               Select seat type and class
             </DrawerTitle>
-            <DrawerDescription className="pb-4">
+            <div className="pb-4">
               <ul className="flex w-full flex-row items-center justify-between gap-2">
                 <li className="flex-1">
                   <input
@@ -204,7 +193,7 @@ const SelectSeatDialog: React.FC<
                   </label>
                 </li>
               </ul>
-            </DrawerDescription>
+            </div>
           </DrawerHeader>
           <div className="flex flex-col gap-6">
             <Card
@@ -325,7 +314,7 @@ const SelectSeatDialog: React.FC<
                 </div>
               </CardContent>
             </Card>
-            <DrawerClose>
+            <DrawerClose asChild>
               <Button variant="primary" className="h-16 w-full">
                 <CheckIcon className="mr-2 h-4 w-4" /> Save
               </Button>
@@ -361,9 +350,9 @@ const SelectSeatDialog: React.FC<
       <DialogContent className="max-w-[425px] backdrop-blur-md sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="pb-4">Select seat type and class</DialogTitle>
-          <DialogDescription className="pb-4">
-            <ul className="flex w-full flex-row items-center justify-center gap-2">
-              <li>
+          <div className="pb-4">
+            <ul className="flex w-full flex-row items-center justify-between gap-2">
+              <li className="flex-1">
                 <input
                   type="radio"
                   id="economy-class"
@@ -376,14 +365,14 @@ const SelectSeatDialog: React.FC<
                 />
                 <label
                   htmlFor="economy-class"
-                  className="inline-flex w-full min-w-[7.5rem] cursor-pointer items-center justify-between rounded-full border border-gray-200 bg-white p-2 text-zinc-900 hover:bg-gray-800 hover:text-white peer-checked:bg-zinc-900 peer-checked:text-white"
+                  className="block w-full cursor-pointer items-center justify-between rounded-full border border-gray-200 bg-white p-2 text-zinc-900 hover:bg-gray-800 hover:text-white peer-checked:bg-zinc-900 peer-checked:text-white"
                 >
                   <Text className="text-center text-xs font-semibold">
                     Economy Class
                   </Text>
                 </label>
               </li>
-              <li>
+              <li className="flex-1">
                 <input
                   type="radio"
                   id="business-class"
@@ -396,16 +385,16 @@ const SelectSeatDialog: React.FC<
                 />
                 <label
                   htmlFor="business-class"
-                  className="inline-flex w-full min-w-[7.5rem] cursor-pointer items-center justify-between rounded-full border border-gray-200 bg-white p-2 text-zinc-900 hover:bg-gray-800 hover:text-white peer-checked:bg-zinc-900 peer-checked:text-white"
+                  className="block w-full cursor-pointer items-center justify-between rounded-full border border-gray-200 bg-white p-2 text-zinc-900 hover:bg-gray-800 hover:text-white peer-checked:bg-zinc-900 peer-checked:text-white"
                 >
                   <div className="flex w-full items-center justify-center">
-                    <Text className="text-xs font-semibold">
+                    <Text className="text-center text-xs font-semibold">
                       Business Class
                     </Text>
                   </div>
                 </label>
               </li>
-              <li>
+              <li className="flex-1">
                 <input
                   type="radio"
                   id="first-class"
@@ -418,15 +407,15 @@ const SelectSeatDialog: React.FC<
                 />
                 <label
                   htmlFor="first-class"
-                  className="inline-flex w-full min-w-[7.5rem] cursor-pointer items-center justify-between rounded-full border border-gray-200 bg-white p-2 text-zinc-900 hover:bg-gray-800 hover:text-white peer-checked:bg-zinc-900 peer-checked:text-white"
+                  className="block w-full cursor-pointer items-center justify-between rounded-full border border-gray-200 bg-white p-2 text-zinc-900 hover:bg-gray-800 hover:text-white peer-checked:bg-zinc-900 peer-checked:text-white"
                 >
-                  <Text className="pl-2 text-xs font-semibold">
+                  <Text className="text-center text-xs font-semibold">
                     First Class
                   </Text>
                 </label>
               </li>
             </ul>
-          </DialogDescription>
+          </div>
         </DialogHeader>
         <div className="flex flex-col gap-6">
           <Card
@@ -508,7 +497,7 @@ const SelectSeatDialog: React.FC<
                   </div>
                 </form>
               </div>
-              <div className=" flex items-center border-b p-4">
+              <div className=" flex items-center p-4">
                 <div className="flex-1 space-y-1">
                   <Text className="text-md text-start font-semibold text-black">
                     Infant
@@ -547,7 +536,7 @@ const SelectSeatDialog: React.FC<
               </div>
             </CardContent>
           </Card>
-          <DialogClose>
+          <DialogClose asChild>
             <Button variant="primary" className="h-16 w-full">
               <CheckIcon className="mr-2 h-4 w-4" /> Save
             </Button>
