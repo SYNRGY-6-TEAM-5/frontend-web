@@ -5,11 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Text } from "@mantine/core";
 import { useCartStore } from "@/store/useCartStore";
+import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
+import { Dot } from "lucide-react";
 
 interface props {
   ticket: Ticket;
   ticketId: number;
-  ticketTitle: string
+  ticketTitle: string;
 }
 
 const formatMoney = (amount: string) => {
@@ -25,6 +27,7 @@ const formatTime = (time: string) => {
 
 const PickedTicketCard = ({ ticket, ticketId, ticketTitle }: props) => {
   const { remove } = useCartStore();
+  const isDesktop = useMediaQuery("(min-width: 1280px)");
 
   const formatDate = (dateString: string) => {
     // Parse the ISO date string into a Date object
@@ -56,15 +59,67 @@ const PickedTicketCard = ({ ticket, ticketId, ticketTitle }: props) => {
   const transitTime =
     ticket.flight.transit > 0 ? `${ticket.flight.transit} transit` : "Non-stop";
 
+  if (!isDesktop) {
+    return (
+      <div className="w-full">
+        <div className="flex w-full items-center justify-between px-2">
+          <Text className="text-xs font-normal text-black">{ticketTitle}</Text>
+          <div
+            onClick={() => {
+              remove(ticketId);
+            }}
+            className="block px-0 py-0 text-xs text-primary-500 decoration-transparent"
+          >
+            Change
+          </div>
+        </div>
+        <Separator
+          orientation="horizontal"
+          className="my-3 h-[1px] w-full bg-slate-200"
+        />
+        <div className="flex w-full items-center justify-between px-2">
+          <div className="flex items-center gap-2">
+            <img
+              src={ticket.flight.airline.image}
+              alt={ticket.flight.airline.name}
+              className="h-[11px]"
+            />
+            <div className="text-base font-medium text-black">
+              {ticket.flight.iata}
+            </div>
+          </div>
+          <div className="rounded-full bg-gray-100 px-2 py-1 text-xs  font-medium text-gray-500">
+            {transitTime}
+          </div>
+        </div>
+        <div className="mt-4 flex items-center justify-between px-2">
+          <div className="flex text-xs text-gray-400">
+            {format(ticket.flight.departure.scheduled_time, "E, dd MMM")}{" "}
+            <Dot className="h-4 w-4 text-black" />
+            {`${format(
+              ticket.flight.departure.scheduled_time,
+              "HH:mm",
+            )} - ${format(ticket.flight.arrival.scheduled_time, "HH:mm")}`}
+          </div>
+          <div className="text-sm font-medium text-primary-500">
+            IDR {formatMoney(ticket.fare_amount)}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full flex-col gap-2 overflow-hidden rounded-xl border border-gray-100 p-2 shadow-sm">
       <div className="flex flex-row items-center justify-between px-4 pb-2">
-        <Text className="text-lg font-normal text-black">
-          {ticketTitle}
-        </Text>
-        <Button variant="ghost" onClick={() => {
-          remove(ticketId);
-        }} className="w-36 text-primary-500">
+        <Text className="text-lg font-normal text-black">{ticketTitle}</Text>
+        <Button
+          variant="ghost"
+          onClick={() => {
+            remove(ticketId);
+          }}
+          className="w-36 text-primary-500"
+        >
           Change
         </Button>
       </div>
@@ -72,7 +127,7 @@ const PickedTicketCard = ({ ticket, ticketId, ticketTitle }: props) => {
         orientation="horizontal"
         className="h-[1px] w-full bg-slate-200"
       />
-      <div className="h-46 mx-auto grid w-full md:grid-cols-3 gap-3 md:gap-0 items-center justify-between bg-white px-4 py-6">
+      <div className="h-46 mx-auto grid w-full items-center justify-between gap-3 bg-white px-4 py-6 md:grid-cols-3 md:gap-0">
         <div className="flex flex-col items-start justify-between gap-8">
           <div className="flex flex-row items-center justify-center gap-4">
             <img src={ticket.flight.airline.image} alt="" width={48} />

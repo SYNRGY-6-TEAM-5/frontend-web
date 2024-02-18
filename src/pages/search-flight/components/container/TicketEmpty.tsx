@@ -14,7 +14,7 @@ const TicketEmpty = () => {
 
   return (
     <div className="mx-auto my-24 w-fit">
-      <Text className="max-w-[807px] text-center text-4xl font-medium">
+      <Text className="max-w-[807px] text-center text-lg md:text-4xl font-medium">
         Flight are not available on{" "}
         {`${format(paramsData.dep_date!, "dd MMMM yyyy")}`}, please select the
         nearest date.
@@ -39,7 +39,7 @@ const TicketEmpty = () => {
             <div className="text-[16px] font-medium text-gray-300">{paramsData.d_city}</div>
           </div>
         </div>
-        <Text className="mt-8 text-center">
+        <Text className="mt-8 text-xs md:text-base text-center">
           The selected flight date may not have any available flights.
           Alternatively, you can choose flights on other dates below.
         </Text>
