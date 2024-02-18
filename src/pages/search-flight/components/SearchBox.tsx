@@ -44,7 +44,7 @@ const SearchBox = () => {
             {`${format(paramsData.dep_date!, "E, dd MMM yyyy")} - ${paramsData.total_seat} Passengers - ${paramsData.ticket_class} Class`}
           </div>
         </div>
-        <div className="rounded-[12px] bg-white">
+        <div className="hidden lg:block rounded-[12px] bg-white">
           {editMode ? (
             <div className="flex flex-row items-center justify-center px-4 py-3">
               <input

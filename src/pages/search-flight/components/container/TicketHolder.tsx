@@ -65,7 +65,7 @@ const TicketsHolder = ({ tripType }: props) => {
     <Accordion
       type="single"
       collapsible
-      className="flex h-full w-full flex-col rounded-lg bg-white px-4 py-8 shadow-lg"
+      className="flex h-full w-full flex-col rounded-lg bg-white p-2 md:px-4 md:py-8 shadow-lg"
     >
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogOverlay className="bg-transparent" />
@@ -76,9 +76,9 @@ const TicketsHolder = ({ tripType }: props) => {
         </DialogContent>
       </Dialog>
       <AccordionItem value="item-1">
-        <AccordionTrigger>
-          <div className="flex flex-row items-center justify-between px-4 pb-2">
-            <Text className="text-lg font-normal text-black">{`Your Tickets (${count()})`}</Text>
+        <AccordionTrigger className="py-2 md:py-4">
+          <div className="flex flex-row items-center justify-between md:px-4 md:pb-2">
+            <Text className="text-sm md:text-lg font-normal text-black">{`Your Tickets (${count()})`}</Text>
           </div>
         </AccordionTrigger>
         <AccordionContent>
@@ -87,11 +87,11 @@ const TicketsHolder = ({ tripType }: props) => {
               onClick={handleProceedToBooking}
               variant="primary"
               className={`${effect && "animate-wiggle"
-                }flex w-56 gap-3 text-white`}
+                }flex text-xs md:text-base md:w-56 gap-3 text-white`}
               onAnimationEnd={() => setEffect(false)}
             >
               Proceed to booking
-              <TicketIcon />
+              <TicketIcon className="w-4 h-4 md:w-6 md:h-6" />
             </Button>
             <Toaster />
           </div>

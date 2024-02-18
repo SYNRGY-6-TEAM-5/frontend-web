@@ -7,7 +7,7 @@ interface props {
 const SkeletonCard = ({ cardTitle }: props) => {
   return (
     <div className="grid h-full md:h-44 w-full md:grid-cols-3 md:gap-2 overflow-hidden rounded-xl border-4 border-dashed border-gray-100 p-2 gap-5">
-      <div className="flex flex-col items-start justify-center gap-4">
+      <div className="hidden md:flex flex-col items-start justify-center gap-4">
         <div className="h-12 w-12 rounded-full bg-slate-200" />
         <div className="space-y-2">
           <div className="h-4 w-[250px] bg-slate-200" />
@@ -19,7 +19,7 @@ const SkeletonCard = ({ cardTitle }: props) => {
             <Text className="text-slate-500 text-lg font-semibold text-center">{`No ${cardTitle} Ticket Selected`}</Text>
         </div>
       </div>
-      <div className="flex flex-col items-end justify-center gap-4">
+      <div className="hidden md:flex flex-col items-end justify-center gap-4">
         <div className="flex gap-6">
           <div className="h-12 w-12 rounded-full bg-slate-200" />
           <div className="h-12 w-12 rounded-full bg-slate-200" />
