@@ -33,15 +33,15 @@ const CheckInPage = () => {
   const { mutateAsync, isPending } = useCheckInBooking(id!);
 
   const handleCheckIn = async () => {
-    await mutateAsync();
+    await mutateAsync(userData);
   };
 
   useEffect(() => {
     if (data) {
-      const formatPass = data?.passengers.map((item) => ({
+      const formatPass = data?.passengers.map((item, index) => ({
         id: item.passenger_id,
         nama: item.name,
-        seat: item.seat ?? "",
+        seat: item.seat ?? userData[index]?.seat ?? "",
       }));
       setUserData(formatPass);
       setSelectedUser(formatPass[0].id);

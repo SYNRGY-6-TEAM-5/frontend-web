@@ -4,6 +4,11 @@ import { Bca, BankMandiri, Ocbc, MasterCard } from "@/assets/svg";
 
 const methodData = [
   {
+    image_logo: Bca,
+    title: "BCA Virtual Acount",
+    value: "bca",
+  },
+  {
     image_logo: BankMandiri,
     title: "Mandiri Virtual Acount",
     value: "mandiri",
@@ -12,11 +17,6 @@ const methodData = [
     image_logo: Ocbc,
     title: "OCB Virtual Acount",
     value: "ocbc",
-  },
-  {
-    image_logo: Bca,
-    title: "BCA Virtual Acount",
-    value: "bca",
   },
   {
     image_logo: MasterCard,

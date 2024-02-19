@@ -35,7 +35,7 @@ const SeatSelector: React.FC = () => {
     chunkArray(numbers, column).map((group) =>
       group.map((num) => ({
         id: getLabel(num),
-        isOccupied: Math.random() < 0.2,
+        isOccupied: false,
       })),
     ),
   );

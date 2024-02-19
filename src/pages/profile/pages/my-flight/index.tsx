@@ -1,6 +1,5 @@
 import { Text } from "@mantine/core";
 import { Link } from "react-router-dom";
-import NoActiveFlight from "./components/NoActiveFlight";
 import ActiveOrder from "./components/ActiveOrder";
 import { useGetUserBooking } from "@/lib/hooks/useProfileBooking";
 import LoadingBooking from "./components/containers/LoadingBooking";
@@ -12,7 +11,7 @@ const MyFlight = () => {
     <section id="order" className="mb-8">
       {isFetching ? (
         <LoadingBooking />
-      ) : !!data && data.length > 0 ? (
+      ) : !!data && data.length > 0 && (
         <>
           <div className="mb-10 flex items-center justify-between">
             <Text>Your Flight</Text>
@@ -22,8 +21,6 @@ const MyFlight = () => {
           </div>
           <ActiveOrder BookingUser={data} />
         </>
-      ) : (
-        <NoActiveFlight />
       )}
     </section>
   );

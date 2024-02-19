@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { BookingUser } from "@/types/BookingUser";
 import useFormatDateTime from "@/lib/hooks/useFormatDateTIme";
 import OrderStatusComponent from "./ui/Checkin";
+import NoActiveFlight from "./NoActiveFlight";
 
 interface BookingUserArr {
   BookingUser: BookingUser[];
@@ -31,7 +32,7 @@ const ActiveOrder = ({ BookingUser }: BookingUserArr) => {
     return new Intl.NumberFormat("id-ID").format(parsedAmount);
   };
 
-  return (
+  return filteredOrder.length > 0 ? (
     <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-2">
       {filteredOrder.map((order) => {
         const departure = order.tickets[0].flight.departure;
@@ -87,6 +88,8 @@ const ActiveOrder = ({ BookingUser }: BookingUserArr) => {
         );
       })}
     </div>
+  ) : (
+    <NoActiveFlight />
   );
 };
 

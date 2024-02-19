@@ -4,6 +4,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
 import { ApiError } from "@/types/ApiError";
 import { handleApiError } from "../errorApiHandler";
+import { UserSeat } from "@/types/CheckIn";
 
 export const useCheckInBooking = (id: string) => {
   const { toast } = useToast();
@@ -12,8 +13,11 @@ export const useCheckInBooking = (id: string) => {
 
   const { mutateAsync, error, isPending } = useMutation({
     mutationKey: ["checkInBooking"],
-    mutationFn: async () => {
-      const response = await axiosFSW.put(`/user/booking/check-in/${id}`);
+    mutationFn: async (data: UserSeat[]) => {
+      const response = await axiosFSW.put(
+        `/user/booking/check-in-seat/${id}`,
+        {dataSeat: data},
+      );
       return response;
     },
     onSuccess(data) {
